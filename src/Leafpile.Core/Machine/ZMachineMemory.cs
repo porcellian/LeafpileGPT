@@ -80,6 +80,13 @@ public sealed class ZMachineMemory
         return _data[address];
     }
 
+    public ushort ReadInstructionWord(int address)
+    {
+        var highByte = ReadInstructionByte(address);
+        var lowByte = ReadInstructionByte(address + 1);
+        return (ushort)((highByte << 8) | lowByte);
+    }
+
     public ReadOnlyMemory<byte> GetStoryImage() => _data.ToArray();
 
     private void ValidateAddress(ushort address, int width)

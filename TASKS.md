@@ -18,7 +18,7 @@ authorized fixtures.
 - [x] **Task 03 — Implement memory, addressing, and machine state.** Support version-dependent packed addresses, dynamic and static memory rules, header fields, arithmetic, signed operations, division errors, and the specified random number behavior.
 - [x] **Task 04 — Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
 - [x] **Task 05 — Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
-- [ ] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
+- [x] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
 - [ ] **Task 07 — Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.
 - [ ] **Task 08 — Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
 - [ ] **Task 09 — Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.

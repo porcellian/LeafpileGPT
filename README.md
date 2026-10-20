@@ -13,7 +13,9 @@ An experimental C# desktop Z-machine VM implemented entirely by ChatGPT. Based o
 The core currently supports story loading, bounded machine memory, arithmetic,
 routine and stack state, and version-aware packed Z-text conversion. Text support
 includes abbreviations, custom alphabets, dictionary-form encoding, ZSCII, and
-story-specific Unicode translation tables.
+story-specific Unicode translation tables. The instruction decoder handles all
+four instruction forms, typed operands, version-specific opcode layouts, stores,
+branches, and inline print strings without executing instructions.
 
 ## Requirements
 
