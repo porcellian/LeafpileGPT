@@ -12,7 +12,7 @@ public sealed class ZMachineState
 
         _story = story;
         Memory = new ZMachineMemory(story);
-        ProgramCounter = story.Header.InitialProgramAddress;
+        CallStack = new ZMachineCallStack(Memory, story.Header);
         Random = new ZMachineRandom();
     }
 
@@ -20,9 +20,11 @@ public sealed class ZMachineState
 
     public ZMachineMemory Memory { get; private set; }
 
+    public ZMachineCallStack CallStack { get; private set; }
+
     public ZMachineRandom Random { get; }
 
-    public int ProgramCounter { get; private set; }
+    public int ProgramCounter => CallStack.ProgramCounter;
 
     public byte ReadHeaderByte(ushort address)
     {
@@ -46,29 +48,15 @@ public sealed class ZMachineState
 
     public void SetProgramCounter(int address)
     {
-        if ((uint)address >= (uint)Memory.StoryLength)
-        {
-            throw new ZMachineRuntimeException($"Program counter 0x{address:x} is outside the {Memory.StoryLength}-byte story.");
-        }
-
-        ProgramCounter = address;
+        CallStack.SetProgramCounter(address);
     }
 
-    public void AdvanceProgramCounter(int byteCount)
-    {
-        var target = (long)ProgramCounter + byteCount;
-        if (target < 0 || target >= Memory.StoryLength)
-        {
-            throw new ZMachineRuntimeException($"Program counter advance to 0x{target:x} is outside the {Memory.StoryLength}-byte story.");
-        }
-
-        ProgramCounter = (int)target;
-    }
+    public void AdvanceProgramCounter(int byteCount) => CallStack.AdvanceProgramCounter(byteCount);
 
     public void Restart()
     {
         Memory = new ZMachineMemory(_story);
-        ProgramCounter = Header.InitialProgramAddress;
+        CallStack = new ZMachineCallStack(Memory, Header);
         Random.ResetToRandom();
     }
 }

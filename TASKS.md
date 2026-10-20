@@ -16,7 +16,7 @@ authorized fixtures.
 - [x] **Task 01 — Establish the solution and workflow.** Create `LeafpileGPT.sln` with `Leafpile.Core`, `Leafpile.Desktop`, and `Leafpile.Tests`; configure Avalonia, xUnit, .NET 10, GitHub Actions for macOS and Windows, and the task/continuity documentation.
 - [x] **Task 02 — Load and validate story files.** Read standalone Z-code and Blorb-contained Z-code; validate file length, version, header, and required addresses, and report malformed or unsupported input clearly.
 - [x] **Task 03 — Implement memory, addressing, and machine state.** Support version-dependent packed addresses, dynamic and static memory rules, header fields, arithmetic, signed operations, division errors, and the specified random number behavior.
-- [ ] **Task 04 — Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
+- [x] **Task 04 — Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
 - [ ] **Task 05 — Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
 - [ ] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
 - [ ] **Task 07 — Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.

@@ -48,7 +48,7 @@ public sealed class ZMachineMemoryTests
         var memory = new ZMachineMemory(StoryLoader.Load(story));
 
         Assert.Equal(0x44, memory.ReadByte(0x300));
-        Assert.Throws<ZMachineRuntimeException>(() => memory.ReadByte(0x400));
+        Assert.Throws<ZMachineRuntimeException>(() => memory.ReadByte(0x800));
     }
 
     [Fact]

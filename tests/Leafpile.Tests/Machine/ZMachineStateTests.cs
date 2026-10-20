@@ -66,7 +66,7 @@ public sealed class ZMachineStateTests
 
 internal static class MachineStoryFactory
 {
-    public static byte[] Create(byte version, int length = 1024)
+    public static byte[] Create(byte version, int length = 2048)
     {
         var data = new byte[length];
         data[0] = version;
@@ -94,6 +94,28 @@ internal static class MachineStoryFactory
         }
 
         return data;
+    }
+
+    public static ushort WriteRoutine(byte[] data, byte version, int address, byte localCount, params ushort[] localDefaults)
+    {
+        data[address] = localCount;
+        if (version <= 4)
+        {
+            for (var index = 0; index < localCount; index++)
+            {
+                var value = index < localDefaults.Length ? localDefaults[index] : (ushort)0;
+                WriteWord(data, address + 1 + (index * sizeof(ushort)), value);
+            }
+        }
+
+        return version switch
+        {
+            <= 3 => checked((ushort)(address / 2)),
+            <= 5 => checked((ushort)(address / 4)),
+            <= 7 => checked((ushort)(address / 4)),
+            8 => checked((ushort)(address / 8)),
+            _ => throw new ArgumentOutOfRangeException(nameof(version))
+        };
     }
 
     private static void WriteWord(byte[] data, int offset, ushort value)
