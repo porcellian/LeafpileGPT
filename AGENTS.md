@@ -1,4 +1,4 @@
-# GrueGPT Codex Guidance (GrueGPT/AGENTS.md)
+# LeafpileGPT Codex Guidance (LeafpileGPT/AGENTS.md)
 
 Project working agreements for Codex CLI.
 
