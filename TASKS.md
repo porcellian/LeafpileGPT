@@ -13,23 +13,23 @@ authorized fixtures.
 
 ## Tasks
 
-1. [x] **Establish the solution and workflow.** Create `LeafpileGPT.sln` with `Leafpile.Core`, `Leafpile.Desktop`, and `Leafpile.Tests`; configure Avalonia, xUnit, .NET 10, GitHub Actions for macOS and Windows, and the task/continuity documentation.
-2. [ ] **Load and validate story files.** Read standalone Z-code and Blorb-contained Z-code; validate file length, version, header, and required addresses, and report malformed or unsupported input clearly.
-3. [ ] **Implement memory, addressing, and machine state.** Support version-dependent packed addresses, dynamic and static memory rules, header fields, arithmetic, signed operations, division errors, and the specified random number behavior.
-4. [ ] **Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
-5. [ ] **Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
-6. [ ] **Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
-7. [ ] **Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.
-8. [ ] **Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
-9. [ ] **Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.
-10. [ ] **Implement dictionary, tokenization, and text opcodes.** Support dictionary lookup, parsing, tokenization, text scanning, and version-specific behavior.
-11. [ ] **Implement input, output streams, and file opcodes.** Support keyboard and timed input, terminating characters, input streams, output buffering and stream selection, transcript and command streams, and standard file operations.
-12. [ ] **Implement the V1–V5 screen model.** Provide status line updates, screen dimensions, cursor and window behavior, text styles and colors, buffering, and the distinct V1–V3 and V4–V5 rules.
-13. [ ] **Implement V6–V8 screen behavior.** Add V6 window and graphics controls, font and character graphics behavior, mouse and menu opcodes, and remaining version-specific screen and input features.
-14. [ ] **Implement sound opcodes and playback.** Handle sound capability reporting, resource playback, repeats, volume, callbacks, stopping, and the sound behavior defined by the Z-Machine and Blorb standards.
-15. [ ] **Implement the Blorb container and index.** Parse IFRS/IFF chunks, offsets, padding, resource indexes, executable selection, and optional metadata and hint chunks; safely skip unknown chunks and reject invalid structures.
-16. [ ] **Integrate Blorb graphics.** Support picture lookup and data, PNG/JPEG images, legacy rectangles, palettes, adaptive palettes, frontispieces, descriptions, and resolution/scaling hints.
-17. [ ] **Implement Quetzal save and restore.** Read and write IFZS, IFhd, CMem and UMem, Stks, annotations, and interpreter data; validate story identity, chunk bounds, compression, stack frames, and resume points.
-18. [ ] **Complete the desktop experience.** Add story open/restart, save/restore dialogs, menus, keyboard interaction, runtime errors, and the reference layout. Keep the core independent of Avalonia through a host interface for input, display, sound, and files.
-19. [ ] **Complete conformance and regression coverage.** Test all versions and spec-defined edge cases with generated fixtures; run local smoke tests using available stories and record reproducible results without adding story files to GitHub or CI.
-20. [ ] **Document and package the application.** Document build/run instructions, supported features, save/resource behavior, and macOS/Windows packaging; verify the Visual Studio solution and both platform build paths.
+- [x] **Task 01 — Establish the solution and workflow.** Create `LeafpileGPT.sln` with `Leafpile.Core`, `Leafpile.Desktop`, and `Leafpile.Tests`; configure Avalonia, xUnit, .NET 10, GitHub Actions for macOS and Windows, and the task/continuity documentation.
+- [ ] **Task 02 — Load and validate story files.** Read standalone Z-code and Blorb-contained Z-code; validate file length, version, header, and required addresses, and report malformed or unsupported input clearly.
+- [ ] **Task 03 — Implement memory, addressing, and machine state.** Support version-dependent packed addresses, dynamic and static memory rules, header fields, arithmetic, signed operations, division errors, and the specified random number behavior.
+- [ ] **Task 04 — Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
+- [ ] **Task 05 — Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
+- [ ] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
+- [ ] **Task 07 — Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.
+- [ ] **Task 08 — Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
+- [ ] **Task 09 — Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.
+- [ ] **Task 10 — Implement dictionary, tokenization, and text opcodes.** Support dictionary lookup, parsing, tokenization, text scanning, and version-specific behavior.
+- [ ] **Task 11 — Implement input, output streams, and file opcodes.** Support keyboard and timed input, terminating characters, input streams, output buffering and stream selection, transcript and command streams, and standard file operations.
+- [ ] **Task 12 — Implement the V1–V5 screen model.** Provide status line updates, screen dimensions, cursor and window behavior, text styles and colors, buffering, and the distinct V1–V3 and V4–V5 rules.
+- [ ] **Task 13 — Implement V6–V8 screen behavior.** Add V6 window and graphics controls, font and character graphics behavior, mouse and menu opcodes, and remaining version-specific screen and input features.
+- [ ] **Task 14 — Implement sound opcodes and playback.** Handle sound capability reporting, resource playback, repeats, volume, callbacks, stopping, and the sound behavior defined by the Z-Machine and Blorb standards.
+- [ ] **Task 15 — Implement the Blorb container and index.** Parse IFRS/IFF chunks, offsets, padding, resource indexes, executable selection, and optional metadata and hint chunks; safely skip unknown chunks and reject invalid structures.
+- [ ] **Task 16 — Integrate Blorb graphics.** Support picture lookup and data, PNG/JPEG images, legacy rectangles, palettes, adaptive palettes, frontispieces, descriptions, and resolution/scaling hints.
+- [ ] **Task 17 — Implement Quetzal save and restore.** Read and write IFZS, IFhd, CMem and UMem, Stks, annotations, and interpreter data; validate story identity, chunk bounds, compression, stack frames, and resume points.
+- [ ] **Task 18 — Complete the desktop experience.** Add story open/restart, save/restore dialogs, menus, keyboard interaction, runtime errors, and the reference layout. Keep the core independent of Avalonia through a host interface for input, display, sound, and files.
+- [ ] **Task 19 — Complete conformance and regression coverage.** Test all versions and spec-defined edge cases with generated fixtures; run local smoke tests using available stories and record reproducible results without adding story files to GitHub or CI.
+- [ ] **Task 20 — Document and package the application.** Document build/run instructions, supported features, save/resource behavior, and macOS/Windows packaging; verify the Visual Studio solution and both platform build paths.

@@ -8,7 +8,8 @@
 - 2026-10-20T04:40Z [USER] Keep story files local; automated tests and CI use generated fixtures.
 
 ## [PROGRESS]
-- 2026-10-20T04:50Z [CODE] Task 1 implementation is complete on `feature/1-solution-workflow`; PR review is pending.
+- 2026-10-20T04:54Z [USER] PR #1 was merged as `8d12864`.
+- 2026-10-20T05:03Z [CODE] Making task numbers explicit in `TASKS.md` and preserving user edits to `AGENTS.md` and `README.md` on `feature/1-explicit-task-numbering`.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
