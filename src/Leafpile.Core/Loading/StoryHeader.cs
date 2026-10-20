@@ -30,6 +30,8 @@ public sealed record StoryHeader
 
     public ushort Checksum { get; private init; }
 
+    public ushort ReleaseNumber { get; private init; }
+
     public string SerialNumber { get; private init; } = string.Empty;
 
     public ushort RoutinesOffset { get; private init; }
@@ -93,6 +95,7 @@ public sealed record StoryHeader
             Flags2 = ReadWord(data, 0x10),
             AbbreviationsTableAddress = abbreviationsTableAddress,
             FileLength = fileLength,
+            ReleaseNumber = ReadWord(data, 0x02),
             Checksum = version >= 3 ? ReadWord(data, 0x1c) : (ushort)0,
             SerialNumber = Encoding.ASCII.GetString(data.Slice(0x12, 6)),
             RoutinesOffset = routinesOffset,

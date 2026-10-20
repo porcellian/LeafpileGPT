@@ -70,6 +70,7 @@ public sealed class ZMachineInstructionDecoder
 
         var descriptor = GetDescriptor(form, opcode, operandCount, form == ZMachineInstructionForm.Variable && (first & 0x20) == 0);
         byte? storeVariable = descriptor.HasStore ? ReadByte(ref address) : null;
+        int? branchAddress = descriptor.HasBranch ? address : null;
         ZMachineBranch? branch = descriptor.HasBranch ? ReadBranch(ref address) : null;
         string? embeddedText = null;
         if (descriptor.HasEmbeddedText)
@@ -79,7 +80,7 @@ public sealed class ZMachineInstructionDecoder
             address = decoded.NextAddress;
         }
 
-        return new ZMachineInstruction(start, address, form, opcodeClass, opcode, operandCount, operands.AsReadOnly(), storeVariable, branch, embeddedText);
+        return new ZMachineInstruction(start, address, form, opcodeClass, opcode, operandCount, operands.AsReadOnly(), storeVariable, branch, embeddedText, branchAddress);
     }
 
     private int ReadVariableOperands(ref int address, ZMachineInstructionForm form, int opcode, bool isTwoOperand, List<ZMachineOperand> operands)

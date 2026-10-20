@@ -22,6 +22,8 @@ public sealed class ZMachineState
 
     public StoryHeader Header => _story.Header;
 
+    internal LoadedStory LoadedStory => _story;
+
     public BlorbFile? Blorb => _story.Blorb;
 
     public ZMachineMemory Memory { get; private set; }
@@ -39,6 +41,8 @@ public sealed class ZMachineState
     public ZMachineScreen Screen { get; private set; }
 
     public int ProgramCounter => CallStack.ProgramCounter;
+
+    internal ReadOnlyMemory<byte> GetOriginalStoryImage() => _story.Data;
 
     public byte ReadHeaderByte(ushort address)
     {
@@ -66,6 +70,59 @@ public sealed class ZMachineState
     }
 
     public void AdvanceProgramCounter(int byteCount) => CallStack.AdvanceProgramCounter(byteCount);
+
+    internal void RestoreSnapshot(ReadOnlySpan<byte> dynamicMemory, IReadOnlyList<ZMachineStackFrameSnapshot> frames, int programCounter)
+    {
+        Memory.RestoreDynamicMemory(dynamicMemory);
+        Characters = new ZMachineCharacterSet(Memory, Header);
+        Text = new ZMachineTextCodec(Memory, Header, Characters);
+        Instructions = new ZMachineInstructionDecoder(Memory, Header, Text);
+        CallStack.RestoreSnapshot(new ZMachineCallStackSnapshot(programCounter, frames), programCounter);
+        Screen = new ZMachineScreen(Memory, Header, Blorb);
+    }
+
+    internal void CompleteRestoredSave(int descriptorAddress)
+    {
+        if (Header.Version <= 3)
+        {
+            var first = Memory.ReadInstructionByte(descriptorAddress);
+            var branchOnTrue = (first & 0x80) != 0;
+            int offset;
+            var nextAddress = descriptorAddress + 1;
+            if ((first & 0x40) != 0)
+            {
+                offset = first & 0x3f;
+            }
+            else
+            {
+                var second = Memory.ReadInstructionByte(nextAddress++);
+                var encoded = ((first & 0x3f) << 8) | second;
+                offset = (encoded & 0x2000) != 0 ? encoded | unchecked((int)0xffffc000) : encoded;
+            }
+
+            if (branchOnTrue)
+            {
+                if (offset is 0 or 1)
+                {
+                    CallStack.ReturnFromRoutine((ushort)offset);
+                }
+                else
+                {
+                    SetProgramCounter(checked(nextAddress + offset - 2));
+                }
+            }
+            else
+            {
+                SetProgramCounter(nextAddress);
+            }
+
+            return;
+        }
+
+        var storeVariable = Memory.ReadInstructionByte(descriptorAddress);
+        WriteVariable(storeVariable, 2);
+        SetProgramCounter(descriptorAddress + 1);
+    }
 
     public ushort ReadVariableValue(byte variableNumber)
     {

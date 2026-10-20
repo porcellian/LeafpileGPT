@@ -11,7 +11,6 @@ public sealed class ZMachineCallStack
     private readonly List<RoutineFrame> _frames = [];
     private readonly List<ushort> _evaluationStack = [];
     private int _routineUsage;
-    private ushort _nextFrameToken = 1;
 
     public ZMachineCallStack(ZMachineMemory memory, StoryHeader header)
     {
@@ -45,9 +44,9 @@ public sealed class ZMachineCallStack
 
     public int CurrentArgumentCount => CurrentFrame.ArgumentCount;
 
-    public ushort CurrentFrameToken => CurrentFrame.Token;
+    public ushort CurrentFrameToken => Catch();
 
-    public ushort Catch() => CurrentFrame.Token;
+    public ushort Catch() => checked((ushort)(_header.Version == 6 ? FrameCount : FrameCount - 1));
 
     public ushort GetLocal(int localNumber)
     {
@@ -68,7 +67,7 @@ public sealed class ZMachineCallStack
             throw new ZMachineRuntimeException("check_arg_count is only available in versions 5 and later.");
         }
 
-        return argumentNumber > 0 && argumentNumber <= CurrentFrame.ArgumentCount;
+        return argumentNumber is > 0 and <= 7 && (CurrentFrame.ArgumentMask & (1 << (argumentNumber - 1))) != 0;
     }
 
     public void SetProgramCounter(int address)
@@ -118,7 +117,6 @@ public sealed class ZMachineCallStack
             routine.Frame.Locals[index] = arguments[index];
         }
 
-        routine.Frame.Token = AllocateFrameToken();
         _frames.Add(routine.Frame);
         _routineUsage += routine.Frame.StackUsage;
         ProgramCounter = routine.FirstInstructionAddress;
@@ -191,13 +189,102 @@ public sealed class ZMachineCallStack
 
     public RoutineReturnResult Throw(ushort value, ushort stackFrame)
     {
-        var frameIndex = _frames.FindIndex(frame => frame.Token == stackFrame);
+        var frameIndex = stackFrame == 0
+            ? -1
+            : _header.Version == 6
+                ? stackFrame - 1
+                : stackFrame;
+        if (frameIndex >= _frames.Count) frameIndex = -1;
         if (frameIndex <= 0)
         {
             throw new ZMachineRuntimeException($"Stack frame {stackFrame} is not an active routine that can return.");
         }
 
         return CompleteFrame(frameIndex, value);
+    }
+
+    public ZMachineCallStackSnapshot CaptureSnapshot()
+    {
+        var frames = new List<ZMachineStackFrameSnapshot>(_frames.Count);
+        for (var index = 0; index < _frames.Count; index++)
+        {
+            var frame = _frames[index];
+            var start = frame.EvaluationStackBase;
+            var end = index + 1 < _frames.Count ? _frames[index + 1].EvaluationStackBase : _evaluationStack.Count;
+            frames.Add(new ZMachineStackFrameSnapshot(
+                frame.IsRoot,
+                frame.ReturnAddress,
+                frame.StoreVariable,
+                frame.ArgumentMask,
+                frame.Locals.ToArray(),
+                _evaluationStack.GetRange(start, end - start)));
+        }
+
+        return new ZMachineCallStackSnapshot(ProgramCounter, frames);
+    }
+
+    public void RestoreSnapshot(ZMachineCallStackSnapshot snapshot, int programCounter)
+    {
+        ArgumentNullException.ThrowIfNull(snapshot);
+        ValidateProgramCounter(programCounter);
+        if (snapshot.Frames.Count == 0 || !snapshot.Frames[0].IsRoot)
+        {
+            throw new ZMachineRuntimeException("The saved stack root frame is invalid for this story version.");
+        }
+
+        var restoredFrames = new List<RoutineFrame>(snapshot.Frames.Count);
+        var restoredEvaluation = new List<ushort>();
+        var routineUsage = 0;
+        for (var index = 0; index < snapshot.Frames.Count; index++)
+        {
+            var saved = snapshot.Frames[index];
+            var validArgumentMask = _header.Version <= 3 ? 0x07 : 0x7f;
+            if ((index == 0) != saved.IsRoot || saved.Locals.Length > 15 || (saved.ArgumentMask & ~validArgumentMask) != 0)
+            {
+                throw new ZMachineRuntimeException($"Saved stack frame {index} has invalid root, local, argument, or result-variable data.");
+            }
+
+            if (!saved.IsRoot && (uint)saved.ReturnAddress >= (uint)_memory.StoryLength)
+            {
+                throw new ZMachineRuntimeException($"Saved stack frame {index} has an invalid return address or result variable.");
+            }
+
+            if (saved.IsRoot && saved.ReturnAddress != 0)
+            {
+                throw new ZMachineRuntimeException("The saved root frame has a nonzero return address.");
+            }
+
+            var baseIndex = restoredEvaluation.Count;
+            restoredEvaluation.AddRange(saved.EvaluationStack);
+            var argumentCount = HighestArgument(saved.ArgumentMask);
+            var stackUsage = saved.IsRoot && _header.Version != 6
+                ? 0
+                : 4 + saved.Locals.Length;
+            var frame = new RoutineFrame(
+                -1,
+                saved.ReturnAddress,
+                saved.StoreVariable,
+                argumentCount,
+                saved.ArgumentMask,
+                saved.Locals.ToArray(),
+                baseIndex,
+                saved.IsRoot,
+                stackUsage);
+            restoredFrames.Add(frame);
+            routineUsage += stackUsage;
+        }
+
+        if (routineUsage + restoredEvaluation.Count > MaximumStackWords)
+        {
+            throw new ZMachineRuntimeException($"The saved stack exceeds the {MaximumStackWords}-word capacity.");
+        }
+
+        _frames.Clear();
+        _frames.AddRange(restoredFrames);
+        _evaluationStack.Clear();
+        _evaluationStack.AddRange(restoredEvaluation);
+        _routineUsage = routineUsage;
+        ProgramCounter = programCounter;
     }
 
     public bool PushUserStack(ushort value, ushort stackAddress)
@@ -315,10 +402,10 @@ public sealed class ZMachineCallStack
             returnAddress,
             storeVariable,
             argumentCount,
+            (byte)((1 << argumentCount) - 1),
             locals,
             _evaluationStack.Count,
             isRoot,
-            0,
             4 + localCount);
         return (frame, firstInstructionAddress);
     }
@@ -347,19 +434,7 @@ public sealed class ZMachineCallStack
         }
     }
 
-    private ushort AllocateFrameToken()
-    {
-        for (var attempt = 0; attempt <= ushort.MaxValue; attempt++)
-        {
-            var candidate = _nextFrameToken++;
-            if (_frames.All(frame => frame.Token != candidate))
-            {
-                return candidate;
-            }
-        }
-
-        throw new ZMachineRuntimeException("No unique stack-frame token is available.");
-    }
+    private static int HighestArgument(byte mask) => 32 - System.Numerics.BitOperations.LeadingZeroCount((uint)mask);
 
     private void EnsureVersion6UserStack()
     {
@@ -376,10 +451,10 @@ public sealed class ZMachineCallStack
         int returnAddress,
         byte? storeVariable,
         int argumentCount,
+        byte argumentMask,
         ushort[] locals,
         int evaluationStackBase,
         bool isRoot,
-        ushort token,
         int stackUsage)
     {
         public int RoutineAddress { get; } = routineAddress;
@@ -390,16 +465,26 @@ public sealed class ZMachineCallStack
 
         public int ArgumentCount { get; } = argumentCount;
 
+        public byte ArgumentMask { get; } = argumentMask;
+
         public ushort[] Locals { get; } = locals;
 
         public int EvaluationStackBase { get; } = evaluationStackBase;
 
         public bool IsRoot { get; } = isRoot;
 
-        public ushort Token { get; set; } = token;
-
         public int StackUsage { get; } = stackUsage;
 
-        public static RoutineFrame CreateEnvironment() => new(-1, 0, null, 0, [], 0, true, 0, 0);
+        public static RoutineFrame CreateEnvironment() => new(-1, 0, null, 0, 0, [], 0, true, 0);
     }
 }
+
+public sealed record ZMachineStackFrameSnapshot(
+    bool IsRoot,
+    int ReturnAddress,
+    byte? StoreVariable,
+    byte ArgumentMask,
+    ushort[] Locals,
+    IReadOnlyList<ushort> EvaluationStack);
+
+public sealed record ZMachineCallStackSnapshot(int ProgramCounter, IReadOnlyList<ZMachineStackFrameSnapshot> Frames);

@@ -145,6 +145,7 @@ public sealed class ZMachineCallStackTests
         var callStack = new ZMachineCallStack(new ZMachineMemory(loaded), loaded.Header);
         callStack.CallRoutine(routineA, [], 0x220, storeVariable: 0x10);
         var caughtFrame = callStack.Catch();
+        Assert.Equal((ushort)1, caughtFrame);
         callStack.CallRoutine(routineB, [], 0x230);
         callStack.CallRoutine(routineC, [], 0x240);
         callStack.Push(0xaaaa);
@@ -178,6 +179,22 @@ public sealed class ZMachineCallStackTests
         Assert.Equal(0x201, callStack.ProgramCounter);
         Assert.Equal(1, callStack.FrameCount);
         Assert.Throws<ZMachineRuntimeException>(() => callStack.ReturnFromRoutine(0));
+    }
+
+    [Fact]
+    public void CatchCountsRoutineFramesAndExcludesTheNonV6TopLevelEnvironment()
+    {
+        var v5 = StoryLoader.Load(MachineStoryFactory.Create(5));
+        var v5Stack = new ZMachineCallStack(new ZMachineMemory(v5), v5.Header);
+        var routineAddress = MachineStoryFactory.WriteRoutine(MachineStoryFactory.Create(5), 5, 0x400, 0);
+
+        Assert.Equal((ushort)0, v5Stack.Catch());
+        v5Stack.CallRoutine(routineAddress, [], 0x220);
+        Assert.Equal((ushort)1, v5Stack.Catch());
+
+        var v6 = StoryLoader.Load(MachineStoryFactory.Create(6));
+        var v6Stack = new ZMachineCallStack(new ZMachineMemory(v6), v6.Header);
+        Assert.Equal((ushort)1, v6Stack.Catch());
     }
 
     [Fact]

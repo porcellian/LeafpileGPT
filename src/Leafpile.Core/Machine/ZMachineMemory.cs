@@ -89,6 +89,18 @@ public sealed class ZMachineMemory
 
     public ReadOnlyMemory<byte> GetStoryImage() => _data.ToArray();
 
+    public byte[] GetDynamicMemory() => _data.AsSpan(0, DynamicMemoryLength).ToArray();
+
+    public void RestoreDynamicMemory(ReadOnlySpan<byte> dynamicMemory)
+    {
+        if (dynamicMemory.Length != DynamicMemoryLength)
+        {
+            throw new ArgumentException($"Dynamic memory must contain exactly {DynamicMemoryLength} bytes.", nameof(dynamicMemory));
+        }
+
+        dynamicMemory.CopyTo(_data);
+    }
+
     private void ValidateAddress(ushort address, int width)
     {
         var end = address + width;
