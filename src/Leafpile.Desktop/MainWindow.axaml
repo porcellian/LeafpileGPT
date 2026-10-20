@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Leafpile.Desktop.MainWindow"
+        Title="LeafpileGPT"
+        Width="960"
+        Height="640"
+        MinWidth="640"
+        MinHeight="400">
+  <Grid>
+    <TextBlock HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Text="Open a story file to begin."
+               FontSize="18" />
+  </Grid>
+</Window>
