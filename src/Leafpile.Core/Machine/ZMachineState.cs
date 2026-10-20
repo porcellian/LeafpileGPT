@@ -12,6 +12,8 @@ public sealed class ZMachineState
 
         _story = story;
         Memory = new ZMachineMemory(story);
+        Characters = new ZMachineCharacterSet(Memory, story.Header);
+        Text = new ZMachineTextCodec(Memory, story.Header, Characters);
         CallStack = new ZMachineCallStack(Memory, story.Header);
         Random = new ZMachineRandom();
     }
@@ -19,6 +21,10 @@ public sealed class ZMachineState
     public StoryHeader Header => _story.Header;
 
     public ZMachineMemory Memory { get; private set; }
+
+    public ZMachineCharacterSet Characters { get; private set; }
+
+    public ZMachineTextCodec Text { get; private set; }
 
     public ZMachineCallStack CallStack { get; private set; }
 
@@ -56,6 +62,8 @@ public sealed class ZMachineState
     public void Restart()
     {
         Memory = new ZMachineMemory(_story);
+        Characters = new ZMachineCharacterSet(Memory, Header);
+        Text = new ZMachineTextCodec(Memory, Header, Characters);
         CallStack = new ZMachineCallStack(Memory, Header);
         Random.ResetToRandom();
     }

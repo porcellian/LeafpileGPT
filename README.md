@@ -10,6 +10,11 @@ An experimental C# desktop Z-machine VM implemented entirely by ChatGPT. Based o
 - `tests/Leafpile.Tests` contains xUnit tests. Tests use generated fixtures and
   do not require local story files.
 
+The core currently supports story loading, bounded machine memory, arithmetic,
+routine and stack state, and version-aware packed Z-text conversion. Text support
+includes abbreviations, custom alphabets, dictionary-form encoding, ZSCII, and
+story-specific Unicode translation tables.
+
 ## Requirements
 
 - .NET 10 SDK
