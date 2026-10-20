@@ -17,6 +17,7 @@ public sealed class ZMachineState
         Instructions = new ZMachineInstructionDecoder(Memory, story.Header, Text);
         CallStack = new ZMachineCallStack(Memory, story.Header);
         Random = new ZMachineRandom();
+        Screen = new ZMachineScreen(Memory, story.Header);
     }
 
     public StoryHeader Header => _story.Header;
@@ -32,6 +33,8 @@ public sealed class ZMachineState
     public ZMachineCallStack CallStack { get; private set; }
 
     public ZMachineRandom Random { get; }
+
+    public ZMachineScreen Screen { get; private set; }
 
     public int ProgramCounter => CallStack.ProgramCounter;
 
@@ -122,5 +125,6 @@ public sealed class ZMachineState
         Instructions = new ZMachineInstructionDecoder(Memory, Header, Text);
         CallStack = new ZMachineCallStack(Memory, Header);
         Random.ResetToRandom();
+        Screen = new ZMachineScreen(Memory, Header);
     }
 }

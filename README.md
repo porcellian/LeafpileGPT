@@ -29,8 +29,10 @@ separators and versioned text/parse buffers. `tokenise`, `encode_text`,
 supports host-provided line and character input, timed-input callbacks, terminating
 characters, command input and recording streams, transcript and screen selection,
 nested memory output streams, standardized suggested filenames, and streamed text
-output. The Avalonia host will be connected in Task 18; save-file encoding is
-implemented in a later task.
+output. The V1–V5 screen model tracks versioned header dimensions, V1–V3 status
+updates, split-window behavior, cursor positions, screen clearing, text styles,
+V5 colors, and lower-window word wrapping and buffering. The Avalonia host will
+be connected in Task 18; save-file encoding is implemented in a later task.
 
 ## Requirements
 

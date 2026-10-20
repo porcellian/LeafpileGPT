@@ -118,12 +118,12 @@ public sealed class ZMachineSystemOpcodeTests
     public void LoadWordAndByteReadFromDynamicAndStaticMemory()
     {
         var story = MachineStoryFactory.Create(5);
-        story[0x22] = 0x12;
-        story[0x23] = 0x34;
+        story[0x82] = 0x12;
+        story[0x83] = 0x34;
         story[0x700] = 0xa5;
         story[0x200] = 0xcf;
         story[0x201] = 0x5f;
-        story[0x202] = 0x20;
+        story[0x202] = 0x80;
         story[0x203] = 1;
         story[0x204] = 0x10;
         story[0x205] = 0xd0;

@@ -42,6 +42,11 @@
 - 2026-10-20T18:40Z [USER] PR #11 was merged; Task 10 is complete and Task 11 may proceed.
 - 2026-10-20T18:40Z [CODE] Completed Task 11 on `feature/11-input-output-streams-files`; host input/output contracts and stream execution are ready for PR review.
 - 2026-10-20T18:40Z [TOOL] Task 11 Release build succeeded with zero warnings/errors, format and whitespace checks pass, and all 256 generated tests pass.
+- 2026-10-20T18:50Z [USER] PR #12 was merged; Task 11 is complete and Task 12 may proceed.
+- 2026-10-20T18:50Z [CODE] Completed Task 12 on `feature/12-v1-v5-screen-model`; the versioned text-screen model and opcode execution are ready for PR review.
+- 2026-10-20T18:50Z [TOOL] Initial Task 12 verification passed with 271 tests; this was superseded by final verification below.
+- 2026-10-20T18:56Z [TOOL] Final Task 12 build and review passed with 274 tests; superseded by the additional status-before-read regression below.
+- 2026-10-20T18:57Z [TOOL] Final Task 12 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 275 generated tests passed. Full diff review found no remaining findings.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -50,6 +55,8 @@
 - 2026-10-20T16:56Z [TOOL] Generated executor tests exposed that 1OP `get_parent` and `get_prop_len` require store bytes; decoder metadata now describes those stores, with regression coverage.
 - 2026-10-20T18:07Z [TOOL] The standard distinguishes zero-terminated V1–V4 text buffers from length-prefixed V5+ buffers; parse positions are offsets into the respective buffer. Generated tests verify both layouts.
 - 2026-10-20T18:40Z [TOOL] Timed input uses an interpreter-thread callback; interrupt output must be sent to the screen while input remains pending. Host capability flags allow unsupported external streams to warn and fall back cleanly.
+- 2026-10-20T18:50Z [TOOL] V5 screen dimensions occupy interpreter-owned header bytes `$20–$27`; opcode fixtures using those addresses as ordinary memory must be moved to safe dynamic-memory addresses.
+- 2026-10-20T18:56Z [TOOL] The text screen stores a row/column grid per window so cursor moves, erase-line, and scrolling update the actual visible cells rather than only tracking cursor metadata.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -64,3 +71,4 @@
 - 2026-10-20T16:56Z [CODE] Added V1–V3 and V4+ object layouts, attribute access/mutation, object-tree traversal and safe insertion/removal, short-name decoding, property defaults and parsing, lookup/address/length/iteration/update operations, and executor support for object/property opcode families. Generated fixtures cover versioned entries, headers, long lengths, malformed ordering/pointers, mutation invariants, and opcode execution.
 - 2026-10-20T18:07Z [CODE] Added version-aware dictionary headers and sorted/unsorted lookup, separator-aware lexical analysis into bounded parse tables, `tokenise` and `encode_text`, Unicode input/output capability checks, and generated V1–V8 text-buffer tests plus V4/V5 `scan_table` word/byte cases.
 - 2026-10-20T18:40Z [CODE] Added host-provided line/key input, timed interrupt execution, function-key terminators, V1–V8 buffer and parse behavior, input/output stream selection, nested stream 3 capture, transcript/command streams, routed text output, `print_table`, `buffer_mode`, and suggested filename normalization. Generated tests cover V1–V8 input, timers, stream nesting, filename rules, and unsupported command-file input. Quetzal save-file encoding remains Task 17.
+- 2026-10-20T18:57Z [CODE] Added V1–V5 screen state and opcode support for status lines, dimensions/resizing, V3–V5 upper/lower windows, cursor operations, erase behavior, text styles, V5 colors, and lower-window word buffering. Generated screen tests cover versions 1–5, including status refresh before input; all 275 tests pass.
