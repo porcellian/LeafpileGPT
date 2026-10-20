@@ -47,6 +47,11 @@
 - 2026-10-20T18:50Z [TOOL] Initial Task 12 verification passed with 271 tests; this was superseded by final verification below.
 - 2026-10-20T18:56Z [TOOL] Final Task 12 build and review passed with 274 tests; superseded by the additional status-before-read regression below.
 - 2026-10-20T18:57Z [TOOL] Final Task 12 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 275 generated tests passed. Full diff review found no remaining findings.
+- 2026-10-20T19:21Z [USER] PR #13 was merged; Task 13 may proceed.
+- 2026-10-20T19:21Z [CODE] Completed Task 13 on `feature/13-v6-v8-screen-model`; V6 windows, controls, formatted output, input capability reporting, and V7/V8 opcode boundaries are ready for PR review.
+- 2026-10-20T19:21Z [TOOL] Task 13 Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 284 generated tests passed.
+- 2026-10-20T19:24Z [CODE] Final review found V7/V8 fixed-pitch and word-wrap behavior still gated to V5; corrected it, superseding the earlier Task 13 completion/verification entries.
+- 2026-10-20T19:24Z [TOOL] Final Task 13 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 285 generated tests passed.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -57,6 +62,8 @@
 - 2026-10-20T18:40Z [TOOL] Timed input uses an interpreter-thread callback; interrupt output must be sent to the screen while input remains pending. Host capability flags allow unsupported external streams to warn and fall back cleanly.
 - 2026-10-20T18:50Z [TOOL] V5 screen dimensions occupy interpreter-owned header bytes `$20–$27`; opcode fixtures using those addresses as ordinary memory must be moved to safe dynamic-memory addresses.
 - 2026-10-20T18:56Z [TOOL] The text screen stores a row/column grid per window so cursor moves, erase-line, and scrolling update the actual visible cells rather than only tracking cursor metadata.
+- 2026-10-20T19:21Z [TOOL] V6 `get_cursor` has no store byte; generated execution coverage exposed and corrected the decoder metadata. V6-only window/screen operand forms are rejected in V7/V8, which retain the V5 two-window model. `set_font` remains available in V5, V7 and V8, but uses single-window state there.
+- 2026-10-20T19:24Z [TOOL] V7/V8 use the V5 window, wrapping, and font model; tests exercise `set_font` and fixed-pitch capability across versions 5, 7, and 8.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -72,3 +79,5 @@
 - 2026-10-20T18:07Z [CODE] Added version-aware dictionary headers and sorted/unsorted lookup, separator-aware lexical analysis into bounded parse tables, `tokenise` and `encode_text`, Unicode input/output capability checks, and generated V1–V8 text-buffer tests plus V4/V5 `scan_table` word/byte cases.
 - 2026-10-20T18:40Z [CODE] Added host-provided line/key input, timed interrupt execution, function-key terminators, V1–V8 buffer and parse behavior, input/output stream selection, nested stream 3 capture, transcript/command streams, routed text output, `print_table`, `buffer_mode`, and suggested filename normalization. Generated tests cover V1–V8 input, timers, stream nesting, filename rules, and unsupported command-file input. Quetzal save-file encoding remains Task 17.
 - 2026-10-20T18:57Z [CODE] Added V1–V5 screen state and opcode support for status lines, dimensions/resizing, V3–V5 upper/lower windows, cursor operations, erase behavior, text styles, V5 colors, and lower-window word buffering. Generated screen tests cover versions 1–5, including status refresh before input; all 275 tests pass.
+- 2026-10-20T19:21Z [CODE] Added V6's eight pixel-coordinate windows, per-window geometry/cursors/styles/colors/fonts/attributes/properties, newline interrupt routines, buffer_screen, formatted stream output and print_form. Unsupported picture, sound, mouse, menu, and transparency features are reported through capability flags; mouse reads return an empty state and picture/menu queries fail cleanly. V7/V8 retain V5 screen behavior. All 284 tests pass.
+- 2026-10-20T19:24Z [CODE] Final Task 13 implementation includes V6 window controls and formatted output, capability reporting for unavailable devices/resources, plus V7/V8 V5-model behavior. Supersedes the 19:21 test count; all 285 generated tests pass.

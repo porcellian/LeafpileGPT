@@ -227,6 +227,186 @@ public sealed class ZMachineScreenTests
         Assert.EndsWith("A", state.Screen.LowerWindowText);
     }
 
+    [Fact]
+    public void VersionSixPublishesEightIndependentPixelWindowsAndUsesCursorOpcodes()
+    {
+        var story = MachineStoryFactory.Create(6);
+        story[0x200] = 0;
+        new byte[]
+        {
+            0xeb, 0x7f, 4,             // set_window 4
+            0xbe, 17, 0x57, 4, 100, 100, // window_size 4 100 100
+            0xef, 0x57, 3, 8, 4,       // set_cursor 3 8 4
+            0xf0, 0x7f, 0x90           // get_cursor $90
+        }.CopyTo(story, 0x201);
+        var state = new ZMachineState(StoryLoader.Load(story));
+        var executor = new ZMachineOpcodeExecutor(state);
+
+        for (var index = 0; index < 3; index++) executor.ExecuteNext();
+        var getCursor = state.Instructions.Decode(state.ProgramCounter);
+        Assert.Equal(0x20f, state.ProgramCounter);
+        Assert.Equal(16, getCursor.Opcode);
+        Assert.Equal(0x90, getCursor.Operands[0].EncodedValue);
+        Assert.Null(getCursor.StoreVariable);
+        executor.ExecuteNext();
+
+        Assert.Equal(4, state.Screen.SelectedWindow);
+        Assert.Equal((3, 8), state.Screen.GetV6Cursor());
+        Assert.Equal(16, state.ReadHeaderByte(0x26));
+        Assert.Equal(8, state.ReadHeaderByte(0x27));
+        Assert.Equal(3, state.Memory.ReadWord(0x90));
+        Assert.Equal(8, state.Memory.ReadWord(0x92));
+        Assert.Equal(new[] { 1, 1, 400, 640 }, state.Screen.V6WindowBounds(0));
+        Assert.Equal(new[] { 1, 1, 0, 640 }, state.Screen.V6WindowBounds(1));
+        Assert.Equal(new[] { 1, 1, 0, 0 }, state.Screen.V6WindowBounds(7));
+        Assert.Equal(641, state.Screen.GetWindowProperty(1, 5));
+    }
+
+    [Fact]
+    public void VersionSixWindowMutationsAndPropertiesFollowTheStandard()
+    {
+        var state = CreateState(6);
+        var screen = state.Screen;
+
+        screen.SplitWindow(120);
+        screen.MoveWindow(3, 10, 20);
+        screen.ResizeWindow(3, 80, 100);
+        screen.SetCursorV6(3, 70, 90);
+        screen.ResizeWindow(3, 60, 80);
+        screen.SelectWindow(3);
+        screen.SetWindowStyle(3, 0b1011, 0);
+        screen.SetMargins(4, 5, 3);
+        screen.PutWindowProperty(3, 9, 12);
+        screen.PutWindowProperty(3, 15, unchecked((ushort)-2));
+
+        Assert.Equal(new[] { 10, 20, 60, 80 }, screen.V6WindowBounds(3));
+        Assert.Equal((1, 5), screen.GetV6Cursor());
+        Assert.Equal(0b1011, screen.GetWindowProperty(3, 14));
+        Assert.Equal(12, screen.GetWindowProperty(3, 9));
+        Assert.Equal(unchecked((ushort)-2), screen.GetWindowProperty(3, 15));
+        Assert.False(screen.CopyTextToTranscript);
+        screen.SetWindowStyle(3, 4, 1);
+        Assert.True(screen.CopyTextToTranscript);
+        Assert.Throws<ZMachineRuntimeException>(() => screen.PutWindowProperty(3, 16, 1));
+
+        screen.SetCursorV6(7, 1, 1);
+        Assert.Equal(1, screen.GetWindowProperty(7, 4));
+        Assert.Equal(1, screen.GetWindowProperty(7, 5));
+
+        screen.EraseWindow(-1);
+        Assert.Equal(0, screen.SelectedWindow);
+        Assert.Equal(new[] { 1, 1, 400, 640 }, screen.V6WindowBounds(0));
+    }
+
+    [Fact]
+    public void VersionSixFontColourBufferAndUnavailableDeviceCapabilitiesAreReported()
+    {
+        var state = CreateState(6);
+        var screen = state.Screen;
+        Assert.Equal(0, state.ReadHeaderWord(0x10) & ((1 << 3) | (1 << 5) | (1 << 8)));
+        Assert.Equal(0, state.ReadHeaderByte(1) & 0x22);
+
+        Assert.Equal(1, screen.SetFont(3, 0xfffd));
+        Assert.Equal(3, screen.GetWindowProperty(0, 12));
+        Assert.Equal(0, screen.SetFont(2, 0xfffd));
+        screen.SetV6Colour(0x1234, 0xfffc, 0xfffd, trueColour: true);
+        Assert.Equal(0x1234, screen.GetWindowProperty(0, 16));
+        Assert.Equal(0x7fff, screen.GetWindowProperty(0, 17));
+
+        Assert.Equal(0, screen.SetBufferScreen(1));
+        Assert.Equal(1, screen.SetBufferScreen(0));
+        Assert.Equal(0, screen.SetBufferScreen(ushort.MaxValue));
+        screen.SetMouseWindow(ushort.MaxValue);
+        Assert.Equal(-1, screen.MouseWindow);
+        Assert.Throws<ZMachineRuntimeException>(() => screen.SetMouseWindow(8));
+    }
+
+    [Fact]
+    public void SetFontRemainsAvailableInVersionsFiveSevenAndEight()
+    {
+        foreach (var version in new byte[] { 5, 7, 8 })
+        {
+            var screen = CreateState(version).Screen;
+
+            Assert.Equal(1, screen.SetFont(4, 0xfffd));
+            Assert.True(screen.UsesFixedPitch);
+            Assert.Equal(4, screen.SetFont(0, 0xfffd));
+            Assert.Equal(0, screen.SetFont(2, 0xfffd));
+        }
+    }
+
+    [Fact]
+    public void VersionSixClearsUnsupportedTransparencyInTheHeaderExtension()
+    {
+        var story = MachineStoryFactory.Create(6);
+        story[0x36] = 0x01;
+        story[0x37] = 0x60;
+        story[0x160] = 0;
+        story[0x161] = 4;
+        story[0x168] = 0;
+        story[0x169] = 1;
+
+        var state = new ZMachineState(StoryLoader.Load(story));
+
+        Assert.Equal(0, state.Memory.ReadWord(0x168) & 1);
+    }
+
+    [Fact]
+    public void VersionSixFormattedMemoryStreamStoresLinesForPrintForm()
+    {
+        var state = CreateState(6);
+        var streams = new ZMachineOutputStreams(state, host: null);
+
+        streams.SelectOutput(3, 0x180, -16);
+        streams.Write("ABC");
+        streams.SelectOutput(-3);
+
+        Assert.Equal(2, state.Memory.ReadWord(0x180));
+        Assert.Equal((byte)'A', state.Memory.ReadByte(0x182));
+        Assert.Equal((byte)'B', state.Memory.ReadByte(0x183));
+        Assert.Equal(1, state.Memory.ReadWord(0x184));
+        Assert.Equal((byte)'C', state.Memory.ReadByte(0x186));
+        Assert.Equal(0, state.Memory.ReadWord(0x187));
+    }
+
+    [Fact]
+    public void VersionSixPrintFormRendersFormattedOutputStreamLines()
+    {
+        var story = MachineStoryFactory.Create(6);
+        story[0x200] = 0;
+        new byte[] { 0xbe, 26, 0x7f, 0x80 }.CopyTo(story, 0x201); // print_form $80
+        var state = new ZMachineState(StoryLoader.Load(story));
+        state.Memory.WriteWord(0x80, 2);
+        state.Memory.WriteByte(0x82, (byte)'A');
+        state.Memory.WriteByte(0x83, (byte)'B');
+        state.Memory.WriteWord(0x84, 1);
+        state.Memory.WriteByte(0x86, (byte)'C');
+        state.Memory.WriteWord(0x87, 0);
+
+        var result = new ZMachineOpcodeExecutor(state).ExecuteNext();
+
+        Assert.Equal("AB\nC", result.Output);
+    }
+
+    [Fact]
+    public void VersionSixWindowNewlineInterruptRunsThePackedRoutineBeforePrintingContinues()
+    {
+        var story = MachineStoryFactory.Create(6);
+        story[0x200] = 0;
+        new byte[] { 0xe5, 0x7f, 13 }.CopyTo(story, 0x201); // print_char newline
+        story[0x240] = 0;
+        new byte[] { 0x4d, 16, 42, 0xb0 }.CopyTo(story, 0x241); // store global 16, 42; rtrue
+        var state = new ZMachineState(StoryLoader.Load(story));
+        state.Screen.PutWindowProperty(0, 8, 0x90);
+        state.Screen.PutWindowProperty(0, 9, 1);
+        state.Screen.PutWindowProperty(0, 15, 1);
+
+        new ZMachineOpcodeExecutor(state).ExecuteNext();
+
+        Assert.Equal(42, state.ReadVariableValue(16));
+        Assert.Equal(1, state.Screen.GetWindowProperty(0, 15));
+    }
+
     private static ZMachineState CreateState(byte version, params byte[] instructions)
     {
         var story = MachineStoryFactory.Create(version);

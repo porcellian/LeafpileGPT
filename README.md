@@ -31,8 +31,14 @@ characters, command input and recording streams, transcript and screen selection
 nested memory output streams, standardized suggested filenames, and streamed text
 output. The V1–V5 screen model tracks versioned header dimensions, V1–V3 status
 updates, split-window behavior, cursor positions, screen clearing, text styles,
-V5 colors, and lower-window word wrapping and buffering. The Avalonia host will
-be connected in Task 18; save-file encoding is implemented in a later task.
+V5 colors, and lower-window word wrapping and buffering. V6 adds eight pixel
+windows, per-window geometry, cursor, style, color, font, margins, attributes and
+properties, scrolling, screen buffering, and formatted output streams. Font 3 is
+available for character graphics. Picture, sound, mouse, menu, and transparency
+capabilities are reported unavailable until their providers are implemented;
+Blorb picture integration is Task 16. Versions 7 and 8 retain the V5 text-window
+model. The Avalonia host will be connected in Task 18; save-file encoding is
+implemented in a later task.
 
 ## Requirements
 

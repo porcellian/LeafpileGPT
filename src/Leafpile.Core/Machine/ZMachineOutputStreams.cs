@@ -43,7 +43,7 @@ public sealed class ZMachineOutputStreams
             return string.Empty;
         }
 
-        if (_transcriptSelected && _host?.SupportsTranscript == true)
+        if (_transcriptSelected && _state.Screen.CopyTextToTranscript && _host?.SupportsTranscript == true)
         {
             _host?.WriteTranscript(text);
         }
@@ -59,7 +59,7 @@ public sealed class ZMachineOutputStreams
             return string.Empty;
         }
 
-        if (_transcriptSelected && allowTranscript && _host?.SupportsTranscript == true)
+        if (_transcriptSelected && allowTranscript && _state.Screen.CopyTextToTranscript && _host?.SupportsTranscript == true)
         {
             _host?.WriteTranscript(text);
         }
@@ -67,7 +67,7 @@ public sealed class ZMachineOutputStreams
         return _screenSelected ? text : string.Empty;
     }
 
-    public void SelectOutput(short stream, ushort? table = null)
+    public void SelectOutput(short stream, ushort? table = null, short? width = null)
     {
         if (stream == 0)
         {
@@ -95,7 +95,10 @@ public sealed class ZMachineOutputStreams
                 }
 
                 _state.Memory.ValidateDynamicRange(table.Value, sizeof(ushort));
-                _memoryStreams.Push(new MemoryStreamFrame(table.Value, 0));
+                var formattedWidth = _state.Header.Version == 6 && width.HasValue
+                    ? _state.Screen.GetFormattedStreamWidth(width.Value)
+                    : 0;
+                _memoryStreams.Push(new MemoryStreamFrame(table.Value, 0, formattedWidth, new List<byte>()));
                 break;
             case 3:
                 if (_memoryStreams.Count == 0)
@@ -104,7 +107,14 @@ public sealed class ZMachineOutputStreams
                 }
 
                 var frame = _memoryStreams.Pop();
-                _state.Memory.WriteWord(frame.TableAddress, frame.CharacterCount);
+                if (frame.FormattedWidth > 0)
+                {
+                    WriteFormattedFrame(frame);
+                }
+                else
+                {
+                    _state.Memory.WriteWord(frame.TableAddress, frame.CharacterCount);
+                }
                 break;
             case 4:
                 _commandSelected = selected;
@@ -154,6 +164,13 @@ public sealed class ZMachineOutputStreams
             ? (byte)13
             : character.IsBmp && _state.Characters.TryGetZsciiForUnicode((char)character.Value, out var code) ? code : (byte)'?';
         var frame = _memoryStreams.Pop();
+        if (frame.FormattedWidth > 0)
+        {
+            frame.FormattedBytes!.Add(zscii);
+            _memoryStreams.Push(frame);
+            return;
+        }
+
         var count = checked((ushort)(frame.CharacterCount + 1));
         var address = (long)frame.TableAddress + sizeof(ushort) + frame.CharacterCount;
         if (address > ushort.MaxValue)
@@ -166,5 +183,62 @@ public sealed class ZMachineOutputStreams
         _memoryStreams.Push(frame with { CharacterCount = count });
     }
 
-    private sealed record MemoryStreamFrame(ushort TableAddress, ushort CharacterCount);
+    private void WriteFormattedFrame(MemoryStreamFrame frame)
+    {
+        var bytes = frame.FormattedBytes!;
+        var lines = new List<List<byte>> { new() };
+        foreach (var value in bytes)
+        {
+            if (value == 13)
+            {
+                lines.Add(new List<byte>());
+                continue;
+            }
+
+            var line = lines[^1];
+            if (line.Count >= frame.FormattedWidth)
+            {
+                var lastSpace = line.FindLastIndex(value => value == (byte)' ');
+                if (lastSpace >= 0)
+                {
+                    var remainder = line.Skip(lastSpace + 1).ToList();
+                    line.RemoveRange(lastSpace, line.Count - lastSpace);
+                    lines.Add(remainder);
+                }
+                else
+                {
+                    lines.Add(new List<byte>());
+                }
+
+                line = lines[^1];
+            }
+            line.Add(value);
+        }
+
+        var address = (int)frame.TableAddress;
+        foreach (var line in lines)
+        {
+            if (line.Count == 0) continue;
+            ValidateFormattedAddress(address, sizeof(ushort));
+            _state.Memory.WriteWord((ushort)address, checked((ushort)line.Count));
+            address += sizeof(ushort);
+            foreach (var value in line)
+            {
+                ValidateFormattedAddress(address, sizeof(byte));
+                _state.Memory.WriteByte((ushort)address++, value);
+            }
+        }
+
+        ValidateFormattedAddress(address, sizeof(ushort));
+        _state.Memory.WriteWord((ushort)address, 0);
+    }
+
+    private void ValidateFormattedAddress(int address, int width)
+    {
+        if (address < 0 || address > ushort.MaxValue)
+            throw new ZMachineRuntimeException("Formatted output stream table exceeds the Z-machine address space.");
+        _state.Memory.ValidateDynamicRange((ushort)address, width);
+    }
+
+    private sealed record MemoryStreamFrame(ushort TableAddress, ushort CharacterCount, int FormattedWidth, List<byte>? FormattedBytes);
 }
