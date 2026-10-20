@@ -57,6 +57,9 @@
 - 2026-10-20T20:01Z [USER] PR #15 was merged; Task 15 started from merged `main` at `5ccbb64` [TOOL].
 - 2026-10-20T20:01Z [CODE] Completed Task 15 on `feature/15-blorb-container-index`: parsed IFRS/IFF chunks, indexed resources and multiple ZCOD candidates, validated optional metadata and hints, and exposed the container on loaded stories and machine state. PR review is pending.
 - 2026-10-20T20:01Z [TOOL] Task 15 Release build succeeded with zero warnings/errors; formatter, whitespace check, 51 targeted tests, and all 312 generated tests passed.
+- 2026-10-20T20:23Z [USER] PR #16 was merged; Task 16 started from merged `main` at `d5a7515` [TOOL].
+- 2026-10-20T20:26Z [CODE] Completed Task 16 on `feature/16-blorb-graphics`: added PNG/JPEG/Rect picture data, Reso-scaled dimensions, palette/adaptive palette metadata, frontispiece lookup, and V6 picture query/draw/erase operations for display hosts. PR review is pending.
+- 2026-10-20T20:28Z [TOOL] Final Task 16 verification passed: Release solution build had zero warnings/errors, formatter and whitespace checks passed, and all 323 generated tests passed.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -71,6 +74,7 @@
 - 2026-10-20T19:24Z [TOOL] V7/V8 use the V5 window, wrapping, and font model; tests exercise `set_font` and fixed-pitch capability across versions 5, 7, and 8.
 - 2026-10-20T19:48Z [TOOL] Sound completion callbacks may arrive asynchronously and multiple routines must run sequentially on the interpreter thread; the executor queues them and processes one callback routine at a time. Hosts provide resource lookup, playback, and sample/music channel arbitration through `IZMachineSound`.
 - 2026-10-20T20:01Z [TOOL] RIdx offsets point to chunk headers from the start of the complete IFF file; indexed resources can share a chunk offset, while index entries must follow resource chunk order. Generated fixtures cover those cases and malformed chunk bounds/padding.
+- 2026-10-20T20:26Z [TOOL] Reso scaling uses the smaller window-to-standard width/height ratio, then applies per-picture min/max bounds; APal requires indexed PNG resources and only non-adaptive plots replace the current palette used by adaptive pictures.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -91,3 +95,4 @@
 - 2026-10-20T19:48Z [CODE] Added sound-effect decoding/execution for bleeps, prepare/start/stop/finish, V3 and V5+ volume/repeat rules, capability flags, and queued completion routines. `IZMachineSound` is the host playback boundary; Blorb resource resolution and desktop audio wiring remain Tasks 15 and 18. Updated README and checked Task 14.
 - 2026-10-20T19:48Z [TOOL] Task 14 Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 296 generated tests passed.
 - 2026-10-20T20:01Z [CODE] Added public Blorb parsing and resource/metadata models, retained full containers on loaded stories, and selected embedded ZCOD executables with IFhd identity validation. Added generated valid and malformed container fixtures; graphics decoding and host playback integration remain in later tasks.
+- 2026-10-20T20:26Z [CODE] Added picture models with PNG/JPEG dimensions and source bytes, Rect dimensions, palette/description data, Reso scaling, and frontispiece access. V6 picture_data reports image metadata; draw_picture and erase_picture publish host-renderable operations. Avalonia pixel rendering remains Task 18.

@@ -174,6 +174,8 @@ public sealed class BlorbFile
 
     public IReadOnlyList<BlorbResource> Executables { get; }
 
+    public int PictureCount => Resources.Count(resource => resource.Usage == "Pict");
+
     public BlorbMetadata Metadata { get; }
 
     public static BlorbFile Parse(ReadOnlyMemory<byte> input)
@@ -305,6 +307,23 @@ public sealed class BlorbFile
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(usage);
         return _resourceLookup.GetValueOrDefault((usage, number));
+    }
+
+    /// <summary>Gets the parsed dimensions and metadata for a picture resource, or null when it is unavailable.</summary>
+    public BlorbPicture? GetPicture(uint number)
+    {
+        var resource = GetResource("Pict", number);
+        return resource is null ? null : BlorbPicture.Create(resource, Metadata);
+    }
+
+    /// <summary>Gets the picture designated by the optional frontispiece chunk, when present.</summary>
+    public BlorbPicture? GetFrontispiece() => Metadata.FrontispieceNumber is { } number ? GetPicture(number) : null;
+
+    /// <summary>Gets picture dimensions after applying any Blorb Reso scaling hints.</summary>
+    public BlorbPictureSize? GetPictureSize(uint number, uint windowWidth, uint windowHeight)
+    {
+        var picture = GetPicture(number);
+        return picture?.GetDisplaySize(Metadata, windowWidth, windowHeight);
     }
 
     /// <summary>Selects the first indexed ZCOD executable, or reports why none is usable.</summary>
@@ -562,6 +581,11 @@ public sealed class BlorbFile
 
     private static void ValidateResourceChunkType(string usage, uint number, BlorbChunk chunk)
     {
+        if (usage == "Pict" && number == 0)
+        {
+            throw new StoryLoadException("Blorb picture resources are numbered from 1; picture number 0 is reserved by picture_data.");
+        }
+
         var valid = usage switch
         {
             "Pict" => chunk.Id is "PNG " or "JPEG" or "Rect",
@@ -724,6 +748,12 @@ public sealed class BlorbFile
             ValidateRatio(entry.StandardNumerator, entry.StandardDenominator, allowZeroPair: false, "standard");
             ValidateRatio(entry.MinimumNumerator, entry.MinimumDenominator, allowZeroPair: true, "minimum");
             ValidateRatio(entry.MaximumNumerator, entry.MaximumDenominator, allowZeroPair: true, "maximum");
+            if (entry.MinimumNumerator != 0 && entry.MaximumNumerator != 0 &&
+                (ulong)entry.MinimumNumerator * entry.MaximumDenominator > (ulong)entry.MaximumNumerator * entry.MinimumDenominator)
+            {
+                throw new StoryLoadException("The Blorb Reso minimum image ratio is greater than its maximum ratio.");
+            }
+
             resolutions.Add(entry);
         }
     }
