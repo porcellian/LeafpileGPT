@@ -66,6 +66,10 @@
 - 2026-10-20T20:44Z [CODE] Final review corrected CATCH/THROW depth to exclude the non-V6 top-level dummy frame while counting the V6 root routine; this supersedes the earlier Task 17 implementation and verification entries.
 - 2026-10-20T20:44Z [TOOL] Final Task 17 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 343 generated tests passed.
 - 2026-10-20T20:46Z [TOOL] Opened PR #18 at `https://github.com/porcellian/LeafpileGPT/pull/18` from commit `a57cd40`; awaiting manual review and merge.
+- 2026-10-20T21:35Z [USER] PR #18 was merged, superseding the 20:46Z pending-review entry; Task 18 started from `origin/main` at `4946722` [TOOL].
+- 2026-10-20T21:35Z [CODE] Completed Task 18 on `feature/18-desktop-experience`: Avalonia open/restart and keyboard workflows, Quetzal pickers, display/sound/input/file hosts, runtime reporting, image rendering, and reference screen layout. Ready for PR review.
+- 2026-10-20T21:35Z [TOOL] Task 18 Release build succeeded with zero warnings/errors; formatter and whitespace checks passed; all 344 generated tests passed.
+- 2026-10-20T21:38Z [TOOL] Opened PR #19 at `https://github.com/porcellian/LeafpileGPT/pull/19` from commit `1e89f47`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -83,6 +87,7 @@
 - 2026-10-20T20:26Z [TOOL] Reso scaling uses the smaller window-to-standard width/height ratio, then applies per-picture min/max bounds; APal requires indexed PNG resources and only non-adaptive plots replace the current palette used by adaptive pictures.
 - 2026-10-20T20:41Z [TOOL] Quetzal IFhd PC addresses the saved SAVE instruction's branch/store descriptor; restore applies SAVE's success branch/store before continuing. Non-V6 versions require a dummy root frame for the top-level evaluation stack, and CATCH values equal active frame depth.
 - 2026-10-20T20:44Z [TOOL] The Quetzal non-V6 dummy root frame preserves top-level evaluation values but is not an active routine frame; frame-depth CATCH cookies exclude it. V6's initial routine is active and counts toward the cookie.
+- 2026-10-20T21:35Z [TOOL] The ignored reference image is `reference/gui-design.png`; its initial V3 layout has a vivid blue story field, light-gray status line with blue Courier text, and a lower-left `>` prompt. Desktop sound, timed reads, transcript, and command files remain unavailable and are exposed as unsupported host capabilities.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -106,3 +111,5 @@
 - 2026-10-20T20:26Z [CODE] Added picture models with PNG/JPEG dimensions and source bytes, Rect dimensions, palette/description data, Reso scaling, and frontispiece access. V6 picture_data reports image metadata; draw_picture and erase_picture publish host-renderable operations. Avalonia pixel rendering remains Task 18.
 - 2026-10-20T20:41Z [CODE] Added Quetzal IFZS read/write for V1–V8, CMem/UMem dynamic memory, story identity validation, stack frames, ANNO/IntD, unknown-chunk skipping, and transactional restore through the save-file host boundary. `save_undo` and `restore_undo` use the same state format; generated coverage includes malformed files and resume behavior.
 - 2026-10-20T20:44Z [TOOL] Final review and verification supersede the earlier Task 17 result: the complete generated suite passes all 343 tests after the CATCH/THROW depth fix.
+- 2026-10-20T21:35Z [CODE] Completed Task 18 with a macOS/Windows Avalonia shell, story and save workflows, Courier text screen and status/prompt layout, Blorb image display, and an `IZMachineDisplay` core boundary. The core has no Avalonia dependency; host controls reflect available desktop capabilities.
+- 2026-10-20T21:35Z [TOOL] Task 18 Release build, formatting, whitespace review, and all 344 tests pass.

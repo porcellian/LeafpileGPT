@@ -10,6 +10,7 @@ public sealed class ZMachineOpcodeExecutor
     private readonly IZMachineObjectQueries? _objects;
     private readonly IZMachineInputOutput? _inputOutput;
     private readonly IZMachineSound? _sound;
+    private readonly IZMachineDisplay? _display;
     private readonly ConcurrentQueue<ushort> _soundCompletions = new();
     private ZMachineTextParser _textParser;
     private ZMachineOutputStreams _outputStreams;
@@ -23,7 +24,8 @@ public sealed class ZMachineOpcodeExecutor
         IZMachineSaveRestoreService? saveRestore = null,
         IZMachineObjectQueries? objects = null,
         IZMachineInputOutput? inputOutput = null,
-        IZMachineSound? sound = null)
+        IZMachineSound? sound = null,
+        IZMachineDisplay? display = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -32,6 +34,7 @@ public sealed class ZMachineOpcodeExecutor
         _objects = objects ?? new ZMachineObjectTable(state);
         _inputOutput = inputOutput;
         _sound = sound;
+        _display = display;
         _outputStreams = new ZMachineOutputStreams(state, inputOutput);
         ConfigureInputCapabilities();
         ConfigureSoundCapabilities();
@@ -40,9 +43,19 @@ public sealed class ZMachineOpcodeExecutor
 
     public ZMachineExecutionResult ExecuteNext()
     {
-        ProcessSoundCompletions();
-        var instruction = _state.Instructions.Decode(_state.ProgramCounter);
-        return Execute(instruction);
+        try
+        {
+            ProcessSoundCompletions();
+            var instruction = _state.Instructions.Decode(_state.ProgramCounter);
+            var result = Execute(instruction);
+            _display?.Present(_state.Screen);
+            return result;
+        }
+        catch (Exception exception)
+        {
+            _display?.ReportRuntimeError(exception.Message);
+            throw;
+        }
     }
 
     /// <summary>Runs queued sound-finished routines on the interpreter thread.</summary>
