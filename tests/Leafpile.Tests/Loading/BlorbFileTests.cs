@@ -11,7 +11,7 @@ public sealed class BlorbFileTests
     public void IndexesTypedResourcesAndKeepsOddChunksAndUnknownChunksBounded()
     {
         var blorb = BlorbFixture.Build(
-            [new("Pict", 7, "PNG ", [1, 2, 3]), new("Snd ", 3, "OGGV", [4, 5, 6, 7, 8])],
+            [new("Pict", 7, "PNG ", Png(4, 5)), new("Snd ", 3, "OGGV", [4, 5, 6, 7, 8])],
             [("XTRA", new byte[] { 9 })]);
 
         var parsed = BlorbFile.Parse(blorb);
@@ -19,7 +19,7 @@ public sealed class BlorbFileTests
         var picture = parsed.GetResource("Pict", 7);
         Assert.NotNull(picture);
         Assert.Equal("PNG ", picture.Chunk.Id);
-        Assert.Equal(new byte[] { 1, 2, 3 }, picture.Chunk.Data.ToArray());
+        Assert.Equal(Png(4, 5), picture.Chunk.Data.ToArray());
         Assert.Collection(parsed.Resources, _ => { }, _ => { });
         Assert.Equal(new byte[] { 9 }, Assert.Single(parsed.Chunks, chunk => chunk.Id == "XTRA").Data.ToArray());
         Assert.Equal(1, parsed.Chunks.Single(chunk => chunk.Id == "PNG ").Data.Length % 2);
@@ -90,7 +90,7 @@ public sealed class BlorbFileTests
         }
 
         var blorb = BlorbFixture.Build(
-            [new("Pict", 1, "PNG ", [1]), new("Snd ", 3, "OGGV", [2])],
+            [new("Pict", 1, "PNG ", Png(1, 1, [new BlorbColor(1, 2, 3)])), new("Snd ", 3, "OGGV", [2])],
             [
                 ("RelN", new byte[] { 0x12, 0x34 }),
                 ("AUTH", Encoding.ASCII.GetBytes("Author")),
@@ -106,7 +106,8 @@ public sealed class BlorbFileTests
                 ("Loop", UInt32Bytes(3, 0))
             ]);
 
-        var metadata = BlorbFile.Parse(blorb).Metadata;
+        var parsed = BlorbFile.Parse(blorb);
+        var metadata = parsed.Metadata;
 
         Assert.Equal((ushort)0x1234, metadata.ReleaseNumber);
         Assert.Equal("Author", metadata.Author);
@@ -116,6 +117,7 @@ public sealed class BlorbFileTests
         Assert.True(metadata.Xml.HasValue);
         Assert.Equal("<ifindex/>", Encoding.UTF8.GetString(metadata.Xml.Value.Span));
         Assert.Equal((uint)1, metadata.FrontispieceNumber);
+        Assert.Equal((uint)1, Assert.IsType<BlorbPicture>(parsed.GetFrontispiece()).Number);
         Assert.Equal(new BlorbColor(1, 2, 3), metadata.Palette[0]);
         Assert.Equal(new BlorbColor(4, 5, 6), metadata.Palette[1]);
         Assert.Equal("cover", metadata.ResourceDescriptions[0].Text);
@@ -123,6 +125,80 @@ public sealed class BlorbFileTests
         Assert.Equal((uint)400, metadata.StandardWindowHeight);
         Assert.Contains((uint)1, metadata.AdaptivePalettePictures);
         Assert.Equal((uint)0, metadata.Version3SoundRepeats[3]);
+    }
+
+    [Fact]
+    public void ReadsPngJpegAndRectanglePictureResourcesAndMetadata()
+    {
+        var palette = new[] { new BlorbColor(12, 34, 56), new BlorbColor(78, 90, 123) };
+        var blorb = BlorbFixture.Build(
+        [
+            new("Pict", 2, "PNG ", Png(40, 20, palette)),
+            new("Pict", 9, "JPEG", Jpeg(320, 200)),
+            new("Pict", 15, "Rect", UInt32Bytes(12, 7))
+        ],
+        [
+            ("RDes", ResourceDescription("Pict", 9, "a photograph"))
+        ]);
+        var parsed = BlorbFile.Parse(blorb);
+
+        var png = Assert.IsType<BlorbPicture>(parsed.GetPicture(2));
+        Assert.Equal(BlorbPictureFormat.Png, png.Format);
+        Assert.Equal(new BlorbPictureSize(40, 20), new BlorbPictureSize(png.Width, png.Height));
+        Assert.Equal(palette, png.Palette);
+        Assert.False(png.UsesAdaptivePalette);
+        Assert.Equal(Png(40, 20, palette), png.Data.ToArray());
+
+        var jpeg = Assert.IsType<BlorbPicture>(parsed.GetPicture(9));
+        Assert.Equal(BlorbPictureFormat.Jpeg, jpeg.Format);
+        Assert.Equal(320u, jpeg.Width);
+        Assert.Equal(200u, jpeg.Height);
+        Assert.Equal("a photograph", jpeg.Description);
+        Assert.False(jpeg.UsesAdaptivePalette);
+
+        var rectangle = Assert.IsType<BlorbPicture>(parsed.GetPicture(15));
+        Assert.Equal(BlorbPictureFormat.Rectangle, rectangle.Format);
+        Assert.Equal(12u, rectangle.Width);
+        Assert.Equal(7u, rectangle.Height);
+        Assert.Null(parsed.GetPicture(3));
+        Assert.Equal(3, parsed.PictureCount);
+
+        var adaptive = BlorbFile.Parse(BlorbFixture.Build(
+            [new("Pict", 9, "PNG ", Png(30, 15, [new BlorbColor(1, 2, 3)]))],
+            [("APal", UInt32Bytes(9))]));
+        Assert.True(Assert.IsType<BlorbPicture>(adaptive.GetPicture(9)).UsesAdaptivePalette);
+    }
+
+    [Fact]
+    public void ComputesResolutionScalingWithAspectRatioAndBounds()
+    {
+        var resolution = UInt32Bytes(640, 400, 0, 0, 0, 0, 4, 2, 1, 1, 2, 3, 1);
+        var parsed = BlorbFile.Parse(BlorbFixture.Build(
+            [new("Pict", 4, "PNG ", Png(100, 50))],
+            [("Reso", resolution)]));
+        var picture = Assert.IsType<BlorbPicture>(parsed.GetPicture(4));
+
+        Assert.Equal(new BlorbPictureSize(200, 100), picture.GetDisplaySize(parsed.Metadata, 640, 400));
+        Assert.Equal(new BlorbPictureSize(100, 50), picture.GetDisplaySize(parsed.Metadata, 320, 200));
+        Assert.Equal(new BlorbPictureSize(300, 150), picture.GetDisplaySize(parsed.Metadata, 1280, 800));
+    }
+
+    [Theory]
+    [InlineData("PNG ", new byte[] { 1, 2, 3 })]
+    [InlineData("JPEG", new byte[] { 0xff, 0xd8, 0xff, 0xd9 })]
+    public void RejectsMalformedImageHeadersWhenPictureIsQueried(string id, byte[] data)
+    {
+        var parsed = BlorbFile.Parse(BlorbFixture.Build([new("Pict", 1, id, data)]));
+
+        Assert.Throws<StoryLoadException>(() => parsed.GetPicture(1));
+    }
+
+    [Fact]
+    public void RejectsPictureResourceNumberZero()
+    {
+        var blorb = BlorbFixture.Build([new("Pict", 0, "Rect", new byte[8])]);
+
+        Assert.Contains("number 0", Assert.Throws<StoryLoadException>(() => BlorbFile.Parse(blorb)).Message);
     }
 
     [Fact]
@@ -223,11 +299,14 @@ public sealed class BlorbFileTests
         Assert.Equal((byte)16, directColor.PreferredColorDepth);
 
         var badResolution = new byte[24];
+        var invertedRatios = UInt32Bytes(640, 400, 0, 0, 0, 0, 1, 1, 1, 2, 1, 1, 1);
         var resolutionBlorb = BlorbFixture.Build([], [("Reso", badResolution)]);
+        var ratioBlorb = BlorbFixture.Build([], [("Reso", invertedRatios)]);
         var missingFrontispiece = BlorbFixture.Build([], [("Fspc", UInt32Bytes(9))]);
         var rectangleFrontispiece = BlorbFixture.Build([new("Pict", 9, "Rect", new byte[8])], [("Fspc", UInt32Bytes(9))]);
 
         Assert.Contains("window dimensions", Assert.Throws<StoryLoadException>(() => BlorbFile.Parse(resolutionBlorb)).Message);
+        Assert.Contains("minimum image ratio", Assert.Throws<StoryLoadException>(() => BlorbFile.Parse(ratioBlorb)).Message);
         Assert.Contains("missing picture", Assert.Throws<StoryLoadException>(() => BlorbFile.Parse(missingFrontispiece)).Message);
         Assert.Contains("placeholder Rect", Assert.Throws<StoryLoadException>(() => BlorbFile.Parse(rectangleFrontispiece)).Message);
     }
@@ -272,6 +351,49 @@ public sealed class BlorbFileTests
         }
 
         return data.ToArray();
+    }
+
+    private static byte[] ResourceDescription(string usage, uint number, string text)
+    {
+        var data = new List<byte>();
+        WriteUInt32(data, 1);
+        WriteDescription(data, usage, number, text);
+        return data.ToArray();
+    }
+
+    private static byte[] Png(uint width, uint height, IReadOnlyList<BlorbColor>? colors = null)
+    {
+        var data = new List<byte> { 137, 80, 78, 71, 13, 10, 26, 10 };
+        var header = new byte[13];
+        BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(0, 4), width);
+        BinaryPrimitives.WriteUInt32BigEndian(header.AsSpan(4, 4), height);
+        header[8] = 8;
+        header[9] = colors is null ? (byte)2 : (byte)3;
+        AddPngChunk(data, "IHDR", header);
+        if (colors is not null)
+        {
+            AddPngChunk(data, "PLTE", colors.SelectMany(color => new[] { color.Red, color.Green, color.Blue }).ToArray());
+        }
+
+        AddPngChunk(data, "IDAT", [0, 0]);
+        AddPngChunk(data, "IEND", []);
+        return data.ToArray();
+    }
+
+    private static byte[] Jpeg(ushort width, ushort height) =>
+    [
+        0xff, 0xd8, // SOI
+        0xff, 0xc0, 0x00, 0x0b, 0x08,
+        (byte)(height >> 8), (byte)height, (byte)(width >> 8), (byte)width,
+        0x01, 0x01, 0x11, 0x00
+    ];
+
+    private static void AddPngChunk(List<byte> target, string id, byte[] data)
+    {
+        WriteUInt32(target, (uint)data.Length);
+        WriteFourCc(target, id);
+        target.AddRange(data);
+        WriteUInt32(target, 0); // CRC is not needed for image dimensions or palette metadata.
     }
 
     private static void WriteFourCc(List<byte> data, string value) => data.AddRange(Encoding.ASCII.GetBytes(value));

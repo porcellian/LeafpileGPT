@@ -37,12 +37,13 @@ properties, scrolling, screen buffering, and formatted output streams. Font 3 is
 available for character graphics. The core dispatches sound effects through the
 `IZMachineSound` host contract, including volume, repeats, stop/finish operations,
 and completion routines; actual resource lookup and playback are supplied by a
-host. Blorb containers expose indexed resources and validated metadata through
-the loaded story; desktop audio wiring remains in Task 18.
-Sound capability bits are set or cleared from host support. Picture, mouse, menu,
-and transparency capabilities remain unavailable until their providers are
-implemented; Blorb picture integration is Task 16. Versions 7 and 8 retain the V5
-text-window model. Save-file encoding is implemented in a later task.
+host. Blorb containers expose indexed resources, validated metadata, image bytes,
+dimensions, and scaling information through the loaded story. V6 draw and erase
+operations are available to a display host; Avalonia rendering and desktop audio
+wiring remain in Task 18. Sound capability bits are set or cleared from host
+support. Mouse, menu, and transparency capabilities remain unavailable. Versions
+7 and 8 retain the V5 text-window model. Save-file encoding is implemented in a
+later task.
 
 ## Requirements
 

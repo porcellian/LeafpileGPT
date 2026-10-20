@@ -17,7 +17,7 @@ public sealed class ZMachineState
         Instructions = new ZMachineInstructionDecoder(Memory, story.Header, Text);
         CallStack = new ZMachineCallStack(Memory, story.Header);
         Random = new ZMachineRandom();
-        Screen = new ZMachineScreen(Memory, story.Header);
+        Screen = new ZMachineScreen(Memory, story.Header, story.Blorb);
     }
 
     public StoryHeader Header => _story.Header;

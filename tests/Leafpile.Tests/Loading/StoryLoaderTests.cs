@@ -168,7 +168,7 @@ public sealed class StoryLoaderTests
     [Fact]
     public void RejectsBlorbWithoutExecutableEntry()
     {
-        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), usage: "Pict", executableChunkId: "PNG ")));
+        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), usage: "Pict", executableChunkId: "PNG ", resourceNumber: 1)));
 
         Assert.Contains("executable", error.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -231,7 +231,7 @@ public sealed class StoryLoaderTests
         return story;
     }
 
-    private static byte[] MakeBlorb(byte[] story, string usage = "Exec", uint? executableOffset = null, string executableChunkId = "ZCOD")
+    private static byte[] MakeBlorb(byte[] story, string usage = "Exec", uint? executableOffset = null, string executableChunkId = "ZCOD", uint resourceNumber = 0)
     {
         const int resourceIndexOffset = 12;
         const int executableChunkDataOffset = resourceIndexOffset + 8 + 16;
@@ -245,7 +245,7 @@ public sealed class StoryLoaderTests
         WriteUInt32(blorb, resourceIndexOffset + 4, 16);
         WriteUInt32(blorb, resourceIndexOffset + 8, 1);
         WriteFourCc(blorb, resourceIndexOffset + 12, usage);
-        WriteUInt32(blorb, resourceIndexOffset + 16, 0);
+        WriteUInt32(blorb, resourceIndexOffset + 16, resourceNumber);
         WriteUInt32(blorb, resourceIndexOffset + 20, executableChunkOffset);
         WriteFourCc(blorb, executableChunkDataOffset, executableChunkId);
         WriteUInt32(blorb, executableChunkDataOffset + 4, (uint)story.Length);

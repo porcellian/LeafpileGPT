@@ -543,8 +543,17 @@ public sealed class ZMachineOpcodeExecutor
             case 4:
                 StoreResult(instruction, _state.Screen.SetFont(ReadValue(instruction.Operands[0]), instruction.Operands.Count == 2 ? ReadValue(instruction.Operands[1]) : (ushort)0xfffd));
                 break;
-            case 5: // Pictures are supplied by the Blorb resource service in Task 16.
+            case 5:
+                _state.Screen.DrawPicture(ReadValue(instruction.Operands[0]),
+                    instruction.Operands.Count >= 2 ? ReadValue(instruction.Operands[1]) : (ushort)0,
+                    instruction.Operands.Count >= 3 ? ReadValue(instruction.Operands[2]) : (ushort)0);
+                break;
             case 7:
+                _state.Screen.DrawPicture(ReadValue(instruction.Operands[0]),
+                    instruction.Operands.Count >= 2 ? ReadValue(instruction.Operands[1]) : (ushort)0,
+                    instruction.Operands.Count >= 3 ? ReadValue(instruction.Operands[2]) : (ushort)0,
+                    erase: true);
+                break;
             case 28:
                 break;
             case 6:
@@ -617,16 +626,28 @@ public sealed class ZMachineOpcodeExecutor
     private void ExecutePictureData(ZMachineInstruction instruction)
     {
         var picture = ReadValue(instruction.Operands[0]);
-        if (picture != 0)
+        if (picture == 0)
+        {
+            var pictureList = ReadValue(instruction.Operands[1]);
+            _state.Memory.ValidateDynamicRange(pictureList, 4);
+            var count = Math.Min(_state.Screen.AvailablePictureCount, ushort.MaxValue);
+            _state.Memory.WriteWord(pictureList, checked((ushort)count));
+            _state.Memory.WriteWord(checked((ushort)(pictureList + 2)), _state.Blorb?.Metadata.ReleaseNumber ?? 0);
+            Branch(instruction, count > 0);
+            return;
+        }
+
+        var size = _state.Screen.GetPictureSize(picture);
+        if (size is null)
         {
             return;
         }
 
-        var table = ReadValue(instruction.Operands[1]);
-        _state.Memory.ValidateDynamicRange(table, 4);
-        _state.Memory.WriteWord(table, 0);
-        _state.Memory.WriteWord(checked((ushort)(table + 2)), 0);
-        Branch(instruction, false);
+        var pictureData = ReadValue(instruction.Operands[1]);
+        _state.Memory.ValidateDynamicRange(pictureData, 4);
+        _state.Memory.WriteWord(pictureData, checked((ushort)Math.Min(size.Value.Height, ushort.MaxValue)));
+        _state.Memory.WriteWord(checked((ushort)(pictureData + 2)), checked((ushort)Math.Min(size.Value.Width, ushort.MaxValue)));
+        Branch(instruction, true);
     }
 
     private void WriteMouseState(ushort table)

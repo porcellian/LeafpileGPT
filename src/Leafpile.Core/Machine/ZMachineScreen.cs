@@ -30,7 +30,10 @@ public sealed class ZMachineScreen
     }
 
     private readonly ZMachineMemory _memory;
+    private readonly BlorbFile? _blorb;
     private readonly WindowState[] _v6Windows = Enumerable.Range(0, 8).Select(_ => new WindowState()).ToArray();
+    private readonly List<ZMachinePictureOperation> _displayedPictures = [];
+    private IReadOnlyList<BlorbColor> _currentAdaptivePalette = Array.Empty<BlorbColor>();
     private char[][] _lowerCells;
     private char[][] _upperCells;
     private int _upperCursorRow;
@@ -39,9 +42,10 @@ public sealed class ZMachineScreen
     private int _lowerCursorColumn;
     private int _currentFont = 1;
 
-    internal ZMachineScreen(ZMachineMemory memory, StoryHeader header)
+    internal ZMachineScreen(ZMachineMemory memory, StoryHeader header, BlorbFile? blorb = null)
     {
         _memory = memory;
+        _blorb = blorb;
         Version = header.Version;
         WidthCharacters = 80;
         HeightLines = 25;
@@ -108,6 +112,18 @@ public sealed class ZMachineScreen
 
     public bool CopyTextToTranscript => Version != 6 || (_v6Windows[SelectedWindow].Attributes & 4) != 0;
 
+    public int AvailablePictureCount => _blorb?.PictureCount ?? 0;
+
+    public IReadOnlyList<ZMachinePictureOperation> DisplayedPictures => _displayedPictures.AsReadOnly();
+
+    public IReadOnlyList<BlorbColor> CurrentAdaptivePalette => _currentAdaptivePalette;
+
+    /// <summary>Raised when a Version 6 picture is drawn or erased; hosts render the supplied encoded resource.</summary>
+    public event Action<ZMachinePictureOperation>? PictureChanged;
+
+    /// <summary>Raised when erase_window clears a picture area; null means the entire screen.</summary>
+    public event Action<int?>? PictureAreaCleared;
+
     internal Action<ushort>? NewlineInterrupt { get; set; }
 
     public int GetFormattedStreamWidth(short width)
@@ -126,6 +142,58 @@ public sealed class ZMachineScreen
     public IReadOnlyList<int> V6WindowBounds(int window) => Version == 6 && window is >= 0 and < 8
         ? new[] { _v6Windows[window].Y, _v6Windows[window].X, _v6Windows[window].Height, _v6Windows[window].Width }
         : throw new ArgumentOutOfRangeException(nameof(window));
+
+    public BlorbPicture? GetPicture(uint number) => _blorb?.GetPicture(number);
+
+    public BlorbPictureSize? GetPictureSize(uint number) => _blorb?.GetPictureSize(number, (uint)WidthUnits, (uint)HeightUnits);
+
+    public void DrawPicture(uint number, ushort y, ushort x, bool erase = false)
+    {
+        if (Version != 6)
+        {
+            throw new ZMachineRuntimeException($"Picture drawing is not available in version {Version}.");
+        }
+
+        var picture = GetPicture(number)
+            ?? throw new ZMachineRuntimeException($"Picture resource {number} is unavailable.");
+        if (picture.Format == BlorbPictureFormat.Rectangle && !erase)
+        {
+            throw new ZMachineRuntimeException($"Placeholder picture {number} cannot be drawn.");
+        }
+
+        var window = _v6Windows[SelectedWindow];
+        var localY = y == 0 ? window.CursorY : y;
+        var localX = x == 0 ? window.CursorX : x;
+        var size = picture.GetDisplaySize(_blorb!.Metadata, (uint)WidthUnits, (uint)HeightUnits);
+        var palette = picture.UsesAdaptivePalette ? _currentAdaptivePalette : picture.Palette;
+        var operation = new ZMachinePictureOperation(
+            erase,
+            SelectedWindow,
+            checked(window.X + localX - 1),
+            checked(window.Y + localY - 1),
+            picture,
+            size,
+            palette);
+        if (erase)
+        {
+            var right = operation.X + (long)operation.DisplaySize.Width;
+            var bottom = operation.Y + (long)operation.DisplaySize.Height;
+            _displayedPictures.RemoveAll(existing => existing.Window == operation.Window &&
+                existing.X < right && existing.Y < bottom &&
+                existing.X + (long)existing.DisplaySize.Width > operation.X &&
+                existing.Y + (long)existing.DisplaySize.Height > operation.Y);
+        }
+        else
+        {
+            _displayedPictures.Add(operation);
+            if (!picture.UsesAdaptivePalette && picture.Palette.Count > 0)
+            {
+                _currentAdaptivePalette = picture.Palette;
+            }
+        }
+
+        PictureChanged?.Invoke(operation);
+    }
 
     public bool UsesFixedPitch => Version == 6
         ? _v6Windows[SelectedWindow].Font == 4 || (_v6Windows[SelectedWindow].Style & 0x08) != 0
@@ -644,6 +712,7 @@ public sealed class ZMachineScreen
         {
             if (window == -1)
             {
+                ClearDisplayedPictures(null);
                 UpperWindowHeight = 0;
                 _v6Windows[0].Y = _v6Windows[0].X = 1;
                 _v6Windows[0].Width = WidthUnits;
@@ -656,8 +725,13 @@ public sealed class ZMachineScreen
                 SelectedWindow = 0;
                 return;
             }
-            if (window == -2) return;
+            if (window == -2)
+            {
+                ClearDisplayedPictures(null);
+                return;
+            }
             var target = ResolveWindow(window);
+            ClearDisplayedPictures(window);
             target.CursorY = 1;
             target.CursorX = Math.Max(1, target.LeftMargin + 1);
             return;
@@ -856,6 +930,27 @@ public sealed class ZMachineScreen
         }
     }
 
+    private void ClearDisplayedPictures(int? window)
+    {
+        if (window is null)
+        {
+            _displayedPictures.Clear();
+        }
+        else
+        {
+            var area = _v6Windows[window.Value];
+            var left = area.X;
+            var top = area.Y;
+            var right = left + (long)area.Width;
+            var bottom = top + (long)area.Height;
+            _displayedPictures.RemoveAll(picture => picture.X < right && picture.Y < bottom &&
+                picture.X + (long)picture.DisplaySize.Width > left &&
+                picture.Y + (long)picture.DisplaySize.Height > top);
+        }
+
+        PictureAreaCleared?.Invoke(window);
+    }
+
     private static string Render(char[][] grid, int visibleRows = int.MaxValue)
     {
         var lines = grid.Take(Math.Min(grid.Length, visibleRows)).Select(line => new string(line).TrimEnd()).ToArray();
@@ -886,8 +981,8 @@ public sealed class ZMachineScreen
         _memory.WriteByte(1, flags1);
         if (Version == 6)
         {
-            // This screen model has no Blorb picture, mouse, or menu provider yet.
-            flags1 = (byte)(flags1 & ~0x22); // Pictures and sound are unavailable until their providers are added.
+            flags1 = (byte)(flags1 & ~0x20); // Sound capability is configured by the sound host.
+            flags1 = AvailablePictureCount > 0 ? (byte)(flags1 | 0x02) : (byte)(flags1 & ~0x02);
             _memory.WriteByte(1, flags1);
             _memory.WriteWord(0x10, (ushort)(_memory.ReadWord(0x10) & ~((1 << 3) | (1 << 5) | (1 << 8))));
             var extension = _memory.ReadWord(0x36);
