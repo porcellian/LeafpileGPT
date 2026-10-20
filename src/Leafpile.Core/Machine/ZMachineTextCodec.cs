@@ -38,7 +38,13 @@ public sealed class ZMachineTextCodec
         _customAlphabets = ReadCustomAlphabets(memory, header, characters);
     }
 
-    public string Decode(int byteAddress) => DecodeInternal(byteAddress, allowAbbreviations: true);
+    public string Decode(int byteAddress) => DecodeInternal(byteAddress, allowAbbreviations: true, out _);
+
+    public DecodedZText DecodeWithEndAddress(int byteAddress)
+    {
+        var text = DecodeInternal(byteAddress, allowAbbreviations: true, out var nextAddress);
+        return new DecodedZText(text, nextAddress);
+    }
 
     public byte[] EncodeZText(ReadOnlySpan<byte> zsciiText)
     {
@@ -61,7 +67,7 @@ public sealed class ZMachineTextCodec
     public byte[] EncodeDictionaryText(ReadOnlySpan<byte> zsciiText) =>
         EncodeDictionaryText(zsciiText, sourceStart: 0, sourceLength: zsciiText.Length);
 
-    private string DecodeInternal(int byteAddress, bool allowAbbreviations)
+    private string DecodeInternal(int byteAddress, bool allowAbbreviations, out int nextAddress)
     {
         var result = new StringBuilder();
         var pendingCharacters = new List<int>();
@@ -70,8 +76,7 @@ public sealed class ZMachineTextCodec
 
         while (!ended)
         {
-            _memory.ValidateReadableRange(address, sizeof(ushort));
-            var packedWord = _memory.ReadWord((ushort)address);
+            var packedWord = _memory.ReadInstructionWord(address);
             address += sizeof(ushort);
             ended = (packedWord & 0x8000) != 0;
 
@@ -85,6 +90,7 @@ public sealed class ZMachineTextCodec
         }
 
         DecodeWordCharacters(pendingCharacters, allowAbbreviations, result);
+        nextAddress = address;
         return result.ToString();
     }
 
@@ -122,7 +128,7 @@ public sealed class ZMachineTextCodec
                 _memory.ValidateReadableRange(tableEntryAddress, sizeof(ushort));
                 var packedAddress = _memory.ReadWord((ushort)tableEntryAddress);
                 var abbreviationAddress = ZMachineAddressing.DecodeWordAddress(packedAddress);
-                result.Append(DecodeInternal(abbreviationAddress, allowAbbreviations: false));
+                result.Append(DecodeInternal(abbreviationAddress, allowAbbreviations: false, out _));
                 shiftedAlphabet = null;
                 continue;
             }

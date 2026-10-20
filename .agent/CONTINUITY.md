@@ -20,10 +20,14 @@
 - 2026-10-20T15:09Z [CODE] Started Task 05 on `feature/5-ztext-character-conversion`; packed text and character conversion services are in progress.
 - 2026-10-20T15:16Z [CODE] Completed and reviewed Task 05 on `feature/5-ztext-character-conversion`; Release build has zero warnings/errors, formatter and whitespace checks pass, and all 131 generated tests pass. PR review pending; this supersedes the Task 05 in-progress status above.
 - 2026-10-20T15:19Z [TOOL] Re-ran the Release build, formatter, staged whitespace check, and full suite after final code review; the build and checks pass with all 131 tests passing.
+- 2026-10-20T15:38Z [USER] PR #6 was merged; this supersedes the Task 05 PR review status above.
+- 2026-10-20T15:38Z [CODE] Completed Task 06 on `feature/6-instruction-decoder`; the decoder and regression suite are ready for PR review.
+- 2026-10-20T15:39Z [TOOL] Final Task 06 build and formatter pass; the full generated suite passes with all 154 tests.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
 - 2026-10-20T04:50Z [TOOL] Avalonia build telemetry must be disabled in this restricted workspace with `AVALONIA_TELEMETRY_OPTOUT=1`; CI uses the same setting.
+- 2026-10-20T15:38Z [TOOL] `call_vs2` and `call_vn2` place both operand-type bytes before all operand values; generated tests verify eight-operand decoding and invalid omitted-type ordering.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -31,3 +35,5 @@
 - 2026-10-20T14:34Z [CODE] Added bounded dynamic/static memory, packed and word address decoding, signed arithmetic, deterministic/random RNG modes, program counter and restart state; tested boundaries and version-specific behavior.
 - 2026-10-20T14:50Z [CODE] Added version-aware routine entry/return, locals and argument tracking, evaluation stack frames, catch/throw, and V6 user stacks; covered V1–V8 generated fixtures.
 - 2026-10-20T15:16Z [CODE] Added packed Z-text decoding and encoding, versioned shifts, abbreviations, custom alphabets, dictionary truncation, ZSCII/Unicode translation, invalid-character replacement, and restart-aware text services; covered V1–V8 with generated fixtures.
+- 2026-10-20T15:38Z [CODE] Added instruction decoding for long, short, variable, and extended forms; opcode legality and operand counts vary by version, with typed operands, stores, branches, and inline `print`/`print_ret` strings. Build and formatting pass; all 153 generated tests pass.
+- 2026-10-20T15:39Z [TOOL] Final Task 06 verification supersedes the prior count: Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 154 tests passed.
