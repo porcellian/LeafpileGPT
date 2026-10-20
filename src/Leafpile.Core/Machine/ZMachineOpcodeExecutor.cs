@@ -178,7 +178,10 @@ public sealed class ZMachineOpcodeExecutor
                 Call(instruction, storeResult: false);
                 break;
             case 27:
-                _state.Screen.SetColour(ReadValue(operands[0]), ReadValue(operands[1]));
+                if (_state.Header.Version == 6 && operands.Count == 3)
+                    _state.Screen.SetV6Colour(ReadValue(operands[0]), ReadValue(operands[1]), ReadValue(operands[2]));
+                else
+                    _state.Screen.SetColour(ReadValue(operands[0]), ReadValue(operands[1]));
                 break;
             case 28:
                 {
@@ -423,14 +426,18 @@ public sealed class ZMachineOpcodeExecutor
                 _state.Screen.EraseLine(ReadValue(instruction.Operands[0]));
                 break;
             case 15:
-                _state.Screen.SetCursor(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]));
+                if (_state.Header.Version == 6)
+                    _state.Screen.SetCursorV6(instruction.Operands.Count == 3 ? unchecked((short)ReadValue(instruction.Operands[2])) : -3, ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]));
+                else
+                    _state.Screen.SetCursor(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]));
                 break;
             case 16:
                 {
                     var table = ReadValue(instruction.Operands[0]);
                     _state.Memory.ValidateDynamicRange(table, 2 * sizeof(ushort));
-                    _state.Memory.WriteWord(table, checked((ushort)(_state.Screen.CursorRow + 1)));
-                    _state.Memory.WriteWord(checked((ushort)(table + sizeof(ushort))), checked((ushort)(_state.Screen.CursorColumn + 1)));
+                    var cursor = _state.Screen.GetV6Cursor();
+                    _state.Memory.WriteWord(table, cursor.Y);
+                    _state.Memory.WriteWord(checked((ushort)(table + sizeof(ushort))), cursor.X);
                     break;
                 }
             case 17:
@@ -442,7 +449,10 @@ public sealed class ZMachineOpcodeExecutor
                     var table = stream == 3 && stream > 0 && instruction.Operands.Count >= 2
                         ? ReadValue(instruction.Operands[1])
                         : (ushort?)null;
-                    _outputStreams.SelectOutput(stream, table);
+                    var width = stream == 3 && stream > 0 && instruction.Operands.Count == 3
+                        ? unchecked((short)ReadValue(instruction.Operands[2]))
+                        : (short?)null;
+                    _outputStreams.SelectOutput(stream, table, width);
                     break;
                 }
             case 20:
@@ -494,6 +504,54 @@ public sealed class ZMachineOpcodeExecutor
                     ReadValue(instruction.Operands[0]),
                     instruction.Operands.Count == 2 ? ReadValue(instruction.Operands[1]) : null);
                 break;
+            case 4:
+                StoreResult(instruction, _state.Screen.SetFont(ReadValue(instruction.Operands[0]), instruction.Operands.Count == 2 ? ReadValue(instruction.Operands[1]) : (ushort)0xfffd));
+                break;
+            case 5: // Pictures are supplied by the Blorb resource service in Task 16.
+            case 7:
+            case 28:
+                break;
+            case 6:
+                ExecutePictureData(instruction);
+                break;
+            case 8:
+                _state.Screen.SetMargins(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), ReadValue(instruction.Operands[2]));
+                break;
+            case 13:
+                _state.Screen.SetTrueColour(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), instruction.Operands.Count == 3 ? ReadValue(instruction.Operands[2]) : (ushort)0xfffd);
+                break;
+            case 16:
+                _state.Screen.MoveWindow(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), ReadValue(instruction.Operands[2]));
+                break;
+            case 17:
+                _state.Screen.ResizeWindow(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), ReadValue(instruction.Operands[2]));
+                break;
+            case 18:
+                _state.Screen.SetWindowStyle(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), instruction.Operands.Count == 3 ? ReadValue(instruction.Operands[2]) : (ushort)0);
+                break;
+            case 19:
+                StoreResult(instruction, _state.Screen.GetWindowProperty(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1])));
+                break;
+            case 20:
+                _state.Screen.ScrollWindow(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]));
+                break;
+            case 22:
+                WriteMouseState(ReadValue(instruction.Operands[0]));
+                break;
+            case 23:
+                _state.Screen.SetMouseWindow(ReadValue(instruction.Operands[0]));
+                break;
+            case 25:
+                _state.Screen.PutWindowProperty(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), ReadValue(instruction.Operands[2]));
+                break;
+            case 26:
+                return ExecutePrintForm(ReadValue(instruction.Operands[0]));
+            case 27:
+                Branch(instruction, false);
+                break;
+            case 29:
+                StoreResult(instruction, _state.Screen.SetBufferScreen(ReadValue(instruction.Operands[0])));
+                break;
             case 2:
                 StoreResult(instruction, Shift(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), arithmetic: false));
                 break;
@@ -518,6 +576,53 @@ public sealed class ZMachineOpcodeExecutor
         }
 
         return new ZMachineExecutionResult();
+    }
+
+    private void ExecutePictureData(ZMachineInstruction instruction)
+    {
+        var picture = ReadValue(instruction.Operands[0]);
+        if (picture != 0)
+        {
+            return;
+        }
+
+        var table = ReadValue(instruction.Operands[1]);
+        _state.Memory.ValidateDynamicRange(table, 4);
+        _state.Memory.WriteWord(table, 0);
+        _state.Memory.WriteWord(checked((ushort)(table + 2)), 0);
+        Branch(instruction, false);
+    }
+
+    private void WriteMouseState(ushort table)
+    {
+        _state.Memory.ValidateDynamicRange(table, 8);
+        for (var offset = 0; offset < 8; offset += 2)
+            _state.Memory.WriteWord(checked((ushort)(table + offset)), 0);
+    }
+
+    private ZMachineExecutionResult ExecutePrintForm(ushort table)
+    {
+        var output = new System.Text.StringBuilder();
+        var address = (int)table;
+        var hasLine = false;
+        while (true)
+        {
+            _state.Memory.ValidateReadableRange(address, sizeof(ushort));
+            var count = _state.Memory.ReadWord(checked((ushort)address));
+            address += sizeof(ushort);
+            if (count == 0) break;
+            _state.Memory.ValidateReadableRange(address, count);
+            if (hasLine) output.Append('\n');
+            for (var index = 0; index < count; index++)
+            {
+                output.Append(_state.Characters.ToUnicodeString(_state.Memory.ReadByte(checked((ushort)(address + index)))));
+            }
+
+            address += count;
+            hasLine = true;
+        }
+
+        return new ZMachineExecutionResult(Output: WriteOutput(output.ToString()));
     }
 
     private ZMachineExecutionResult ExecuteSave(ZMachineInstruction instruction, bool undo)
@@ -974,8 +1079,25 @@ public sealed class ZMachineOpcodeExecutor
     private string WriteOutput(string text)
     {
         var visible = _outputStreams.Write(text);
+        _state.Screen.NewlineInterrupt = ExecuteWindowNewlineInterrupt;
         _state.Screen.Write(visible);
         return visible;
+    }
+
+    private void ExecuteWindowNewlineInterrupt(ushort routine)
+    {
+        var originalFrameCount = _state.CallStack.FrameCount;
+        var call = _state.CallStack.CallRoutine(routine, Array.Empty<ushort>(), _state.ProgramCounter);
+        if (!call.RoutineStarted) return;
+
+        while (_state.CallStack.FrameCount > originalFrameCount)
+        {
+            var result = ExecuteNext();
+            if (!string.IsNullOrEmpty(result.Output))
+                throw new ZMachineRuntimeException("A V6 window newline interrupt routine must not print text.");
+            if (result.Halted || result.Restarted || result.Restored)
+                throw new ZMachineRuntimeException("A V6 window newline interrupt routine cannot halt, restart, or restore the story.");
+        }
     }
 
     private void UpdateStatusLine()

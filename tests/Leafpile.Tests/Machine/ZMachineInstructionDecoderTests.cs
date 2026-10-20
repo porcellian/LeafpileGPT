@@ -95,6 +95,22 @@ public sealed class ZMachineInstructionDecoderTests
         Assert.Equal((byte)0x10, instruction.StoreVariable);
     }
 
+    [Theory]
+    [InlineData(7)]
+    [InlineData(8)]
+    public void RejectsVersionSixOnlyScreenOpcodesInVersionsSevenAndEight(byte version)
+    {
+        var bufferScreen = CreateDecoder(version, 0xbe, 29, 0x7f, 1, 0x10);
+        var threeOperandCursor = CreateDecoder(version, 0xef, 0x57, 1, 1, 0);
+        var threeOperandColour = CreateDecoder(version, 0xdb, 0x57, 2, 9, 0);
+        var twoOperandFont = CreateDecoder(version, 0xbe, 4, 0x5f, 1, 0, 0x10);
+
+        Assert.Throws<ZMachineRuntimeException>(() => bufferScreen.Decode(0x500));
+        Assert.Throws<ZMachineRuntimeException>(() => threeOperandCursor.Decode(0x500));
+        Assert.Throws<ZMachineRuntimeException>(() => threeOperandColour.Decode(0x500));
+        Assert.Throws<ZMachineRuntimeException>(() => twoOperandFont.Decode(0x500));
+    }
+
     [Fact]
     public void DecodesPrintInlineTextAndAdvancesPastTerminatingWord()
     {
