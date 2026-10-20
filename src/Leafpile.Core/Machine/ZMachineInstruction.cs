@@ -8,6 +8,15 @@ public enum ZMachineInstructionForm
     Extended
 }
 
+public enum ZMachineOpcodeClass
+{
+    TwoOperand,
+    OneOperand,
+    ZeroOperand,
+    Variable,
+    Extended
+}
+
 public enum ZMachineOperandType
 {
     LargeConstant,
@@ -28,6 +37,7 @@ public sealed record ZMachineInstruction(
     int Address,
     int NextAddress,
     ZMachineInstructionForm Form,
+    ZMachineOpcodeClass OpcodeClass,
     int Opcode,
     int OperandCount,
     IReadOnlyList<ZMachineOperand> Operands,
