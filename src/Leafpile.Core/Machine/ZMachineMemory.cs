@@ -56,6 +56,20 @@ public sealed class ZMachineMemory
         ValidateDynamicAddress(address, width);
     }
 
+    public void ValidateReadableRange(int address, int width)
+    {
+        if (width <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(width), "A readable memory range must have a positive width.");
+        }
+
+        var end = (long)address + width;
+        if (address < 0 || address > ushort.MaxValue || end > StaticMemoryLimitExclusive)
+        {
+            throw new ZMachineRuntimeException($"Memory read at 0x{address:x} with width {width} is outside addressable dynamic and static memory.");
+        }
+    }
+
     public byte ReadInstructionByte(int address)
     {
         if ((uint)address >= (uint)_data.Length)

@@ -16,6 +16,10 @@
 - 2026-10-20T14:34Z [CODE] Implemented Task 03 on `feature/3-machine-state`; Release build, formatter, whitespace check, and all 75 generated tests pass. PR review pending.
 - 2026-10-20T14:45Z [USER] PR #4 was merged.
 - 2026-10-20T14:50Z [CODE] Implemented and reviewed Task 04 on `feature/4-routines-stacks`; Release build has zero warnings/errors, formatter and whitespace checks pass, and all 95 generated tests pass. PR review pending.
+- 2026-10-20T15:09Z [USER] PR #5 was merged; this supersedes the Task 04 PR review status above.
+- 2026-10-20T15:09Z [CODE] Started Task 05 on `feature/5-ztext-character-conversion`; packed text and character conversion services are in progress.
+- 2026-10-20T15:16Z [CODE] Completed and reviewed Task 05 on `feature/5-ztext-character-conversion`; Release build has zero warnings/errors, formatter and whitespace checks pass, and all 131 generated tests pass. PR review pending; this supersedes the Task 05 in-progress status above.
+- 2026-10-20T15:19Z [TOOL] Re-ran the Release build, formatter, staged whitespace check, and full suite after final code review; the build and checks pass with all 131 tests passing.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -26,3 +30,4 @@
 - 2026-10-20T05:21Z [CODE] Added standalone and Blorb Z-code loading with header/memory validation and clear errors; tested generated V1–V8 stories and malformed inputs. Local stories remain untracked.
 - 2026-10-20T14:34Z [CODE] Added bounded dynamic/static memory, packed and word address decoding, signed arithmetic, deterministic/random RNG modes, program counter and restart state; tested boundaries and version-specific behavior.
 - 2026-10-20T14:50Z [CODE] Added version-aware routine entry/return, locals and argument tracking, evaluation stack frames, catch/throw, and V6 user stacks; covered V1–V8 generated fixtures.
+- 2026-10-20T15:16Z [CODE] Added packed Z-text decoding and encoding, versioned shifts, abbreviations, custom alphabets, dictionary truncation, ZSCII/Unicode translation, invalid-character replacement, and restart-aware text services; covered V1–V8 with generated fixtures.
