@@ -6,23 +6,28 @@ public sealed class ZMachineOpcodeExecutor
     private readonly ZMachineState _state;
     private readonly IZMachineSaveRestoreService? _saveRestore;
     private readonly IZMachineObjectQueries? _objects;
-    private readonly ZMachineTextParser _textParser;
+    private readonly IZMachineInputOutput? _inputOutput;
+    private ZMachineTextParser _textParser;
+    private ZMachineOutputStreams _outputStreams;
+    private bool _commandInputSelected;
+    private ushort _lastRoutineReturnValue;
+    private bool _insideTimedInputRoutine;
 
     public ZMachineOpcodeExecutor(
         ZMachineState state,
         IZMachineSaveRestoreService? saveRestore = null,
-        IZMachineObjectQueries? objects = null)
+        IZMachineObjectQueries? objects = null,
+        IZMachineInputOutput? inputOutput = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
         _state = state;
         _saveRestore = saveRestore;
         _objects = objects ?? new ZMachineObjectTable(state);
-        _textParser = new ZMachineTextParser(
-            state.Memory,
-            state.Header,
-            new ZMachineDictionary(state.Memory, state.Header, state.Characters),
-            state.Text);
+        _inputOutput = inputOutput;
+        _outputStreams = new ZMachineOutputStreams(state, inputOutput);
+        ConfigureInputCapabilities();
+        _textParser = CreateTextParser();
     }
 
     public ZMachineExecutionResult ExecuteNext()
@@ -30,6 +35,8 @@ public sealed class ZMachineOpcodeExecutor
         var instruction = _state.Instructions.Decode(_state.ProgramCounter);
         return Execute(instruction);
     }
+
+    public bool OutputBufferingEnabled => _outputStreams.BufferingEnabled;
 
     public ZMachineExecutionResult Execute(ZMachineInstruction instruction)
     {
@@ -43,7 +50,7 @@ public sealed class ZMachineOpcodeExecutor
 
         if (instruction.OpcodeClass == ZMachineOpcodeClass.ZeroOperand && instruction.Opcode is 2 or 3)
         {
-            var printedText = instruction.Opcode == 3 ? $"{instruction.EmbeddedText}\n" : instruction.EmbeddedText;
+            var printedText = WriteOutput(instruction.Opcode == 3 ? $"{instruction.EmbeddedText}\n" : instruction.EmbeddedText ?? string.Empty);
             if (instruction.Opcode == 3)
             {
                 Return(1);
@@ -224,7 +231,7 @@ public sealed class ZMachineOpcodeExecutor
                 RequireObjects().RemoveObject(ReadValue(operand));
                 break;
             case 10:
-                return new ZMachineExecutionResult(Output: RequireObjects().GetShortName(ReadValue(operand)));
+                return new ZMachineExecutionResult(Output: WriteOutput(RequireObjects().GetShortName(ReadValue(operand))));
             case 11:
                 Return(ReadValue(operand));
                 break;
@@ -268,6 +275,10 @@ public sealed class ZMachineOpcodeExecutor
                 return ExecuteRestore(instruction, undo: false);
             case 7:
                 _state.Restart();
+                _textParser = CreateTextParser();
+                _outputStreams = new ZMachineOutputStreams(_state, _inputOutput);
+                _commandInputSelected = false;
+                ConfigureInputCapabilities();
                 return new ZMachineExecutionResult(Restarted: true);
             case 8:
                 Return(_state.CallStack.Pop());
@@ -280,6 +291,8 @@ public sealed class ZMachineOpcodeExecutor
                 break;
             case 10:
                 return new ZMachineExecutionResult(Halted: true);
+            case 11:
+                return new ZMachineExecutionResult(Output: WriteOutput("\n"));
             case 13:
                 Branch(instruction, VerifyStory());
                 break;
@@ -306,6 +319,12 @@ public sealed class ZMachineOpcodeExecutor
             case 8:
                 _state.CallStack.Push(ReadValue(instruction.Operands[0]));
                 break;
+            case 4:
+                return ExecuteRead(instruction);
+            case 5:
+                return new ZMachineExecutionResult(Output: WriteOutput(_state.Characters.ToUnicodeString(ReadValue(instruction.Operands[0]))));
+            case 6:
+                return new ZMachineExecutionResult(Output: WriteOutput(((short)ReadValue(instruction.Operands[0])).ToString(System.Globalization.CultureInfo.InvariantCulture)));
             case 9 when _state.Header.Version < 6:
                 {
                     var variable = ReadVariableReference(instruction.Operands[0]);
@@ -380,6 +399,39 @@ public sealed class ZMachineOpcodeExecutor
             case 29:
                 ExecuteCopyTable(instruction);
                 break;
+            case 18:
+                _outputStreams.SetBuffering(ReadValue(instruction.Operands[0]) != 0);
+                break;
+            case 19:
+                {
+                    var stream = unchecked((short)ReadValue(instruction.Operands[0]));
+                    var table = stream == 3 && stream > 0 && instruction.Operands.Count >= 2
+                        ? ReadValue(instruction.Operands[1])
+                        : (ushort?)null;
+                    _outputStreams.SelectOutput(stream, table);
+                    break;
+                }
+            case 20:
+                {
+                    var inputStream = ReadValue(instruction.Operands[0]);
+                    if (inputStream > 1)
+                    {
+                        throw new ZMachineRuntimeException($"Input stream {inputStream} is not defined.");
+                    }
+
+                    _commandInputSelected = inputStream == 1;
+                    if (_commandInputSelected && (_inputOutput is null || !_inputOutput.SupportsCommandInput))
+                    {
+                        _inputOutput?.ReportFileAccessUnavailable("command input");
+                        _commandInputSelected = false;
+                    }
+
+                    break;
+                }
+            case 22:
+                return ExecuteReadCharacter(instruction);
+            case 30:
+                return ExecutePrintTable(instruction);
             case 24 when _state.Header.Version >= 5:
                 StoreResult(instruction, ZMachineArithmetic.Not(ReadValue(instruction.Operands[0])));
                 break;
@@ -417,6 +469,8 @@ public sealed class ZMachineOpcodeExecutor
             case 12:
                 StoreResult(instruction, _state.Characters.CheckUnicode(ReadValue(instruction.Operands[0])));
                 break;
+            case 11:
+                return new ZMachineExecutionResult(Output: WriteOutput(char.ConvertFromUtf32(ReadValue(instruction.Operands[0]))));
             case 24:
                 {
                     var value = ReadValue(instruction.Operands[0]);
@@ -434,6 +488,11 @@ public sealed class ZMachineOpcodeExecutor
 
     private ZMachineExecutionResult ExecuteSave(ZMachineInstruction instruction, bool undo)
     {
+        if (_insideTimedInputRoutine)
+        {
+            throw new ZMachineRuntimeException("Save and save_undo cannot be executed inside a timed input interrupt routine.");
+        }
+
         var result = RequireSaveRestoreService().Save(_state, instruction, undo);
         if (result.ResumedFromSavedState)
         {
@@ -491,6 +550,7 @@ public sealed class ZMachineOpcodeExecutor
 
     private void ApplyReturn(RoutineReturnResult result)
     {
+        _lastRoutineReturnValue = result.Value;
         if (result.StoreVariable.HasValue)
         {
             _state.WriteVariable(result.StoreVariable.Value, result.Value);
@@ -542,6 +602,348 @@ public sealed class ZMachineOpcodeExecutor
         StoreResult(instruction, foundAddress);
         Branch(instruction, foundAddress != 0);
     }
+
+    private ZMachineExecutionResult ExecuteRead(ZMachineInstruction instruction)
+    {
+        var operands = instruction.Operands;
+        var textBuffer = ReadValue(operands[0]);
+        var parseBuffer = ReadValue(operands[1]);
+        _state.Memory.ValidateReadableRange(textBuffer, 2);
+        var version = _state.Header.Version;
+        var maximum = _state.Memory.ReadByte(textBuffer);
+        var initialCount = version >= 5 ? _state.Memory.ReadByte(checked((ushort)(textBuffer + 1))) : 0;
+        var maximumTyped = version <= 4 ? Math.Max(0, maximum - 1) : maximum;
+        if (version <= 4 && maximum < 2 || version >= 5 && maximum < 1)
+        {
+            throw new ZMachineRuntimeException($"The Version {version} input text buffer at 0x{textBuffer:x4} is too short.");
+        }
+
+        _state.Memory.ValidateDynamicRange(textBuffer, version <= 4 ? maximum + 1 : maximum + 2);
+
+        if (parseBuffer == 0 && version <= 4)
+        {
+            throw new ZMachineRuntimeException($"Version {version} read requires a parse buffer.");
+        }
+
+        if (parseBuffer != 0)
+        {
+            _state.Memory.ValidateDynamicRange(parseBuffer, 1);
+            var maximumWords = _state.Memory.ReadByte(parseBuffer);
+            if (maximumWords == 0)
+            {
+                throw new ZMachineRuntimeException($"The parse buffer at 0x{parseBuffer:x4} is shorter than the six-byte minimum.");
+            }
+
+            _state.Memory.ValidateDynamicRange(parseBuffer, 2 + (maximumWords * 4));
+        }
+
+        if (version >= 5 && initialCount > maximum)
+        {
+            throw new ZMachineRuntimeException($"The input text buffer at 0x{textBuffer:x4} has an initial character count larger than its capacity.");
+        }
+
+        var initialText = ReadInitialText(textBuffer, checked((byte)initialCount), version);
+        var timing = version >= 4 && operands.Count >= 4
+            ? (Time: ReadValue(operands[2]), Routine: ReadValue(operands[3]))
+            : (Time: (ushort)0, Routine: (ushort)0);
+        var terminatingCharacters = version >= 5 ? ReadTerminatingCharacters() : new HashSet<byte>();
+        terminatingCharacters.Add(13);
+        var request = new ZMachineInputRequest(
+            ReadCharacter: false,
+            FromCommandFile: _commandInputSelected,
+            MaximumCharacters: maximumTyped,
+            InitialText: initialText,
+            TerminatingCharacters: terminatingCharacters,
+            timing.Time,
+            timing.Routine);
+        var response = ReadHostInput(request);
+        var typedText = NormalizeInput(response.Text, maximumTyped - initialCount);
+        var wasTimedOut = response.TimedOut;
+        if (wasTimedOut)
+        {
+            typedText = string.Empty;
+        }
+
+        var fullText = wasTimedOut ? string.Empty : initialText + typedText;
+        StoreInputText(textBuffer, fullText, version, maximumTyped);
+        var terminator = wasTimedOut ? (byte)0 : NormalizeTerminator(response.Terminator, terminatingCharacters);
+        var echo = !wasTimedOut ? fullText + "\n" : string.Empty;
+        var output = _outputStreams.WriteInputEcho(echo, allowTranscript: version <= 5);
+        _outputStreams.RecordCommand(fullText);
+
+        if (parseBuffer != 0)
+        {
+            _textParser.Tokenise(textBuffer, parseBuffer, _state.Header.DictionaryAddress, skipUnrecognized: false);
+        }
+
+        if (version >= 5)
+        {
+            StoreResult(instruction, terminator);
+        }
+
+        return new ZMachineExecutionResult(Output: output);
+    }
+
+    private ZMachineExecutionResult ExecuteReadCharacter(ZMachineInstruction instruction)
+    {
+        if (_state.Header.Version < 4)
+        {
+            throw Unsupported(instruction);
+        }
+
+        var operands = instruction.Operands;
+        if (ReadValue(operands[0]) != 1)
+        {
+            throw new ZMachineRuntimeException("read_char supports input device 1 (the keyboard) only.");
+        }
+
+        var timing = operands.Count == 3
+            ? (Time: ReadValue(operands[1]), Routine: ReadValue(operands[2]))
+            : (Time: (ushort)0, Routine: (ushort)0);
+        var request = new ZMachineInputRequest(
+            ReadCharacter: true,
+            FromCommandFile: _commandInputSelected,
+            MaximumCharacters: 1,
+            InitialText: string.Empty,
+            TerminatingCharacters: new HashSet<byte>(),
+            timing.Time,
+            timing.Routine);
+        var response = ReadHostInput(request);
+        var character = response.TimedOut ? (ushort)0 : ResponseCharacter(response);
+        StoreResult(instruction, character);
+        if (!response.TimedOut)
+        {
+            _outputStreams.RecordKeypress(checked((byte)character));
+        }
+
+        return new ZMachineExecutionResult();
+    }
+
+    private ZMachineInputResponse ReadHostInput(ZMachineInputRequest request)
+    {
+        var host = _inputOutput ?? throw new ZMachineRuntimeException("A host input/output service is required to read input.");
+        Func<bool>? callback = null;
+        var cancelled = false;
+        var timedInput = host.SupportsTimedInput && request.TimeTenths != 0 && request.InterruptRoutine != 0;
+        if (timedInput)
+        {
+            callback = () =>
+            {
+                cancelled = RunTimedInputRoutine(request.InterruptRoutine);
+                return cancelled;
+            };
+        }
+
+        var response = host.ReadInput(timedInput ? request : request with { TimeTenths = 0, InterruptRoutine = 0 }, callback)
+            ?? throw new ZMachineRuntimeException("The host input/output service returned no input response.");
+        return cancelled ? response with { Text = string.Empty, Terminator = 0, TimedOut = true } : response;
+    }
+
+    private bool RunTimedInputRoutine(ushort packedRoutine)
+    {
+        var callerFrameCount = _state.CallStack.FrameCount;
+        var routine = _state.CallStack.CallRoutine(packedRoutine, [], _state.ProgramCounter);
+        if (!routine.RoutineStarted)
+        {
+            return false;
+        }
+
+        _lastRoutineReturnValue = 0;
+        _insideTimedInputRoutine = true;
+        try
+        {
+            var instructionCount = 0;
+            while (_state.CallStack.FrameCount > callerFrameCount)
+            {
+                if (++instructionCount > 1_000_000)
+                {
+                    throw new ZMachineRuntimeException("Timed input interrupt routine exceeded one million instructions.");
+                }
+
+                var result = ExecuteNext();
+                if (result.Halted || result.Restarted || result.Restored)
+                {
+                    throw new ZMachineRuntimeException("A timed input interrupt routine attempted to halt, restart, or restore the story.");
+                }
+
+                if (!string.IsNullOrEmpty(result.Output))
+                {
+                    _inputOutput?.WriteScreenOutput(result.Output);
+                }
+            }
+        }
+        finally
+        {
+            _insideTimedInputRoutine = false;
+        }
+
+        return _lastRoutineReturnValue != 0;
+    }
+
+    private string ReadInitialText(ushort textBuffer, byte count, byte version)
+    {
+        if (version < 5 || count == 0)
+        {
+            return string.Empty;
+        }
+
+        var text = new System.Text.StringBuilder(count);
+        for (var index = 0; index < count; index++)
+        {
+            text.Append(_state.Characters.ToUnicodeString(_state.Memory.ReadByte(checked((ushort)(textBuffer + 2 + index)))));
+        }
+
+        return text.ToString();
+    }
+
+    private HashSet<byte> ReadTerminatingCharacters()
+    {
+        var table = _state.Memory.ReadWord(0x2e);
+        var result = new HashSet<byte>();
+        if (table == 0)
+        {
+            return result;
+        }
+
+        for (var index = 0; index < _state.Memory.StoryLength - table; index++)
+        {
+            var code = _state.Memory.ReadByte(checked((ushort)(table + index)));
+            if (code == 0)
+            {
+                return result;
+            }
+
+            if (code == 255)
+            {
+                for (byte functionKey = 129; functionKey <= 154; functionKey++)
+                {
+                    result.Add(functionKey);
+                }
+
+                result.Add(252);
+                result.Add(253);
+                result.Add(254);
+                continue;
+            }
+
+            if (code is >= 129 and <= 154 or 252 or 253 or 254)
+            {
+                result.Add(code);
+            }
+        }
+
+        throw new ZMachineRuntimeException($"The terminating-characters table at 0x{table:x4} is not zero-terminated.");
+    }
+
+    private string NormalizeInput(string text, int maximumCharacters)
+    {
+        var normalized = new System.Text.StringBuilder(Math.Max(0, maximumCharacters));
+        foreach (var character in text)
+        {
+            if (normalized.Length >= maximumCharacters)
+            {
+                break;
+            }
+
+            var lower = char.ToLowerInvariant(character);
+            if (_state.Characters.TryGetZsciiForUnicode(lower, out var code) && _state.Characters.IsDefinedForTextInput(code))
+            {
+                normalized.Append((char)code);
+            }
+        }
+
+        return normalized.ToString();
+    }
+
+    private void StoreInputText(ushort textBuffer, string text, byte version, int maximumCharacters)
+    {
+        _state.Memory.ValidateDynamicRange(textBuffer, maximumCharacters + 2);
+        if (version <= 4)
+        {
+            for (var index = 0; index < text.Length; index++)
+            {
+                _state.Memory.WriteByte(checked((ushort)(textBuffer + 1 + index)), checked((byte)text[index]));
+            }
+
+            _state.Memory.WriteByte(checked((ushort)(textBuffer + 1 + text.Length)), 0);
+            return;
+        }
+
+        _state.Memory.WriteByte(checked((ushort)(textBuffer + 1)), checked((byte)text.Length));
+        for (var index = 0; index < text.Length; index++)
+        {
+            _state.Memory.WriteByte(checked((ushort)(textBuffer + 2 + index)), checked((byte)text[index]));
+        }
+    }
+
+    private static byte NormalizeTerminator(byte terminator, IReadOnlySet<byte> terminatingCharacters)
+    {
+        if (terminator is 10 or 13)
+        {
+            return 13;
+        }
+
+        return terminatingCharacters.Contains(terminator) ? terminator : (byte)13;
+    }
+
+    private static ushort ResponseCharacter(ZMachineInputResponse response)
+    {
+        if (response.Terminator is 10 or 13)
+        {
+            return 13;
+        }
+
+        return response.Terminator;
+    }
+
+    private ZMachineExecutionResult ExecutePrintTable(ZMachineInstruction instruction)
+    {
+        var operands = instruction.Operands;
+        var table = ReadValue(operands[0]);
+        var width = ReadValue(operands[1]);
+        var height = operands.Count >= 3 ? ReadValue(operands[2]) : (ushort)1;
+        var skip = operands.Count == 4 ? ReadValue(operands[3]) : (ushort)0;
+        var output = new System.Text.StringBuilder(checked(width * height + height));
+        for (var row = 0; row < height; row++)
+        {
+            for (var column = 0; column < width; column++)
+            {
+                var offset = (long)table + ((long)row * (width + skip)) + column;
+                if (offset >= _state.Memory.StoryLength)
+                {
+                    throw new ZMachineRuntimeException("print_table reads beyond the end of the story memory.");
+                }
+
+                output.Append(_state.Characters.ToUnicodeString(_state.Memory.ReadByte((ushort)offset)));
+            }
+
+            if (row + 1 < height)
+            {
+                output.Append('\n');
+            }
+        }
+
+        return new ZMachineExecutionResult(Output: WriteOutput(output.ToString()));
+    }
+
+    private string WriteOutput(string text) => _outputStreams.Write(text);
+
+    private void ConfigureInputCapabilities()
+    {
+        if (_state.Header.Version >= 4)
+        {
+            var flags1 = _state.Memory.ReadByte(0x01);
+            _state.Memory.WriteByte(0x01, _inputOutput?.SupportsTimedInput == true
+                ? (byte)(flags1 | 0x80)
+                : (byte)(flags1 & 0x7f));
+        }
+    }
+
+    private ZMachineTextParser CreateTextParser() => new(
+        _state.Memory,
+        _state.Header,
+        new ZMachineDictionary(_state.Memory, _state.Header, _state.Characters),
+        _state.Text);
 
     private void ExecuteCopyTable(ZMachineInstruction instruction)
     {

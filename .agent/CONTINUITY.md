@@ -39,6 +39,9 @@
 - 2026-10-20T17:56Z [CODE] Started Task 10 on `feature/10-dictionary-token-text-opcodes` from merged `main` at `ec6d519`.
 - 2026-10-20T18:07Z [CODE] Completed and reviewed Task 10 on `feature/10-dictionary-token-text-opcodes`; dictionary, tokenization, text encoding, Unicode capability, and scan-table coverage is ready for PR review.
 - 2026-10-20T18:07Z [TOOL] Task 10 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 235 generated tests pass.
+- 2026-10-20T18:40Z [USER] PR #11 was merged; Task 10 is complete and Task 11 may proceed.
+- 2026-10-20T18:40Z [CODE] Completed Task 11 on `feature/11-input-output-streams-files`; host input/output contracts and stream execution are ready for PR review.
+- 2026-10-20T18:40Z [TOOL] Task 11 Release build succeeded with zero warnings/errors, format and whitespace checks pass, and all 256 generated tests pass.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -46,6 +49,7 @@
 - 2026-10-20T15:38Z [TOOL] `call_vs2` and `call_vn2` place both operand-type bytes before all operand values; generated tests verify eight-operand decoding and invalid omitted-type ordering.
 - 2026-10-20T16:56Z [TOOL] Generated executor tests exposed that 1OP `get_parent` and `get_prop_len` require store bytes; decoder metadata now describes those stores, with regression coverage.
 - 2026-10-20T18:07Z [TOOL] The standard distinguishes zero-terminated V1–V4 text buffers from length-prefixed V5+ buffers; parse positions are offsets into the respective buffer. Generated tests verify both layouts.
+- 2026-10-20T18:40Z [TOOL] Timed input uses an interpreter-thread callback; interrupt output must be sent to the screen while input remains pending. Host capability flags allow unsupported external streams to warn and fall back cleanly.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -59,3 +63,4 @@
 - 2026-10-20T16:20Z [CODE] Added signed arithmetic with 16-bit wrapping, indirect variable stack-top access, bounded byte/word arrays, overlap-aware `copy_table`, random opcode seeding/reset, shifts, and V6 `pop_stack` execution.
 - 2026-10-20T16:56Z [CODE] Added V1–V3 and V4+ object layouts, attribute access/mutation, object-tree traversal and safe insertion/removal, short-name decoding, property defaults and parsing, lookup/address/length/iteration/update operations, and executor support for object/property opcode families. Generated fixtures cover versioned entries, headers, long lengths, malformed ordering/pointers, mutation invariants, and opcode execution.
 - 2026-10-20T18:07Z [CODE] Added version-aware dictionary headers and sorted/unsorted lookup, separator-aware lexical analysis into bounded parse tables, `tokenise` and `encode_text`, Unicode input/output capability checks, and generated V1–V8 text-buffer tests plus V4/V5 `scan_table` word/byte cases.
+- 2026-10-20T18:40Z [CODE] Added host-provided line/key input, timed interrupt execution, function-key terminators, V1–V8 buffer and parse behavior, input/output stream selection, nested stream 3 capture, transcript/command streams, routed text output, `print_table`, `buffer_mode`, and suggested filename normalization. Generated tests cover V1–V8 input, timers, stream nesting, filename rules, and unsupported command-file input. Quetzal save-file encoding remains Task 17.

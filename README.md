@@ -25,8 +25,12 @@ tables, attributes, tree mutation, short names, and versioned property headers,
 defaults, lookup, iteration, and updates. Dictionary search supports sorted
 story dictionaries and unsorted user dictionaries; text parsing handles word
 separators and versioned text/parse buffers. `tokenise`, `encode_text`,
-`check_unicode`, and versioned `scan_table` execution are covered. Save-file
-encoding is implemented in a later task.
+`check_unicode`, and versioned `scan_table` execution are covered. The executor
+supports host-provided line and character input, timed-input callbacks, terminating
+characters, command input and recording streams, transcript and screen selection,
+nested memory output streams, standardized suggested filenames, and streamed text
+output. The Avalonia host will be connected in Task 18; save-file encoding is
+implemented in a later task.
 
 ## Requirements
 
