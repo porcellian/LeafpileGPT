@@ -6,6 +6,7 @@ public sealed class ZMachineOpcodeExecutor
     private readonly ZMachineState _state;
     private readonly IZMachineSaveRestoreService? _saveRestore;
     private readonly IZMachineObjectQueries? _objects;
+    private readonly ZMachineTextParser _textParser;
 
     public ZMachineOpcodeExecutor(
         ZMachineState state,
@@ -17,6 +18,11 @@ public sealed class ZMachineOpcodeExecutor
         _state = state;
         _saveRestore = saveRestore;
         _objects = objects ?? new ZMachineObjectTable(state);
+        _textParser = new ZMachineTextParser(
+            state.Memory,
+            state.Header,
+            new ZMachineDictionary(state.Memory, state.Header, state.Characters),
+            state.Text);
     }
 
     public ZMachineExecutionResult ExecuteNext()
@@ -340,6 +346,34 @@ public sealed class ZMachineOpcodeExecutor
             case 23:
                 ExecuteScanTable(instruction);
                 break;
+            case 27:
+                {
+                    var textBuffer = ReadValue(instruction.Operands[0]);
+                    var parseBuffer = ReadValue(instruction.Operands[1]);
+                    var dictionaryAddress = instruction.Operands.Count >= 3 ? ReadValue(instruction.Operands[2]) : (ushort)0;
+                    var skipUnrecognized = instruction.Operands.Count == 4 && ReadValue(instruction.Operands[3]) != 0;
+                    _textParser.Tokenise(
+                        textBuffer,
+                        parseBuffer,
+                        dictionaryAddress == 0 ? _state.Header.DictionaryAddress : dictionaryAddress,
+                        skipUnrecognized);
+                    break;
+                }
+            case 28:
+                {
+                    var encoded = _textParser.EncodeText(
+                        ReadValue(instruction.Operands[0]),
+                        ReadValue(instruction.Operands[1]),
+                        ReadValue(instruction.Operands[2]));
+                    var destination = ReadValue(instruction.Operands[3]);
+                    _state.Memory.ValidateDynamicRange(destination, encoded.Length);
+                    for (var index = 0; index < encoded.Length; index++)
+                    {
+                        _state.Memory.WriteByte(checked((ushort)(destination + index)), encoded[index]);
+                    }
+
+                    break;
+                }
             case 31:
                 Branch(instruction, _state.CallStack.HasArgument(ReadValue(instruction.Operands[0])));
                 break;
@@ -379,6 +413,9 @@ public sealed class ZMachineOpcodeExecutor
                 break;
             case 3:
                 StoreResult(instruction, Shift(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), arithmetic: true));
+                break;
+            case 12:
+                StoreResult(instruction, _state.Characters.CheckUnicode(ReadValue(instruction.Operands[0])));
                 break;
             case 24:
                 {
