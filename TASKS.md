@@ -14,7 +14,7 @@ authorized fixtures.
 ## Tasks
 
 - [x] **Task 01 — Establish the solution and workflow.** Create `LeafpileGPT.sln` with `Leafpile.Core`, `Leafpile.Desktop`, and `Leafpile.Tests`; configure Avalonia, xUnit, .NET 10, GitHub Actions for macOS and Windows, and the task/continuity documentation.
-- [ ] **Task 02 — Load and validate story files.** Read standalone Z-code and Blorb-contained Z-code; validate file length, version, header, and required addresses, and report malformed or unsupported input clearly.
+- [x] **Task 02 — Load and validate story files.** Read standalone Z-code and Blorb-contained Z-code; validate file length, version, header, and required addresses, and report malformed or unsupported input clearly.
 - [ ] **Task 03 — Implement memory, addressing, and machine state.** Support version-dependent packed addresses, dynamic and static memory rules, header fields, arithmetic, signed operations, division errors, and the specified random number behavior.
 - [ ] **Task 04 — Implement routines and stacks.** Support calls, locals, return values, evaluation stacks, catch/throw, and V6 user stacks, with version-correct startup and frame behavior.
 - [ ] **Task 05 — Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
