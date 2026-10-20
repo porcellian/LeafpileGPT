@@ -1,6 +1,6 @@
 namespace Leafpile.Core.Machine;
 
-/// <summary>Executes control-flow and routine opcodes for one decoded instruction.</summary>
+/// <summary>Executes decoded control-flow, arithmetic, memory, and routine instructions.</summary>
 public sealed class ZMachineOpcodeExecutor
 {
     private readonly ZMachineState _state;
@@ -84,9 +84,9 @@ public sealed class ZMachineOpcodeExecutor
             case 5:
                 {
                     var variable = ReadVariableReference(operands[0]);
-                    var value = variable == 0 ? _state.CallStack.Pop() : _state.ReadVariableValue(variable);
+                    var value = _state.ReadIndirectVariable(variable);
                     var updated = unchecked((ushort)(value + (instruction.Opcode == 4 ? -1 : 1)));
-                    _state.WriteVariable(variable, updated);
+                    _state.WriteIndirectVariable(variable, updated);
                     var compare = ReadValue(operands[1]);
                     Branch(instruction, instruction.Opcode == 4 ? (short)updated < (short)compare : (short)updated > (short)compare);
                     break;
@@ -101,8 +101,44 @@ public sealed class ZMachineOpcodeExecutor
                     Branch(instruction, (bitmap & flags) == flags);
                     break;
                 }
+            case 8:
+                StoreResult(instruction, ZMachineArithmetic.Or(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 9:
+                StoreResult(instruction, ZMachineArithmetic.And(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
             case 10:
                 Branch(instruction, RequireObjects().HasAttribute(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 13:
+                _state.WriteIndirectVariable(ReadVariableReference(operands[0]), ReadValue(operands[1]));
+                break;
+            case 15:
+            case 16:
+                {
+                    var array = ReadValue(operands[0]);
+                    var index = ReadValue(operands[1]);
+                    var address = CalculateAddress(array, index, instruction.Opcode == 15 ? sizeof(ushort) : sizeof(byte));
+                    var value = instruction.Opcode == 15
+                        ? _state.Memory.ReadWord(address)
+                        : _state.Memory.ReadByte(address);
+                    StoreResult(instruction, value);
+                    break;
+                }
+            case 20:
+                StoreResult(instruction, ZMachineArithmetic.Add(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 21:
+                StoreResult(instruction, ZMachineArithmetic.Subtract(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 22:
+                StoreResult(instruction, ZMachineArithmetic.Multiply(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 23:
+                StoreResult(instruction, ZMachineArithmetic.Divide(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 24:
+                StoreResult(instruction, ZMachineArithmetic.Remainder(ReadValue(operands[0]), ReadValue(operands[1])));
                 break;
             case 25:
                 Call(instruction, storeResult: true);
@@ -143,6 +179,14 @@ public sealed class ZMachineOpcodeExecutor
                     Branch(instruction, value != 0);
                     break;
                 }
+            case 5:
+            case 6:
+                {
+                    var variable = ReadVariableReference(operand);
+                    var value = _state.ReadIndirectVariable(variable);
+                    _state.WriteIndirectVariable(variable, unchecked((ushort)(value + (instruction.Opcode == 5 ? 1 : -1))));
+                    break;
+                }
             case 8:
                 Call(instruction, storeResult: true);
                 break;
@@ -155,6 +199,12 @@ public sealed class ZMachineOpcodeExecutor
                     _state.SetProgramCounter(checked(instruction.NextAddress + offset - 2));
                     break;
                 }
+            case 14:
+                StoreResult(instruction, _state.ReadIndirectVariable(ReadVariableReference(operand)));
+                break;
+            case 15 when _state.Header.Version <= 4:
+                StoreResult(instruction, ZMachineArithmetic.Not(ReadValue(operand)));
+                break;
             case 15 when _state.Header.Version >= 5:
                 Call(instruction, storeResult: false);
                 break;
@@ -222,16 +272,47 @@ public sealed class ZMachineOpcodeExecutor
                 _state.CallStack.Push(ReadValue(instruction.Operands[0]));
                 break;
             case 9 when _state.Header.Version < 6:
-                _state.WriteVariable(ReadVariableReference(instruction.Operands[0]), _state.CallStack.Pop());
-                break;
+                {
+                    var variable = ReadVariableReference(instruction.Operands[0]);
+                    var value = variable == 0 ? _state.CallStack.Peek() : _state.CallStack.Pop();
+                    _state.WriteIndirectVariable(variable, value);
+                    break;
+                }
             case 9:
                 StoreResult(instruction, _state.CallStack.PullUserStack(ReadValue(instruction.Operands[0])));
+                break;
+            case 1:
+            case 2:
+                {
+                    var array = ReadValue(instruction.Operands[0]);
+                    var index = ReadValue(instruction.Operands[1]);
+                    var value = ReadValue(instruction.Operands[2]);
+                    var address = CalculateAddress(array, index, instruction.Opcode == 1 ? sizeof(ushort) : sizeof(byte));
+                    if (instruction.Opcode == 1)
+                    {
+                        _state.Memory.WriteWord(address, value);
+                    }
+                    else
+                    {
+                        _state.Memory.WriteByte(address, (byte)value);
+                    }
+
+                    break;
+                }
+            case 7:
+                StoreResult(instruction, _state.Random.Next(ReadValue(instruction.Operands[0])));
                 break;
             case 23:
                 ExecuteScanTable(instruction);
                 break;
             case 31:
                 Branch(instruction, _state.CallStack.HasArgument(ReadValue(instruction.Operands[0])));
+                break;
+            case 29:
+                ExecuteCopyTable(instruction);
+                break;
+            case 24 when _state.Header.Version >= 5:
+                StoreResult(instruction, ZMachineArithmetic.Not(ReadValue(instruction.Operands[0])));
                 break;
             default:
                 throw Unsupported(instruction);
@@ -253,6 +334,17 @@ public sealed class ZMachineOpcodeExecutor
                 return ExecuteSave(instruction, undo: true);
             case 10:
                 return ExecuteRestore(instruction, undo: true);
+            case 21:
+                _state.CallStack.PopStack(
+                    ReadValue(instruction.Operands[0]),
+                    instruction.Operands.Count == 2 ? ReadValue(instruction.Operands[1]) : null);
+                break;
+            case 2:
+                StoreResult(instruction, Shift(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), arithmetic: false));
+                break;
+            case 3:
+                StoreResult(instruction, Shift(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]), arithmetic: true));
+                break;
             case 24:
                 {
                     var value = ReadValue(instruction.Operands[0]);
@@ -379,6 +471,69 @@ public sealed class ZMachineOpcodeExecutor
         Branch(instruction, foundAddress != 0);
     }
 
+    private void ExecuteCopyTable(ZMachineInstruction instruction)
+    {
+        var source = ReadValue(instruction.Operands[0]);
+        var destination = ReadValue(instruction.Operands[1]);
+        var signedSize = (short)ReadValue(instruction.Operands[2]);
+        if (signedSize == 0)
+        {
+            return;
+        }
+
+        var count = Math.Abs((int)signedSize);
+        if (destination == 0)
+        {
+            _state.Memory.ValidateDynamicRange(source, count);
+            for (var index = 0; index < count; index++)
+            {
+                _state.Memory.WriteByte(checked((ushort)(source + index)), 0);
+            }
+
+            return;
+        }
+
+        var direction = signedSize > 0 && destination > source && destination < (long)source + count ? -1 : 1;
+        _state.Memory.ValidateReadableRange(source, count);
+        _state.Memory.ValidateDynamicRange(destination, count);
+        var indexToCopy = direction < 0 ? count - 1 : 0;
+        for (var copied = 0; copied < count; copied++, indexToCopy += direction)
+        {
+            var value = _state.Memory.ReadByte(checked((ushort)(source + indexToCopy)));
+            _state.Memory.WriteByte(checked((ushort)(destination + indexToCopy)), value);
+        }
+    }
+
+    private ushort Shift(ushort value, ushort encodedPlaces, bool arithmetic)
+    {
+        var places = (short)encodedPlaces;
+        if (places is < -15 or > 15)
+        {
+            throw new ZMachineRuntimeException($"Shift count {places} is outside the defined range -15 through 15.");
+        }
+
+        if (places >= 0)
+        {
+            return unchecked((ushort)(value << places));
+        }
+
+        return arithmetic
+            ? unchecked((ushort)((short)value >> -places))
+            : (ushort)(value >> -places);
+    }
+
+    private ushort CalculateAddress(ushort baseAddress, ushort index, int scale)
+    {
+        var address = (long)baseAddress + ((long)index * scale);
+        var width = scale;
+        if (address > ushort.MaxValue || address + width > _state.Memory.StaticMemoryLimitExclusive)
+        {
+            throw new ZMachineRuntimeException($"Array access at 0x{address:x} with width {width} is outside addressable memory.");
+        }
+
+        return (ushort)address;
+    }
+
     private bool VerifyStory()
     {
         var image = _state.Memory.GetStoryImage().Span;
@@ -400,9 +555,7 @@ public sealed class ZMachineOpcodeExecutor
 
     private byte ReadVariableReference(ZMachineOperand operand)
     {
-        var value = operand.Type == ZMachineOperandType.Variable
-            ? _state.ReadVariableValue(checked((byte)operand.EncodedValue))
-            : operand.EncodedValue;
+        var value = operand.EncodedValue;
         if (value > byte.MaxValue)
         {
             throw new ZMachineRuntimeException($"Variable reference {value} is outside the range 0–255.");

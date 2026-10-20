@@ -145,6 +145,28 @@ public sealed class ZMachineCallStack
         return value;
     }
 
+    public ushort Peek()
+    {
+        var frame = CurrentFrame;
+        if (_evaluationStack.Count <= frame.EvaluationStackBase)
+        {
+            throw new ZMachineRuntimeException("The evaluation stack is empty for the current routine.");
+        }
+
+        return _evaluationStack[^1];
+    }
+
+    public void ReplaceTop(ushort value)
+    {
+        var frame = CurrentFrame;
+        if (_evaluationStack.Count <= frame.EvaluationStackBase)
+        {
+            throw new ZMachineRuntimeException("The evaluation stack is empty for the current routine.");
+        }
+
+        _evaluationStack[^1] = value;
+    }
+
     public RoutineReturnResult ReturnFromRoutine(ushort value)
     {
         var frameIndex = _frames.Count - 1;
