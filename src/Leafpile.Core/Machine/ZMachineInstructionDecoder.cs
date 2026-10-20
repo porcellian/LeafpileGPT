@@ -185,7 +185,8 @@ public sealed class ZMachineInstructionDecoder
             {
                 0 => new(1, 1, branch: true),
                 1 or 2 => new(1, 1, store: true, branch: true),
-                >= 3 and <= 7 => new(1, 1),
+                3 or 4 => new(1, 1, store: true),
+                >= 5 and <= 7 => new(1, 1),
                 8 when _header.Version >= 4 => new(1, 1, store: true),
                 >= 9 and <= 13 => new(1, 1),
                 14 => new(1, 1, store: true),

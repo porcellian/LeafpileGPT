@@ -21,7 +21,7 @@ authorized fixtures.
 - [x] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
 - [x] **Task 07 — Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.
 - [x] **Task 08 — Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
-- [ ] **Task 09 — Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.
+- [x] **Task 09 — Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.
 - [ ] **Task 10 — Implement dictionary, tokenization, and text opcodes.** Support dictionary lookup, parsing, tokenization, text scanning, and version-specific behavior.
 - [ ] **Task 11 — Implement input, output streams, and file opcodes.** Support keyboard and timed input, terminating characters, input streams, output buffering and stream selection, transcript and command streams, and standard file operations.
 - [ ] **Task 12 — Implement the V1–V5 screen model.** Provide status line updates, screen dimensions, cursor and window behavior, text styles and colors, buffering, and the distinct V1–V3 and V4–V5 rules.

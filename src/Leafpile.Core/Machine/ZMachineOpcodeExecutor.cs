@@ -16,7 +16,7 @@ public sealed class ZMachineOpcodeExecutor
 
         _state = state;
         _saveRestore = saveRestore;
-        _objects = objects;
+        _objects = objects ?? new ZMachineObjectTable(state);
     }
 
     public ZMachineExecutionResult ExecuteNext()
@@ -110,8 +110,17 @@ public sealed class ZMachineOpcodeExecutor
             case 10:
                 Branch(instruction, RequireObjects().HasAttribute(ReadValue(operands[0]), ReadValue(operands[1])));
                 break;
+            case 11:
+                RequireObjects().SetAttribute(ReadValue(operands[0]), ReadValue(operands[1]));
+                break;
+            case 12:
+                RequireObjects().ClearAttribute(ReadValue(operands[0]), ReadValue(operands[1]));
+                break;
             case 13:
                 _state.WriteIndirectVariable(ReadVariableReference(operands[0]), ReadValue(operands[1]));
+                break;
+            case 14:
+                RequireObjects().InsertObject(ReadValue(operands[0]), ReadValue(operands[1]));
                 break;
             case 15:
             case 16:
@@ -125,6 +134,15 @@ public sealed class ZMachineOpcodeExecutor
                     StoreResult(instruction, value);
                     break;
                 }
+            case 17:
+                StoreResult(instruction, RequireObjects().GetProperty(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 18:
+                StoreResult(instruction, RequireObjects().GetPropertyAddress(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
+            case 19:
+                StoreResult(instruction, RequireObjects().GetNextProperty(ReadValue(operands[0]), ReadValue(operands[1])));
+                break;
             case 20:
                 StoreResult(instruction, ZMachineArithmetic.Add(ReadValue(operands[0]), ReadValue(operands[1])));
                 break;
@@ -179,6 +197,12 @@ public sealed class ZMachineOpcodeExecutor
                     Branch(instruction, value != 0);
                     break;
                 }
+            case 3:
+                StoreResult(instruction, RequireObjects().GetParent(ReadValue(operand)));
+                break;
+            case 4:
+                StoreResult(instruction, RequireObjects().GetPropertyLength(ReadValue(operand)));
+                break;
             case 5:
             case 6:
                 {
@@ -190,6 +214,11 @@ public sealed class ZMachineOpcodeExecutor
             case 8:
                 Call(instruction, storeResult: true);
                 break;
+            case 9:
+                RequireObjects().RemoveObject(ReadValue(operand));
+                break;
+            case 10:
+                return new ZMachineExecutionResult(Output: RequireObjects().GetShortName(ReadValue(operand)));
             case 11:
                 Return(ReadValue(operand));
                 break;
@@ -280,6 +309,12 @@ public sealed class ZMachineOpcodeExecutor
                 }
             case 9:
                 StoreResult(instruction, _state.CallStack.PullUserStack(ReadValue(instruction.Operands[0])));
+                break;
+            case 3:
+                RequireObjects().SetProperty(
+                    ReadValue(instruction.Operands[0]),
+                    ReadValue(instruction.Operands[1]),
+                    ReadValue(instruction.Operands[2]));
                 break;
             case 1:
             case 2:

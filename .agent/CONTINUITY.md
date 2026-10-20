@@ -31,11 +31,16 @@
 - 2026-10-20T16:10Z [CODE] Started Task 08 on `feature/8-arithmetic-memory-system-opcodes` from merged `main` at `7b42175`.
 - 2026-10-20T16:20Z [CODE] Completed and reviewed Task 08 on `feature/8-arithmetic-memory-system-opcodes`; arithmetic, variable, memory/table, random, shift, and stack cleanup opcodes are ready for PR review.
 - 2026-10-20T16:20Z [TOOL] Task 08 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 187 generated tests pass.
+- 2026-10-20T16:25Z [USER] PR #9 was merged; this supersedes the Task 08 PR review status above.
+- 2026-10-20T16:25Z [CODE] Started Task 09 on `feature/9-object-property-opcodes` from merged `main` at `017c2f2`.
+- 2026-10-20T16:56Z [CODE] Completed and reviewed Task 09 on `feature/9-object-property-opcodes`; versioned object/property operations and their opcode handlers are ready for PR review.
+- 2026-10-20T16:56Z [TOOL] Task 09 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 207 generated tests pass.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
 - 2026-10-20T04:50Z [TOOL] Avalonia build telemetry must be disabled in this restricted workspace with `AVALONIA_TELEMETRY_OPTOUT=1`; CI uses the same setting.
 - 2026-10-20T15:38Z [TOOL] `call_vs2` and `call_vn2` place both operand-type bytes before all operand values; generated tests verify eight-operand decoding and invalid omitted-type ordering.
+- 2026-10-20T16:56Z [TOOL] Generated executor tests exposed that 1OP `get_parent` and `get_prop_len` require store bytes; decoder metadata now describes those stores, with regression coverage.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -47,3 +52,4 @@
 - 2026-10-20T15:39Z [TOOL] Final Task 06 verification supersedes the prior count: Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 154 tests passed.
 - 2026-10-20T16:00Z [CODE] Added the execution framework for conditional branches, calls/returns, save/restore service flow, restart/quit, verification, scan-table, and argument/catch/throw control instructions, with generated tests for key version differences.
 - 2026-10-20T16:20Z [CODE] Added signed arithmetic with 16-bit wrapping, indirect variable stack-top access, bounded byte/word arrays, overlap-aware `copy_table`, random opcode seeding/reset, shifts, and V6 `pop_stack` execution.
+- 2026-10-20T16:56Z [CODE] Added V1–V3 and V4+ object layouts, attribute access/mutation, object-tree traversal and safe insertion/removal, short-name decoding, property defaults and parsing, lookup/address/length/iteration/update operations, and executor support for object/property opcode families. Generated fixtures cover versioned entries, headers, long lengths, malformed ordering/pointers, mutation invariants, and opcode execution.
