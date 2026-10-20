@@ -177,6 +177,9 @@ public sealed class ZMachineOpcodeExecutor
             case 26:
                 Call(instruction, storeResult: false);
                 break;
+            case 27:
+                _state.Screen.SetColour(ReadValue(operands[0]), ReadValue(operands[1]));
+                break;
             case 28:
                 {
                     var value = ReadValue(operands[0]);
@@ -293,6 +296,9 @@ public sealed class ZMachineOpcodeExecutor
                 return new ZMachineExecutionResult(Halted: true);
             case 11:
                 return new ZMachineExecutionResult(Output: WriteOutput("\n"));
+            case 12:
+                UpdateStatusLine();
+                break;
             case 13:
                 Branch(instruction, VerifyStory());
                 break;
@@ -400,7 +406,35 @@ public sealed class ZMachineOpcodeExecutor
                 ExecuteCopyTable(instruction);
                 break;
             case 18:
-                _outputStreams.SetBuffering(ReadValue(instruction.Operands[0]) != 0);
+                var buffering = ReadValue(instruction.Operands[0]) != 0;
+                _outputStreams.SetBuffering(buffering);
+                _state.Screen.SetBuffering(buffering);
+                break;
+            case 10:
+                _state.Screen.SplitWindow(ReadValue(instruction.Operands[0]));
+                break;
+            case 11:
+                _state.Screen.SelectWindow(ReadValue(instruction.Operands[0]));
+                break;
+            case 13:
+                _state.Screen.EraseWindow(unchecked((short)ReadValue(instruction.Operands[0])));
+                break;
+            case 14:
+                _state.Screen.EraseLine(ReadValue(instruction.Operands[0]));
+                break;
+            case 15:
+                _state.Screen.SetCursor(ReadValue(instruction.Operands[0]), ReadValue(instruction.Operands[1]));
+                break;
+            case 16:
+                {
+                    var table = ReadValue(instruction.Operands[0]);
+                    _state.Memory.ValidateDynamicRange(table, 2 * sizeof(ushort));
+                    _state.Memory.WriteWord(table, checked((ushort)(_state.Screen.CursorRow + 1)));
+                    _state.Memory.WriteWord(checked((ushort)(table + sizeof(ushort))), checked((ushort)(_state.Screen.CursorColumn + 1)));
+                    break;
+                }
+            case 17:
+                _state.Screen.SetTextStyle(ReadValue(instruction.Operands[0]));
                 break;
             case 19:
                 {
@@ -516,6 +550,11 @@ public sealed class ZMachineOpcodeExecutor
         var result = RequireSaveRestoreService().Restore(_state, instruction, undo);
         if (result.ResumedFromSavedState)
         {
+            if (_state.Header.Version == 3)
+            {
+                _state.Screen.SplitWindow(0);
+            }
+
             return new ZMachineExecutionResult(Restored: true);
         }
 
@@ -656,6 +695,11 @@ public sealed class ZMachineOpcodeExecutor
             TerminatingCharacters: terminatingCharacters,
             timing.Time,
             timing.Routine);
+        if (version <= 3)
+        {
+            UpdateStatusLine();
+        }
+
         var response = ReadHostInput(request);
         var typedText = NormalizeInput(response.Text, maximumTyped - initialCount);
         var wasTimedOut = response.TimedOut;
@@ -669,6 +713,7 @@ public sealed class ZMachineOpcodeExecutor
         var terminator = wasTimedOut ? (byte)0 : NormalizeTerminator(response.Terminator, terminatingCharacters);
         var echo = !wasTimedOut ? fullText + "\n" : string.Empty;
         var output = _outputStreams.WriteInputEcho(echo, allowTranscript: version <= 5);
+        _state.Screen.Write(output);
         _outputStreams.RecordCommand(fullText);
 
         if (parseBuffer != 0)
@@ -926,7 +971,36 @@ public sealed class ZMachineOpcodeExecutor
         return new ZMachineExecutionResult(Output: WriteOutput(output.ToString()));
     }
 
-    private string WriteOutput(string text) => _outputStreams.Write(text);
+    private string WriteOutput(string text)
+    {
+        var visible = _outputStreams.Write(text);
+        _state.Screen.Write(visible);
+        return visible;
+    }
+
+    private void UpdateStatusLine()
+    {
+        if (_state.Header.Version > 3)
+        {
+            return;
+        }
+
+        var objectNumber = _state.ReadVariableValue(16);
+        var location = string.Empty;
+        if (objectNumber != 0)
+        {
+            try
+            {
+                location = RequireObjects().GetShortName(objectNumber);
+            }
+            catch (ZMachineRuntimeException)
+            {
+                // A malformed status object must not prevent the next command from being read.
+            }
+        }
+
+        _state.Screen.ShowStatus(location, _state.ReadVariableValue(17), _state.ReadVariableValue(18));
+    }
 
     private void ConfigureInputCapabilities()
     {
