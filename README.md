@@ -39,17 +39,21 @@ available for character graphics. The core dispatches sound effects through the
 and completion routines; actual resource lookup and playback are supplied by a
 host. Blorb containers expose indexed resources, validated metadata, image bytes,
 dimensions, and scaling information through the loaded story. V6 draw and erase
-operations are available to a display host; Avalonia rendering and desktop audio
-wiring remain in Task 18. Sound capability bits are set or cleared from host
-support. Mouse, menu, and transparency capabilities remain unavailable. Versions
-7 and 8 retain the V5 text-window model. Quetzal support writes compressed CMem
+operations are available to a display host. Sound capability bits are set or
+cleared from host support. Mouse, menu, and transparency capabilities remain
+unavailable. Versions 7 and 8 retain the V5 text-window model. Quetzal support writes compressed CMem
 or optional UMem saves and restores either encoding for V1–V8. It validates story
 identity and IFZS chunk bounds, restores versioned call frames and stack values,
 resumes at the original save instruction's success continuation, and supports
 ANNO and IntD chunks. `QuetzalSaveRestoreService` uses the core
 `IZMachineSaveFileAccess` boundary for host-selected files and includes
-in-memory `save_undo` / `restore_undo` support; the desktop file dialogs remain
-in Task 18.
+in-memory `save_undo` / `restore_undo` support. The Avalonia desktop host now
+provides Quetzal save and restore file pickers, story open and restart commands,
+keyboard text and character input, renderer-neutral display updates, Blorb image
+rendering, and runtime error reporting. It uses a Courier-style font with a blue
+story area and gray V1–V3 status bar. Timed input, transcript and command files,
+and sound playback remain unavailable in the desktop host and are reported via
+the capability flags supported by the core.
 
 ## Requirements
 

@@ -177,6 +177,24 @@ public sealed class ZMachineOpcodeExecutorTests
         Assert.Contains("save and restore service", error.Message);
     }
 
+    [Fact]
+    public void PublishesScreenUpdatesAndRuntimeErrorsToTheDisplayHost()
+    {
+        var state = CreateState(5, 0xb4);
+        var display = new FakeDisplay();
+        var result = new ZMachineOpcodeExecutor(state, display: display).ExecuteNext();
+
+        Assert.False(result.Halted);
+        Assert.Same(state.Screen, display.LastScreen);
+
+        var saveState = CreateState(5, 0xbe, 9, 0xff, 0x10);
+        var saveDisplay = new FakeDisplay();
+        var error = Assert.Throws<ZMachineRuntimeException>(() =>
+            new ZMachineOpcodeExecutor(saveState, display: saveDisplay).ExecuteNext());
+
+        Assert.Equal(error.Message, saveDisplay.LastRuntimeError);
+    }
+
     private static ZMachineState CreateState(byte version, params byte[] instruction)
     {
         var story = MachineStoryFactory.Create(version);
@@ -211,5 +229,16 @@ public sealed class ZMachineOpcodeExecutorTests
 
             return RestoreResult;
         }
+    }
+
+    private sealed class FakeDisplay : IZMachineDisplay
+    {
+        public ZMachineScreen? LastScreen { get; private set; }
+
+        public string? LastRuntimeError { get; private set; }
+
+        public void Present(ZMachineScreen screen) => LastScreen = screen;
+
+        public void ReportRuntimeError(string message) => LastRuntimeError = message;
     }
 }
