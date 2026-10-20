@@ -1,3 +1,5 @@
+using System.Collections.Concurrent;
+
 namespace Leafpile.Core.Machine;
 
 /// <summary>Executes decoded control-flow, arithmetic, memory, and routine instructions.</summary>
@@ -7,17 +9,21 @@ public sealed class ZMachineOpcodeExecutor
     private readonly IZMachineSaveRestoreService? _saveRestore;
     private readonly IZMachineObjectQueries? _objects;
     private readonly IZMachineInputOutput? _inputOutput;
+    private readonly IZMachineSound? _sound;
+    private readonly ConcurrentQueue<ushort> _soundCompletions = new();
     private ZMachineTextParser _textParser;
     private ZMachineOutputStreams _outputStreams;
     private bool _commandInputSelected;
     private ushort _lastRoutineReturnValue;
     private bool _insideTimedInputRoutine;
+    private int? _activeSoundCallbackDepth;
 
     public ZMachineOpcodeExecutor(
         ZMachineState state,
         IZMachineSaveRestoreService? saveRestore = null,
         IZMachineObjectQueries? objects = null,
-        IZMachineInputOutput? inputOutput = null)
+        IZMachineInputOutput? inputOutput = null,
+        IZMachineSound? sound = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -25,15 +31,42 @@ public sealed class ZMachineOpcodeExecutor
         _saveRestore = saveRestore;
         _objects = objects ?? new ZMachineObjectTable(state);
         _inputOutput = inputOutput;
+        _sound = sound;
         _outputStreams = new ZMachineOutputStreams(state, inputOutput);
         ConfigureInputCapabilities();
+        ConfigureSoundCapabilities();
         _textParser = CreateTextParser();
     }
 
     public ZMachineExecutionResult ExecuteNext()
     {
+        ProcessSoundCompletions();
         var instruction = _state.Instructions.Decode(_state.ProgramCounter);
         return Execute(instruction);
+    }
+
+    /// <summary>Runs queued sound-finished routines on the interpreter thread.</summary>
+    /// <remarks>Hosts that run sound asynchronously should call this between instruction steps.</remarks>
+    public void ProcessSoundCompletions()
+    {
+        if (_activeSoundCallbackDepth.HasValue)
+        {
+            if (_state.CallStack.FrameCount >= _activeSoundCallbackDepth.Value)
+            {
+                return;
+            }
+
+            _activeSoundCallbackDepth = null;
+        }
+
+        if (_soundCompletions.TryDequeue(out var routine) && routine != 0)
+        {
+            var call = _state.CallStack.CallRoutine(routine, Array.Empty<ushort>(), _state.ProgramCounter);
+            if (call.RoutineStarted)
+            {
+                _activeSoundCallbackDepth = _state.CallStack.FrameCount;
+            }
+        }
     }
 
     public bool OutputBufferingEnabled => _outputStreams.BufferingEnabled;
@@ -412,6 +445,9 @@ public sealed class ZMachineOpcodeExecutor
                 var buffering = ReadValue(instruction.Operands[0]) != 0;
                 _outputStreams.SetBuffering(buffering);
                 _state.Screen.SetBuffering(buffering);
+                break;
+            case 21:
+                ExecuteSoundEffect(instruction);
                 break;
             case 10:
                 _state.Screen.SplitWindow(ReadValue(instruction.Operands[0]));
@@ -1132,6 +1168,94 @@ public sealed class ZMachineOpcodeExecutor
             _state.Memory.WriteByte(0x01, _inputOutput?.SupportsTimedInput == true
                 ? (byte)(flags1 | 0x80)
                 : (byte)(flags1 & 0x7f));
+        }
+    }
+
+    private void ConfigureSoundCapabilities()
+    {
+        var supported = _sound?.SupportsSoundEffects == true;
+        if (_state.Header.Version == 6)
+        {
+            var flags1 = _state.Memory.ReadByte(0x01);
+            _state.Memory.WriteByte(0x01, supported ? (byte)(flags1 | 0x20) : (byte)(flags1 & ~0x20));
+        }
+
+        if (_state.Header.Version >= 5 && !supported)
+        {
+            _state.Memory.WriteWord(0x10, (ushort)(_state.Memory.ReadWord(0x10) & ~0x80));
+        }
+    }
+
+    private void ExecuteSoundEffect(ZMachineInstruction instruction)
+    {
+        var operands = instruction.Operands;
+        var soundNumber = operands.Count == 0 ? (ushort)1 : ReadValue(operands[0]);
+        if (soundNumber is 1 or 2)
+        {
+            if (operands.Count > 1)
+            {
+                throw new ZMachineRuntimeException("Sound bleeps 1 and 2 do not accept effect, volume, repeat, or callback operands.");
+            }
+
+            _sound?.Play(new ZMachineSoundRequest(soundNumber, 8, 1, 0), completed: null);
+            return;
+        }
+
+        if (operands.Count < 2)
+        {
+            throw new ZMachineRuntimeException("sound_effect requires an effect for sound resources numbered 3 or higher.");
+        }
+
+        var effect = ReadValue(operands[1]);
+        if (effect is < 1 or > 4)
+        {
+            throw new ZMachineRuntimeException($"sound_effect effect {effect} is not one of prepare (1), start (2), stop (3), or finish (4).");
+        }
+
+        if (soundNumber == 0 && effect is 1 or 2)
+        {
+            return;
+        }
+
+        if (_sound?.SupportsSoundEffects != true)
+        {
+            return;
+        }
+
+        switch (effect)
+        {
+            case 1:
+                _sound.Prepare(soundNumber);
+                break;
+            case 2:
+                var packed = operands.Count >= 3
+                    ? ReadValue(operands[2])
+                    : _state.Header.Version == 3 ? (ushort)8 : (ushort)0x0108;
+                var volumeByte = packed & 0xff;
+                var repeatByte = packed >> 8;
+                if (volumeByte != 255 && (volumeByte < 1 || volumeByte > 8))
+                {
+                    throw new ZMachineRuntimeException($"sound_effect volume {volumeByte} is outside 1–8 and the loudest-possible value 255.");
+                }
+
+                if (_state.Header.Version == 3 && repeatByte != 0)
+                {
+                    throw new ZMachineRuntimeException("Version 3 sound_effect does not support repeats; the high volume-repeat byte must be zero.");
+                }
+
+                int? repeats = _state.Header.Version == 3
+                    ? 1
+                    : repeatByte == 255 ? null : repeatByte == 0 ? 1 : repeatByte;
+                var volume = volumeByte == 255 ? -1 : volumeByte;
+                var routine = _state.Header.Version >= 5 && operands.Count >= 4 ? ReadValue(operands[3]) : (ushort)0;
+                _sound.Play(new ZMachineSoundRequest(soundNumber, volume, repeats, routine), routine == 0 ? null : () => _soundCompletions.Enqueue(routine));
+                break;
+            case 3:
+                _sound.Stop(soundNumber == 0 ? null : soundNumber);
+                break;
+            case 4:
+                _sound.Finish(soundNumber == 0 ? null : soundNumber);
+                break;
         }
     }
 

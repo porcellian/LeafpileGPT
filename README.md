@@ -34,11 +34,14 @@ updates, split-window behavior, cursor positions, screen clearing, text styles,
 V5 colors, and lower-window word wrapping and buffering. V6 adds eight pixel
 windows, per-window geometry, cursor, style, color, font, margins, attributes and
 properties, scrolling, screen buffering, and formatted output streams. Font 3 is
-available for character graphics. Picture, sound, mouse, menu, and transparency
-capabilities are reported unavailable until their providers are implemented;
-Blorb picture integration is Task 16. Versions 7 and 8 retain the V5 text-window
-model. The Avalonia host will be connected in Task 18; save-file encoding is
-implemented in a later task.
+available for character graphics. The core dispatches sound effects through the
+`IZMachineSound` host contract, including volume, repeats, stop/finish operations,
+and completion routines; actual resource lookup and playback are supplied by a
+host, with Blorb resource indexing in Task 15 and desktop audio wiring in Task 18.
+Sound capability bits are set or cleared from host support. Picture, mouse, menu,
+and transparency capabilities remain unavailable until their providers are
+implemented; Blorb picture integration is Task 16. Versions 7 and 8 retain the V5
+text-window model. Save-file encoding is implemented in a later task.
 
 ## Requirements
 
