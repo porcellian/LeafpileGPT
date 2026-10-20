@@ -91,6 +91,37 @@ public sealed class ZMachineCharacterSet
         (zsciiCode == 13 || zsciiCode is >= 32 and <= 126 || zsciiCode is >= FirstExtraCharacter and <= LastExtraCharacter) &&
         IsDefinedForInput(zsciiCode) && IsDefinedForOutput(zsciiCode);
 
+    public ushort CheckUnicode(ushort unicodeCharacter)
+    {
+        if (unicodeCharacter == 8)
+        {
+            return 0x0002;
+        }
+
+        if (unicodeCharacter == 27)
+        {
+            return 0x0002;
+        }
+
+        if (!TryGetZsciiForUnicode((char)unicodeCharacter, out var zsciiCode))
+        {
+            return 0;
+        }
+
+        var result = 0;
+        if (IsDefinedForOutput(zsciiCode))
+        {
+            result |= 0x0001;
+        }
+
+        if (IsDefinedForInput(zsciiCode))
+        {
+            result |= 0x0002;
+        }
+
+        return (ushort)result;
+    }
+
     public bool TryGetZsciiForUnicode(char character, out byte zsciiCode)
     {
         if (character == '\r' || character == '\n')

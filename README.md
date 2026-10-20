@@ -22,8 +22,11 @@ and related routine opcodes. It also executes signed and bitwise arithmetic,
 indirect variable operations, memory and table access, random-number control,
 and logical/arithmetic shifts. Object operations now support versioned object
 tables, attributes, tree mutation, short names, and versioned property headers,
-defaults, lookup, iteration, and updates. Save-file encoding is implemented in
-a later task.
+defaults, lookup, iteration, and updates. Dictionary search supports sorted
+story dictionaries and unsorted user dictionaries; text parsing handles word
+separators and versioned text/parse buffers. `tokenise`, `encode_text`,
+`check_unicode`, and versioned `scan_table` execution are covered. Save-file
+encoding is implemented in a later task.
 
 ## Requirements
 
