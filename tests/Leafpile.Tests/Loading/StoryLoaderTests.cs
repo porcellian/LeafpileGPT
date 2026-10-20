@@ -152,6 +152,9 @@ public sealed class StoryLoaderTests
 
         Assert.Equal(story, loaded.Data.ToArray());
         Assert.Equal(StorySourceKind.BlorbExecutable, loaded.SourceKind);
+        Assert.NotNull(loaded.Blorb);
+        Assert.Single(loaded.Blorb.Resources);
+        Assert.Equal("ZCOD", Assert.Single(loaded.Blorb.Executables).Chunk.Id);
     }
 
     [Fact]
@@ -165,7 +168,7 @@ public sealed class StoryLoaderTests
     [Fact]
     public void RejectsBlorbWithoutExecutableEntry()
     {
-        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), usage: "Pict")));
+        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), usage: "Pict", executableChunkId: "PNG ")));
 
         Assert.Contains("executable", error.Message, StringComparison.OrdinalIgnoreCase);
     }
@@ -181,9 +184,9 @@ public sealed class StoryLoaderTests
     [Fact]
     public void RejectsBlorbExecutableOfWrongChunkType()
     {
-        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), executableChunkId: "TEXT")));
+        var error = Assert.Throws<StoryLoadException>(() => StoryLoader.Load(MakeBlorb(MakeStory(5), executableChunkId: "GLUL")));
 
-        Assert.Contains("not ZCOD", error.Message);
+        Assert.Contains("no ZCOD", error.Message);
     }
 
     [Fact]
