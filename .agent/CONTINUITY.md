@@ -60,6 +60,11 @@
 - 2026-10-20T20:23Z [USER] PR #16 was merged; Task 16 started from merged `main` at `d5a7515` [TOOL].
 - 2026-10-20T20:26Z [CODE] Completed Task 16 on `feature/16-blorb-graphics`: added PNG/JPEG/Rect picture data, Reso-scaled dimensions, palette/adaptive palette metadata, frontispiece lookup, and V6 picture query/draw/erase operations for display hosts. PR review is pending.
 - 2026-10-20T20:28Z [TOOL] Final Task 16 verification passed: Release solution build had zero warnings/errors, formatter and whitespace checks passed, and all 323 generated tests passed.
+- 2026-10-20T20:41Z [USER] PR #17 was merged; Task 17 started from merged `main` at `d6e32da` [TOOL].
+- 2026-10-20T20:41Z [CODE] Completed Task 17 on `feature/17-quetzal-save-restore`: added IFZS encoding/decoding, CMem/UMem, IFhd identity, frame snapshots, ANNO/IntD, a file-access host boundary, save/restore continuation, and in-memory undo. PR review is pending.
+- 2026-10-20T20:41Z [TOOL] Task 17 Release solution build had zero warnings/errors; formatter and whitespace checks passed; all 342 generated tests passed.
+- 2026-10-20T20:44Z [CODE] Final review corrected CATCH/THROW depth to exclude the non-V6 top-level dummy frame while counting the V6 root routine; this supersedes the earlier Task 17 implementation and verification entries.
+- 2026-10-20T20:44Z [TOOL] Final Task 17 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 343 generated tests passed.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -75,6 +80,8 @@
 - 2026-10-20T19:48Z [TOOL] Sound completion callbacks may arrive asynchronously and multiple routines must run sequentially on the interpreter thread; the executor queues them and processes one callback routine at a time. Hosts provide resource lookup, playback, and sample/music channel arbitration through `IZMachineSound`.
 - 2026-10-20T20:01Z [TOOL] RIdx offsets point to chunk headers from the start of the complete IFF file; indexed resources can share a chunk offset, while index entries must follow resource chunk order. Generated fixtures cover those cases and malformed chunk bounds/padding.
 - 2026-10-20T20:26Z [TOOL] Reso scaling uses the smaller window-to-standard width/height ratio, then applies per-picture min/max bounds; APal requires indexed PNG resources and only non-adaptive plots replace the current palette used by adaptive pictures.
+- 2026-10-20T20:41Z [TOOL] Quetzal IFhd PC addresses the saved SAVE instruction's branch/store descriptor; restore applies SAVE's success branch/store before continuing. Non-V6 versions require a dummy root frame for the top-level evaluation stack, and CATCH values equal active frame depth.
+- 2026-10-20T20:44Z [TOOL] The Quetzal non-V6 dummy root frame preserves top-level evaluation values but is not an active routine frame; frame-depth CATCH cookies exclude it. V6's initial routine is active and counts toward the cookie.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -96,3 +103,5 @@
 - 2026-10-20T19:48Z [TOOL] Task 14 Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 296 generated tests passed.
 - 2026-10-20T20:01Z [CODE] Added public Blorb parsing and resource/metadata models, retained full containers on loaded stories, and selected embedded ZCOD executables with IFhd identity validation. Added generated valid and malformed container fixtures; graphics decoding and host playback integration remain in later tasks.
 - 2026-10-20T20:26Z [CODE] Added picture models with PNG/JPEG dimensions and source bytes, Rect dimensions, palette/description data, Reso scaling, and frontispiece access. V6 picture_data reports image metadata; draw_picture and erase_picture publish host-renderable operations. Avalonia pixel rendering remains Task 18.
+- 2026-10-20T20:41Z [CODE] Added Quetzal IFZS read/write for V1–V8, CMem/UMem dynamic memory, story identity validation, stack frames, ANNO/IntD, unknown-chunk skipping, and transactional restore through the save-file host boundary. `save_undo` and `restore_undo` use the same state format; generated coverage includes malformed files and resume behavior.
+- 2026-10-20T20:44Z [TOOL] Final review and verification supersede the earlier Task 17 result: the complete generated suite passes all 343 tests after the CATCH/THROW depth fix.

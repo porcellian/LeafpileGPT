@@ -8,3 +8,11 @@ public interface IZMachineSaveRestoreService
 
     ZMachineSaveRestoreOutcome Restore(ZMachineState state, ZMachineInstruction instruction, bool undo);
 }
+
+/// <summary>Provides save-file selection and byte transfer without tying the core to a desktop UI.</summary>
+public interface IZMachineSaveFileAccess
+{
+    bool WriteSaveFile(ReadOnlyMemory<byte> saveFile);
+
+    ReadOnlyMemory<byte>? ReadSaveFile();
+}

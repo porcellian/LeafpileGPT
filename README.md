@@ -42,8 +42,14 @@ dimensions, and scaling information through the loaded story. V6 draw and erase
 operations are available to a display host; Avalonia rendering and desktop audio
 wiring remain in Task 18. Sound capability bits are set or cleared from host
 support. Mouse, menu, and transparency capabilities remain unavailable. Versions
-7 and 8 retain the V5 text-window model. Save-file encoding is implemented in a
-later task.
+7 and 8 retain the V5 text-window model. Quetzal support writes compressed CMem
+or optional UMem saves and restores either encoding for V1–V8. It validates story
+identity and IFZS chunk bounds, restores versioned call frames and stack values,
+resumes at the original save instruction's success continuation, and supports
+ANNO and IntD chunks. `QuetzalSaveRestoreService` uses the core
+`IZMachineSaveFileAccess` boundary for host-selected files and includes
+in-memory `save_undo` / `restore_undo` support; the desktop file dialogs remain
+in Task 18.
 
 ## Requirements
 

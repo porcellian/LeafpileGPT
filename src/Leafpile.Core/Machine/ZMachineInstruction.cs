@@ -43,4 +43,5 @@ public sealed record ZMachineInstruction(
     IReadOnlyList<ZMachineOperand> Operands,
     byte? StoreVariable,
     ZMachineBranch? Branch,
-    string? EmbeddedText);
+    string? EmbeddedText,
+    int? BranchAddress = null);
