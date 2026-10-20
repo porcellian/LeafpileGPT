@@ -46,6 +46,16 @@ public sealed class ZMachineMemory
         BinaryPrimitives.WriteUInt16BigEndian(_data.AsSpan(address, sizeof(ushort)), value);
     }
 
+    public void ValidateDynamicRange(ushort address, int width)
+    {
+        if (width <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(width), "A dynamic memory range must have a positive width.");
+        }
+
+        ValidateDynamicAddress(address, width);
+    }
+
     public byte ReadInstructionByte(int address)
     {
         if ((uint)address >= (uint)_data.Length)
@@ -72,7 +82,7 @@ public sealed class ZMachineMemory
         var end = address + width;
         if (end > DynamicMemoryLength)
         {
-            throw new ZMachineRuntimeException($"Memory write at 0x{address:x4} with width {width} is outside dynamic memory (0x0000–0x{DynamicMemoryLength - 1:x4}).");
+            throw new ZMachineRuntimeException($"Memory access at 0x{address:x4} with width {width} is outside dynamic memory (0x0000–0x{DynamicMemoryLength - 1:x4}).");
         }
     }
 }
