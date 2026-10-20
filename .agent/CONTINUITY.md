@@ -27,6 +27,10 @@
 - 2026-10-20T15:48Z [CODE] Started Task 07 on `feature/7-control-flow-opcodes` from `main` at `fe94611`.
 - 2026-10-20T16:00Z [CODE] Completed and reviewed Task 07 on `feature/7-control-flow-opcodes`; control-flow execution is implemented and ready for PR review.
 - 2026-10-20T16:00Z [TOOL] Task 07 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 164 generated tests pass.
+- 2026-10-20T16:10Z [USER] PR #8 was merged; this supersedes the Task 07 PR review status above.
+- 2026-10-20T16:10Z [CODE] Started Task 08 on `feature/8-arithmetic-memory-system-opcodes` from merged `main` at `7b42175`.
+- 2026-10-20T16:20Z [CODE] Completed and reviewed Task 08 on `feature/8-arithmetic-memory-system-opcodes`; arithmetic, variable, memory/table, random, shift, and stack cleanup opcodes are ready for PR review.
+- 2026-10-20T16:20Z [TOOL] Task 08 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 187 generated tests pass.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -42,3 +46,4 @@
 - 2026-10-20T15:38Z [CODE] Added instruction decoding for long, short, variable, and extended forms; opcode legality and operand counts vary by version, with typed operands, stores, branches, and inline `print`/`print_ret` strings. Build and formatting pass; all 153 generated tests pass.
 - 2026-10-20T15:39Z [TOOL] Final Task 06 verification supersedes the prior count: Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 154 tests passed.
 - 2026-10-20T16:00Z [CODE] Added the execution framework for conditional branches, calls/returns, save/restore service flow, restart/quit, verification, scan-table, and argument/catch/throw control instructions, with generated tests for key version differences.
+- 2026-10-20T16:20Z [CODE] Added signed arithmetic with 16-bit wrapping, indirect variable stack-top access, bounded byte/word arrays, overlap-aware `copy_table`, random opcode seeding/reset, shifts, and V6 `pop_stack` execution.

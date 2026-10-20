@@ -21,7 +21,7 @@ public static class ZMachineArithmetic
             throw new ZMachineRuntimeException("The Z-machine cannot divide by zero.");
         }
 
-        return FromSigned(ToSigned(dividend) / signedDivisor);
+        return FromSigned((int)ToSigned(dividend) / signedDivisor);
     }
 
     public static ushort Remainder(ushort dividend, ushort divisor)
@@ -32,7 +32,7 @@ public static class ZMachineArithmetic
             throw new ZMachineRuntimeException("The Z-machine cannot calculate a remainder after division by zero.");
         }
 
-        return FromSigned(ToSigned(dividend) % signedDivisor);
+        return FromSigned((int)ToSigned(dividend) % signedDivisor);
     }
 
     public static int CompareSigned(ushort left, ushort right) =>

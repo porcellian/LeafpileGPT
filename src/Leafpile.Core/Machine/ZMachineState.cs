@@ -78,6 +78,10 @@ public sealed class ZMachineState
         return Memory.ReadWord(address);
     }
 
+    public ushort ReadIndirectVariable(byte variableNumber) => variableNumber == 0
+        ? CallStack.Peek()
+        : ReadVariableValue(variableNumber);
+
     public void WriteVariable(byte variableNumber, ushort value)
     {
         if (variableNumber == 0)
@@ -94,6 +98,17 @@ public sealed class ZMachineState
 
         var address = checked((ushort)(Header.GlobalVariablesAddress + ((variableNumber - 16) * sizeof(ushort))));
         Memory.WriteWord(address, value);
+    }
+
+    public void WriteIndirectVariable(byte variableNumber, ushort value)
+    {
+        if (variableNumber == 0)
+        {
+            CallStack.ReplaceTop(value);
+            return;
+        }
+
+        WriteVariable(variableNumber, value);
     }
 
     public void Restart()

@@ -20,7 +20,7 @@ authorized fixtures.
 - [x] **Task 05 — Implement Z-text and character conversion.** Decode and encode packed text, abbreviations, alphabet tables, escapes, dictionary truncation, ZSCII, Unicode mappings, and invalid or unavailable characters.
 - [x] **Task 06 — Build the instruction decoder.** Decode every instruction form, operand type, store, branch, and embedded text representation defined by the standard, with version-aware operand validation.
 - [x] **Task 07 — Implement control-flow and routine opcodes.** Cover conditional branches, calls, returns, save/restore control flow, and related control instructions across their defined versions.
-- [ ] **Task 08 — Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
+- [x] **Task 08 — Implement arithmetic, memory, and system opcodes.** Cover the applicable arithmetic, variable, table, random, header, and other machine-level opcode families.
 - [ ] **Task 09 — Implement object and property opcodes.** Support object-tree relationships, attributes, property defaults and lookup, property iteration, and object mutation.
 - [ ] **Task 10 — Implement dictionary, tokenization, and text opcodes.** Support dictionary lookup, parsing, tokenization, text scanning, and version-specific behavior.
 - [ ] **Task 11 — Implement input, output streams, and file opcodes.** Support keyboard and timed input, terminating characters, input streams, output buffering and stream selection, transcript and command streams, and standard file operations.

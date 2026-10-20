@@ -18,8 +18,10 @@ four instruction forms, typed operands, version-specific opcode layouts, stores,
 branches, and inline print strings. A control-flow executor now handles
 conditional branches, routine calls and returns, stack-frame catch/throw,
 versioned save/restore control flow through a host service, restart, verification,
-and related routine opcodes. Arithmetic, object-table operations, and save-file
-encoding are implemented in later tasks.
+and related routine opcodes. It also executes signed and bitwise arithmetic,
+indirect variable operations, memory and table access, random-number control,
+and logical/arithmetic shifts. Object-table operations and save-file encoding
+are implemented in later tasks.
 
 ## Requirements
 
