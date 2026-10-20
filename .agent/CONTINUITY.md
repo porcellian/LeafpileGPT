@@ -10,6 +10,8 @@
 ## [PROGRESS]
 - 2026-10-20T04:54Z [USER] PR #1 was merged as `8d12864`.
 - 2026-10-20T05:03Z [CODE] Making task numbers explicit in `TASKS.md` and preserving user edits to `AGENTS.md` and `README.md` on `feature/1-explicit-task-numbering`.
+- 2026-10-20T05:17Z [USER] PR #2 was merged; `origin/main` is at `13e524e` [TOOL].
+- 2026-10-20T05:21Z [CODE] Implemented Task 02 on `feature/2-story-loading`; Release build, formatting, whitespace check, and all 36 generated tests pass. PR review and merge pending.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -17,3 +19,4 @@
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
+- 2026-10-20T05:21Z [CODE] Added standalone and Blorb Z-code loading with header/memory validation and clear errors; tested generated V1–V8 stories and malformed inputs. Local stories remain untracked.
