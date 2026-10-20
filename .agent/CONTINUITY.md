@@ -65,6 +65,7 @@
 - 2026-10-20T20:41Z [TOOL] Task 17 Release solution build had zero warnings/errors; formatter and whitespace checks passed; all 342 generated tests passed.
 - 2026-10-20T20:44Z [CODE] Final review corrected CATCH/THROW depth to exclude the non-V6 top-level dummy frame while counting the V6 root routine; this supersedes the earlier Task 17 implementation and verification entries.
 - 2026-10-20T20:44Z [TOOL] Final Task 17 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 343 generated tests passed.
+- 2026-10-20T20:46Z [TOOL] Opened PR #18 at `https://github.com/porcellian/LeafpileGPT/pull/18` from commit `a57cd40`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
