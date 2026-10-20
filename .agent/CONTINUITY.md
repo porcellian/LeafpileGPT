@@ -52,6 +52,8 @@
 - 2026-10-20T19:21Z [TOOL] Task 13 Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 284 generated tests passed.
 - 2026-10-20T19:24Z [CODE] Final review found V7/V8 fixed-pitch and word-wrap behavior still gated to V5; corrected it, superseding the earlier Task 13 completion/verification entries.
 - 2026-10-20T19:24Z [TOOL] Final Task 13 Release build succeeded with zero warnings/errors, formatting and whitespace checks passed, and all 285 generated tests passed.
+- 2026-10-20T19:30Z [USER] PR #14 was merged; Task 14 began from `main` at `21f25c4` [TOOL].
+- 2026-10-20T19:48Z [CODE] Task 14 implementation and full review are complete on `feature/14-sound-opcodes-playback`; verification passes and PR review is pending.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -64,6 +66,7 @@
 - 2026-10-20T18:56Z [TOOL] The text screen stores a row/column grid per window so cursor moves, erase-line, and scrolling update the actual visible cells rather than only tracking cursor metadata.
 - 2026-10-20T19:21Z [TOOL] V6 `get_cursor` has no store byte; generated execution coverage exposed and corrected the decoder metadata. V6-only window/screen operand forms are rejected in V7/V8, which retain the V5 two-window model. `set_font` remains available in V5, V7 and V8, but uses single-window state there.
 - 2026-10-20T19:24Z [TOOL] V7/V8 use the V5 window, wrapping, and font model; tests exercise `set_font` and fixed-pitch capability across versions 5, 7, and 8.
+- 2026-10-20T19:48Z [TOOL] Sound completion callbacks may arrive asynchronously and multiple routines must run sequentially on the interpreter thread; the executor queues them and processes one callback routine at a time. Hosts provide resource lookup, playback, and sample/music channel arbitration through `IZMachineSound`.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -81,3 +84,5 @@
 - 2026-10-20T18:57Z [CODE] Added V1–V5 screen state and opcode support for status lines, dimensions/resizing, V3–V5 upper/lower windows, cursor operations, erase behavior, text styles, V5 colors, and lower-window word buffering. Generated screen tests cover versions 1–5, including status refresh before input; all 275 tests pass.
 - 2026-10-20T19:21Z [CODE] Added V6's eight pixel-coordinate windows, per-window geometry/cursors/styles/colors/fonts/attributes/properties, newline interrupt routines, buffer_screen, formatted stream output and print_form. Unsupported picture, sound, mouse, menu, and transparency features are reported through capability flags; mouse reads return an empty state and picture/menu queries fail cleanly. V7/V8 retain V5 screen behavior. All 284 tests pass.
 - 2026-10-20T19:24Z [CODE] Final Task 13 implementation includes V6 window controls and formatted output, capability reporting for unavailable devices/resources, plus V7/V8 V5-model behavior. Supersedes the 19:21 test count; all 285 generated tests pass.
+- 2026-10-20T19:48Z [CODE] Added sound-effect decoding/execution for bleeps, prepare/start/stop/finish, V3 and V5+ volume/repeat rules, capability flags, and queued completion routines. `IZMachineSound` is the host playback boundary; Blorb resource resolution and desktop audio wiring remain Tasks 15 and 18. Updated README and checked Task 14.
+- 2026-10-20T19:48Z [TOOL] Task 14 Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 296 generated tests passed.
