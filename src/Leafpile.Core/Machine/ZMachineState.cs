@@ -22,6 +22,8 @@ public sealed class ZMachineState
 
     public StoryHeader Header => _story.Header;
 
+    public BlorbFile? Blorb => _story.Blorb;
+
     public ZMachineMemory Memory { get; private set; }
 
     public ZMachineCharacterSet Characters { get; private set; }
