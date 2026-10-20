@@ -23,6 +23,10 @@
 - 2026-10-20T15:38Z [USER] PR #6 was merged; this supersedes the Task 05 PR review status above.
 - 2026-10-20T15:38Z [CODE] Completed Task 06 on `feature/6-instruction-decoder`; the decoder and regression suite are ready for PR review.
 - 2026-10-20T15:39Z [TOOL] Final Task 06 build and formatter pass; the full generated suite passes with all 154 tests.
+- 2026-10-20T15:48Z [USER] PR #7 was merged; this supersedes the Task 06 PR review status above.
+- 2026-10-20T15:48Z [CODE] Started Task 07 on `feature/7-control-flow-opcodes` from `main` at `fe94611`.
+- 2026-10-20T16:00Z [CODE] Completed and reviewed Task 07 on `feature/7-control-flow-opcodes`; control-flow execution is implemented and ready for PR review.
+- 2026-10-20T16:00Z [TOOL] Task 07 Release build succeeded with zero warnings/errors, formatter and whitespace checks pass, and all 164 generated tests pass.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -37,3 +41,4 @@
 - 2026-10-20T15:16Z [CODE] Added packed Z-text decoding and encoding, versioned shifts, abbreviations, custom alphabets, dictionary truncation, ZSCII/Unicode translation, invalid-character replacement, and restart-aware text services; covered V1–V8 with generated fixtures.
 - 2026-10-20T15:38Z [CODE] Added instruction decoding for long, short, variable, and extended forms; opcode legality and operand counts vary by version, with typed operands, stores, branches, and inline `print`/`print_ret` strings. Build and formatting pass; all 153 generated tests pass.
 - 2026-10-20T15:39Z [TOOL] Final Task 06 verification supersedes the prior count: Release build succeeded with zero warnings/errors, formatter and whitespace checks passed, and all 154 tests passed.
+- 2026-10-20T16:00Z [CODE] Added the execution framework for conditional branches, calls/returns, save/restore service flow, restart/quit, verification, scan-table, and argument/catch/throw control instructions, with generated tests for key version differences.

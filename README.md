@@ -15,7 +15,11 @@ routine and stack state, and version-aware packed Z-text conversion. Text suppor
 includes abbreviations, custom alphabets, dictionary-form encoding, ZSCII, and
 story-specific Unicode translation tables. The instruction decoder handles all
 four instruction forms, typed operands, version-specific opcode layouts, stores,
-branches, and inline print strings without executing instructions.
+branches, and inline print strings. A control-flow executor now handles
+conditional branches, routine calls and returns, stack-frame catch/throw,
+versioned save/restore control flow through a host service, restart, verification,
+and related routine opcodes. Arithmetic, object-table operations, and save-file
+encoding are implemented in later tasks.
 
 ## Requirements
 

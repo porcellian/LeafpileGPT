@@ -33,15 +33,18 @@ public sealed class ZMachineInstructionDecoder
         var operands = new List<ZMachineOperand>(4);
         int opcode;
         int operandCount;
+        ZMachineOpcodeClass opcodeClass;
 
         if (first == 0xbe && _header.Version >= 5)
         {
             form = ZMachineInstructionForm.Extended;
+            opcodeClass = ZMachineOpcodeClass.Extended;
             opcode = ReadByte(ref address);
             operandCount = ReadVariableOperands(ref address, form, opcode, isTwoOperand: false, operands);
         }
         else if (form == ZMachineInstructionForm.Long)
         {
+            opcodeClass = ZMachineOpcodeClass.TwoOperand;
             opcode = first & 0x1f;
             operandCount = 2;
             AddOperand(operands, (first & 0x40) == 0 ? ZMachineOperandType.SmallConstant : ZMachineOperandType.Variable, ref address);
@@ -52,6 +55,7 @@ public sealed class ZMachineInstructionDecoder
             opcode = first & 0x0f;
             var operandType = (first >> 4) & 0x03;
             operandCount = operandType == 3 ? 0 : 1;
+            opcodeClass = operandCount == 0 ? ZMachineOpcodeClass.ZeroOperand : ZMachineOpcodeClass.OneOperand;
             if (operandCount == 1)
             {
                 AddOperand(operands, (ZMachineOperandType)operandType, ref address);
@@ -59,6 +63,7 @@ public sealed class ZMachineInstructionDecoder
         }
         else
         {
+            opcodeClass = (first & 0x20) == 0 ? ZMachineOpcodeClass.TwoOperand : ZMachineOpcodeClass.Variable;
             opcode = first & 0x1f;
             operandCount = ReadVariableOperands(ref address, form, opcode, (first & 0x20) == 0, operands);
         }
@@ -74,7 +79,7 @@ public sealed class ZMachineInstructionDecoder
             address = decoded.NextAddress;
         }
 
-        return new ZMachineInstruction(start, address, form, opcode, operandCount, operands.AsReadOnly(), storeVariable, branch, embeddedText);
+        return new ZMachineInstruction(start, address, form, opcodeClass, opcode, operandCount, operands.AsReadOnly(), storeVariable, branch, embeddedText);
     }
 
     private int ReadVariableOperands(ref int address, ZMachineInstructionForm form, int opcode, bool isTwoOperand, List<ZMachineOperand> operands)

@@ -62,9 +62,46 @@ public sealed class ZMachineState
 
     public void AdvanceProgramCounter(int byteCount) => CallStack.AdvanceProgramCounter(byteCount);
 
+    public ushort ReadVariableValue(byte variableNumber)
+    {
+        if (variableNumber == 0)
+        {
+            return CallStack.Pop();
+        }
+
+        if (variableNumber < 16)
+        {
+            return CallStack.GetLocal(variableNumber);
+        }
+
+        var address = checked((ushort)(Header.GlobalVariablesAddress + ((variableNumber - 16) * sizeof(ushort))));
+        return Memory.ReadWord(address);
+    }
+
+    public void WriteVariable(byte variableNumber, ushort value)
+    {
+        if (variableNumber == 0)
+        {
+            CallStack.Push(value);
+            return;
+        }
+
+        if (variableNumber < 16)
+        {
+            CallStack.SetLocal(variableNumber, value);
+            return;
+        }
+
+        var address = checked((ushort)(Header.GlobalVariablesAddress + ((variableNumber - 16) * sizeof(ushort))));
+        Memory.WriteWord(address, value);
+    }
+
     public void Restart()
     {
+        const ushort PreservedFlags2 = 0x0003;
+        var preservedFlags = (ushort)(Memory.ReadWord(0x10) & PreservedFlags2);
         Memory = new ZMachineMemory(_story);
+        Memory.WriteWord(0x10, (ushort)((Memory.ReadWord(0x10) & ~PreservedFlags2) | preservedFlags));
         Characters = new ZMachineCharacterSet(Memory, Header);
         Text = new ZMachineTextCodec(Memory, Header, Characters);
         Instructions = new ZMachineInstructionDecoder(Memory, Header, Text);
