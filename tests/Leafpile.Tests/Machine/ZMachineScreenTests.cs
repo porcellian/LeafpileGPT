@@ -188,6 +188,40 @@ public sealed class ZMachineScreenTests
         Assert.Equal(1, state.Screen.CursorRow);
     }
 
+    [Theory]
+    [InlineData(3)]
+    [InlineData(5)]
+    public void BufferedWordWrapDoesNotCarrySpacesToTheStartOfTheNextLine(byte version)
+    {
+        var state = CreateState(version);
+        state.Screen.SetDimensions(5, 3, version == 5 ? 40 : 5, version == 5 ? 48 : 3);
+
+        state.Screen.Write("12345  x");
+
+        Assert.EndsWith("12345\nx", state.Screen.LowerWindowText);
+    }
+
+    [Fact]
+    public void VersionSixBufferedWordWrapDoesNotCarrySpacesToTheNextLine()
+    {
+        var state = CreateState(6);
+        state.Screen.SetDimensions(5, 3, 40, 48);
+
+        state.Screen.Write("12345  x");
+
+        Assert.Equal(8, state.Screen.CursorColumn);
+    }
+
+    [Fact]
+    public void BufferedWordWrapPreservesIntentionalIndentAfterExplicitNewline()
+    {
+        var state = CreateState(3);
+
+        state.Screen.Write("a\n  x");
+
+        Assert.EndsWith("a\n  x", state.Screen.LowerWindowText);
+    }
+
     [Fact]
     public void EraseLineAppliesToTheCurrentLowerWindowWithoutMovingItsCursor()
     {

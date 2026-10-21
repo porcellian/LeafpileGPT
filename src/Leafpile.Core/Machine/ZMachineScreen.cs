@@ -32,6 +32,7 @@ public sealed class ZMachineScreen
     private readonly ZMachineMemory _memory;
     private readonly BlorbFile? _blorb;
     private readonly WindowState[] _v6Windows = Enumerable.Range(0, 8).Select(_ => new WindowState()).ToArray();
+    private readonly bool[] _discardLeadingSpaceAfterBufferedWrap = new bool[8];
     private readonly List<ZMachinePictureOperation> _displayedPictures = [];
     private IReadOnlyList<BlorbColor> _currentAdaptivePalette = Array.Empty<BlorbColor>();
     private char[][] _lowerCells;
@@ -790,6 +791,12 @@ public sealed class ZMachineScreen
 
     private void WriteCharacter(char character)
     {
+        if (_discardLeadingSpaceAfterBufferedWrap[SelectedWindow])
+        {
+            if (character is ' ' or '\t') return;
+            _discardLeadingSpaceAfterBufferedWrap[SelectedWindow] = false;
+        }
+
         if (Version == 6)
         {
             var target = _v6Windows[SelectedWindow];
@@ -818,7 +825,10 @@ public sealed class ZMachineScreen
             {
                 target.CursorX = target.LeftMargin + 1;
                 if ((target.Attributes & 8) != 0)
+                {
                     target.CursorY = Math.Min(Math.Max(1, maxRows * cellHeight), target.CursorY + cellHeight);
+                    _discardLeadingSpaceAfterBufferedWrap[SelectedWindow] = true;
+                }
             }
             return;
         }
@@ -846,6 +856,12 @@ public sealed class ZMachineScreen
             }
 
             SetCursor(false, 0, NextRow(false, maximumRow));
+            if (IsBufferedWordWrappingEnabled() && (character is ' ' or '\t'))
+            {
+                _discardLeadingSpaceAfterBufferedWrap[SelectedWindow] = true;
+                return;
+            }
+
             column = 0;
         }
 
@@ -860,6 +876,8 @@ public sealed class ZMachineScreen
             _lowerCursorColumn++;
         }
     }
+
+    private bool IsBufferedWordWrappingEnabled() => SelectedWindow == 0 && (Version <= 3 || LowerBufferingEnabled);
 
     private int NextRow(bool upper, int maximumRow)
     {
