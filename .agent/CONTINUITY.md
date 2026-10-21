@@ -99,6 +99,11 @@
 - 2026-10-21T02:34Z [TOOL] Rendered and reviewed all 10 final pages; commands 160-163 and other section transitions are visually separated, with all 394 commands preserved.
 - 2026-10-21T02:37Z [USER] Requested all untracked images under `reference/` be added to the active PR.
 - 2026-10-21T02:37Z [CODE] Added the two newly untracked PDF issue screenshots, `pdf01.png` and `pdf02.png`, to the Task 19.1 branch; existing reference images were already tracked.
+- 2026-10-21T02:47Z [USER] Requested Task 19.2 for Zork II maximum-score play, walkthrough, location maps, opcode inventory, and local route regression.
+- 2026-10-21T02:47Z [TOOL] PR #23 is merged as `a0f5ebc`; started `feature/19-zork2-walkthrough` from updated `origin/main`.
+- 2026-10-21T02:47Z [CODE] Added the unchecked Task 19.2 entry; Zork II manual and complete hints list are local and will remain untracked.
+- 2026-10-21T06:39Z [CODE] Completed Task 19.2 on `feature/19-zork2-walkthrough`: verified the Zork II guide and local route, added fixes for object 0 property defaults and in-memory route SAVE, checked Task 19.2, and kept Task 19 open.
+- 2026-10-21T06:39Z [TOOL] Zork II fresh replay passed at 400 points in 320 moves (306 commands; 52 unique opcodes); Zork I regression passed at 350 points in 391 moves (394 commands; 53 opcodes). Release build passed with zero warnings/errors, formatter passed, and all 352 generated xUnit tests passed. Story assets and replay routes/traces are ignored/local.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -118,6 +123,7 @@
 - 2026-10-20T20:44Z [TOOL] The Quetzal non-V6 dummy root frame preserves top-level evaluation values but is not an active routine frame; frame-depth CATCH cookies exclude it. V6's initial routine is active and counts toward the cookie.
 - 2026-10-20T21:35Z [TOOL] The ignored reference image is `reference/gui-design.png`; its initial V3 layout has a vivid blue story field, light-gray status line with blue Courier text, and a lower-left `>` prompt. Desktop sound, timed reads, transcript, and command files remain unavailable and are exposed as unsupported host capabilities.
 - 2026-10-21T02:15Z [TOOL] Zork I reached 344 points until the ivory torch was placed in the trophy case for the final 6; deterministic replay uses the same seed and validates score/location checkpoints and halt state.
+- 2026-10-21T04:20Z [TOOL] Zork II scouting on seed 1035 reached 311 points and the bank without a death, but the lamp exhausts near 255 story moves; dark bank and Wizard's Workshop transitions require a lit source. Failed scouting runs are not regression routes; optimize lamp use and record only a fresh no-death completion. [SUPERSEDED 2026-10-21T06:39Z: the successful route uses seed 1035 and delays the optional Maze/club trip until after the wand, finishing without a death or lamp exhaustion.]
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -144,3 +150,6 @@
 - 2026-10-20T21:35Z [CODE] Completed Task 18 with a macOS/Windows Avalonia shell, story and save workflows, Courier text screen and status/prompt layout, Blorb image display, and an `IZMachineDisplay` core boundary. The core has no Avalonia dependency; host controls reflect available desktop capabilities.
 - 2026-10-20T21:35Z [TOOL] Task 18 Release build, formatting, whitespace review, and all 344 tests pass.
 - 2026-10-21T02:15Z [CODE] Task 19.1 adds a local story route replay CLI, observer-based JSONL trace and opcode inventory, generated-fixture coverage, and a 10-page player guide with complete hand-drawn maps. The walkthrough and supporting tool are tracked; story, route, and trace remain local/ignored.
+- 2026-10-21T06:39Z [CODE] Task 19.2 adds a nine-page Zork II walkthrough with 306 numbered commands, four hand-drawn regional maps, checkpoints, ending verification, and the 52-opcode replay inventory. RouteReplay now supports in-memory Quetzal saves, and object 0 property queries return defaults; regression tests cover both fixes.
+- 2026-10-21T06:39Z [TOOL] Rendered and inspected all nine PDF pages. Fresh Zork II and Zork I route replays pass; solution Release build, formatting check, and 352-test xUnit suite pass. Task 19 remains open for broader conformance work.
+- 2026-10-21T06:12Z [TOOL] [DISCOVERIES] Zork II route candidates reach 379 but the lamp expires before the crypt; the local hint file and independent Invisiclues both identify the Wizard's FLOURESCE spell as the built-in fallback when the burned-out lamp and score-above-200 conditions are met. Current route kills or immobilizes the Wizard before that event, so a valid maximum-score route must keep him available until FLOURESCE is active. [SUPERSEDED 2026-10-21T06:39Z: postponing the optional Maze/club trip keeps the lamp alive through the crypt; the wizard fallback is unnecessary.]
