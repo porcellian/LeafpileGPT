@@ -94,6 +94,9 @@
 - 2026-10-21T02:30Z [USER] Requested the walkthrough PDF's boxed display headings be changed from a comical face to an Arial-style family.
 - 2026-10-21T02:30Z [CODE] Regenerated the walkthrough with embedded Arial regular and bold for the display headings and map notes; retained Courier for route text and metadata.
 - 2026-10-21T02:30Z [TOOL] Confirmed embedded Arial fonts in the PDF, preserved all 10 pages and extracted text, and rendered/reviewed every page without layout issues.
+- 2026-10-21T02:34Z [USER] Reported overlapping route commands and section headings on walkthrough pages.
+- 2026-10-21T02:34Z [CODE] Increased vertical spacing before command-section headings so they no longer collide with adjacent command lines.
+- 2026-10-21T02:34Z [TOOL] Rendered and reviewed all 10 final pages; commands 160-163 and other section transitions are visually separated, with all 394 commands preserved.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
