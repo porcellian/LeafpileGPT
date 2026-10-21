@@ -100,6 +100,26 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         }
     }
 
+    internal async Task OpenStoryFromCommandLineAsync(string[] args)
+    {
+        if (args.Length != 1)
+        {
+            ReportStoryLoadError("Pass exactly one story file path on the command line.");
+            return;
+        }
+
+        var path = args[0];
+        try
+        {
+            var storyBytes = await File.ReadAllBytesAsync(path);
+            StartStory(StoryLoader.Load(storyBytes), Path.GetFileName(path) ?? "Story");
+        }
+        catch (Exception exception) when (exception is StoryLoadException or IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+        {
+            ReportStoryLoadError(exception.Message);
+        }
+    }
+
     private void OnRestart(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
     {
         _ = sender;
@@ -230,6 +250,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         var cancellation = new CancellationTokenSource();
         _sessionCancellation = cancellation;
         var state = new ZMachineState(story);
+        ConfigureScreenDimensions(state.Screen);
         var input = new DesktopInputOutputHost((request, completion) =>
         {
             Present(state.Screen);
@@ -245,6 +266,23 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
             display: this);
         Present(state.Screen);
         _ = Task.Run(() => RunStory(state, executor, input, cancellation.Token), cancellation.Token);
+    }
+
+    private void ConfigureScreenDimensions(ZMachineScreen screen)
+    {
+        var bounds = StorySurface.Bounds;
+        var availableWidth = bounds.Width - LowerText.Margin.Left - LowerText.Margin.Right;
+        var availableHeight = bounds.Height - LowerText.Margin.Top - LowerText.Margin.Bottom;
+        if (availableWidth <= 0 || availableHeight <= 0) return;
+
+        // Courier New is a fixed-pitch font with glyphs that are 0.6 em wide and 1.2 em high.
+        var characterWidth = LowerText.FontSize * 0.6;
+        var lineHeight = LowerText.FontSize * 1.2;
+        var columns = Math.Clamp((int)Math.Floor(availableWidth / characterWidth), 1, byte.MaxValue);
+        var rows = Math.Clamp((int)Math.Floor(availableHeight / lineHeight), 1, byte.MaxValue);
+        var widthUnits = screen.Version <= 4 ? columns : Math.Clamp((int)Math.Round(availableWidth), 1, ushort.MaxValue);
+        var heightUnits = screen.Version <= 4 ? rows : Math.Clamp((int)Math.Round(availableHeight), 1, ushort.MaxValue);
+        screen.SetDimensions(columns, rows, widthUnits, heightUnits);
     }
 
     private void StopCurrentSession()
