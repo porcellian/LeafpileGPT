@@ -201,6 +201,20 @@ public sealed class ZMachineScreenTests
         Assert.EndsWith("12345\nx", state.Screen.LowerWindowText);
     }
 
+    [Theory]
+    [InlineData(3)]
+    [InlineData(5)]
+    public void BufferedWordWrapMovesTrailingWordWithSeparatelyWrittenPunctuation(byte version)
+    {
+        var state = CreateState(version);
+        state.Screen.SetDimensions(5, 3, version == 5 ? 40 : 5, version == 5 ? 48 : 3);
+
+        state.Screen.Write("ab cd");
+        state.Screen.Write(".");
+
+        Assert.EndsWith("ab\ncd.", state.Screen.LowerWindowText);
+    }
+
     [Fact]
     public void VersionSixBufferedWordWrapDoesNotCarrySpacesToTheNextLine()
     {
