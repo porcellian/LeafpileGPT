@@ -34,4 +34,5 @@ authorized fixtures.
 - [ ] **Task 19 — Complete conformance and regression coverage.** Test all versions and spec-defined edge cases with generated fixtures; run local smoke tests using available stories and record reproducible results without adding story files to GitHub or CI.
   - [x] **Task 19.1 — Play `stories/zork1.z3` to the verified maximum score and ending; publish a walkthrough, complete map, opcode inventory, and local replay route.**
   - [x] **Task 19.2 — Play `stories/zork2.z3` to the verified maximum score and ending; publish a walkthrough, complete map, opcode inventory, and local replay route.**
+  - [x] **Task 19.3 — Complete `stories/deadline.z3`’s perfect solution and best ending; publish a walkthrough, complete map, opcode inventory, and local replay route.**
 - [ ] **Task 20 — Document and package the application.** Document build/run instructions, supported features, save/resource behavior, and macOS/Windows packaging; verify the Visual Studio solution and both platform build paths.
