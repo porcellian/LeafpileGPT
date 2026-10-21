@@ -84,6 +84,7 @@
 - 2026-10-21T01:10Z [USER] Reported that the gameplay-blue menu bar should match the white menu bar in `reference/gui-design.png`.
 - 2026-10-21T01:10Z [CODE] Started `fix/desktop-menu-background` from merged `main` at `03d72a4`; set the Avalonia menu background explicitly to white.
 - 2026-10-21T01:11Z [TOOL] Desktop Release build passed with zero warnings/errors; focused whitespace and diff checks passed; all 344 xUnit tests passed.
+- 2026-10-21T01:11Z [TOOL] Opened PR #22 at `https://github.com/porcellian/LeafpileGPT/pull/22` from `fix/desktop-menu-background`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
