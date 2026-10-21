@@ -195,6 +195,22 @@ public sealed class ZMachineOpcodeExecutorTests
         Assert.Equal(error.Message, saveDisplay.LastRuntimeError);
     }
 
+    [Fact]
+    public void PrintsStringsFromByteAndPackedAddresses()
+    {
+        var state = CreateState(3, 0x97, 0x80, 0x9d, 0x40);
+        var encoded = state.Text.EncodeZText("maple"u8);
+        for (var index = 0; index < encoded.Length; index++)
+        {
+            state.Memory.WriteByte(checked((ushort)(0x80 + index)), encoded[index]);
+        }
+
+        var executor = new ZMachineOpcodeExecutor(state);
+
+        Assert.Equal("maple", executor.ExecuteNext().Output);
+        Assert.Equal("maple", executor.ExecuteNext().Output);
+    }
+
     private static ZMachineState CreateState(byte version, params byte[] instruction)
     {
         var story = MachineStoryFactory.Create(version);

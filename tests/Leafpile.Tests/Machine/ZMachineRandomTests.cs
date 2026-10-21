@@ -53,6 +53,19 @@ public sealed class ZMachineRandomTests
     }
 
     [Fact]
+    public void DeterministicReplayModeRepeatsItsSeedAfterRandomizeOpcode()
+    {
+        var random = new ZMachineRandom();
+        random.UseDeterministicSeed(31415);
+        var expected = Enumerable.Range(0, 12).Select(_ => random.Next(1000)).ToArray();
+
+        Assert.Equal(0, random.Next(0));
+
+        var actual = Enumerable.Range(0, 12).Select(_ => random.Next(1000)).ToArray();
+        Assert.Equal(expected, actual);
+    }
+
+    [Fact]
     public void MinimumSignedOperandCanBeUsedAsAPredictableSeed()
     {
         var random = new ZMachineRandom();

@@ -77,3 +77,17 @@ dotnet run --project src/Leafpile.Desktop
 See [TASKS.md](TASKS.md) for implementation status and the per-task PR workflow.
 Local story files under `stories/` are excluded from Git and are not needed by
 builds or tests.
+
+## Local story route replay
+
+`tools/Leafpile.RouteReplay` replays a JSON command route against a local story,
+checks story identity and score/location checkpoints, and reports the executed
+opcode inventory. An optional JSONL trace records each instruction. Routes and
+traces under `.agent/regression-routes/` are local regression data and stay out
+of Git; automated tests use generated stories.
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- \
+  stories/zork1.z3 .agent/regression-routes/zork1-maximum-score.json \
+  .agent/regression-routes/zork1-opcode-trace.jsonl
+```

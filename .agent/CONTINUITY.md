@@ -87,6 +87,9 @@
 - 2026-10-21T01:11Z [TOOL] Opened PR #22 at `https://github.com/porcellian/LeafpileGPT/pull/22` from `fix/desktop-menu-background`; awaiting manual review and merge.
 - 2026-10-21T01:14Z [USER] Requested all untracked images from `reference/` be added to PR #22.
 - 2026-10-21T01:14Z [CODE] Added `gui01.png`, `gui02.png`, `gui03.png`, `gui-design.png`, and `map-ex.png` to the PR; `.DS_Store` remains untracked/ignored.
+- 2026-10-21T02:15Z [USER] PR #22 merged; Task 19.1 Zork I maximum-score walkthrough work began on `feature/19-zork1-walkthrough`.
+- 2026-10-21T02:15Z [CODE] Added local route replay tooling and generated-fixture tests, fixed Zork-discovered print-address opcodes, produced the 350-point guide, and checked Task 19.1; Task 19 remains open.
+- 2026-10-21T02:15Z [TOOL] Release build, formatting, and all 350 tests pass; fresh play and replay each completed at 350/350 in 391 moves without deaths. Route and trace remain ignored locally.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -105,6 +108,7 @@
 - 2026-10-20T20:41Z [TOOL] Quetzal IFhd PC addresses the saved SAVE instruction's branch/store descriptor; restore applies SAVE's success branch/store before continuing. Non-V6 versions require a dummy root frame for the top-level evaluation stack, and CATCH values equal active frame depth.
 - 2026-10-20T20:44Z [TOOL] The Quetzal non-V6 dummy root frame preserves top-level evaluation values but is not an active routine frame; frame-depth CATCH cookies exclude it. V6's initial routine is active and counts toward the cookie.
 - 2026-10-20T21:35Z [TOOL] The ignored reference image is `reference/gui-design.png`; its initial V3 layout has a vivid blue story field, light-gray status line with blue Courier text, and a lower-left `>` prompt. Desktop sound, timed reads, transcript, and command files remain unavailable and are exposed as unsupported host capabilities.
+- 2026-10-21T02:15Z [TOOL] Zork I reached 344 points until the ivory torch was placed in the trophy case for the final 6; deterministic replay uses the same seed and validates score/location checkpoints and halt state.
 
 ## [OUTCOMES]
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
@@ -130,3 +134,4 @@
 - 2026-10-20T20:44Z [TOOL] Final review and verification supersede the earlier Task 17 result: the complete generated suite passes all 343 tests after the CATCH/THROW depth fix.
 - 2026-10-20T21:35Z [CODE] Completed Task 18 with a macOS/Windows Avalonia shell, story and save workflows, Courier text screen and status/prompt layout, Blorb image display, and an `IZMachineDisplay` core boundary. The core has no Avalonia dependency; host controls reflect available desktop capabilities.
 - 2026-10-20T21:35Z [TOOL] Task 18 Release build, formatting, whitespace review, and all 344 tests pass.
+- 2026-10-21T02:15Z [CODE] Task 19.1 adds a local story route replay CLI, observer-based JSONL trace and opcode inventory, generated-fixture coverage, and a 10-page player guide with complete hand-drawn maps. The walkthrough and supporting tool are tracked; story, route, and trace remain local/ignored.
