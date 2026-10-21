@@ -112,7 +112,12 @@
 - 2026-10-21T15:22Z [CODE] Started `fix/file-menu-save-restore` from merged `origin/main`; File menu items submit the story's `save` or `restore` command at an active line prompt and are disabled otherwise.
 - 2026-10-21T15:22Z [TOOL] Release solution build passed with zero warnings/errors, formatting passed, and all 356 xUnit tests passed.
 
+- 2026-10-21T17:47Z [CODE] Completed Task 19.3 on `feature/19.3-deadline-walkthrough`: added the eight-page Deadline guide with all 196 route commands, maps of all 49 rooms, and a 53-opcode inventory; marked the subtask complete while keeping Task 19 open.
+- 2026-10-21T17:47Z [TOOL] Fresh Deadline replay passes at 2:55 p.m. in the Living Room with the solved-case ending and no deaths; fresh Zork I (350) and Zork II (400) replays pass. Release solution build has zero warnings/errors; all 366 tests and the read-only formatter pass. PDF pages rendered and inspected. Story assets and Deadline route/trace remain local and ignored.
+- 2026-10-21T17:49Z [TOOL] Committed Task 19.3 as `438337a` and opened PR #30 at `https://github.com/porcellian/LeafpileGPT/pull/30`; awaiting manual review and merge.
+
 ## [DISCOVERIES]
+- 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
 - 2026-10-20T04:50Z [TOOL] Avalonia build telemetry must be disabled in this restricted workspace with `AVALONIA_TELEMETRY_OPTOUT=1`; CI uses the same setting.
 - 2026-10-20T15:38Z [TOOL] `call_vs2` and `call_vn2` place both operand-type bytes before all operand values; generated tests verify eight-operand decoding and invalid omitted-type ordering.
@@ -134,6 +139,7 @@
 - 2026-10-21T15:03Z [TOOL] Z-Machine Standard 1.1 section 7.2 says buffered output inserts line breaks to keep short words intact; it does not require trimming complete strings. The defect came from a separator space being emitted at column zero when a prior character had filled the row.
 
 ## [OUTCOMES]
+- 2026-10-21T17:47Z [CODE] Added `walkthroughs/deadline-maximum-score.pdf`, matching the Zork guide's typography and presenting the evidence chain, best ending, clean replay details, 49-room hand-sketched maps, and all 53 opcodes. Task 19.3 is complete; Task 19 remains unchecked pending broader conformance work.
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
 - 2026-10-20T05:21Z [CODE] Added standalone and Blorb Z-code loading with header/memory validation and clear errors; tested generated V1–V8 stories and malformed inputs. Local stories remain untracked.
 - 2026-10-20T14:34Z [CODE] Added bounded dynamic/static memory, packed and word address decoding, signed arithmetic, deterministic/random RNG modes, program counter and restart state; tested boundaries and version-specific behavior.
