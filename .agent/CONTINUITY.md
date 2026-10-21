@@ -75,6 +75,7 @@
 - 2026-10-21T00:42Z [CODE] Split V1–V3 status location and value fields; Avalonia aligns status values to the right edge. Regression assertions cover score/moves and time values.
 - 2026-10-21T00:42Z [TOOL] Alignment fix Release build had zero warnings/errors; formatting passed and all 344 tests passed.
 - 2026-10-21T00:42Z [CODE] PR #19 had already merged before the alignment commit reached its branch; cherry-picked the fix onto `fix/18-status-line-alignment` from merged `main` as `6c49254` for a separate PR.
+- 2026-10-21T00:43Z [TOOL] Opened PR #20 at `https://github.com/porcellian/LeafpileGPT/pull/20` from `fix/18-status-line-alignment`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
