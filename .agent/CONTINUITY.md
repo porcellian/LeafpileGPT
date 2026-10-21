@@ -127,6 +127,7 @@
 - 2026-10-21T19:12Z [DISCOVERIES] Starcross V3 object 122 repeats property 31; retaining the first definition lets short-name lookup work while malformed ascending properties and other duplicates still fail. A generated regression test covers this compatibility case.
 - 2026-10-21T19:37Z [CODE] Task 19.5 is complete: the 226-command no-death route reaches 400/400 and the Earth course ending. The 11-page PDF indexes 86 room objects and includes 57 trace-derived opcode rows and 188,557 executed instructions. Local route and traces remain ignored.
 - 2026-10-21T19:37Z [TOOL] Fresh Starcross, Zork I, Zork II, Deadline, and Zork III routes pass; earlier guide opcode sets are unchanged. Release build, formatter verification, and all 368 tests pass; all PDF pages rendered and reviewed.
+- 2026-10-21T19:38Z [TOOL] Committed Task 19.5 as `4d1a618`, pushed `feature/19.5-starcross-walkthrough`, and opened PR #33 at `https://github.com/porcellian/LeafpileGPT/pull/33`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)
