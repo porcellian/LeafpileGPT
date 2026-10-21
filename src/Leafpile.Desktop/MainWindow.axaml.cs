@@ -107,6 +107,32 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         if (_story is not null) StartStory(_story, _storyName);
     }
 
+    private void OnSaveGame(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        SubmitGameCommand("save");
+    }
+
+    private void OnRestoreGame(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        SubmitGameCommand("restore");
+    }
+
+    private void SubmitGameCommand(string command)
+    {
+        if (_currentInput is null || !_inputActive || _inputIsCharacter || command.Length > _maximumInputCharacters)
+        {
+            return;
+        }
+
+        _inputText = command;
+        UpdateLowerText();
+        SubmitInput();
+    }
+
     private void OnQuit(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
     {
         _ = sender;
@@ -256,6 +282,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         _inputText = request.InitialText;
         _maximumInputCharacters = request.MaximumCharacters > 0 ? request.MaximumCharacters : int.MaxValue;
         _inputActive = true;
+        UpdateFileCommandMenu();
         _cursorVisible = true;
         _cursorTimer.Start();
         UpdateLowerText();
@@ -299,6 +326,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     private void HideInput()
     {
         _inputActive = false;
+        UpdateFileCommandMenu();
         _inputText = string.Empty;
         _cursorTimer.Stop();
         UpdateLowerText();
@@ -309,6 +337,12 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         LowerText.Text = _inputActive
             ? string.Concat(_lowerWindowText, _inputText, _cursorVisible ? "█" : " ")
             : _lowerWindowText;
+    }
+
+    private void UpdateFileCommandMenu()
+    {
+        SaveMenuItem.IsEnabled = _story is not null && _inputActive && !_inputIsCharacter && _maximumInputCharacters >= "save".Length;
+        RestoreMenuItem.IsEnabled = _story is not null && _inputActive && !_inputIsCharacter && _maximumInputCharacters >= "restore".Length;
     }
 
     private static Avalonia.Media.Color ScreenColour(ushort value, bool foreground)
