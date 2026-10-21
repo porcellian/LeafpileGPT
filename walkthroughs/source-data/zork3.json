@@ -1,0 +1,505 @@
+{
+  "title": "ZORK III",
+  "subtitle": "Dungeon Master",
+  "routeTitle": "MAXIMUM-SCORE ROUTE",
+  "score": "7 / 7",
+  "commands": 242,
+  "moves": 283,
+  "location": "Treasury of Zork",
+  "ending": "Quest completed; winning ending verified.",
+  "replacePages": [
+    13,
+    14
+  ],
+  "totalInstructions": 203121,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 12837,
+      "FirstSequence": 1,
+      "FirstAddress": 18743
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 9397,
+      "FirstSequence": 3,
+      "FirstAddress": 18597
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 23167,
+      "FirstSequence": 5,
+      "FirstAddress": 18605
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 3042,
+      "FirstSequence": 6,
+      "FirstAddress": 18609
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 35688,
+      "FirstSequence": 7,
+      "FirstAddress": 18613
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 5687,
+      "FirstSequence": 9,
+      "FirstAddress": 18624
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1822,
+      "FirstSequence": 10,
+      "FirstAddress": 18629
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 13204,
+      "FirstSequence": 13,
+      "FirstAddress": 18751
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 647,
+      "FirstSequence": 14,
+      "FirstAddress": 18754
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 97,
+      "FirstSequence": 29,
+      "FirstAddress": 18813
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 17209,
+      "FirstSequence": 36,
+      "FirstAddress": 18631
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 16450,
+      "FirstSequence": 39,
+      "FirstAddress": 18645
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 4667,
+      "FirstSequence": 74,
+      "FirstAddress": 18853
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 2012,
+      "FirstSequence": 75,
+      "FirstAddress": 18858
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 869,
+      "FirstSequence": 76,
+      "FirstAddress": 19217
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 80,
+      "FirstSequence": 81,
+      "FirstAddress": 26200
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 11,
+      "FirstSequence": 82,
+      "FirstAddress": 26206
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 5534,
+      "FirstSequence": 84,
+      "FirstAddress": 26224
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 4575,
+      "FirstSequence": 85,
+      "FirstAddress": 26231
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 86,
+      "FirstAddress": 26235
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1666,
+      "FirstSequence": 111,
+      "FirstAddress": 26242
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 168,
+      "FirstSequence": 113,
+      "FirstAddress": 19225
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1477,
+      "FirstSequence": 118,
+      "FirstAddress": 25150
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 324,
+      "FirstSequence": 120,
+      "FirstAddress": 25159
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 170,
+      "FirstSequence": 123,
+      "FirstAddress": 25279
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 451,
+      "FirstSequence": 125,
+      "FirstAddress": 25285
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 204,
+      "FirstSequence": 126,
+      "FirstAddress": 25289
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 2187,
+      "FirstSequence": 129,
+      "FirstAddress": 25298
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 1871,
+      "FirstSequence": 132,
+      "FirstAddress": 25325
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 73,
+      "FirstSequence": 138,
+      "FirstAddress": 25347
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 2509,
+      "FirstSequence": 145,
+      "FirstAddress": 25386
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 6919,
+      "FirstSequence": 158,
+      "FirstAddress": 25627
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 1540,
+      "FirstSequence": 173,
+      "FirstAddress": 31275
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 2287,
+      "FirstSequence": 175,
+      "FirstAddress": 25715
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 1838,
+      "FirstSequence": 205,
+      "FirstAddress": 25414
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 242,
+      "FirstSequence": 260,
+      "FirstAddress": 19992
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 997,
+      "FirstSequence": 267,
+      "FirstAddress": 20030
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 2415,
+      "FirstSequence": 276,
+      "FirstAddress": 20605
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 3415,
+      "FirstSequence": 281,
+      "FirstAddress": 20609
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 878,
+      "FirstSequence": 282,
+      "FirstAddress": 20613
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 227,
+      "FirstSequence": 295,
+      "FirstAddress": 20301
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 835,
+      "FirstSequence": 336,
+      "FirstAddress": 20472
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 3643,
+      "FirstSequence": 381,
+      "FirstAddress": 20485
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 143,
+      "FirstSequence": 550,
+      "FirstAddress": 23294
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 3704,
+      "FirstSequence": 560,
+      "FirstAddress": 24035
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2284,
+      "FirstSequence": 566,
+      "FirstAddress": 24674
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1221,
+      "FirstSequence": 567,
+      "FirstAddress": 24677
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 79,
+      "FirstSequence": 743,
+      "FirstAddress": 27948
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 18,
+      "FirstSequence": 14449,
+      "FirstAddress": 65477
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 102,
+      "FirstSequence": 14453,
+      "FirstAddress": 65488
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 7,
+      "FirstSequence": 19998,
+      "FirstAddress": 27570
+    },
+    {
+      "Form": "Long",
+      "Opcode": 19,
+      "Mnemonic": "get_next_prop",
+      "Count": 1075,
+      "FirstSequence": 25423,
+      "FirstAddress": 58227
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 6,
+      "FirstSequence": 27146,
+      "FirstAddress": 58625
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 17,
+      "FirstSequence": 55198,
+      "FirstAddress": 21139
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 6,
+      "FirstSequence": 63635,
+      "FirstAddress": 52835
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 75700,
+      "FirstAddress": 22645
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 880,
+      "FirstSequence": 84952,
+      "FirstAddress": 35815
+    },
+    {
+      "Form": "Long",
+      "Opcode": 8,
+      "Mnemonic": "or",
+      "Count": 79,
+      "FirstSequence": 84996,
+      "FirstAddress": 36627
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 158,
+      "FirstSequence": 85083,
+      "FirstAddress": 37331
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 3,
+      "FirstSequence": 178431,
+      "FirstAddress": 43035
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 203121,
+      "FirstAddress": 25998
+    }
+  ]
+}

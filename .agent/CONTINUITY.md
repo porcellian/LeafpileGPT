@@ -2,6 +2,7 @@
 
 ## [PLANS]
 - 2026-10-20T04:40Z [USER] Implement the accepted 20-task Z-machine interpreter plan; complete one task per PR and wait for manual merge before starting the next.
+- 2026-10-21T20:04Z [USER] Refresh Zork I, Zork II, Deadline, and Zork III walkthroughs to the Starcross visual frame and trace-derived six-column opcode tables; preserve source PDFs and committed inventory data for reproducible builds.
 
 ## [DECISIONS]
 - 2026-10-20T04:40Z [USER] Use Avalonia and target macOS and Windows only; use .NET 10 and xUnit.
@@ -197,3 +198,5 @@
 - 2026-10-21T16:11Z [USER] PR #28 merged as `afc61bf`; this supersedes its pending-review status. User requested standby.
 - 2026-10-21T16:31Z [CODE] On `fix/quetzal-app-data-default`, Save and Restore pickers now start in `LocalApplicationData/LeafpileGPT` or the exact `LEAFPILEGPT_HOME` path; the directory is created on demand and preparation errors are shown in the desktop runtime error area. README and generated xUnit coverage were updated.
 - 2026-10-21T16:31Z [TOOL] Release solution build and all 366 xUnit tests pass; `dotnet format --verify-no-changes` and `git diff --check` pass. Commit `46f1308` is on `fix/quetzal-app-data-default`; PR #29 is open for manual review.
+- 2026-10-21T20:04Z [CODE] On `feature/19-walkthrough-style-refresh`, rebuilt four guides with Starcross-style framing and fresh trace inventory tables; committed immutable source PDFs, inventory data, and a reusable generator. Fresh replays passed: Zork I 350/350 (417,106 instructions), Zork II 400/400 (304,265), Deadline solved at 14 (269,606), Zork III 7/7 (203,121), Starcross 400/400 (188,557). Release build, format verification, 368 tests, and visual inspection passed; PR pending.
+- 2026-10-21T20:05Z [TOOL] Pushed commit `19c4096` and opened PR #34 at `https://github.com/porcellian/LeafpileGPT/pull/34`; awaiting manual review and merge.

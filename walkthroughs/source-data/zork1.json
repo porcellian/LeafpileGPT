@@ -1,0 +1,480 @@
+{
+  "title": "ZORK I",
+  "subtitle": "The Great Underground Empire",
+  "routeTitle": "MAX SCORE ROUTE",
+  "score": "350 / 350",
+  "commands": 394,
+  "moves": 391,
+  "location": "Living Room",
+  "ending": "Master Adventurer; maximum score confirmed; quit cleanly.",
+  "replacePages": [
+    5
+  ],
+  "totalInstructions": 417106,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 29204,
+      "FirstSequence": 1,
+      "FirstAddress": 20229
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 15027,
+      "FirstSequence": 3,
+      "FirstAddress": 21649
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 42982,
+      "FirstSequence": 5,
+      "FirstAddress": 21657
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 4075,
+      "FirstSequence": 6,
+      "FirstAddress": 21661
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 77078,
+      "FirstSequence": 7,
+      "FirstAddress": 21665
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 11288,
+      "FirstSequence": 9,
+      "FirstAddress": 21676
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 3374,
+      "FirstSequence": 10,
+      "FirstAddress": 21681
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 25076,
+      "FirstSequence": 19,
+      "FirstAddress": 21683
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 24689,
+      "FirstSequence": 22,
+      "FirstAddress": 21697
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 40,
+      "FirstSequence": 113,
+      "FirstAddress": 20282
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 29604,
+      "FirstSequence": 126,
+      "FirstAddress": 20341
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 27705,
+      "FirstSequence": 131,
+      "FirstAddress": 20350
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 950,
+      "FirstSequence": 133,
+      "FirstAddress": 28387
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 1101,
+      "FirstSequence": 135,
+      "FirstAddress": 28473
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 8771,
+      "FirstSequence": 136,
+      "FirstAddress": 28474
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1856,
+      "FirstSequence": 137,
+      "FirstAddress": 28478
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 141,
+      "FirstAddress": 28556
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 5,
+      "FirstSequence": 142,
+      "FirstAddress": 28562
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 10218,
+      "FirstSequence": 144,
+      "FirstAddress": 28580
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 38,
+      "FirstSequence": 146,
+      "FirstAddress": 28591
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 4202,
+      "FirstSequence": 171,
+      "FirstAddress": 28598
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 672,
+      "FirstSequence": 176,
+      "FirstAddress": 20369
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 3919,
+      "FirstSequence": 180,
+      "FirstAddress": 36006
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 446,
+      "FirstSequence": 182,
+      "FirstAddress": 36015
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 791,
+      "FirstSequence": 185,
+      "FirstAddress": 36072
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 2285,
+      "FirstSequence": 188,
+      "FirstAddress": 36085
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 488,
+      "FirstSequence": 189,
+      "FirstAddress": 36089
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 4392,
+      "FirstSequence": 190,
+      "FirstAddress": 36091
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 5364,
+      "FirstSequence": 196,
+      "FirstAddress": 36118
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 9479,
+      "FirstSequence": 207,
+      "FirstAddress": 36180
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 11698,
+      "FirstSequence": 221,
+      "FirstAddress": 36572
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 10422,
+      "FirstSequence": 226,
+      "FirstAddress": 36670
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 2041,
+      "FirstSequence": 279,
+      "FirstAddress": 36763
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 4243,
+      "FirstSequence": 281,
+      "FirstAddress": 36768
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 5310,
+      "FirstSequence": 302,
+      "FirstAddress": 20693
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 3746,
+      "FirstSequence": 320,
+      "FirstAddress": 36208
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 394,
+      "FirstSequence": 387,
+      "FirstAddress": 22796
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 2166,
+      "FirstSequence": 394,
+      "FirstAddress": 22834
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 5594,
+      "FirstSequence": 403,
+      "FirstAddress": 23481
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 6677,
+      "FirstSequence": 408,
+      "FirstAddress": 23485
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 1058,
+      "FirstSequence": 419,
+      "FirstAddress": 23096
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 783,
+      "FirstSequence": 422,
+      "FirstAddress": 23108
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 626,
+      "FirstSequence": 624,
+      "FirstAddress": 26411
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 2931,
+      "FirstSequence": 628,
+      "FirstAddress": 26434
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 8749,
+      "FirstSequence": 635,
+      "FirstAddress": 27237
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2356,
+      "FirstSequence": 650,
+      "FirstAddress": 27952
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 2119,
+      "FirstSequence": 651,
+      "FirstAddress": 27955
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 171,
+      "FirstSequence": 866,
+      "FirstAddress": 33012
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 391,
+      "FirstSequence": 1037,
+      "FirstAddress": 21740
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 298,
+      "FirstSequence": 1665,
+      "FirstAddress": 33815
+    },
+    {
+      "Form": "Long",
+      "Opcode": 19,
+      "Mnemonic": "get_next_prop",
+      "Count": 39,
+      "FirstSequence": 22705,
+      "FirstAddress": 65831
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 124,
+      "FirstSequence": 25500,
+      "FirstAddress": 43360
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 8,
+      "FirstSequence": 28168,
+      "FirstAddress": 30924
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 24,
+      "FirstSequence": 35296,
+      "FirstAddress": 35593
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 4,
+      "FirstSequence": 82571,
+      "FirstAddress": 20097
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 6,
+      "FirstSequence": 209183,
+      "FirstAddress": 64432
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 7,
+      "FirstSequence": 246062,
+      "FirstAddress": 25499
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 417106,
+      "FirstAddress": 28167
+    }
+  ]
+}
