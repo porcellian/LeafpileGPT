@@ -12,11 +12,13 @@
       <MenuItem Header="_File">
         <MenuItem Header="_Open Story…" Click="OnOpenStory" />
         <Separator />
+        <MenuItem x:Name="SaveMenuItem" Header="_Save…" Click="OnSaveGame" IsEnabled="False" />
+        <MenuItem x:Name="RestoreMenuItem" Header="_Restore…" Click="OnRestoreGame" IsEnabled="False" />
+        <Separator />
         <MenuItem Header="_Quit" Click="OnQuit" />
       </MenuItem>
       <MenuItem Header="_Tools">
         <MenuItem x:Name="RestartMenuItem" Header="_Restart" Click="OnRestart" IsEnabled="False" />
-        <MenuItem Header="Save and restore use the story's save and restore commands" IsEnabled="False" />
       </MenuItem>
       <MenuItem Header="_Help">
         <MenuItem Header="Keyboard: type a command and press Enter" IsEnabled="False" />

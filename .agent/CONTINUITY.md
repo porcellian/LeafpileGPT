@@ -107,6 +107,10 @@
 - 2026-10-21T14:42Z [USER] PR #24 was merged; user requested standby. Task 19 remains open and no further task has started.
 - 2026-10-21T15:03Z [CODE] Started `fix/gui-wrap-leading-spaces` from merged `origin/main` to remove only whitespace carried to a new line by buffered automatic wrapping; the GUI04 issue image is included for review.
 - 2026-10-21T15:03Z [TOOL] Release solution build and formatting passed; all 356 xUnit tests pass, including V3/V5/V6 wrapping cases and explicit-indentation preservation.
+- 2026-10-21T15:14Z [USER] PR #25 was merged; user requested standby. No subsequent task has started.
+- 2026-10-21T15:22Z [USER] Requested Save and Restore entries under the File menu.
+- 2026-10-21T15:22Z [CODE] Started `fix/file-menu-save-restore` from merged `origin/main`; File menu items submit the story's `save` or `restore` command at an active line prompt and are disabled otherwise.
+- 2026-10-21T15:22Z [TOOL] Release solution build passed with zero warnings/errors, formatting passed, and all 356 xUnit tests passed.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
@@ -159,3 +163,5 @@
 - 2026-10-21T06:12Z [TOOL] [DISCOVERIES] Zork II route candidates reach 379 but the lamp expires before the crypt; the local hint file and independent Invisiclues both identify the Wizard's FLOURESCE spell as the built-in fallback when the burned-out lamp and score-above-200 conditions are met. Current route kills or immobilizes the Wizard before that event, so a valid maximum-score route must keep him available until FLOURESCE is active. [SUPERSEDED 2026-10-21T06:39Z: postponing the optional Maze/club trip keeps the lamp alive through the crypt; the wizard fallback is unnecessary.]
 - 2026-10-21T15:03Z [CODE] Fixed buffered screen wrapping so spaces/tabs that would otherwise spill onto a new line are suppressed for V3/V5 text grids and V6 windows; deliberate indentation after explicit newlines is preserved. Added four generated-fixture regressions and retained `reference/gui04.png` as PR context.
 - 2026-10-21T15:03Z [TOOL] Final GUI-wrap verification passed: Release build, formatter, diff whitespace check, and all 356 xUnit tests.
+- 2026-10-21T15:22Z [CODE] Added File menu Save and Restore actions that route through the existing story-command input flow and Quetzal dialogs.
+- 2026-10-21T15:22Z [TOOL] Menu change builds cleanly; formatting and all 356 xUnit tests pass.
