@@ -201,6 +201,10 @@ public sealed class ZMachineScreen
 
     public string StatusLine { get; private set; } = string.Empty;
 
+    public string StatusLocation { get; private set; } = string.Empty;
+
+    public string StatusValues { get; private set; } = string.Empty;
+
     public string LowerWindowText => Render(_lowerCells);
 
     public string UpperWindowText => Render(_upperCells, UpperWindowHeight);
@@ -278,6 +282,8 @@ public sealed class ZMachineScreen
             location = lastSpace > 0 ? location[..lastSpace] + "..." : location[..prefixLength] + "...";
         }
 
+        StatusLocation = location;
+        StatusValues = right;
         StatusLine = location.PadRight(available) + "  " + right;
     }
 

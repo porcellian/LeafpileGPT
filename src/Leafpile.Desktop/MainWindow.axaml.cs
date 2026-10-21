@@ -238,7 +238,8 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     private void RenderScreen(ZMachineScreen screen)
     {
         StatusBar.IsVisible = screen.Version <= 3;
-        StatusText.Text = screen.StatusLine;
+        StatusLocationText.Text = screen.StatusLocation;
+        StatusValuesText.Text = screen.StatusValues;
         UpperText.Text = screen.UpperWindowText;
         UpperText.IsVisible = !string.IsNullOrEmpty(screen.UpperWindowText);
         LowerText.Text = screen.LowerWindowText;
