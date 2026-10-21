@@ -46,12 +46,14 @@ try
         }));
     }
 
-    Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {result.Score}, moves {result.Moves}, location '{result.Location}', halted={result.Halted}.");
+    var score = result.Score?.ToString() ?? "n/a";
+    Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {score}, moves {result.Moves}, location '{result.Location}', halted={result.Halted}.");
     if (showProgress)
     {
         foreach (var progress in result.Progress)
         {
-            Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {progress.Score,3} points | {progress.Moves,3} moves");
+            var progressScore = progress.Score?.ToString() ?? "n/a";
+            Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {progressScore,3} points | {progress.Moves,3} moves");
             Console.WriteLine(progress.ScreenText.Replace("\n", " "));
         }
     }

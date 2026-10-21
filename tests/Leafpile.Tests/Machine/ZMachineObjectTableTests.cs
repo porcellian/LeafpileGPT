@@ -181,6 +181,41 @@ public sealed class ZMachineObjectTableTests
     }
 
     [Fact]
+    public void UsesFirstDefinitionWhenInfocomV3StoryRepeatsAnotherProperty()
+    {
+        var state = CreatePopulatedState(3);
+        state.Memory.WriteByte(0x101, 0x08); // property 8, one byte
+        state.Memory.WriteByte(0x102, 0x33);
+        state.Memory.WriteByte(0x103, 0x08); // duplicate property 8, one byte
+        state.Memory.WriteByte(0x104, 0x44);
+        state.Memory.WriteByte(0x105, 0x05); // lower-numbered property
+        state.Memory.WriteByte(0x106, 0x55);
+        state.Memory.WriteByte(0x107, 0);
+        var table = new ZMachineObjectTable(state);
+
+        Assert.Equal(0x33, table.GetProperty(1, 8));
+        Assert.Equal(8, table.GetNextProperty(1, 0));
+        Assert.Equal(5, table.GetNextProperty(1, 8));
+        Assert.Equal(0, table.GetNextProperty(1, 5));
+    }
+
+    [Fact]
+    public void RejectsAscendingPropertyNumbersAfterAllowingV3Duplicates()
+    {
+        var state = CreatePopulatedState(3);
+        state.Memory.WriteByte(0x101, 0x05); // property 5
+        state.Memory.WriteByte(0x102, 0x33);
+        state.Memory.WriteByte(0x103, 0x08); // invalid increase to property 8
+        state.Memory.WriteByte(0x104, 0x44);
+        state.Memory.WriteByte(0x105, 0);
+        var table = new ZMachineObjectTable(state);
+
+        var exception = Assert.Throws<ZMachineRuntimeException>(() => table.GetProperty(1, 5));
+
+        Assert.Contains("not in descending numerical order", exception.Message);
+    }
+
+    [Fact]
     public void ExecutesObjectAndPropertyOpcodesThroughTheDefaultObjectService()
     {
         var story = CreatePopulatedStory(3);

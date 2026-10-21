@@ -37,4 +37,5 @@ authorized fixtures.
   - [x] **Task 19.3 — Complete `stories/deadline.z3`’s perfect solution and best ending; publish a walkthrough, complete map, opcode inventory, and local replay route.**
   - [x] **Task 19.4 — Play `stories/zork3.z3` to the verified maximum score and ending; publish a concise walkthrough, complete hand-drawn map, executed-opcode inventory, and local replay route.**
   - [x] **Task 19.5 — Play `stories/starcros.z3` to the verified maximum score and winning ending; publish a concise walkthrough, complete hand-drawn map, executed-opcode inventory, and local replay route.**
+  - [x] **Task 19.6 — Complete `stories/suspend.z3` with the fewest verified surface casualties on a winning route with no robot deaths; publish a concise walkthrough, complete hand-drawn map, executed-opcode inventory, and local replay route.**
 - [ ] **Task 20 — Document and package the application.** Document build/run instructions, supported features, save/resource behavior, and macOS/Windows packaging; verify the Visual Studio solution and both platform build paths.
