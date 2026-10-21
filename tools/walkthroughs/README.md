@@ -27,3 +27,26 @@ python3 tools/walkthroughs/refresh_walkthroughs.py \
 Repeat the replay and option for `zork2`, `deadline`, and `zork3`. Story files,
 routes, and raw traces remain local. The generator checks that the opcode counts
 sum to the total instruction count before writing each guide.
+
+## Suspended no-death guide
+
+The Suspended guide has its own ReportLab generator and committed source data:
+
+```sh
+python3 tools/walkthroughs/make_suspended_walkthrough.py
+```
+
+To refresh its opcode table after a clean local replay, run the ignored route and
+trace, then pass the trace to the generator:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/suspend.z3 \
+  .agent/regression-routes/suspended-no-death.json \
+  .agent/regression-routes/suspended-no-death.trace.jsonl
+python3 tools/walkthroughs/make_suspended_walkthrough.py \
+  --refresh-trace .agent/regression-routes/suspended-no-death.trace.jsonl
+```
+
+The route uses no numeric score global; it validates casualty checkpoints from
+the story text and tracks the current robot's parent room as its location. Keep
+the Suspended story, manual, hints, route, and raw trace local.

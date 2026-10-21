@@ -31,8 +31,9 @@ public sealed record StoryRoute(
     IReadOnlyList<string> Commands,
     IReadOnlyList<RouteCheckpoint> Checkpoints,
     int LocationGlobal = 16,
-    int ScoreGlobal = 17,
-    int MovesGlobal = 18)
+    int? ScoreGlobal = 17,
+    int MovesGlobal = 18,
+    bool LocationGlobalContainsActor = false)
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -77,7 +78,7 @@ public sealed record OpcodeExecutionSummary(
 public sealed record RouteReplayResult(
     int CommandsReplayed,
     int InstructionsExecuted,
-    int Score,
+    int? Score,
     int Moves,
     string Location,
     bool Halted,
@@ -103,7 +104,7 @@ public sealed record RouteReplayResult(
         .ToArray();
 }
 
-public sealed record RouteProgress(int CommandNumber, string Command, string Location, int Score, int Moves, string ScreenText);
+public sealed record RouteProgress(int CommandNumber, string Command, string Location, int? Score, int Moves, string ScreenText);
 
 public static class StoryRouteReplayer
 {
@@ -152,9 +153,9 @@ public static class StoryRouteReplayer
             throw new InvalidOperationException($"Story halted after {host.CommandsConsumed} of {route.Commands.Count} route commands.");
         }
 
-        var finalScore = ReadGlobal(state, route.ScoreGlobal);
+        var finalScore = ReadOptionalGlobal(state, route.ScoreGlobal);
         var moves = ReadGlobal(state, route.MovesGlobal);
-        var location = ReadLocation(state, route.LocationGlobal);
+        var location = ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor);
         return new RouteReplayResult(host.CommandsConsumed, instructionCount, finalScore, moves, location, halted, trace, host.Progress);
     }
 
@@ -164,10 +165,15 @@ public static class StoryRouteReplayer
         return (short)state.ReadVariableValue((byte)variable);
     }
 
-    private static string ReadLocation(ZMachineState state, int variable)
+    private static int? ReadOptionalGlobal(ZMachineState state, int? variable) =>
+        variable.HasValue ? ReadGlobal(state, variable.Value) : null;
+
+    private static string ReadLocation(ZMachineState state, int variable, bool globalContainsActor = false)
     {
         if (variable is < 16 or > 255) throw new InvalidDataException($"Global variable number {variable} is invalid.");
         var objectNumber = state.ReadVariableValue((byte)variable);
+        if (globalContainsActor && objectNumber != 0)
+            objectNumber = new ZMachineObjectTable(state).GetParent(objectNumber);
         return objectNumber == 0 ? string.Empty : new ZMachineObjectTable(state).GetShortName(objectNumber).Trim();
     }
 
@@ -213,8 +219,8 @@ public static class StoryRouteReplayer
             RecordProgress(commandNumber);
             var checkpoint = route.Checkpoints.SingleOrDefault(item => item.CommandNumber == commandNumber + 1);
             if (checkpoint is null) return;
-            var location = ReadLocation(state, route.LocationGlobal);
-            var score = ReadGlobal(state, route.ScoreGlobal);
+            var location = ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor);
+            var score = ReadOptionalGlobal(state, route.ScoreGlobal);
             var moves = ReadGlobal(state, route.MovesGlobal);
             var lowerText = state.Screen.LowerWindowText;
             if (checkpoint.Location is not null && !string.Equals(location, checkpoint.Location, StringComparison.OrdinalIgnoreCase))
@@ -231,7 +237,7 @@ public static class StoryRouteReplayer
         {
             if (commandIndex < 0 || commandIndex >= route.Commands.Count || _progress.Any(item => item.CommandNumber == commandIndex + 1)) return;
             _progress.Add(new RouteProgress(commandIndex + 1, route.Commands[commandIndex],
-                ReadLocation(state, route.LocationGlobal), ReadGlobal(state, route.ScoreGlobal), ReadGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText));
+                ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor), ReadOptionalGlobal(state, route.ScoreGlobal), ReadGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText));
         }
 
         public void WriteScreenOutput(string text) { }

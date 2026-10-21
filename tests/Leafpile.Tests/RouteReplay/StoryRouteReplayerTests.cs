@@ -1,4 +1,5 @@
 using Leafpile.Core.Loading;
+using Leafpile.Core.Machine;
 using Leafpile.RouteReplay;
 
 namespace Leafpile.Tests.RouteReplay;
@@ -9,7 +10,7 @@ public sealed class StoryRouteReplayerTests
     public void RouteCanBeSavedAndLoaded()
     {
         var story = StoryLoader.Load(CreateReadAndQuitStory());
-        var route = CreateRoute(story, ["look"]);
+        var route = CreateRoute(story, ["look"]) with { ScoreGlobal = null, LocationGlobalContainsActor = true };
         var path = Path.Combine(Path.GetTempPath(), $"leafpile-route-{Guid.NewGuid():N}.json");
         try
         {
@@ -18,6 +19,8 @@ public sealed class StoryRouteReplayerTests
             Assert.Equal(route.Name, loaded.Name);
             Assert.Equal(route.Story, loaded.Story);
             Assert.Equal(route.Commands, loaded.Commands);
+            Assert.Null(loaded.ScoreGlobal);
+            Assert.True(loaded.LocationGlobalContainsActor);
         }
         finally
         {
@@ -85,6 +88,35 @@ public sealed class StoryRouteReplayerTests
         Assert.Equal(1, result.CommandsReplayed);
         Assert.Contains("ZeroOperand.05 save", result.UniqueOpcodes);
         Assert.Contains("ZeroOperand.10 quit", result.UniqueOpcodes);
+    }
+
+    [Fact]
+    public void ReplayCanUseActorParentAsLocationWithoutNumericScoreGlobal()
+    {
+        var image = CreateReadAndQuitStory();
+        const int objectOne = 0x70 + 62;
+        const int objectTwo = objectOne + 9;
+        image[objectOne + 4] = 2; // global 16 points to actor 1; actor 1 is in room 2.
+        WriteWord(image, objectTwo + 7, 0x0190);
+        var originalStory = StoryLoader.Load(image);
+        var encoder = new ZMachineState(originalStory).Text;
+        var roomName = encoder.EncodeZText("Room"u8);
+        image[0x190] = (byte)(roomName.Length / 2);
+        roomName.CopyTo(image, 0x191);
+        var story = StoryLoader.Load(image);
+        var state = new ZMachineState(story);
+        Assert.Equal(2, new ZMachineObjectTable(state).GetParent(1));
+        Assert.Equal("Room", new ZMachineObjectTable(state).GetShortName(2).Trim(), ignoreCase: true);
+        var route = new StoryRoute("generated fixture", StoryIdentity.From(story), 31415, 1000, ["look"],
+            [new RouteCheckpoint(1, Location: "Room", ContainsText: "look", Halted: true)],
+            ScoreGlobal: null, LocationGlobalContainsActor: true);
+
+        var result = StoryRouteReplayer.Replay(story, route);
+
+        Assert.Null(result.Score);
+        Assert.Equal("Room", result.Location);
+        Assert.Equal("Room", Assert.Single(result.Progress).Location);
+        Assert.Null(Assert.Single(result.Progress).Score);
     }
 
     [Fact]
