@@ -55,6 +55,12 @@ story area and gray V1–V3 status bar. Timed input, transcript and command file
 and sound playback remain unavailable in the desktop host and are reported via
 the capability flags supported by the core.
 
+Save and Restore dialogs start in the per-user `LocalApplicationData/LeafpileGPT`
+directory (for example, `%LOCALAPPDATA%/LeafpileGPT` on Windows). Set
+`LEAFPILEGPT_HOME` to use a different save directory; its value is used directly
+as the directory, without an additional application subfolder. The directory is
+created when needed, and each picker still allows choosing another location.
+
 ## Requirements
 
 - .NET 10 SDK
