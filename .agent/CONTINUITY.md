@@ -118,6 +118,9 @@
 - 2026-10-21T17:54Z [USER] PR #30 was merged; Task 19.3 is complete and Task 19 remains open. User requested standby.
 - 2026-10-21T17:56Z [USER] Requested an unchecked Task 19.4 for `stories/zork3.z3`, using the established maximum-score walkthrough, map, opcode trace, and fresh-route regression process.
 - 2026-10-21T17:56Z [CODE] Started `feature/19.4-zork3-walkthrough` from refreshed `origin/main` at `9e65de2`; Task 19.4 is listed in `TASKS.md` and remains unchecked.
+- 2026-10-21T19:00Z [CODE] Completed Task 19.4 on `feature/19.4-zork3-walkthrough-playthrough`; added the 14-page guide with 242 commands, 15 replay checkpoints, maps indexing all 89 room objects, and all 54 trace-derived opcodes. Local route and trace remain ignored.
+- 2026-10-21T19:00Z [TOOL] Fresh routes passed for Zork III (7/7, Treasury ending, no deaths), Zork I (350), Zork II (400), and Deadline (14). Release build passed single-threaded with Avalonia telemetry disabled; formatting passed; all 366 xUnit tests passed. All PDF pages were rendered and inspected.
+- 2026-10-21T19:01Z [TOOL] Opened PR #32 at `https://github.com/porcellian/LeafpileGPT/pull/32`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)
@@ -140,8 +143,10 @@
 - 2026-10-21T02:15Z [TOOL] Zork I reached 344 points until the ivory torch was placed in the trophy case for the final 6; deterministic replay uses the same seed and validates score/location checkpoints and halt state.
 - 2026-10-21T04:20Z [TOOL] Zork II scouting on seed 1035 reached 311 points and the bank without a death, but the lamp exhausts near 255 story moves; dark bank and Wizard's Workshop transitions require a lit source. Failed scouting runs are not regression routes; optimize lamp use and record only a fresh no-death completion. [SUPERSEDED 2026-10-21T06:39Z: the successful route uses seed 1035 and delays the optional Maze/club trip until after the wand, finishing without a death or lamp exhaustion.]
 - 2026-10-21T15:03Z [TOOL] Z-Machine Standard 1.1 section 7.2 says buffered output inserts line breaks to keep short words intact; it does not require trimming complete strings. The defect came from a separator space being emitted at column zero when a prior character had filled the row.
+- 2026-10-21T19:00Z [TOOL] The sandbox denied MSBuild worker IPC sockets and Avalonia's telemetry log under the user Library path. Running MSBuild single-threaded with `UsedAvaloniaProducts` empty allowed the full Release build; xUnit and formatter checks passed with elevated execution.
 
 ## [OUTCOMES]
+- 2026-10-21T19:00Z [CODE] Added `walkthroughs/zork3-maximum-score.pdf`; Task 19.4 is complete after a fresh 7/7 ending, clean replay, and successful Zork I/II/Deadline regressions. Task 19 remains unchecked pending broader conformance work.
 - 2026-10-21T17:47Z [CODE] Added `walkthroughs/deadline-maximum-score.pdf`, matching the Zork guide's typography and presenting the evidence chain, best ending, clean replay details, 49-room hand-sketched maps, and all 53 opcodes. Task 19.3 is complete; Task 19 remains unchecked pending broader conformance work.
 - 2026-10-20T04:50Z [CODE] Added the .NET 10 solution, Avalonia desktop shell, xUnit test, macOS/Windows CI, task list, and project instructions. Release build and the setup test pass.
 - 2026-10-20T05:21Z [CODE] Added standalone and Blorb Z-code loading with header/memory validation and clear errors; tested generated V1–V8 stories and malformed inputs. Local stories remain untracked.
