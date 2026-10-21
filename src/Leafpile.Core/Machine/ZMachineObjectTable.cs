@@ -452,14 +452,21 @@ public sealed class ZMachineObjectTable : IZMachineObjectQueries
                 }
             }
 
-            if (number >= previousNumber)
+            var repeatedInfocomV3Property31 = _state.Header.Version <= 3 && number == 31 && number == previousNumber;
+            if (number > previousNumber || (number == previousNumber && !repeatedInfocomV3Property31))
             {
                 throw new ZMachineRuntimeException($"Object {objectNumber} properties are not in descending numerical order.");
             }
 
             var dataAddress = address + headerLength;
             EnsureDynamicAddress(dataAddress, length, $"property {number} data for object {objectNumber}");
-            properties.Add(new PropertyEntry((ushort)number, dataAddress, (ushort)length));
+            // Some Infocom V3 stories contain duplicate entries for property 31.
+            // Keep the first (highest-positioned) definition and skip later duplicates.
+            if (number < previousNumber)
+            {
+                properties.Add(new PropertyEntry((ushort)number, dataAddress, (ushort)length));
+            }
+
             previousNumber = number;
             address = dataAddress + length;
         }

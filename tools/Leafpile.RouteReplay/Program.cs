@@ -39,7 +39,11 @@ try
         await using var writer = new StreamWriter(tracePath, false);
         foreach (var instruction in result.Trace)
             await writer.WriteLineAsync(JsonSerializer.Serialize(instruction));
-        await writer.WriteLineAsync(JsonSerializer.Serialize(new { uniqueOpcodes = result.UniqueOpcodes }));
+        await writer.WriteLineAsync(JsonSerializer.Serialize(new
+        {
+            instructionsExecuted = result.InstructionsExecuted,
+            opcodeInventory = result.OpcodeInventory
+        }));
     }
 
     Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {result.Score}, moves {result.Moves}, location '{result.Location}', halted={result.Halted}.");
@@ -51,8 +55,9 @@ try
             Console.WriteLine(progress.ScreenText.Replace("\n", " "));
         }
     }
-    Console.WriteLine($"Unique opcodes: {result.UniqueOpcodes.Count}");
-    foreach (var opcode in result.UniqueOpcodes) Console.WriteLine(opcode);
+    Console.WriteLine($"Unique opcodes: {result.OpcodeInventory.Count}; total instructions: {result.InstructionsExecuted}");
+    foreach (var opcode in result.OpcodeInventory)
+        Console.WriteLine($"{opcode.Form,-8} {opcode.Opcode,2} {opcode.Mnemonic,-20} {opcode.Count,8} {opcode.FirstSequence,10} 0x{opcode.FirstAddress:x4}");
     return 0;
 }
 catch (Exception exception)

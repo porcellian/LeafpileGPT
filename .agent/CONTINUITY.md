@@ -121,6 +121,12 @@
 - 2026-10-21T19:00Z [CODE] Completed Task 19.4 on `feature/19.4-zork3-walkthrough-playthrough`; added the 14-page guide with 242 commands, 15 replay checkpoints, maps indexing all 89 room objects, and all 54 trace-derived opcodes. Local route and trace remain ignored.
 - 2026-10-21T19:00Z [TOOL] Fresh routes passed for Zork III (7/7, Treasury ending, no deaths), Zork I (350), Zork II (400), and Deadline (14). Release build passed single-threaded with Avalonia telemetry disabled; formatting passed; all 366 xUnit tests passed. All PDF pages were rendered and inspected.
 - 2026-10-21T19:01Z [TOOL] Opened PR #32 at `https://github.com/porcellian/LeafpileGPT/pull/32`; awaiting manual review and merge.
+- 2026-10-21T19:07Z [USER] PR #32 was merged. Task 19.4 is complete; user requested standby before Task 20.
+- 2026-10-21T19:12Z [USER] Requested Task 19.5 for Starcross, including verified maximum score and ending, full room map, route, trace, opcode fields, instruction total, and replay of prior story routes.
+- 2026-10-21T19:12Z [CODE] Started `feature/19.5-starcross-walkthrough` from refreshed `origin/main` at `02b7fb3`; retained the local PR #32 continuity update and added `reference/pdf03.png` to the Task 19.5 work.
+- 2026-10-21T19:12Z [DISCOVERIES] Starcross V3 object 122 repeats property 31; retaining the first definition lets short-name lookup work while malformed ascending properties and other duplicates still fail. A generated regression test covers this compatibility case.
+- 2026-10-21T19:37Z [CODE] Task 19.5 is complete: the 226-command no-death route reaches 400/400 and the Earth course ending. The 11-page PDF indexes 86 room objects and includes 57 trace-derived opcode rows and 188,557 executed instructions. Local route and traces remain ignored.
+- 2026-10-21T19:37Z [TOOL] Fresh Starcross, Zork I, Zork II, Deadline, and Zork III routes pass; earlier guide opcode sets are unchanged. Release build, formatter verification, and all 368 tests pass; all PDF pages rendered and reviewed.
 
 ## [DISCOVERIES]
 - 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)

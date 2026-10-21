@@ -59,10 +59,20 @@ public sealed record StoryRoute(
 
 public sealed record InstructionTraceEntry(
     int CommandNumber,
+    int Sequence,
     int Address,
+    string Form,
     string OpcodeClass,
     int Opcode,
     string Mnemonic);
+
+public sealed record OpcodeExecutionSummary(
+    string Form,
+    int Opcode,
+    string Mnemonic,
+    int Count,
+    int FirstSequence,
+    int FirstAddress);
 
 public sealed record RouteReplayResult(
     int CommandsReplayed,
@@ -74,6 +84,18 @@ public sealed record RouteReplayResult(
     IReadOnlyList<InstructionTraceEntry> Trace,
     IReadOnlyList<RouteProgress> Progress)
 {
+    public IReadOnlyList<OpcodeExecutionSummary> OpcodeInventory => Trace
+        .GroupBy(entry => new { entry.Form, entry.Opcode, entry.Mnemonic })
+        .Select(group => new OpcodeExecutionSummary(
+            group.Key.Form,
+            group.Key.Opcode,
+            group.Key.Mnemonic,
+            group.Count(),
+            group.Min(entry => entry.Sequence),
+            group.OrderBy(entry => entry.Sequence).First().Address))
+        .OrderBy(entry => entry.FirstSequence)
+        .ToArray();
+
     public IReadOnlyList<string> UniqueOpcodes => Trace
         .Select(entry => $"{entry.OpcodeClass}.{entry.Opcode:00} {entry.Mnemonic}")
         .Distinct(StringComparer.Ordinal)
@@ -104,14 +126,16 @@ public static class StoryRouteReplayer
         var host = new RouteHost(state, route);
         var saveRestore = new QuetzalSaveRestoreService(host);
         var trace = new List<InstructionTraceEntry>();
+        var sequence = 0;
+        var instructionCount = 0;
         var executor = new ZMachineOpcodeExecutor(state, saveRestore: saveRestore, inputOutput: host, instructionObserver: instruction =>
         {
-            trace.Add(new InstructionTraceEntry(host.LastCommandNumber, instruction.Address,
+            trace.Add(new InstructionTraceEntry(host.LastCommandNumber, ++sequence, instruction.Address,
+                instruction.Form.ToString(),
                 instruction.OpcodeClass.ToString(), instruction.Opcode,
                 OpcodeNames.Get(instruction.OpcodeClass, instruction.Opcode)));
         });
 
-        var instructionCount = 0;
         var halted = false;
         var limit = Math.Min(route.MaximumInstructions, instructionLimit ?? route.MaximumInstructions);
         while (!halted)
