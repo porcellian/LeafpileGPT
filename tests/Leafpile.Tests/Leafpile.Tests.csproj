@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../src/Leafpile.Core/Leafpile.Core.csproj" />
+    <ProjectReference Include="../../src/Leafpile.Desktop/Leafpile.Desktop.csproj" />
     <ProjectReference Include="../../tools/Leafpile.RouteReplay/Leafpile.RouteReplay.csproj" />
   </ItemGroup>
 
