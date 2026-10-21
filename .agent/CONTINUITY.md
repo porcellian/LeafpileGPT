@@ -175,4 +175,4 @@
 - 2026-10-21T16:08Z [TOOL] PR #28 is open at `https://github.com/porcellian/LeafpileGPT/pull/28`; awaiting manual review and merge.
 - 2026-10-21T16:11Z [USER] PR #28 merged as `afc61bf`; this supersedes its pending-review status. User requested standby.
 - 2026-10-21T16:31Z [CODE] On `fix/quetzal-app-data-default`, Save and Restore pickers now start in `LocalApplicationData/LeafpileGPT` or the exact `LEAFPILEGPT_HOME` path; the directory is created on demand and preparation errors are shown in the desktop runtime error area. README and generated xUnit coverage were updated.
-- 2026-10-21T16:31Z [TOOL] Release solution build and all 366 xUnit tests pass; `dotnet format --verify-no-changes` and `git diff --check` pass. PR/commit status pending.
+- 2026-10-21T16:31Z [TOOL] Release solution build and all 366 xUnit tests pass; `dotnet format --verify-no-changes` and `git diff --check` pass. Commit `46f1308` is on `fix/quetzal-app-data-default`; PR #29 is open for manual review.
