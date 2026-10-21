@@ -172,3 +172,4 @@
 - 2026-10-21T15:52Z [TOOL] PR #27 is merged as `fc2190e` into `fix/file-menu-save-restore`, but its GUI changes are not in `origin/main` (`b0a92ed`). Commit `26be0cb` carries that merged GUI change onto `feature/desktop-command-line-story-launch` so it can reach main.
 - 2026-10-21T16:08Z [CODE] Added startup handling for one positional story path from Avalonia's desktop arguments, loading it after the window opens; multiple paths produce a visible error. README documents the command and the no-argument File menu flow.
 - 2026-10-21T16:08Z [TOOL] Release build succeeded with zero warnings/errors, formatting check passed, and all 358 xUnit tests passed.
+- 2026-10-21T16:08Z [TOOL] PR #28 is open at `https://github.com/porcellian/LeafpileGPT/pull/28`; awaiting manual review and merge.
