@@ -173,3 +173,4 @@
 - 2026-10-21T16:08Z [CODE] Added startup handling for one positional story path from Avalonia's desktop arguments, loading it after the window opens; multiple paths produce a visible error. README documents the command and the no-argument File menu flow.
 - 2026-10-21T16:08Z [TOOL] Release build succeeded with zero warnings/errors, formatting check passed, and all 358 xUnit tests passed.
 - 2026-10-21T16:08Z [TOOL] PR #28 is open at `https://github.com/porcellian/LeafpileGPT/pull/28`; awaiting manual review and merge.
+- 2026-10-21T16:11Z [USER] PR #28 merged as `afc61bf`; this supersedes its pending-review status. User requested standby.
