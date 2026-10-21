@@ -665,6 +665,11 @@ public sealed class ZMachineScreen
     public void Write(string text)
     {
         ArgumentNullException.ThrowIfNull(text);
+        if (text.Length > 0 && IsClosingPunctuation(text[0]))
+        {
+            MoveTrailingWordBeforePunctuation();
+        }
+
         for (var index = 0; index < text.Length; index++)
         {
             var shouldWordWrap = Version == 6
@@ -694,6 +699,39 @@ public sealed class ZMachineScreen
             WriteCharacter(text[index]);
         }
     }
+
+    private void MoveTrailingWordBeforePunctuation()
+    {
+        if (Version == 6 || !IsBufferedWordWrappingEnabled() || _lowerCursorColumn != WidthCharacters)
+        {
+            return;
+        }
+
+        var row = _lowerCells[_lowerCursorRow];
+        var wordStart = WidthCharacters;
+        while (wordStart > 0 && !char.IsWhiteSpace(row[wordStart - 1]))
+        {
+            wordStart--;
+        }
+
+        var wordLength = WidthCharacters - wordStart;
+        if (wordLength == 0 || wordLength + 1 > WidthCharacters)
+        {
+            return;
+        }
+
+        var trailingWord = new string(row, wordStart, wordLength);
+        Array.Fill(row, ' ', wordStart, wordLength);
+        _discardLeadingSpaceAfterBufferedWrap[SelectedWindow] = false;
+        SetCursor(false, 0, NextRow(false, HeightLines));
+        foreach (var character in trailingWord)
+        {
+            WriteCharacter(character);
+        }
+    }
+
+    private static bool IsClosingPunctuation(char character) => character is '.' or ',' or ';' or ':' or '!' or '?'
+        or ')' or ']' or '}' or '\'' or '"' or '\u2019' or '\u201d' or '\u00bb';
 
     public void EraseLine(ushort value)
     {
