@@ -168,3 +168,7 @@
 - 2026-10-21T15:32Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting check passed, and all 356 xUnit tests passed. PR #27 is open at `https://github.com/porcellian/LeafpileGPT/pull/27` and stacked on PR #26; merge #26 first, then retarget/review #27.
 - 2026-10-21T15:43Z [CODE] Follow-up on PR #27: when buffered V3/V5+ output emits closing punctuation separately after filling the final column, move the preceding word to the next line before writing the punctuation; regression coverage uses separate writes.
 - 2026-10-21T15:43Z [TOOL] Full Release build, formatting check, whitespace check, and all 358 xUnit tests pass; this supersedes the prior 356-test count. PR #27 remains stacked on PR #26.
+- 2026-10-21T15:48Z [USER] PR #26 merged as `b0a92ed`; this supersedes the pending-review status above.
+- 2026-10-21T15:52Z [TOOL] PR #27 is merged as `fc2190e` into `fix/file-menu-save-restore`, but its GUI changes are not in `origin/main` (`b0a92ed`). Commit `26be0cb` carries that merged GUI change onto `feature/desktop-command-line-story-launch` so it can reach main.
+- 2026-10-21T16:08Z [CODE] Added startup handling for one positional story path from Avalonia's desktop arguments, loading it after the window opens; multiple paths produce a visible error. README documents the command and the no-argument File menu flow.
+- 2026-10-21T16:08Z [TOOL] Release build succeeded with zero warnings/errors, formatting check passed, and all 358 xUnit tests passed.

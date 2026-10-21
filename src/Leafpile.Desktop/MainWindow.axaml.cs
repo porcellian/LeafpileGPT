@@ -100,6 +100,26 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         }
     }
 
+    internal async Task OpenStoryFromCommandLineAsync(string[] args)
+    {
+        if (args.Length != 1)
+        {
+            ReportStoryLoadError("Pass exactly one story file path on the command line.");
+            return;
+        }
+
+        var path = args[0];
+        try
+        {
+            var storyBytes = await File.ReadAllBytesAsync(path);
+            StartStory(StoryLoader.Load(storyBytes), Path.GetFileName(path) ?? "Story");
+        }
+        catch (Exception exception) when (exception is StoryLoadException or IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+        {
+            ReportStoryLoadError(exception.Message);
+        }
+    }
+
     private void OnRestart(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
     {
         _ = sender;

@@ -74,6 +74,17 @@ Run the desktop application with:
 dotnet run --project src/Leafpile.Desktop
 ```
 
+To open a story file as the application starts, pass its path after `--`:
+
+```sh
+dotnet run --project src/Leafpile.Desktop -- stories/zork1.z3
+```
+
+Pass one standalone Z-code or Blorb story path. Relative paths are resolved
+from the current working directory; quote paths containing spaces. Without a
+path, the application starts normally and a story can be opened from the File
+menu.
+
 See [TASKS.md](TASKS.md) for implementation status and the per-task PR workflow.
 Local story files under `stories/` are excluded from Git and are not needed by
 builds or tests.
