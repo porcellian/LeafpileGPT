@@ -97,6 +97,8 @@
 - 2026-10-21T02:34Z [USER] Reported overlapping route commands and section headings on walkthrough pages.
 - 2026-10-21T02:34Z [CODE] Increased vertical spacing before command-section headings so they no longer collide with adjacent command lines.
 - 2026-10-21T02:34Z [TOOL] Rendered and reviewed all 10 final pages; commands 160-163 and other section transitions are visually separated, with all 394 commands preserved.
+- 2026-10-21T02:37Z [USER] Requested all untracked images under `reference/` be added to the active PR.
+- 2026-10-21T02:37Z [CODE] Added the two newly untracked PDF issue screenshots, `pdf01.png` and `pdf02.png`, to the Task 19.1 branch; existing reference images were already tracked.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
