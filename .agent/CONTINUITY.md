@@ -80,6 +80,13 @@
 - 2026-10-21T00:58Z [CODE] On `fix/desktop-inline-input-cursor`, removed the separate TextBox and prompt row; line and character input now use window keyboard events, with line input rendered at the end of the story text and a blinking Courier block cursor.
 - 2026-10-21T00:58Z [TOOL] Desktop Release build passed with zero warnings/errors; folder whitespace verification passed and all 344 xUnit tests passed. Solution-wide build and project-aware formatting stalled without output; focused checks succeeded.
 - 2026-10-21T01:00Z [TOOL] Opened PR #21 at `https://github.com/porcellian/LeafpileGPT/pull/21` from `fix/desktop-inline-input-cursor`; awaiting manual review and merge.
+- 2026-10-21T01:02Z [USER] Confirmed PR #21 merged; subsequent `gh` inspection verified merge commit `03d72a4` [TOOL].
+- 2026-10-21T01:10Z [USER] Reported that the gameplay-blue menu bar should match the white menu bar in `reference/gui-design.png`.
+- 2026-10-21T01:10Z [CODE] Started `fix/desktop-menu-background` from merged `main` at `03d72a4`; set the Avalonia menu background explicitly to white.
+- 2026-10-21T01:11Z [TOOL] Desktop Release build passed with zero warnings/errors; focused whitespace and diff checks passed; all 344 xUnit tests passed.
+- 2026-10-21T01:11Z [TOOL] Opened PR #22 at `https://github.com/porcellian/LeafpileGPT/pull/22` from `fix/desktop-menu-background`; awaiting manual review and merge.
+- 2026-10-21T01:14Z [USER] Requested all untracked images from `reference/` be added to PR #22.
+- 2026-10-21T01:14Z [CODE] Added `gui01.png`, `gui02.png`, `gui03.png`, `gui-design.png`, and `map-ex.png` to the PR; `.DS_Store` remains untracked/ignored.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
