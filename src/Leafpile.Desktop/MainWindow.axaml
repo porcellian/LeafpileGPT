@@ -29,26 +29,16 @@
                    FontFamily="Courier New, monospace" Foreground="#0066CC" />
       </Grid>
     </Border>
-    <Grid x:Name="StorySurface" Background="#0066CC" RowDefinitions="*,Auto">
-      <Grid Grid.Row="0">
-        <TextBlock x:Name="UpperText" Margin="12,10" FontFamily="Courier New, monospace" FontSize="16"
-                   Foreground="#FFFFFF" TextWrapping="NoWrap" VerticalAlignment="Top" />
-        <TextBlock x:Name="LowerText" Margin="12,10" FontFamily="Courier New, monospace" FontSize="16"
-                   Foreground="#FFFFFF" TextWrapping="NoWrap" VerticalAlignment="Bottom" />
-        <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
-        <TextBlock x:Name="WelcomeText" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   Text="Open a story file to begin." FontSize="18" Foreground="#FFFFFF" />
-        <TextBlock x:Name="RuntimeErrorText" Margin="12" HorizontalAlignment="Left" VerticalAlignment="Top"
-                   Foreground="#FFB0A8" FontWeight="Bold" TextWrapping="Wrap" IsVisible="False" />
-      </Grid>
-      <Grid Grid.Row="1" Margin="12,2,12,12" ColumnDefinitions="Auto,*">
-        <TextBlock x:Name="PromptText" Text=">" Margin="0,0,3,0" FontFamily="Courier New, monospace"
-                   FontSize="16" Foreground="#FFFFFF" IsVisible="False" />
-        <TextBox x:Name="InputBox" Grid.Column="1" Padding="0" BorderThickness="0"
-                 Background="#0066CC" Foreground="#FFFFFF" CaretBrush="#FFFFFF"
-                 FontFamily="Courier New, monospace" FontSize="16" IsVisible="False"
-                 KeyDown="OnInputKeyDown" TextInput="OnInputTextInput" />
-      </Grid>
+    <Grid x:Name="StorySurface" Background="#0066CC" Focusable="True">
+      <TextBlock x:Name="UpperText" Margin="12,10" FontFamily="Courier New, monospace" FontSize="16"
+                 Foreground="#FFFFFF" TextWrapping="NoWrap" VerticalAlignment="Top" />
+      <TextBlock x:Name="LowerText" Margin="12,10" FontFamily="Courier New, monospace" FontSize="16"
+                 Foreground="#FFFFFF" TextWrapping="NoWrap" VerticalAlignment="Bottom" />
+      <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
+      <TextBlock x:Name="WelcomeText" HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Text="Open a story file to begin." FontSize="18" Foreground="#FFFFFF" />
+      <TextBlock x:Name="RuntimeErrorText" Margin="12" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Foreground="#FFB0A8" FontWeight="Bold" TextWrapping="Wrap" IsVisible="False" />
     </Grid>
   </DockPanel>
 </Window>

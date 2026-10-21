@@ -17,6 +17,12 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     private DesktopInputOutputHost? _inputOutput;
     private TaskCompletionSource<ZMachineInputResponse>? _currentInput;
     private bool _inputIsCharacter;
+    private bool _inputActive;
+    private bool _cursorVisible;
+    private int _maximumInputCharacters;
+    private string _inputText = string.Empty;
+    private string _lowerWindowText = string.Empty;
+    private readonly DispatcherTimer _cursorTimer;
     private string _storyName = string.Empty;
     private int _renderQueued;
     private (int Window, uint Picture, int X, int Y, uint Width, uint Height)[] _pictureKeys = [];
@@ -25,6 +31,13 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     {
         InitializeComponent();
         AddHandler(KeyDownEvent, OnWindowKeyDown, Avalonia.Interactivity.RoutingStrategies.Tunnel);
+        TextInput += OnWindowTextInput;
+        _cursorTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        _cursorTimer.Tick += (_, _) =>
+        {
+            _cursorVisible = !_cursorVisible;
+            UpdateLowerText();
+        };
         Closing += (_, _) => StopCurrentSession();
     }
 
@@ -50,9 +63,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         {
             RuntimeErrorText.Text = message;
             RuntimeErrorText.IsVisible = true;
-            InputBox.IsEnabled = false;
-            InputBox.IsVisible = false;
-            PromptText.IsVisible = false;
+            HideInput();
         });
     }
 
@@ -105,6 +116,38 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
 
     private void OnWindowKeyDown(object? sender, KeyEventArgs args)
     {
+        if (_currentInput is not null)
+        {
+            if (args.Key == Key.Enter)
+            {
+                args.Handled = true;
+                SubmitInput();
+                return;
+            }
+
+            if (args.Key == Key.Escape)
+            {
+                args.Handled = true;
+                _inputOutput?.CancelPendingInput();
+                _currentInput.TrySetResult(new ZMachineInputResponse(string.Empty, 13));
+                _currentInput = null;
+                HideInput();
+                return;
+            }
+
+            if (!_inputIsCharacter && args.Key == Key.Back)
+            {
+                args.Handled = true;
+                if (_inputText.Length > 0)
+                {
+                    _inputText = _inputText[..^1];
+                    UpdateLowerText();
+                }
+
+                return;
+            }
+        }
+
         if ((args.KeyModifiers & (KeyModifiers.Control | KeyModifiers.Meta)) == 0) return;
         if (args.Key == Key.O)
         {
@@ -118,35 +161,28 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         }
     }
 
-    private void OnInputKeyDown(object? sender, KeyEventArgs args)
-    {
-        if (args.Key == Key.Enter)
-        {
-            args.Handled = true;
-            SubmitInput();
-        }
-        else if (args.Key == Key.Escape)
-        {
-            args.Handled = true;
-            _inputOutput?.CancelPendingInput();
-            _currentInput?.TrySetResult(new ZMachineInputResponse(string.Empty, 13));
-            _currentInput = null;
-            InputBox.IsVisible = false;
-            PromptText.IsVisible = false;
-        }
-    }
-
-    private void OnInputTextInput(object? sender, TextInputEventArgs args)
+    private void OnWindowTextInput(object? sender, TextInputEventArgs args)
     {
         _ = sender;
-        if (!_inputIsCharacter || string.IsNullOrEmpty(args.Text)) return;
-        var character = args.Text[0];
-        var code = character <= byte.MaxValue ? (byte)character : (byte)'?';
-        _currentInput?.TrySetResult(new ZMachineInputResponse(string.Empty, code));
-        _currentInput = null;
-        InputBox.Text = string.Empty;
-        InputBox.IsVisible = false;
-        PromptText.IsVisible = false;
+        if (_currentInput is null || string.IsNullOrEmpty(args.Text)) return;
+        if (_inputIsCharacter)
+        {
+            var character = args.Text[0];
+            var code = character <= byte.MaxValue ? (byte)character : (byte)'?';
+            _currentInput.TrySetResult(new ZMachineInputResponse(string.Empty, code));
+            _currentInput = null;
+            HideInput();
+            args.Handled = true;
+            return;
+        }
+
+        foreach (var character in args.Text)
+        {
+            if (!char.IsControl(character) && _inputText.Length < _maximumInputCharacters)
+                _inputText += character;
+        }
+
+        UpdateLowerText();
         args.Handled = true;
     }
 
@@ -160,8 +196,9 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         WelcomeText.IsVisible = false;
         RuntimeErrorText.IsVisible = false;
         StatusBar.IsVisible = story.Header.Version <= 3;
-        InputBox.Text = string.Empty;
-        InputBox.IsVisible = false;
+        HideInput();
+        _lowerWindowText = string.Empty;
+        LowerText.Text = string.Empty;
         PictureCanvas.Children.Clear();
         _pictureKeys = [];
         var cancellation = new CancellationTokenSource();
@@ -192,6 +229,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         _inputOutput?.CancelPendingInput();
         _currentInput?.TrySetResult(new ZMachineInputResponse(string.Empty, 13));
         _currentInput = null;
+        HideInput();
     }
 
     private void RunStory(ZMachineState state, ZMachineOpcodeExecutor executor, DesktopInputOutputHost input, CancellationToken cancellationToken)
@@ -215,24 +253,22 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         RuntimeErrorText.IsVisible = false;
         _currentInput = completion;
         _inputIsCharacter = request.ReadCharacter;
-        InputBox.Text = request.InitialText;
-        InputBox.MaxLength = request.MaximumCharacters > 0 ? request.MaximumCharacters : int.MaxValue;
-        InputBox.IsEnabled = true;
-        InputBox.IsVisible = true;
-        PromptText.IsVisible = !request.ReadCharacter;
-        InputBox.Focus();
-        InputBox.CaretIndex = InputBox.Text?.Length ?? 0;
+        _inputText = request.InitialText;
+        _maximumInputCharacters = request.MaximumCharacters > 0 ? request.MaximumCharacters : int.MaxValue;
+        _inputActive = true;
+        _cursorVisible = true;
+        _cursorTimer.Start();
+        UpdateLowerText();
+        StorySurface.Focus();
     }
 
     private void SubmitInput()
     {
         if (_inputIsCharacter) return;
         var completion = _currentInput;
-        if (completion is null || !completion.TrySetResult(new ZMachineInputResponse(InputBox.Text ?? string.Empty, 13))) return;
+        if (completion is null || !completion.TrySetResult(new ZMachineInputResponse(_inputText, 13))) return;
         _currentInput = null;
-        InputBox.IsVisible = false;
-        PromptText.IsVisible = false;
-        InputBox.Text = string.Empty;
+        HideInput();
     }
 
     private void RenderScreen(ZMachineScreen screen)
@@ -242,7 +278,8 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         StatusValuesText.Text = screen.StatusValues;
         UpperText.Text = screen.UpperWindowText;
         UpperText.IsVisible = !string.IsNullOrEmpty(screen.UpperWindowText);
-        LowerText.Text = screen.LowerWindowText;
+        _lowerWindowText = screen.LowerWindowText;
+        UpdateLowerText();
         var foreground = screen.Version < 5
             ? Avalonia.Media.Colors.White
             : screen.Version == 6
@@ -256,10 +293,22 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         UpperText.Foreground = LowerText.Foreground = new Avalonia.Media.SolidColorBrush(foreground);
         UpperText.Background = LowerText.Background = new Avalonia.Media.SolidColorBrush(background);
         StorySurface.Background = new Avalonia.Media.SolidColorBrush(background);
-        InputBox.Foreground = new Avalonia.Media.SolidColorBrush(foreground);
-        InputBox.Background = new Avalonia.Media.SolidColorBrush(background);
-        InputBox.CaretBrush = new Avalonia.Media.SolidColorBrush(foreground);
         RenderPictures(screen);
+    }
+
+    private void HideInput()
+    {
+        _inputActive = false;
+        _inputText = string.Empty;
+        _cursorTimer.Stop();
+        UpdateLowerText();
+    }
+
+    private void UpdateLowerText()
+    {
+        LowerText.Text = _inputActive
+            ? string.Concat(_lowerWindowText, _inputText, _cursorVisible ? "█" : " ")
+            : _lowerWindowText;
     }
 
     private static Avalonia.Media.Color ScreenColour(ushort value, bool foreground)
