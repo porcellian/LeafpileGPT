@@ -115,6 +115,9 @@
 - 2026-10-21T17:47Z [CODE] Completed Task 19.3 on `feature/19.3-deadline-walkthrough`: added the eight-page Deadline guide with all 196 route commands, maps of all 49 rooms, and a 53-opcode inventory; marked the subtask complete while keeping Task 19 open.
 - 2026-10-21T17:47Z [TOOL] Fresh Deadline replay passes at 2:55 p.m. in the Living Room with the solved-case ending and no deaths; fresh Zork I (350) and Zork II (400) replays pass. Release solution build has zero warnings/errors; all 366 tests and the read-only formatter pass. PDF pages rendered and inspected. Story assets and Deadline route/trace remain local and ignored.
 - 2026-10-21T17:49Z [TOOL] Committed Task 19.3 as `438337a` and opened PR #30 at `https://github.com/porcellian/LeafpileGPT/pull/30`; awaiting manual review and merge.
+- 2026-10-21T17:54Z [USER] PR #30 was merged; Task 19.3 is complete and Task 19 remains open. User requested standby.
+- 2026-10-21T17:56Z [USER] Requested an unchecked Task 19.4 for `stories/zork3.z3`, using the established maximum-score walkthrough, map, opcode trace, and fresh-route regression process.
+- 2026-10-21T17:56Z [CODE] Started `feature/19.4-zork3-walkthrough` from refreshed `origin/main` at `9e65de2`; Task 19.4 is listed in `TASKS.md` and remains unchecked.
 
 ## [DISCOVERIES]
 - 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)
