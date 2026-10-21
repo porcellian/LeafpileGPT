@@ -120,6 +120,7 @@
 - 2026-10-21T17:56Z [CODE] Started `feature/19.4-zork3-walkthrough` from refreshed `origin/main` at `9e65de2`; Task 19.4 is listed in `TASKS.md` and remains unchecked.
 - 2026-10-21T19:00Z [CODE] Completed Task 19.4 on `feature/19.4-zork3-walkthrough-playthrough`; added the 14-page guide with 242 commands, 15 replay checkpoints, maps indexing all 89 room objects, and all 54 trace-derived opcodes. Local route and trace remain ignored.
 - 2026-10-21T19:00Z [TOOL] Fresh routes passed for Zork III (7/7, Treasury ending, no deaths), Zork I (350), Zork II (400), and Deadline (14). Release build passed single-threaded with Avalonia telemetry disabled; formatting passed; all 366 xUnit tests passed. All PDF pages were rendered and inspected.
+- 2026-10-21T19:01Z [TOOL] Opened PR #32 at `https://github.com/porcellian/LeafpileGPT/pull/32`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-21T17:47Z [TOOL] Deadline repurposes the Z-machine score and moves fields for its clock; the final `14` and `55` are 2:55 p.m., not points. Its best outcome is evidenced by the perfect joint-conviction ending. (Annotated Deadline ZIL source, `zil-clock.html` and `zil-actions.html`.)
