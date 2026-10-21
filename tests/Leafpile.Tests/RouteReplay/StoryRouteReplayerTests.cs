@@ -45,6 +45,22 @@ public sealed class StoryRouteReplayerTests
     }
 
     [Fact]
+    public void ReplayProvidesAnInMemoryQuetzalFileForSaveCommands()
+    {
+        var image = CreateReadAndQuitStory();
+        new byte[] { 0xb5, 0xc2, 0xba }.CopyTo(image, 0x206); // save, branch on success, quit
+        var story = StoryLoader.Load(image);
+        var route = CreateRoute(story, ["look"], [new RouteCheckpoint(1, Location: "Hall", Halted: true)]);
+
+        var result = StoryRouteReplayer.Replay(story, route);
+
+        Assert.True(result.Halted);
+        Assert.Equal(1, result.CommandsReplayed);
+        Assert.Contains("ZeroOperand.05 save", result.UniqueOpcodes);
+        Assert.Contains("ZeroOperand.10 quit", result.UniqueOpcodes);
+    }
+
+    [Fact]
     public void ReplayRejectsDifferentStoryIdentity()
     {
         var original = CreateReadAndQuitStory();

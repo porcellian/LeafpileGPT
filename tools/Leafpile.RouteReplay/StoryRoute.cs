@@ -102,8 +102,9 @@ public static class StoryRouteReplayer
         var state = new ZMachineState(story);
         state.Random.UseDeterministicSeed(route.RandomSeed);
         var host = new RouteHost(state, route);
+        var saveRestore = new QuetzalSaveRestoreService(host);
         var trace = new List<InstructionTraceEntry>();
-        var executor = new ZMachineOpcodeExecutor(state, inputOutput: host, instructionObserver: instruction =>
+        var executor = new ZMachineOpcodeExecutor(state, saveRestore: saveRestore, inputOutput: host, instructionObserver: instruction =>
         {
             trace.Add(new InstructionTraceEntry(host.LastCommandNumber, instruction.Address,
                 instruction.OpcodeClass.ToString(), instruction.Opcode,
@@ -146,11 +147,12 @@ public static class StoryRouteReplayer
         return objectNumber == 0 ? string.Empty : new ZMachineObjectTable(state).GetShortName(objectNumber).Trim();
     }
 
-    private sealed class RouteHost(ZMachineState state, StoryRoute route) : IZMachineInputOutput
+    private sealed class RouteHost(ZMachineState state, StoryRoute route) : IZMachineInputOutput, IZMachineSaveFileAccess
     {
         private int _nextCommand;
         private int _lastValidatedCommand = -1;
         private readonly List<RouteProgress> _progress = [];
+        private byte[]? _saveFile;
         public int LastCommandNumber { get; private set; } = -1;
         public int CommandsConsumed => _nextCommand;
         public IReadOnlyList<RouteProgress> Progress => _progress;
@@ -158,6 +160,14 @@ public static class StoryRouteReplayer
         public bool SupportsCommandInput => false;
         public bool SupportsTranscript => false;
         public bool SupportsCommandRecording => false;
+
+        public bool WriteSaveFile(ReadOnlyMemory<byte> saveFile)
+        {
+            _saveFile = saveFile.ToArray();
+            return true;
+        }
+
+        public ReadOnlyMemory<byte>? ReadSaveFile() => _saveFile;
 
         public ZMachineInputResponse ReadInput(ZMachineInputRequest request, Func<bool>? timedInterrupt)
         {

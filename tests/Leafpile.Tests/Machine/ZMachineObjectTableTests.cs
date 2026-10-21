@@ -135,6 +135,15 @@ public sealed class ZMachineObjectTableTests
     }
 
     [Fact]
+    public void ReadsNullObjectPropertiesAsDefaultsWithoutAnAddress()
+    {
+        var table = new ZMachineObjectTable(CreatePopulatedState(5));
+
+        Assert.Equal(0xbeef, table.GetProperty(0, 3));
+        Assert.Equal(0, table.GetPropertyAddress(0, 3));
+    }
+
+    [Fact]
     public void RejectsMalformedPropertyOrderAndInvalidTablePointers()
     {
         var state = CreatePopulatedState(5);

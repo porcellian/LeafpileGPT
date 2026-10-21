@@ -374,6 +374,11 @@ public sealed class ZMachineObjectTable : IZMachineObjectQueries
 
     private PropertyEntry? FindProperty(ushort objectNumber, ushort propertyNumber)
     {
+        if (objectNumber == 0)
+        {
+            return null;
+        }
+
         foreach (var property in ReadProperties(objectNumber))
         {
             if (property.Number == propertyNumber)
