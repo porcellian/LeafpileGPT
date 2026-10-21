@@ -49,6 +49,7 @@ public sealed class ZMachineScreenTests
 
         Assert.Contains("Score: 42", state.Screen.StatusLine);
         Assert.Contains("Moves: 7", state.Screen.StatusLine);
+        Assert.Equal("Score: 42  Moves: 7", state.Screen.StatusValues);
     }
 
     [Fact]
@@ -65,6 +66,7 @@ public sealed class ZMachineScreenTests
 
         Assert.Contains("16:05", state.Screen.StatusLine);
         Assert.DoesNotContain("Score", state.Screen.StatusLine);
+        Assert.Equal("16:05", state.Screen.StatusValues);
     }
 
     [Fact]
