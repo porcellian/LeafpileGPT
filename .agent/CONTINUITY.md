@@ -70,9 +70,11 @@
 - 2026-10-20T21:35Z [CODE] Completed Task 18 on `feature/18-desktop-experience`: Avalonia open/restart and keyboard workflows, Quetzal pickers, display/sound/input/file hosts, runtime reporting, image rendering, and reference screen layout. Ready for PR review.
 - 2026-10-20T21:35Z [TOOL] Task 18 Release build succeeded with zero warnings/errors; formatter and whitespace checks passed; all 344 generated tests passed.
 - 2026-10-20T21:38Z [TOOL] Opened PR #19 at `https://github.com/porcellian/LeafpileGPT/pull/19` from commit `1e89f47`; awaiting manual review and merge.
+- 2026-10-20T21:39Z [TOOL] PR #19 merged to `main` at `1ac9e67`; this supersedes its pending-review status.
 - 2026-10-21T00:42Z [USER] Reported that the score/moves status text is not right-aligned to the wider desktop window.
 - 2026-10-21T00:42Z [CODE] Split V1–V3 status location and value fields; Avalonia aligns status values to the right edge. Regression assertions cover score/moves and time values.
 - 2026-10-21T00:42Z [TOOL] Alignment fix Release build had zero warnings/errors; formatting passed and all 344 tests passed.
+- 2026-10-21T00:42Z [CODE] PR #19 had already merged before the alignment commit reached its branch; cherry-picked the fix onto `fix/18-status-line-alignment` from merged `main` as `6c49254` for a separate PR.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
