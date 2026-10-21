@@ -42,6 +42,33 @@ public sealed class StoryRouteReplayerTests
         Assert.NotEmpty(result.Trace);
         Assert.Contains("Variable.04 read", result.UniqueOpcodes);
         Assert.Equal(2, result.UniqueOpcodes.Count);
+        Assert.All(result.Trace, entry => Assert.False(string.IsNullOrWhiteSpace(entry.Form)));
+        Assert.Equal(Enumerable.Range(1, result.InstructionsExecuted), result.Trace.Select(entry => entry.Sequence));
+        Assert.Equal(result.InstructionsExecuted, result.OpcodeInventory.Sum(entry => entry.Count));
+        Assert.Equal(result.Trace[0].Form, result.OpcodeInventory[0].Form);
+        Assert.Equal(result.Trace[0].Sequence, result.OpcodeInventory[0].FirstSequence);
+        Assert.Equal(result.Trace[0].Address, result.OpcodeInventory[0].FirstAddress);
+        Assert.Equal(1, result.OpcodeInventory[0].Count);
+        Assert.Equal(1, result.OpcodeInventory[1].Count);
+    }
+
+    [Fact]
+    public void OpcodeInventoryPreservesActualFormAndFirstExecutionForRepeatedInstructions()
+    {
+        var image = CreateReadAndQuitStory();
+        // Two VARIABLE-form read instructions followed by a SHORT-form quit.
+        new byte[] { 0xe4, 0x0f, 0x01, 0x00, 0x01, 0x50, 0xe4, 0x0f, 0x01, 0x00, 0x01, 0x50, 0xba }
+            .CopyTo(image, 0x200);
+        var story = StoryLoader.Load(image);
+        var result = StoryRouteReplayer.Replay(story, CreateRoute(story, ["look", "look"]));
+
+        Assert.Equal(3, result.InstructionsExecuted);
+        Assert.Equal(new[] { "Variable", "Variable", "Short" }, result.Trace.Select(entry => entry.Form));
+        Assert.Equal(new[] { 1, 2, 3 }, result.Trace.Select(entry => entry.Sequence));
+        Assert.Equal(2, result.OpcodeInventory.Count);
+        Assert.Equal(new OpcodeExecutionSummary("Variable", 4, "read", 2, 1, 0x200), result.OpcodeInventory[0]);
+        Assert.Equal(new OpcodeExecutionSummary("Short", 10, "quit", 1, 3, 0x20c), result.OpcodeInventory[1]);
+        Assert.Equal(result.InstructionsExecuted, result.OpcodeInventory.Sum(entry => entry.Count));
     }
 
     [Fact]

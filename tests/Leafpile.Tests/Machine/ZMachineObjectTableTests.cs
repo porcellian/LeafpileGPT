@@ -162,6 +162,25 @@ public sealed class ZMachineObjectTableTests
     }
 
     [Fact]
+    public void UsesFirstDefinitionWhenInfocomV3StoryRepeatsProperty31()
+    {
+        var state = CreatePopulatedState(3);
+        state.Memory.WriteByte(0x101, 0x1f); // property 31, one byte
+        state.Memory.WriteByte(0x102, 0x11);
+        state.Memory.WriteByte(0x103, 0x9f); // duplicate property 31, length 5
+        for (var index = 0; index < 5; index++) state.Memory.WriteByte((ushort)(0x104 + index), (byte)(0x20 + index));
+        state.Memory.WriteByte(0x109, 0x05); // lower-numbered property
+        state.Memory.WriteByte(0x10a, 0x22);
+        state.Memory.WriteByte(0x10b, 0);
+        var table = new ZMachineObjectTable(state);
+
+        Assert.Equal(0x11, table.GetProperty(1, 31));
+        Assert.Equal(31, table.GetNextProperty(1, 0));
+        Assert.Equal(5, table.GetNextProperty(1, 31));
+        Assert.Equal(0, table.GetNextProperty(1, 5));
+    }
+
+    [Fact]
     public void ExecutesObjectAndPropertyOpcodesThroughTheDefaultObjectService()
     {
         var story = CreatePopulatedStory(3);
