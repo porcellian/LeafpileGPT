@@ -90,6 +90,7 @@
 - 2026-10-21T02:15Z [USER] PR #22 merged; Task 19.1 Zork I maximum-score walkthrough work began on `feature/19-zork1-walkthrough`.
 - 2026-10-21T02:15Z [CODE] Added local route replay tooling and generated-fixture tests, fixed Zork-discovered print-address opcodes, produced the 350-point guide, and checked Task 19.1; Task 19 remains open.
 - 2026-10-21T02:15Z [TOOL] Release build, formatting, and all 350 tests pass; fresh play and replay each completed at 350/350 in 391 moves without deaths. Route and trace remain ignored locally.
+- 2026-10-21T02:16Z [TOOL] Committed Task 19.1 as `2225502` and opened PR #23 at `https://github.com/porcellian/LeafpileGPT/pull/23`; awaiting manual review and merge.
 
 ## [DISCOVERIES]
 - 2026-10-20T04:40Z [TOOL] The repository initially had no C# projects or continuity file; local story candidates cover V3–V6.
