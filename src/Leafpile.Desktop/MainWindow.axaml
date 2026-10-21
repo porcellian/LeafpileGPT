@@ -23,7 +23,11 @@
       </MenuItem>
     </Menu>
     <Border x:Name="StatusBar" DockPanel.Dock="Top" Background="#E5E5E5" Padding="10,5" IsVisible="False">
-      <TextBlock x:Name="StatusText" FontFamily="Courier New, monospace" Foreground="#0066CC" />
+      <Grid ColumnDefinitions="*,Auto">
+        <TextBlock x:Name="StatusLocationText" FontFamily="Courier New, monospace" Foreground="#0066CC" />
+        <TextBlock x:Name="StatusValuesText" Grid.Column="1" HorizontalAlignment="Right"
+                   FontFamily="Courier New, monospace" Foreground="#0066CC" />
+      </Grid>
     </Border>
     <Grid x:Name="StorySurface" Background="#0066CC" RowDefinitions="*,Auto">
       <Grid Grid.Row="0">
