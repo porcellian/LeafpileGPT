@@ -11,6 +11,7 @@ public sealed class ZMachineOpcodeExecutor
     private readonly IZMachineInputOutput? _inputOutput;
     private readonly IZMachineSound? _sound;
     private readonly IZMachineDisplay? _display;
+    private readonly Action<ZMachineInstruction>? _instructionObserver;
     private readonly ConcurrentQueue<ushort> _soundCompletions = new();
     private ZMachineTextParser _textParser;
     private ZMachineOutputStreams _outputStreams;
@@ -25,7 +26,8 @@ public sealed class ZMachineOpcodeExecutor
         IZMachineObjectQueries? objects = null,
         IZMachineInputOutput? inputOutput = null,
         IZMachineSound? sound = null,
-        IZMachineDisplay? display = null)
+        IZMachineDisplay? display = null,
+        Action<ZMachineInstruction>? instructionObserver = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -35,6 +37,7 @@ public sealed class ZMachineOpcodeExecutor
         _inputOutput = inputOutput;
         _sound = sound;
         _display = display;
+        _instructionObserver = instructionObserver;
         _outputStreams = new ZMachineOutputStreams(state, inputOutput);
         ConfigureInputCapabilities();
         ConfigureSoundCapabilities();
@@ -47,6 +50,7 @@ public sealed class ZMachineOpcodeExecutor
         {
             ProcessSoundCompletions();
             var instruction = _state.Instructions.Decode(_state.ProgramCounter);
+            _instructionObserver?.Invoke(instruction);
             var result = Execute(instruction);
             _display?.Present(_state.Screen);
             return result;
@@ -276,6 +280,8 @@ public sealed class ZMachineOpcodeExecutor
                     _state.WriteIndirectVariable(variable, unchecked((ushort)(value + (instruction.Opcode == 5 ? 1 : -1))));
                     break;
                 }
+            case 7:
+                return new ZMachineExecutionResult(Output: WriteOutput(_state.Text.Decode(ReadValue(operand))));
             case 8:
                 Call(instruction, storeResult: true);
                 break;
@@ -292,6 +298,11 @@ public sealed class ZMachineOpcodeExecutor
                     var offset = (short)ReadValue(operand);
                     _state.SetProgramCounter(checked(instruction.NextAddress + offset - 2));
                     break;
+                }
+            case 13:
+                {
+                    var address = ZMachineAddressing.DecodePackedAddress(ReadValue(operand), _state.Header, PackedAddressKind.String);
+                    return new ZMachineExecutionResult(Output: WriteOutput(_state.Text.Decode(address)));
                 }
             case 14:
                 StoreResult(instruction, _state.ReadIndirectVariable(ReadVariableReference(operand)));
