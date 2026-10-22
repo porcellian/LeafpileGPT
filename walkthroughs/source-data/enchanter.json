@@ -1,0 +1,1896 @@
+{
+  "title": "ENCHANTER",
+  "routeTitle": "MAXIMUM-SCORE VICTORY WALKTHROUGH",
+  "release": 29,
+  "serial": "860820",
+  "randomSeed": 1,
+  "score": 400,
+  "maximumScore": 400,
+  "rank": "Member of the Circle of Enchanters",
+  "endingVerification": "Krill is banished; Belboz welcomes you into the Circle as a Member of the Circle of Enchanters.",
+  "moves": 284,
+  "commandsCount": 242,
+  "commands": [
+    "look",
+    "ne",
+    "enter shack",
+    "take jug",
+    "open oven",
+    "take loaf",
+    "south",
+    "ne",
+    "se",
+    "ne",
+    "fill jug",
+    "sw",
+    "se",
+    "sw",
+    "sw",
+    "south",
+    "read scroll",
+    "gnusto rezrov",
+    "ne",
+    "ne",
+    "east",
+    "east",
+    "learn rezrov",
+    "rezrov gate",
+    "east",
+    "frotz spell book",
+    "north",
+    "north",
+    "up",
+    "take egg",
+    "learn rezrov",
+    "rezrov egg",
+    "take shredded scroll",
+    "down",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "learn rezrov",
+    "rezrov gate",
+    "north",
+    "take crumpled scroll",
+    "read crumpled scroll",
+    "krebf shredded scroll",
+    "read faded scroll",
+    "south",
+    "south",
+    "examine rat tracks",
+    "reach into hole",
+    "take frayed scroll",
+    "north",
+    "read frayed scroll",
+    "gnusto gondar",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "south",
+    "south",
+    "south",
+    "south",
+    "up",
+    "examine bedpost",
+    "learn rezrov",
+    "rezrov bedpost",
+    "take gold leaf scroll",
+    "read gold leaf scroll",
+    "gnusto vaxum",
+    "down",
+    "east",
+    "drink water",
+    "drop spell book",
+    "east",
+    "remove lighted portrait",
+    "take black scroll",
+    "read black scroll",
+    "west",
+    "take spell book",
+    "down",
+    "open cell door",
+    "north",
+    "examine writing",
+    "remove block",
+    "east",
+    "take stained scroll",
+    "read stained scroll",
+    "eat loaf",
+    "west",
+    "south",
+    "up",
+    "east",
+    "east",
+    "south",
+    "se",
+    "learn nitfol",
+    "nitfol turtle",
+    "turtle, follow me",
+    "nw",
+    "north",
+    "east",
+    "up",
+    "exex turtle",
+    "turtle, go se and get scroll",
+    "yell at turtle",
+    "down",
+    "west",
+    "west",
+    "west",
+    "west",
+    "up",
+    "lie down",
+    "get up",
+    "drink water",
+    "eat loaf",
+    "down",
+    "east",
+    "east",
+    "east",
+    "east",
+    "up",
+    "take brittle scroll",
+    "read brittle scroll",
+    "down",
+    "west",
+    "west",
+    "west",
+    "west",
+    "up",
+    "lie down",
+    "get up",
+    "down",
+    "north",
+    "north",
+    "east",
+    "east",
+    "ozmoo me",
+    "drop all",
+    "east",
+    "wait",
+    "down",
+    "west",
+    "get all",
+    "west",
+    "south",
+    "cut rope with dagger",
+    "open box",
+    "take vellum scroll",
+    "read vellum scroll",
+    "drop dagger",
+    "north",
+    "west",
+    "north",
+    "north",
+    "east",
+    "learn vaxum",
+    "east",
+    "east",
+    "east",
+    "east",
+    "west",
+    "west",
+    "west",
+    "west",
+    "east",
+    "east",
+    "east",
+    "east",
+    "west",
+    "score",
+    "zifmia adventurer",
+    "vaxum adventurer",
+    "show egg to adventurer",
+    "east",
+    "east",
+    "point at door",
+    "up",
+    "look",
+    "drop egg",
+    "take map",
+    "take pencil",
+    "eat loaf",
+    "drink water",
+    "down",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "south",
+    "south",
+    "south",
+    "south",
+    "east",
+    "down",
+    "connect b and k",
+    "connect p and f",
+    "wait",
+    "wait",
+    "disconnect j and v",
+    "disconnect b and k",
+    "drop map",
+    "drop pencil",
+    "drop jug",
+    "drop loaf",
+    "down",
+    "south",
+    "east",
+    "ne",
+    "se",
+    "sw",
+    "take powerful scroll",
+    "read powerful scroll",
+    "gnusto guncho",
+    "ne",
+    "nw",
+    "sw",
+    "west",
+    "north",
+    "up",
+    "up",
+    "east",
+    "east",
+    "north",
+    "melbor me",
+    "north",
+    "north",
+    "east",
+    "east",
+    "learn gondar",
+    "learn vaxum",
+    "inventory",
+    "kulcad stairs",
+    "read ornate scroll",
+    "izyuk me",
+    "east",
+    "gondar dragon",
+    "vaxum shape",
+    "guncho krill",
+    "score"
+  ],
+  "criticalCommands": [
+    17,
+    18,
+    24,
+    26,
+    30,
+    32,
+    41,
+    45,
+    50,
+    54,
+    67,
+    70,
+    76,
+    85,
+    87,
+    89,
+    97,
+    98,
+    99,
+    104,
+    105,
+    106,
+    113,
+    123,
+    138,
+    139,
+    144,
+    147,
+    150,
+    157,
+    171,
+    172,
+    173,
+    174,
+    177,
+    178,
+    181,
+    182,
+    198,
+    199,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    214,
+    215,
+    216,
+    221,
+    227,
+    232,
+    233,
+    235,
+    236,
+    237,
+    238,
+    239,
+    240,
+    241
+  ],
+  "stepStarts": {
+    "1": "01  |  Find the scroll and prepare Rezrov",
+    "19": "02  |  Open the castle; reveal the egg",
+    "35": "03  |  Repair the Krebf scroll; learn Gondar",
+    "60": "04  |  Bedroom compartment and Vaxum",
+    "79": "05  |  Gallery, cell, and the Turtle",
+    "107": "06  |  Rest before lifting the brittle scroll",
+    "138": "07  |  Let the guards capture you",
+    "152": "08  |  Reach the Adventurer in the mirror hall",
+    "180": "09  |  Use his map to open the Guarded Door",
+    "198": "10  |  Trap the Terror in the magic map",
+    "208": "11  |  Retrieve Guncho and reach the Winding Stair",
+    "227": "12  |  Defeat Krill and earn the Circle"
+  },
+  "checkpoints": [
+    {
+      "heading": "40 / 400",
+      "detail": "Rezrov opens the gate; Frotz lights the book; Rezrov reveals the egg."
+    },
+    {
+      "heading": "80 / 400",
+      "detail": "Repair Krebf, recover Gondar, and enter the library hole."
+    },
+    {
+      "heading": "175 / 400",
+      "detail": "Turtle returns the brittle Kulcad scroll."
+    },
+    {
+      "heading": "280 / 400",
+      "detail": "The Adventurer unlocks the Guarded Door."
+    },
+    {
+      "heading": "330 / 400",
+      "detail": "The Terror is trapped; Guncho scroll recovered."
+    },
+    {
+      "heading": "400 / 400",
+      "detail": "Krill defeated; the Circle welcomes you."
+    }
+  ],
+  "totalInstructions": 526697,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 44130,
+      "FirstSequence": 1,
+      "FirstAddress": 21771
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 23866,
+      "FirstSequence": 2,
+      "FirstAddress": 21776
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 31904,
+      "FirstSequence": 4,
+      "FirstAddress": 21623
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 38810,
+      "FirstSequence": 6,
+      "FirstAddress": 21631
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 5063,
+      "FirstSequence": 7,
+      "FirstAddress": 21635
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 72526,
+      "FirstSequence": 8,
+      "FirstAddress": 21639
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 18369,
+      "FirstSequence": 10,
+      "FirstAddress": 21650
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 2265,
+      "FirstSequence": 11,
+      "FirstAddress": 21655
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 26866,
+      "FirstSequence": 20,
+      "FirstAddress": 21657
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 17069,
+      "FirstSequence": 23,
+      "FirstAddress": 21671
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 19342,
+      "FirstSequence": 246,
+      "FirstAddress": 21881
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 36330,
+      "FirstSequence": 250,
+      "FirstAddress": 21893
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 690,
+      "FirstSequence": 251,
+      "FirstAddress": 21898
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 684,
+      "FirstSequence": 252,
+      "FirstAddress": 22645
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 257,
+      "FirstAddress": 32740
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 7,
+      "FirstSequence": 258,
+      "FirstAddress": 32746
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 13500,
+      "FirstSequence": 260,
+      "FirstAddress": 32764
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 49257,
+      "FirstSequence": 261,
+      "FirstAddress": 32771
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 262,
+      "FirstAddress": 32775
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 4377,
+      "FirstSequence": 287,
+      "FirstAddress": 32782
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 298,
+      "FirstSequence": 289,
+      "FirstAddress": 22653
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 2985,
+      "FirstSequence": 294,
+      "FirstAddress": 31140
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 288,
+      "FirstSequence": 296,
+      "FirstAddress": 31149
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 356,
+      "FirstSequence": 299,
+      "FirstAddress": 31191
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 2379,
+      "FirstSequence": 301,
+      "FirstAddress": 31197
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 243,
+      "FirstSequence": 302,
+      "FirstAddress": 31201
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 3868,
+      "FirstSequence": 305,
+      "FirstAddress": 31210
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 2347,
+      "FirstSequence": 308,
+      "FirstAddress": 31237
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 182,
+      "FirstSequence": 317,
+      "FirstAddress": 31369
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 4737,
+      "FirstSequence": 322,
+      "FirstAddress": 31404
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 2947,
+      "FirstSequence": 324,
+      "FirstAddress": 31468
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 6125,
+      "FirstSequence": 333,
+      "FirstAddress": 31516
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 7727,
+      "FirstSequence": 346,
+      "FirstAddress": 31861
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 9695,
+      "FirstSequence": 351,
+      "FirstAddress": 31956
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 2215,
+      "FirstSequence": 364,
+      "FirstAddress": 31544
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 242,
+      "FirstSequence": 466,
+      "FirstAddress": 24251
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 15426,
+      "FirstSequence": 483,
+      "FirstAddress": 25660
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 30167,
+      "FirstSequence": 835,
+      "FirstAddress": 25728
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 2701,
+      "FirstSequence": 1223,
+      "FirstAddress": 25845
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 783,
+      "FirstSequence": 1229,
+      "FirstAddress": 25853
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 961,
+      "FirstSequence": 1264,
+      "FirstAddress": 27371
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 11163,
+      "FirstSequence": 2606,
+      "FirstAddress": 34505
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2739,
+      "FirstSequence": 2608,
+      "FirstAddress": 34513
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 330,
+      "FirstSequence": 3895,
+      "FirstAddress": 29132
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 197,
+      "FirstSequence": 3899,
+      "FirstAddress": 29155
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1933,
+      "FirstSequence": 3932,
+      "FirstAddress": 30803
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 7644,
+      "FirstSequence": 3942,
+      "FirstAddress": 30550
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 109,
+      "FirstSequence": 6258,
+      "FirstAddress": 34978
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 190,
+      "FirstSequence": 7975,
+      "FirstAddress": 95543
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 96,
+      "FirstSequence": 8021,
+      "FirstAddress": 21535
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 24,
+      "FirstSequence": 16229,
+      "FirstAddress": 44544
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 51,
+      "FirstSequence": 16251,
+      "FirstAddress": 44740
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 2,
+      "FirstSequence": 160523,
+      "FirstAddress": 34577
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 3,
+      "FirstSequence": 203496,
+      "FirstAddress": 90155
+    },
+    {
+      "Form": "Long",
+      "Opcode": 19,
+      "Mnemonic": "get_next_prop",
+      "Count": 480,
+      "FirstSequence": 388381,
+      "FirstAddress": 69581
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 1,
+      "FirstSequence": 526668,
+      "FirstAddress": 54920
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 526697,
+      "FirstAddress": 32492
+    }
+  ],
+  "visitedLocations": [
+    "Fork",
+    "Outside of Shack",
+    "Inside Shack",
+    "Trail",
+    "Trail Head",
+    "Shady Brook",
+    "Eastern Fork",
+    "Village Outskirts",
+    "Deserted Village",
+    "Western Road",
+    "Outside Gate",
+    "Inside Gate",
+    "Pebbled Path",
+    "Tower",
+    "Jewel Room",
+    "Hall of Mirrors One",
+    "Hall of Mirrors Two",
+    "Hall of Mirrors Three",
+    "Hall of Mirrors Four",
+    "North Gate",
+    "Forest",
+    "Library",
+    "West Hall",
+    "Bedroom",
+    "South Hall",
+    "Gallery",
+    "Dungeon",
+    "Cell",
+    "Secret Passage",
+    "South Gate",
+    "Meadow",
+    "Beach",
+    "Engine Room",
+    "Courtyard",
+    "Sacrificial Altar",
+    "Temple",
+    "Closet",
+    "Guarded Door",
+    "Map Room",
+    "Translucent Room",
+    "East Hall",
+    "Banquet Hall",
+    "Junction",
+    "Landing",
+    "Winding Stair",
+    "Warlock's Tower"
+  ],
+  "maps": [
+    {
+      "title": "The road around Lonely Mountain",
+      "icon": "road",
+      "rooms": [
+        "Fork",
+        "Outside of Shack",
+        "Inside Shack",
+        "Trail",
+        "Trail Head",
+        "Shady Brook",
+        "Eastern Fork",
+        "Village Outskirts",
+        "Deserted Village",
+        "Western Road",
+        "Outside Gate",
+        "Inside Gate",
+        "Pebbled Path"
+      ],
+      "edges": [
+        {
+          "source": "Fork",
+          "target": "Outside of Shack",
+          "label": "ne",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside of Shack",
+          "target": "Inside Shack",
+          "label": "enter shack",
+          "firstArrival": true
+        },
+        {
+          "source": "Inside Shack",
+          "target": "Outside of Shack",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Outside of Shack",
+          "target": "Trail",
+          "label": "ne",
+          "firstArrival": true
+        },
+        {
+          "source": "Trail",
+          "target": "Trail Head",
+          "label": "se",
+          "firstArrival": true
+        },
+        {
+          "source": "Trail Head",
+          "target": "Shady Brook",
+          "label": "ne",
+          "firstArrival": true
+        },
+        {
+          "source": "Shady Brook",
+          "target": "Trail Head",
+          "label": "sw",
+          "firstArrival": false
+        },
+        {
+          "source": "Trail Head",
+          "target": "Eastern Fork",
+          "label": "se",
+          "firstArrival": true
+        },
+        {
+          "source": "Eastern Fork",
+          "target": "Village Outskirts",
+          "label": "sw",
+          "firstArrival": true
+        },
+        {
+          "source": "Village Outskirts",
+          "target": "Deserted Village",
+          "label": "sw",
+          "firstArrival": true
+        },
+        {
+          "source": "Deserted Village",
+          "target": "Village Outskirts",
+          "label": "ne",
+          "firstArrival": false
+        },
+        {
+          "source": "Village Outskirts",
+          "target": "Eastern Fork",
+          "label": "ne",
+          "firstArrival": false
+        },
+        {
+          "source": "Eastern Fork",
+          "target": "Western Road",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Western Road",
+          "target": "Outside Gate",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Gate",
+          "target": "Inside Gate",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Inside Gate",
+          "target": "Pebbled Path",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Pebbled Path",
+          "target": "Tower",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Tower",
+          "target": "Pebbled Path",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Pebbled Path",
+          "target": "Inside Gate",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "West Hall",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "West Hall",
+          "target": "Inside Gate",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "Courtyard",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Courtyard",
+          "target": "Inside Gate",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "Pebbled Path",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Pebbled Path",
+          "target": "Tower",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Pebbled Path",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Pebbled Path",
+          "target": "Inside Gate",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "West Hall",
+          "label": "south",
+          "firstArrival": false
+        }
+      ]
+    },
+    {
+      "title": "Castle halls and north wing",
+      "icon": "book",
+      "rooms": [
+        "Tower",
+        "Jewel Room",
+        "Hall of Mirrors One",
+        "Hall of Mirrors Two",
+        "Hall of Mirrors Three",
+        "Hall of Mirrors Four",
+        "North Gate",
+        "Forest",
+        "Library",
+        "West Hall",
+        "Bedroom",
+        "South Hall",
+        "Gallery",
+        "Dungeon",
+        "Cell",
+        "Secret Passage",
+        "South Gate"
+      ],
+      "edges": [
+        {
+          "source": "Pebbled Path",
+          "target": "Tower",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Tower",
+          "target": "Jewel Room",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Jewel Room",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Hall of Mirrors One",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Mirrors One",
+          "target": "Hall of Mirrors Two",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors Three",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Four",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "North Gate",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "North Gate",
+          "target": "Forest",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Forest",
+          "target": "North Gate",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Library",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Library",
+          "target": "North Gate",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Hall of Mirrors Four",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "Hall of Mirrors Three",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Two",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors One",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors One",
+          "target": "Tower",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Pebbled Path",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "West Hall",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "West Hall",
+          "target": "Tower",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Bedroom",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Bedroom",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "South Hall",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "South Hall",
+          "target": "Gallery",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Gallery",
+          "target": "South Hall",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Dungeon",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Dungeon",
+          "target": "Cell",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Cell",
+          "target": "Secret Passage",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Secret Passage",
+          "target": "Cell",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Cell",
+          "target": "Dungeon",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Dungeon",
+          "target": "South Hall",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Gallery",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Gallery",
+          "target": "South Gate",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "South Gate",
+          "target": "Meadow",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Meadow",
+          "target": "South Gate",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "Tower",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Engine Room",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Engine Room",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "South Gate",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "Gallery",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Gallery",
+          "target": "South Hall",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Tower",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Bedroom",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "Bedroom",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "South Hall",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Gallery",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Gallery",
+          "target": "South Gate",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "Tower",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Engine Room",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "Engine Room",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "South Gate",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "Gallery",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Gallery",
+          "target": "South Hall",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Tower",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Bedroom",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "Bedroom",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "West Hall",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "West Hall",
+          "target": "Inside Gate",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Courtyard",
+          "target": "Cell",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Cell",
+          "target": "Sacrificial Altar",
+          "label": "wait",
+          "firstArrival": true
+        },
+        {
+          "source": "Pebbled Path",
+          "target": "Tower",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Hall of Mirrors One",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors One",
+          "target": "Hall of Mirrors Two",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors Three",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Four",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "North Gate",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Hall of Mirrors Four",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "Hall of Mirrors Three",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Two",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors One",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors One",
+          "target": "Hall of Mirrors Two",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors Three",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Four",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "North Gate",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Hall of Mirrors Four",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "North Gate",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Guarded Door",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Guarded Door",
+          "target": "North Gate",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Hall of Mirrors Four",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Four",
+          "target": "Hall of Mirrors Three",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Three",
+          "target": "Hall of Mirrors Two",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors Two",
+          "target": "Hall of Mirrors One",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Hall of Mirrors One",
+          "target": "Tower",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Pebbled Path",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "West Hall",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "West Hall",
+          "target": "Tower",
+          "label": "south",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "South Hall",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Dungeon",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Dungeon",
+          "target": "Translucent Room",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Translucent Room",
+          "target": "Dungeon",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "Dungeon",
+          "target": "South Hall",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "South Hall",
+          "target": "Gallery",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Gallery",
+          "target": "South Gate",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "East Hall",
+          "label": "north",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "The beach, engine, and trap",
+      "icon": "turtle",
+      "rooms": [
+        "Meadow",
+        "Beach",
+        "Engine Room",
+        "Courtyard",
+        "Sacrificial Altar",
+        "Temple",
+        "Closet",
+        "Guarded Door",
+        "Map Room"
+      ],
+      "edges": [
+        {
+          "source": "South Gate",
+          "target": "Meadow",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Meadow",
+          "target": "Beach",
+          "label": "se",
+          "firstArrival": true
+        },
+        {
+          "source": "Beach",
+          "target": "Meadow",
+          "label": "nw",
+          "firstArrival": false
+        },
+        {
+          "source": "Meadow",
+          "target": "South Gate",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Engine Room",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Engine Room",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Tower",
+          "target": "Engine Room",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "Engine Room",
+          "target": "Tower",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Inside Gate",
+          "target": "Courtyard",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Courtyard",
+          "target": "Cell",
+          "label": "east",
+          "firstArrival": false
+        },
+        {
+          "source": "Cell",
+          "target": "Sacrificial Altar",
+          "label": "wait",
+          "firstArrival": true
+        },
+        {
+          "source": "Sacrificial Altar",
+          "target": "Temple",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Temple",
+          "target": "Courtyard",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "Courtyard",
+          "target": "Closet",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Closet",
+          "target": "Courtyard",
+          "label": "north",
+          "firstArrival": false
+        },
+        {
+          "source": "Courtyard",
+          "target": "Inside Gate",
+          "label": "west",
+          "firstArrival": false
+        },
+        {
+          "source": "North Gate",
+          "target": "Guarded Door",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Guarded Door",
+          "target": "Map Room",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Map Room",
+          "target": "Guarded Door",
+          "label": "down",
+          "firstArrival": false
+        },
+        {
+          "source": "Guarded Door",
+          "target": "North Gate",
+          "label": "west",
+          "firstArrival": false
+        }
+      ]
+    },
+    {
+      "title": "The magic map and final tower",
+      "icon": "dragon",
+      "rooms": [
+        "Translucent Room",
+        "East Hall",
+        "Banquet Hall",
+        "Junction",
+        "Landing",
+        "Winding Stair",
+        "Warlock's Tower"
+      ],
+      "edges": [
+        {
+          "source": "Dungeon",
+          "target": "Translucent Room",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Translucent Room",
+          "target": "Dungeon",
+          "label": "up",
+          "firstArrival": false
+        },
+        {
+          "source": "South Gate",
+          "target": "East Hall",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "East Hall",
+          "target": "Banquet Hall",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Banquet Hall",
+          "target": "Junction",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Junction",
+          "target": "Landing",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Landing",
+          "target": "Winding Stair",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Winding Stair",
+          "target": "Warlock's Tower",
+          "label": "east",
+          "firstArrival": true
+        }
+      ]
+    }
+  ],
+  "intro": [
+    "Start a fresh Release 29 game and use random seed 1. This deterministic seed keeps the Adventurer in the Map Room long enough to lead him to the Guarded Door.",
+    "Read spells before copying them into the illuminated book. Keep the egg for the Adventurer, use the pencil and parchment to solve the map, and follow the rest stop before carrying the Turtle\u2019s brittle scroll back from the Engine Room.",
+    "After the map puzzle, drop the used map, pencil, jug, and bread before taking the powerful Guncho scroll through Kulcad\u2019s dissolving stairway. Cast Gondar on the dragon, Vaxum on the shape, then Guncho on Krill."
+  ],
+  "routeIdentity": {
+    "Version": 3,
+    "Release": 29,
+    "Serial": "860820",
+    "Checksum": 9543,
+    "Sha256": "bc9b99be980a1aa67c1aef89d4e5878f1f03edab62fe43ae23b2f7e2c41b1dc8"
+  },
+  "routeCheckpoints": [
+    {
+      "CommandNumber": 171,
+      "Location": "Hall of Mirrors Four",
+      "Score": 235
+    },
+    {
+      "CommandNumber": 177,
+      "Location": "Guarded Door",
+      "Score": 280
+    },
+    {
+      "CommandNumber": 203,
+      "Location": "Dungeon",
+      "Score": 280
+    },
+    {
+      "CommandNumber": 214,
+      "Location": "Translucent Room",
+      "Score": 280
+    },
+    {
+      "CommandNumber": 235,
+      "Location": "Winding Stair",
+      "Score": 340
+    },
+    {
+      "CommandNumber": 241,
+      "Location": "Warlock's Tower",
+      "Score": 400
+    },
+    {
+      "CommandNumber": 242,
+      "Location": "Warlock's Tower",
+      "Score": 400,
+      "Halted": true
+    }
+  ]
+}

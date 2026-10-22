@@ -72,3 +72,25 @@ The fresh route ends with the police-chief letter confirming Monica Linder's
 conviction. Witness exposes no numeric score global, so the guide verifies the
 best-ending result instead. The story, manual, hints, route, saves, and trace
 stay local and remain unnecessary for CI.
+
+## Enchanter maximum-score guide
+
+The Enchanter guide is generated from `walkthroughs/source-data/enchanter.json`:
+
+```sh
+python3 tools/walkthroughs/make_enchanter_walkthrough.py
+```
+
+After a fresh local replay, refresh its inventory from the ignored route trace:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/enchante.z3 \
+  .agent/regression-routes/enchanter-maximum-score.json \
+  .agent/regression-routes/enchanter-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_enchanter_walkthrough.py \
+  --refresh-trace .agent/regression-routes/enchanter-maximum-score.trace.jsonl
+```
+
+The seed-1 route reaches 400/400 and the Circle ending in 284 moves without a
+player-death event. Keep the Enchanter story, manual, hints, route, and raw trace
+local; automated tests do not require them.
