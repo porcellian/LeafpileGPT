@@ -147,3 +147,29 @@ ending. It intentionally includes one player death at Hollow, required for the
 verified maximum-score route, and avoids additional deaths. Keep the story,
 manual, hints, route, saves, and raw trace local; automated tests do not require
 those assets.
+
+## Sea Stalker no-death walkthrough
+
+`make_seastalker_walkthrough.py` rebuilds the Sea Stalker 100-point guide from
+`walkthroughs/source-data/seastalker.json`. It includes the 202-input route,
+score checkpoints, field-sketch maps for the laboratory, Aquadome, and ocean
+encounters, and the six-column opcode inventory:
+
+```sh
+python3 tools/walkthroughs/make_seastalker_walkthrough.py
+```
+
+To refresh the inventory from a new local replay, run the ignored route and
+trace, then rebuild from that trace:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/seastalker.z3 \
+  .agent/regression-routes/seastalker-no-death.json \
+  .agent/regression-routes/seastalker-no-death.trace.jsonl
+python3 tools/walkthroughs/make_seastalker_walkthrough.py \
+  --refresh-trace .agent/regression-routes/seastalker-no-death.trace.jsonl
+```
+
+The deterministic seed-1035 route reaches 100/100 in 213 moves and completes
+the mission with no player deaths. Keep the Sea Stalker story, manual, hints,
+route, saves, and raw trace local; automated tests do not require those files.
