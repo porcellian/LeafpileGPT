@@ -254,6 +254,9 @@
 - 2026-10-22T17:37Z [USER] Shorten the opcode label to `OP`, the variable form to `Var`, and make auto-scroll target the just-entered command so later instruction output stays under manual scroll control.
 - 2026-10-22T17:37Z [CODE] PR #48 now formats `OP` and `Form=Var`; it scrolls to new command rows only and leaves later opcode batches at the user's scroll position. README documents the behavior.
 - 2026-10-22T17:37Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting verification passed, and all 385 xUnit tests passed. Native GUI interaction remains unverified.
+- 2026-10-22T17:44Z [USER] Reduce the form field width by five characters and tighten whitespace between mnemonics and operand lists.
+- 2026-10-22T17:44Z [CODE] PR #48 now uses a three-character form field and a 12-character mnemonic field, shifting `OP` left five columns for `Var` and reducing mnemonic-to-operands spacing.
+- 2026-10-22T17:44Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting verification passed, and all 385 xUnit tests passed.
 - 2026-10-22T03:34Z [USER] PR #41 is merged; Task 19.9 is complete. User requested the Task 19.10 Infidel checklist PR; do not begin the playthrough before that checklist PR is merged.
 - 2026-10-22T03:36Z [TOOL] Started `feature/19.10-infidel-task` from refreshed `origin/main` at `181b329`. Local Infidel story, manual, and hints are present and ignored. The unchecked Task 19.10 checklist requires the best verified no-death score and ending, Starcross-style guide/maps/opcode table, local route/trace, fixes with generated tests, and fresh replay of all nine earlier walkthrough routes.
 - 2026-10-22T03:37Z [TOOL] Committed the checklist as `05c3d32`, pushed `feature/19.10-infidel-task`, and opened PR #42 at `https://github.com/porcellian/LeafpileGPT/pull/42` after a successful dry-run preview. Wait for manual merge before starting the Infidel playthrough.
