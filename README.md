@@ -61,6 +61,12 @@ directory (for example, `%LOCALAPPDATA%/LeafpileGPT` on Windows). Set
 as the directory, without an additional application subfolder. The directory is
 created when needed, and each picker still allows choosing another location.
 
+The Open Story picker remembers the folder of the last selected story separately
+in `LocalApplicationData/LeafpileGPT/Preferences`. On first use it starts with
+the operating system's default location. If the remembered folder is unavailable,
+the app clears it and returns to the operating system default. This preference
+does not use `LEAFPILEGPT_HOME` and does not change the Save or Restore locations.
+
 ## Requirements
 
 - .NET 10 SDK

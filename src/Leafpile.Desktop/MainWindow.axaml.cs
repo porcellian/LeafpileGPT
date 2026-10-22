@@ -23,6 +23,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     private string _inputText = string.Empty;
     private string _lowerWindowText = string.Empty;
     private readonly DispatcherTimer _cursorTimer;
+    private readonly OpenStoryDirectoryStore _openStoryDirectoryStore;
     private string _storyName = string.Empty;
     private int _renderQueued;
     private (int Window, uint Picture, int X, int Y, uint Width, uint Height)[] _pictureKeys = [];
@@ -30,6 +31,8 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     public MainWindow()
     {
         InitializeComponent();
+        _openStoryDirectoryStore = new OpenStoryDirectoryStore(OpenStoryDirectoryStore.GetDefaultPreferenceFilePath(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)));
         AddHandler(KeyDownEvent, OnWindowKeyDown, Avalonia.Interactivity.RoutingStrategies.Tunnel);
         TextInput += OnWindowTextInput;
         _cursorTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
@@ -80,23 +83,86 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     {
         _ = sender;
         _ = args;
+        var warnings = new List<string>();
+        var preference = _openStoryDirectoryStore.Read();
+        if (preference.Warning is not null) warnings.Add(preference.Warning);
+
+        IStorageFolder? startLocation = null;
         try
         {
-            var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+            if (preference.Directory is not null)
             {
-                Title = "Open Z-machine story",
-                AllowMultiple = false,
-                FileTypeFilter = [new FilePickerFileType("Z-machine story or Blorb") { Patterns = ["*.z1", "*.z2", "*.z3", "*.z4", "*.z5", "*.z6", "*.z7", "*.z8", "*.blorb", "*.blb", "*.*"] }]
-            });
-            if (files.Count == 0) return;
+                try
+                {
+                    startLocation = await StorageProvider.TryGetFolderFromPathAsync(new Uri(preference.Directory));
+                }
+                catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or NotSupportedException)
+                {
+                    warnings.Add($"Could not open the previously used story folder; the picker will use its default location. {exception.Message}");
+                }
+
+                if (startLocation is null)
+                {
+                    var cleared = _openStoryDirectoryStore.Clear();
+                    if (cleared.Warning is not null)
+                    {
+                        warnings.Add(cleared.Warning);
+                    }
+                    else if (warnings.Count == 0)
+                    {
+                        warnings.Add("The previously used story folder is unavailable; the picker will use its default location.");
+                    }
+                }
+            }
+
+            var files = await StorageProvider.OpenFilePickerAsync(CreateOpenStoryPickerOptions(startLocation));
+            if (files.Count == 0)
+            {
+                ReportOpenStoryWarnings(warnings);
+                return;
+            }
+
+            var localPath = files[0].TryGetLocalPath();
+            if (localPath is not null)
+            {
+                var remembered = _openStoryDirectoryStore.RememberSelectedStory(localPath);
+                if (remembered.Warning is not null) warnings.Add(remembered.Warning);
+            }
+            else
+            {
+                warnings.Add("The selected story folder could not be remembered because the file picker did not provide a local path.");
+            }
+
             await using var stream = await files[0].OpenReadAsync();
             using var memory = new MemoryStream();
             await stream.CopyToAsync(memory);
             StartStory(StoryLoader.Load(memory.ToArray()), files[0].Name ?? "Story");
+            ReportOpenStoryWarnings(warnings);
         }
         catch (Exception exception) when (exception is StoryLoadException or IOException or UnauthorizedAccessException)
         {
-            ReportStoryLoadError(exception.Message);
+            warnings.Add(exception.Message);
+            ReportStoryLoadError(string.Join(Environment.NewLine, warnings));
+        }
+        finally
+        {
+            startLocation?.Dispose();
+        }
+    }
+
+    internal static FilePickerOpenOptions CreateOpenStoryPickerOptions(IStorageFolder? startLocation) => new()
+    {
+        Title = "Open Z-machine story",
+        SuggestedStartLocation = startLocation,
+        AllowMultiple = false,
+        FileTypeFilter = [new FilePickerFileType("Z-machine story or Blorb") { Patterns = ["*.z1", "*.z2", "*.z3", "*.z4", "*.z5", "*.z6", "*.z7", "*.z8", "*.blorb", "*.blb", "*.*"] }]
+    };
+
+    private void ReportOpenStoryWarnings(IReadOnlyCollection<string> warnings)
+    {
+        if (warnings.Count > 0)
+        {
+            ReportStoryLoadError(string.Join(Environment.NewLine, warnings));
         }
     }
 
