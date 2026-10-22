@@ -245,8 +245,16 @@ public sealed class ZMachineObjectTable : IZMachineObjectQueries
 
     private void UpdateAttribute(ushort objectNumber, ushort attribute, bool set)
     {
-        ValidateRequiredObject(objectNumber);
         ValidateAttribute(attribute);
+        // Object 0 is the null object. The standard recommends configurable
+        // handling for illegal object-0 operations; silently ignoring this
+        // mutation is the compatibility behavior used by classic Infocom games.
+        if (objectNumber == 0)
+        {
+            return;
+        }
+
+        ValidateRequiredObject(objectNumber);
         var entryAddress = GetObjectEntryAddress(objectNumber);
         var address = checked((ushort)(entryAddress + (attribute / 8)));
         var mask = (byte)(0x80 >> (attribute % 8));

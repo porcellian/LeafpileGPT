@@ -1,0 +1,625 @@
+{
+  "title": "THE WITNESS",
+  "routeTitle": "BEST-ENDING CASE ROUTE",
+  "commands": [
+    "north",
+    "north",
+    "ring bell",
+    "east",
+    "wait",
+    "sit in wooden chair",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "yes",
+    "wait",
+    "wait",
+    "stand",
+    "press button",
+    "examine clock",
+    "take key",
+    "examine keyhole",
+    "examine window",
+    "take wire",
+    "unlock back door",
+    "open back door",
+    "east",
+    "south",
+    "take gun",
+    "north",
+    "west",
+    "check powder",
+    "west",
+    "north",
+    "north",
+    "open butler door",
+    "west",
+    "open mystery book",
+    "take receipt",
+    "read receipt",
+    "east",
+    "south",
+    "south",
+    "unlock garage door",
+    "open garage door",
+    "south",
+    "unlock workshop door",
+    "open workshop door",
+    "east",
+    "wait for Duffy",
+    "check piece",
+    "wait for Duffy",
+    "wait for Monica",
+    "yes",
+    "wait",
+    "wait",
+    "no",
+    "west",
+    "north",
+    "east",
+    "west",
+    "north",
+    "north",
+    "east",
+    "wait for Monica",
+    "Monica, tell me about Mr Linder",
+    "wait",
+    "wait",
+    "wait",
+    "no",
+    "west",
+    "south",
+    "south",
+    "east",
+    "handcuff Monica",
+    "search Monica",
+    "unlock clock",
+    "open clock",
+    "search Monica",
+    "wait for Duffy",
+    "yes",
+    "arrest Monica",
+    "yes",
+    "no"
+  ],
+  "commandsCount": 81,
+  "moves": 43,
+  "totalInstructions": 158771,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 5474,
+      "FirstSequence": 1,
+      "FirstAddress": 52665
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 6806,
+      "FirstSequence": 5,
+      "FirstAddress": 52677
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 509,
+      "FirstSequence": 8,
+      "FirstAddress": 47913
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 1627,
+      "FirstSequence": 11,
+      "FirstAddress": 54080
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1733,
+      "FirstSequence": 12,
+      "FirstAddress": 54083
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 2441,
+      "FirstSequence": 14,
+      "FirstAddress": 52692
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 338,
+      "FirstSequence": 18,
+      "FirstAddress": 52479
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 7558,
+      "FirstSequence": 19,
+      "FirstAddress": 52485
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 18505,
+      "FirstSequence": 20,
+      "FirstAddress": 52489
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 5460,
+      "FirstSequence": 21,
+      "FirstAddress": 52493
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 30322,
+      "FirstSequence": 22,
+      "FirstAddress": 52497
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 5778,
+      "FirstSequence": 24,
+      "FirstAddress": 52508
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 21702,
+      "FirstSequence": 34,
+      "FirstAddress": 52515
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 14811,
+      "FirstSequence": 37,
+      "FirstAddress": 52529
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 467,
+      "FirstSequence": 438,
+      "FirstAddress": 76155
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 234,
+      "FirstSequence": 439,
+      "FirstAddress": 76418
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 39,
+      "FirstSequence": 440,
+      "FirstAddress": 76419
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 1770,
+      "FirstSequence": 444,
+      "FirstAddress": 61195
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 404,
+      "FirstSequence": 445,
+      "FirstAddress": 61199
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 450,
+      "FirstAddress": 61388
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 38,
+      "FirstSequence": 451,
+      "FirstAddress": 61394
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 7372,
+      "FirstSequence": 453,
+      "FirstAddress": 61412
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 455,
+      "FirstAddress": 61423
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 118,
+      "FirstSequence": 482,
+      "FirstAddress": 52717
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 807,
+      "FirstSequence": 486,
+      "FirstAddress": 61766
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 62,
+      "FirstSequence": 488,
+      "FirstAddress": 61775
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 93,
+      "FirstSequence": 490,
+      "FirstAddress": 61782
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 752,
+      "FirstSequence": 493,
+      "FirstAddress": 61791
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 77,
+      "FirstSequence": 498,
+      "FirstAddress": 61820
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 2769,
+      "FirstSequence": 500,
+      "FirstAddress": 47857
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 74,
+      "FirstSequence": 509,
+      "FirstAddress": 61831
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 1258,
+      "FirstSequence": 519,
+      "FirstAddress": 61955
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 1639,
+      "FirstSequence": 535,
+      "FirstAddress": 29690
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 1482,
+      "FirstSequence": 546,
+      "FirstAddress": 29806
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 1459,
+      "FirstSequence": 549,
+      "FirstAddress": 29955
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1116,
+      "FirstSequence": 556,
+      "FirstAddress": 29968
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 617,
+      "FirstSequence": 677,
+      "FirstAddress": 61732
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 718,
+      "FirstSequence": 734,
+      "FirstAddress": 54354
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 81,
+      "FirstSequence": 745,
+      "FirstAddress": 54404
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 820,
+      "FirstSequence": 766,
+      "FirstAddress": 55245
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 4015,
+      "FirstSequence": 767,
+      "FirstAddress": 55249
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 1247,
+      "FirstSequence": 813,
+      "FirstAddress": 20525
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 2527,
+      "FirstSequence": 855,
+      "FirstAddress": 75553
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 1407,
+      "FirstSequence": 857,
+      "FirstAddress": 75561
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 283,
+      "FirstSequence": 1142,
+      "FirstAddress": 52552
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 165,
+      "FirstSequence": 1255,
+      "FirstAddress": 83089
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 16,
+      "FirstSequence": 1256,
+      "FirstAddress": 83093
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 45,
+      "FirstSequence": 1332,
+      "FirstAddress": 54087
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 93,
+      "FirstSequence": 2060,
+      "FirstAddress": 54886
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 73,
+      "FirstSequence": 2257,
+      "FirstAddress": 58218
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1188,
+      "FirstSequence": 2271,
+      "FirstAddress": 59221
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 2,
+      "FirstSequence": 4142,
+      "FirstAddress": 82891
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 6,
+      "FirstSequence": 4349,
+      "FirstAddress": 81258
+    },
+    {
+      "Form": "Long",
+      "Opcode": 19,
+      "Mnemonic": "get_next_prop",
+      "Count": 125,
+      "FirstSequence": 4544,
+      "FirstAddress": 85121
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 218,
+      "FirstSequence": 5502,
+      "FirstAddress": 75080
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 18,
+      "FirstSequence": 8232,
+      "FirstAddress": 60740
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 5,
+      "FirstSequence": 27121,
+      "FirstAddress": 82742
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 158771,
+      "FirstAddress": 97396
+    }
+  ],
+  "intro": [
+    "Begin from a fresh Release 22 story. Enter one numbered line at each prompt; answer YES or NO exactly where the route lists it. The repeated waits are intentional and follow the story clock.",
+    "The route preserves the murder scene, recovers the clock-keyhole powder and the green wire, identifies the muddy handgun and the purchase receipt, and lets Monica reveal her motive before the arrest.",
+    "Witness does not expose a numeric score in the replay globals. The verified best ending is the police-chief letter reporting Monica Linder convicted; the detective survives and the case reaches its complete-solution prompt."
+  ],
+  "checkpoints": [
+    {
+      "heading": "9:04 p.m.",
+      "detail": "Linder is shot; preserve scene evidence."
+    },
+    {
+      "heading": "Forensics",
+      "detail": "Powder: gunpowder; wire: 16-gauge bell wire."
+    },
+    {
+      "heading": "Motive + method",
+      "detail": "Monica reveals resentment; hidden gun recovered."
+    },
+    {
+      "heading": "Conviction",
+      "detail": "Jury convicts Monica; zero deaths."
+    }
+  ],
+  "stepStarts": {
+    "1": "Approach and meet the household",
+    "6": "Hear Linder\u2019s account",
+    "7": "Wait for the 9 p.m. attack",
+    "15": "Read the scene and collect evidence",
+    "22": "Follow the footprint trail",
+    "28": "Confirm the powder and trace the receipt",
+    "45": "Get the forensic reports",
+    "49": "Observe Monica at the junction box",
+    "59": "Follow Monica to her bedroom",
+    "64": "Ask about her motive",
+    "72": "Secure the evidence and arrest",
+    "81": "Finish the case"
+  },
+  "criticalCommands": [
+    15,
+    16,
+    17,
+    19,
+    20,
+    21,
+    27,
+    28,
+    35,
+    36,
+    37,
+    38,
+    45,
+    47,
+    48,
+    49,
+    58,
+    59,
+    60,
+    64,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ]
+}
