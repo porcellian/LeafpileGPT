@@ -76,6 +76,35 @@ public sealed class InstructionAuditLogTests
         Assert.False(InstructionWindow.ContainsCommandLine(["#000010   PC=0x00100   Form=Short"]));
     }
 
+    [Fact]
+    public void CommandNavigatorMovesAcrossCommandsAndCurrentReturnsToLatest()
+    {
+        var navigator = new InstructionCommandNavigator();
+        Assert.False(navigator.HasCommands);
+        Assert.Equal(-1, navigator.CurrentLineIndexAndSelect());
+
+        navigator.Add(3);
+        navigator.Add(9);
+        navigator.Add(15);
+
+        Assert.True(navigator.CanGoPrevious);
+        Assert.False(navigator.CanGoNext);
+        Assert.Equal(9, navigator.PreviousLineIndex());
+        Assert.True(navigator.CanGoNext);
+        Assert.Equal(15, navigator.NextLineIndex());
+        Assert.Equal(9, navigator.PreviousLineIndex());
+        Assert.Equal(3, navigator.PreviousLineIndex());
+        Assert.Equal(3, navigator.PreviousLineIndex());
+        Assert.Equal(15, navigator.CurrentLineIndexAndSelect());
+        Assert.Equal(15, navigator.CurrentLineIndex);
+        Assert.False(navigator.CanGoNext);
+
+        navigator.Reset();
+        Assert.False(navigator.HasCommands);
+        Assert.False(navigator.CanGoPrevious);
+        Assert.False(navigator.CanGoNext);
+    }
+
     private static ZMachineInstruction CreateInstruction(
         int address,
         ZMachineInstructionForm form,

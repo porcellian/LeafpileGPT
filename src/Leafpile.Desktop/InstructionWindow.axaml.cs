@@ -9,7 +9,8 @@ namespace Leafpile.Desktop;
 public sealed partial class InstructionWindow : Window
 {
     private InstructionAuditLog _auditLog = null!;
-    private readonly ObservableCollection<string> _lines = [];
+    private readonly ObservableCollection<InstructionAuditLine> _lines = [];
+    private readonly InstructionCommandNavigator _commandNavigator = new();
     private bool _ownerClosing;
 
     public event Action<int>? HistoryCleared;
@@ -28,7 +29,17 @@ public sealed partial class InstructionWindow : Window
         var additions = lines.ToArray();
         var scrollViewer = AuditLines.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
         var wasAtBottom = scrollViewer is null || scrollViewer.Offset.Y >= scrollViewer.Extent.Height - scrollViewer.Viewport.Height - 2;
-        foreach (var line in additions) _lines.Add(line);
+        var commandAdded = false;
+        foreach (var line in additions)
+        {
+            var lineIndex = _lines.Count;
+            _lines.Add(new InstructionAuditLine(line));
+            if (!line.StartsWith("> ", StringComparison.Ordinal)) continue;
+            _commandNavigator.Add(lineIndex);
+            commandAdded = true;
+        }
+        if (commandAdded) AuditLines.SelectedIndex = _commandNavigator.CurrentLineIndex;
+        UpdateCommandNavigationButtons();
         if ((wasAtBottom || ContainsCommandLine(additions)) && _lines.Count > 0)
             AuditLines.ScrollIntoView(_lines[^1]);
     }
@@ -39,9 +50,46 @@ public sealed partial class InstructionWindow : Window
     public int ClearDisplayed()
     {
         _lines.Clear();
+        _commandNavigator.Reset();
         var currentLines = _auditLog.SnapshotFrom(0);
         Append(currentLines);
         return currentLines.Length;
+    }
+
+    private void OnPreviousCommand(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        NavigateToCommand(_commandNavigator.PreviousLineIndex());
+    }
+
+    private void OnCurrentCommand(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        NavigateToCommand(_commandNavigator.CurrentLineIndexAndSelect());
+    }
+
+    private void OnNextCommand(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        NavigateToCommand(_commandNavigator.NextLineIndex());
+    }
+
+    private void NavigateToCommand(int lineIndex)
+    {
+        if (lineIndex < 0 || lineIndex >= _lines.Count) return;
+        AuditLines.SelectedIndex = lineIndex;
+        AuditLines.ScrollIntoView(_lines[lineIndex]);
+        UpdateCommandNavigationButtons();
+    }
+
+    private void UpdateCommandNavigationButtons()
+    {
+        PreviousCommandButton.IsEnabled = _commandNavigator.CanGoPrevious;
+        CurrentCommandButton.IsEnabled = _commandNavigator.HasCommands;
+        NextCommandButton.IsEnabled = _commandNavigator.CanGoNext;
     }
 
     public void AllowOwnerClose() => _ownerClosing = true;
@@ -88,4 +136,9 @@ public sealed partial class InstructionWindow : Window
         _auditLog.Clear();
         HistoryCleared?.Invoke(ClearDisplayed());
     }
+}
+
+internal sealed class InstructionAuditLine(string text)
+{
+    public string Text { get; } = text;
 }
