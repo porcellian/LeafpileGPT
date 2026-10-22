@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using System.Text;
 using Avalonia.Controls;
+using Avalonia.Media;
 using Avalonia.Platform.Storage;
 
 namespace Leafpile.Desktop;
@@ -137,4 +138,5 @@ public sealed partial class InstructionWindow : Window
 internal sealed class InstructionAuditLine(string text)
 {
     public string Text { get; } = text;
+    public FontWeight FontWeight { get; } = text.StartsWith("> ", StringComparison.Ordinal) ? FontWeight.Bold : FontWeight.Normal;
 }

@@ -1,5 +1,6 @@
 using Leafpile.Core.Machine;
 using Leafpile.Desktop;
+using Avalonia.Media;
 
 namespace Leafpile.Tests.Desktop;
 
@@ -116,6 +117,13 @@ public sealed class InstructionAuditLogTests
         Assert.Equal(new[] { "Short", "Long", "Var", "Ext" }, instructions.Select(GetForm).ToArray());
         Assert.Single(instructions.Select(line => line.IndexOf("OP=", StringComparison.Ordinal)).Distinct());
         Assert.Single(instructions.Select(line => line.IndexOf('[')).Distinct());
+    }
+
+    [Fact]
+    public void CommandRowsUseBoldFontWeightAndInstructionRowsRemainNormal()
+    {
+        Assert.Equal(FontWeight.Bold, new InstructionAuditLine("> take lamp").FontWeight);
+        Assert.Equal(FontWeight.Normal, new InstructionAuditLine("#000001 PC=0x00200").FontWeight);
     }
 
     private static string GetForm(string line)

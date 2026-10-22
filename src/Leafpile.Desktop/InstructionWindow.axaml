@@ -29,7 +29,7 @@
       </ListBox.Styles>
       <ListBox.ItemTemplate>
         <DataTemplate x:DataType="local:InstructionAuditLine">
-          <TextBlock Text="{Binding Text}" FontFamily="Courier New, monospace" FontSize="12" TextWrapping="NoWrap" Margin="0" />
+          <TextBlock Text="{Binding Text}" FontFamily="Courier New, monospace" FontSize="12" FontWeight="{Binding FontWeight}" TextWrapping="NoWrap" Margin="0" />
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>
