@@ -25,11 +25,16 @@ public sealed partial class InstructionWindow : Window
 
     public void Append(IEnumerable<string> lines)
     {
+        var additions = lines.ToArray();
         var scrollViewer = AuditLines.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
         var wasAtBottom = scrollViewer is null || scrollViewer.Offset.Y >= scrollViewer.Extent.Height - scrollViewer.Viewport.Height - 2;
-        foreach (var line in lines) _lines.Add(line);
-        if (wasAtBottom && _lines.Count > 0) AuditLines.ScrollIntoView(_lines[^1]);
+        foreach (var line in additions) _lines.Add(line);
+        if ((wasAtBottom || ContainsCommandLine(additions)) && _lines.Count > 0)
+            AuditLines.ScrollIntoView(_lines[^1]);
     }
+
+    internal static bool ContainsCommandLine(IEnumerable<string> lines) =>
+        lines.Any(line => line.StartsWith("> ", StringComparison.Ordinal));
 
     public int ClearDisplayed()
     {

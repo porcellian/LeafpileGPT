@@ -95,9 +95,9 @@ internal sealed class InstructionAuditLog
     {
         var type = operand.Type switch
         {
-            ZMachineOperandType.LargeConstant => "large",
-            ZMachineOperandType.SmallConstant => "small",
-            ZMachineOperandType.Variable => "variable",
+            ZMachineOperandType.LargeConstant => "lg",
+            ZMachineOperandType.SmallConstant => "sm",
+            ZMachineOperandType.Variable => "var",
             _ => "unknown"
         };
         return $"{type}:0x{operand.EncodedValue:x4}";
