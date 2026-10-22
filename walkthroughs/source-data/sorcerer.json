@@ -1,0 +1,1498 @@
+{
+  "title": "SORCERER",
+  "routeTitle": "400-POINT MAXIMUM-SCORE WALKTHROUGH",
+  "release": 15,
+  "serial": "851108",
+  "randomSeed": 1,
+  "score": 400,
+  "maximumScore": 400,
+  "rank": "Leader of the Circle of Enchanters",
+  "moves": 379,
+  "commandsCount": 228,
+  "totalInstructions": 221946,
+  "requiredDeaths": 1,
+  "deathLocation": "Hollow",
+  "deathCountNote": "One required Hollow death; no other player deaths",
+  "endingVerification": "At 400/400, Belboz awakens, Jeearr dissipates, and the Circle names you its new leader. The final QUIT answers the ending prompt.",
+  "intro": [
+    "Start a fresh Release 15 game with deterministic seed 1. This verified route reaches 400/400 in 379 moves and 228 commands.",
+    "The route intentionally dies once in Hollow: after sending the parchment down the hole, wait for the Dorn, then recover at the Stone Hut. This is the sole player death on the verified maximum-score route.",
+    "Seed 1 gives the coal-dial combination 1. At the Top of Chute, drop all after tying and lowering the rope so the climb succeeds.",
+    "At Lagoon Shore, wait for the Vilstu potion to expire before sleeping. The rest prevents exhaustion during the underwater crate sequence."
+  ],
+  "checkpoints": [
+    {
+      "heading": "75 / 400",
+      "detail": "The trunk yields the moldy Aimfiz scroll."
+    },
+    {
+      "heading": "140 / 400",
+      "detail": "Take the single real zorkmid from the illusion tree."
+    },
+    {
+      "heading": "205 / 400",
+      "detail": "The planned Dorn death returns you to Gaspar; recover all items and learn Swanzo."
+    },
+    {
+      "heading": "235 / 400",
+      "detail": "Malyon opens the dragon passage to the coal mine."
+    },
+    {
+      "heading": "320 / 400",
+      "detail": "The time loop returns the book; escape to fresh air."
+    },
+    {
+      "heading": "400 / 400",
+      "detail": "Belboz is freed, Jeearr dissipates, and the Circle names you its successor."
+    }
+  ],
+  "visitedLocations": [
+    "Your Quarters",
+    "Hallway",
+    "Helistar's Quarters",
+    "Lobby",
+    "Store Room",
+    "Library",
+    "Belboz's Quarters",
+    "Cellar",
+    "Twisted Forest",
+    "Forest Edge",
+    "Meadow",
+    "River Bank",
+    "River Bed",
+    "Hidden Cave",
+    "Pit of Bones",
+    "Dungeon",
+    "Ruins",
+    "Drawbridge",
+    "Fort Entrance",
+    "Parade Ground",
+    "Gun Emplacement",
+    "Snake Pit",
+    "Slimy Room",
+    "Crater",
+    "Edge of Chasm",
+    "Bare Passage",
+    "Elbow Room",
+    "Tree Room",
+    "Edge of Crater",
+    "Bend",
+    "Highway",
+    "Toll Gate",
+    "Outside Store",
+    "End of Highway",
+    "Stone Hut",
+    "Entrance Hall",
+    "Outside Glass Arch",
+    "Inside the Glass Maze",
+    "Hollow",
+    "Winding Tunnel",
+    "Park Entrance",
+    "East End of Midway",
+    "West End of Midway",
+    "Arcade",
+    "Hall of Carvings",
+    "Sooty Room",
+    "Coal Bin Room",
+    "Dial Room",
+    "Shaft Bottom",
+    "Shaft Top",
+    "Coal Mine",
+    "Top of Chute",
+    "Slanted Room",
+    "Lagoon Shore",
+    "Surface of Lagoon",
+    "Lagoon Floor",
+    "Ocean Shore North",
+    "Mouth of River",
+    "Grue Lair",
+    "Mammoth Cavern",
+    "Belboz's Hideout",
+    "Chamber of the Circle"
+  ],
+  "maps": [
+    {
+      "title": "Guild Hall to the Hidden Cave",
+      "caption": "spellbook, journal, and the wooded river approach",
+      "icon": "book",
+      "rooms": [
+        "Your Quarters",
+        "Hallway",
+        "Helistar's Quarters",
+        "Lobby",
+        "Store Room",
+        "Library",
+        "Belboz's Quarters",
+        "Cellar",
+        "Twisted Forest",
+        "Forest Edge",
+        "Meadow",
+        "River Bank",
+        "River Bed",
+        "Hidden Cave",
+        "Pit of Bones",
+        "Dungeon"
+      ],
+      "edges": [
+        {
+          "source": "Your Quarters",
+          "target": "Hallway",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Hallway",
+          "target": "Helistar's Quarters",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Hallway",
+          "target": "Lobby",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Lobby",
+          "target": "Store Room",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Lobby",
+          "target": "Library",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hallway",
+          "target": "Belboz's Quarters",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Lobby",
+          "target": "Cellar",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Cellar",
+          "target": "Twisted Forest",
+          "label": "aimfiz belboz",
+          "firstArrival": true
+        },
+        {
+          "source": "Twisted Forest",
+          "target": "Forest Edge",
+          "label": "ne",
+          "firstArrival": true
+        },
+        {
+          "source": "Forest Edge",
+          "target": "Meadow",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Meadow",
+          "target": "River Bank",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "River Bank",
+          "target": "River Bed",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "River Bed",
+          "target": "Hidden Cave",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Hidden Cave",
+          "target": "Pit of Bones",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Pit of Bones",
+          "target": "Dungeon",
+          "label": "southwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Dungeon",
+          "target": "Ruins",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "River Bank",
+          "target": "Fort Entrance",
+          "label": "southeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Forest Edge",
+          "target": "Snake Pit",
+          "label": "down",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Ruins, Fort, and Toll Road",
+      "caption": "fortress ruins, unstable chasm, and the money-tree crossing",
+      "icon": "tree",
+      "rooms": [
+        "Ruins",
+        "Drawbridge",
+        "Fort Entrance",
+        "Parade Ground",
+        "Gun Emplacement",
+        "Snake Pit",
+        "Slimy Room",
+        "Crater",
+        "Edge of Chasm",
+        "Bare Passage",
+        "Elbow Room",
+        "Tree Room",
+        "Edge of Crater",
+        "Bend",
+        "Highway",
+        "Toll Gate"
+      ],
+      "edges": [
+        {
+          "source": "Dungeon",
+          "target": "Ruins",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Ruins",
+          "target": "Drawbridge",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "River Bank",
+          "target": "Fort Entrance",
+          "label": "southeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Fort Entrance",
+          "target": "Parade Ground",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Parade Ground",
+          "target": "Gun Emplacement",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Forest Edge",
+          "target": "Snake Pit",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Snake Pit",
+          "target": "Slimy Room",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Slimy Room",
+          "target": "Crater",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Crater",
+          "target": "Edge of Chasm",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Edge of Chasm",
+          "target": "Bare Passage",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Bare Passage",
+          "target": "Elbow Room",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Elbow Room",
+          "target": "Tree Room",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Crater",
+          "target": "Edge of Crater",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Edge of Crater",
+          "target": "Bend",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Bend",
+          "target": "Highway",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Highway",
+          "target": "Toll Gate",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Toll Gate",
+          "target": "Outside Store",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Crater",
+          "target": "Winding Tunnel",
+          "label": "south",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Stone Hut, Maze, and Bozbarland",
+      "caption": "Gaspar's refuge, bat-flight maze, Hollow, and prize arcade",
+      "icon": "bat",
+      "rooms": [
+        "Outside Store",
+        "End of Highway",
+        "Stone Hut",
+        "Entrance Hall",
+        "Outside Glass Arch",
+        "Inside the Glass Maze",
+        "Hollow",
+        "Park Entrance",
+        "Winding Tunnel",
+        "West End of Midway",
+        "East End of Midway",
+        "Arcade",
+        "Hall of Carvings",
+        "Sooty Room",
+        "Coal Bin Room",
+        "Dial Room"
+      ],
+      "edges": [
+        {
+          "source": "Toll Gate",
+          "target": "Outside Store",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Store",
+          "target": "End of Highway",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "End of Highway",
+          "target": "Stone Hut",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "End of Highway",
+          "target": "Entrance Hall",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Entrance Hall",
+          "target": "Outside Glass Arch",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Glass Arch",
+          "target": "Inside the Glass Maze",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Inside the Glass Maze",
+          "target": "Hollow",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Crater",
+          "target": "Winding Tunnel",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Winding Tunnel",
+          "target": "Park Entrance",
+          "label": "southwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Park Entrance",
+          "target": "East End of Midway",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "East End of Midway",
+          "target": "West End of Midway",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "West End of Midway",
+          "target": "Arcade",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Winding Tunnel",
+          "target": "Hall of Carvings",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Carvings",
+          "target": "Sooty Room",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Sooty Room",
+          "target": "Coal Bin Room",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Coal Bin Room",
+          "target": "Dial Room",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Dial Room",
+          "target": "Shaft Bottom",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Coal Bin Room",
+          "target": "Lagoon Shore",
+          "label": "down",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Coal Mine, Lagoon, and Jeearr",
+      "caption": "the time loop, underwater crate, and Belboz's hideout",
+      "icon": "dragon",
+      "rooms": [
+        "Shaft Bottom",
+        "Shaft Top",
+        "Coal Mine",
+        "Top of Chute",
+        "Slanted Room",
+        "Lagoon Shore",
+        "Surface of Lagoon",
+        "Lagoon Floor",
+        "Ocean Shore North",
+        "Mouth of River",
+        "Grue Lair",
+        "Mammoth Cavern",
+        "Belboz's Hideout",
+        "Chamber of the Circle"
+      ],
+      "edges": [
+        {
+          "source": "Dial Room",
+          "target": "Shaft Bottom",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Shaft Bottom",
+          "target": "Shaft Top",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Shaft Top",
+          "target": "Coal Mine",
+          "label": "southwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Coal Mine",
+          "target": "Top of Chute",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Top of Chute",
+          "target": "Slanted Room",
+          "label": "climb down rope",
+          "firstArrival": true
+        },
+        {
+          "source": "Coal Bin Room",
+          "target": "Lagoon Shore",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Lagoon Shore",
+          "target": "Surface of Lagoon",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Surface of Lagoon",
+          "target": "Lagoon Floor",
+          "label": "dive",
+          "firstArrival": true
+        },
+        {
+          "source": "Lagoon Shore",
+          "target": "Ocean Shore North",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Ocean Shore North",
+          "target": "Mouth of River",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Mouth of River",
+          "target": "Grue Lair",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Grue Lair",
+          "target": "Mammoth Cavern",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Mammoth Cavern",
+          "target": "Belboz's Hideout",
+          "label": "open white door",
+          "firstArrival": true
+        },
+        {
+          "source": "Belboz's Hideout",
+          "target": "Chamber of the Circle",
+          "label": "swanzo belboz",
+          "firstArrival": true
+        }
+      ]
+    }
+  ],
+  "commands": [
+    "wait",
+    "frotz me",
+    "get up",
+    "west",
+    "south",
+    "west",
+    "get scroll",
+    "read scroll",
+    "gnusto gaspar",
+    "east",
+    "south",
+    "west",
+    "get vial",
+    "get matchbook",
+    "east",
+    "open receptacle",
+    "put matchbook in receptacle",
+    "open vial",
+    "drink from vial",
+    "drop vial",
+    "east",
+    "get dusty scroll",
+    "read dusty scroll",
+    "gnusto meef",
+    "west",
+    "wait",
+    "open receptacle",
+    "get orange vial",
+    "north",
+    "north",
+    "west",
+    "look behind wall hanging",
+    "get key",
+    "open desk",
+    "get journal",
+    "open journal",
+    "read journal",
+    "east",
+    "south",
+    "south",
+    "down",
+    "press white",
+    "press gray",
+    "press black",
+    "press red",
+    "press black",
+    "open trunk",
+    "drop key",
+    "drop journal",
+    "get moldy scroll",
+    "read moldy scroll",
+    "aimfiz belboz",
+    "ne",
+    "learn pulver",
+    "east",
+    "northeast",
+    "pulver river",
+    "northeast",
+    "northeast",
+    "get all",
+    "drop amber vial",
+    "read soiled scroll",
+    "gnusto fweep",
+    "down",
+    "southwest",
+    "up",
+    "west",
+    "west",
+    "northeast",
+    "southeast",
+    "east",
+    "lower flag",
+    "examine flag",
+    "get aqua vial",
+    "east",
+    "put guano in cannon",
+    "get scroll",
+    "read scroll",
+    "west",
+    "west",
+    "learn izyuk",
+    "izyuk me",
+    "northwest",
+    "southwest",
+    "west",
+    "down",
+    "down",
+    "south",
+    "west",
+    "learn izyuk",
+    "izyuk me",
+    "west",
+    "west",
+    "north",
+    "get zorkmid",
+    "sleep",
+    "south",
+    "east",
+    "learn izyuk",
+    "izyuk me",
+    "east",
+    "east",
+    "northeast",
+    "northeast",
+    "east",
+    "east",
+    "wake gnome",
+    "give zorkmid to gnome",
+    "search gnome",
+    "east",
+    "east",
+    "east",
+    "learn gaspar",
+    "gaspar me",
+    "learn fweep",
+    "drop all",
+    "west",
+    "north",
+    "north",
+    "fweep me",
+    "east",
+    "north",
+    "east",
+    "south",
+    "south",
+    "west",
+    "down",
+    "east",
+    "east",
+    "north",
+    "north",
+    "up",
+    "up",
+    "south",
+    "east",
+    "get parchment scroll",
+    "put scroll in hole",
+    "wait",
+    "get all",
+    "get all",
+    "read parchment scroll",
+    "gnusto swanzo",
+    "sleep",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "southwest",
+    "southwest",
+    "south",
+    "southwest",
+    "west",
+    "give zorkmid",
+    "west",
+    "west",
+    "south",
+    "open aqua vial",
+    "drink from aqua vial",
+    "drop aqua vial",
+    "get ball",
+    "throw ball at bunny",
+    "read glittering scroll",
+    "north",
+    "east",
+    "east",
+    "northeast",
+    "south",
+    "yonk malyon",
+    "malyon dragon",
+    "south",
+    "open orange vial",
+    "wait",
+    "sleep",
+    "east",
+    "drink from orange vial",
+    "give spell book to stranger",
+    "east",
+    "turn dial to 1",
+    "open door",
+    "east",
+    "drop all",
+    "get rope",
+    "up",
+    "southwest",
+    "get wooden timber",
+    "northwest",
+    "west",
+    "drop timber",
+    "tie rope to timber",
+    "put rope down chute",
+    "drop all",
+    "climb down rope",
+    "read shimmering scroll",
+    "golmac me",
+    "open lamp",
+    "read smelly scroll",
+    "east",
+    "twin, combination is 1",
+    "down",
+    "gnusto vardik",
+    "wait",
+    "wait",
+    "sleep",
+    "learn meef",
+    "drop spell book",
+    "east",
+    "dive",
+    "meef weeds",
+    "get wooden crate",
+    "up",
+    "west",
+    "drop crate",
+    "get spell book",
+    "open crate",
+    "get grue suit",
+    "northeast",
+    "north",
+    "learn meef",
+    "meef vines",
+    "west",
+    "west",
+    "open white door",
+    "learn swanzo",
+    "learn vardik",
+    "vardik me",
+    "swanzo belboz",
+    "quit"
+  ],
+  "stepStarts": {
+    "1": "Wake and recover the first spells",
+    "52": "Escape the Hall and outrun Jeearr",
+    "59": "Dry the river and claim Fweep",
+    "72": "Search the fort for Yonk",
+    "81": "Fly across the chasm; claim the coin",
+    "107": "Pay the toll, then take the coin back",
+    "113": "Set the Stone Hut as your return point",
+    "120": "Fly the glass maze to Hollow",
+    "137": "Send the scroll down the hole",
+    "144": "Recover, then enter Bozbarland",
+    "162": "Win Malyon and open the coal mine",
+    "172": "Resolve the coal mine time loop",
+    "199": "Tell your younger self the dial code",
+    "201": "Return the Vardik scroll to your book",
+    "207": "Rest, dive, and retrieve the crate",
+    "217": "Clear the vines and rescue Belboz"
+  },
+  "criticalCommands": [
+    46,
+    52,
+    57,
+    76,
+    95,
+    108,
+    109,
+    120,
+    135,
+    137,
+    138,
+    140,
+    142,
+    154,
+    162,
+    169,
+    170,
+    172,
+    177,
+    179,
+    182,
+    191,
+    192,
+    193,
+    195,
+    197,
+    199,
+    200,
+    201,
+    203,
+    204,
+    209,
+    215,
+    220,
+    226,
+    227
+  ],
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 247,
+      "FirstSequence": 1,
+      "FirstAddress": 23553
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 13924,
+      "FirstSequence": 2,
+      "FirstAddress": 23558
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 352,
+      "FirstSequence": 4,
+      "FirstAddress": 24977
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 10488,
+      "FirstSequence": 5,
+      "FirstAddress": 24983
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 26304,
+      "FirstSequence": 6,
+      "FirstAddress": 24987
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 3363,
+      "FirstSequence": 7,
+      "FirstAddress": 24991
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 39902,
+      "FirstSequence": 8,
+      "FirstAddress": 24995
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 5338,
+      "FirstSequence": 10,
+      "FirstAddress": 25006
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1978,
+      "FirstSequence": 11,
+      "FirstAddress": 25011
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 17722,
+      "FirstSequence": 20,
+      "FirstAddress": 25013
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 17282,
+      "FirstSequence": 23,
+      "FirstAddress": 25027
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 14716,
+      "FirstSequence": 33,
+      "FirstAddress": 23585
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 214,
+      "FirstSequence": 37,
+      "FirstAddress": 23597
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 733,
+      "FirstSequence": 42,
+      "FirstAddress": 23611
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 587,
+      "FirstSequence": 43,
+      "FirstAddress": 23686
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1297,
+      "FirstSequence": 48,
+      "FirstAddress": 48208
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 224,
+      "FirstSequence": 50,
+      "FirstAddress": 48217
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 7877,
+      "FirstSequence": 52,
+      "FirstAddress": 48363
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 250,
+      "FirstSequence": 53,
+      "FirstAddress": 48367
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 3100,
+      "FirstSequence": 55,
+      "FirstAddress": 48373
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 202,
+      "FirstSequence": 56,
+      "FirstAddress": 48377
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 2976,
+      "FirstSequence": 58,
+      "FirstAddress": 48393
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 1884,
+      "FirstSequence": 65,
+      "FirstAddress": 48429
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 107,
+      "FirstSequence": 71,
+      "FirstAddress": 48451
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 2431,
+      "FirstSequence": 78,
+      "FirstAddress": 48493
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 7548,
+      "FirstSequence": 90,
+      "FirstAddress": 48823
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 3059,
+      "FirstSequence": 95,
+      "FirstAddress": 48911
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 1838,
+      "FirstSequence": 128,
+      "FirstAddress": 48521
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 152,
+      "FirstSequence": 135,
+      "FirstAddress": 64319
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 7067,
+      "FirstSequence": 142,
+      "FirstAddress": 25151
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 228,
+      "FirstSequence": 203,
+      "FirstAddress": 25267
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 5053,
+      "FirstSequence": 204,
+      "FirstAddress": 25271
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1084,
+      "FirstSequence": 210,
+      "FirstAddress": 25305
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 2559,
+      "FirstSequence": 219,
+      "FirstAddress": 25951
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 3510,
+      "FirstSequence": 224,
+      "FirstAddress": 25955
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 949,
+      "FirstSequence": 225,
+      "FirstAddress": 25959
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 498,
+      "FirstSequence": 235,
+      "FirstAddress": 25567
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 832,
+      "FirstSequence": 258,
+      "FirstAddress": 27085
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 2523,
+      "FirstSequence": 262,
+      "FirstAddress": 27102
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1348,
+      "FirstSequence": 286,
+      "FirstAddress": 27174
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 83,
+      "FirstSequence": 420,
+      "FirstAddress": 58277
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 164,
+      "FirstSequence": 636,
+      "FirstAddress": 74521
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 31,
+      "FirstSequence": 1188,
+      "FirstAddress": 49620
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 1199,
+      "FirstAddress": 31464
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 5,
+      "FirstSequence": 1200,
+      "FirstAddress": 31470
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 1204,
+      "FirstAddress": 31499
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 1899,
+      "FirstSequence": 1285,
+      "FirstAddress": 25045
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 131,
+      "FirstSequence": 1346,
+      "FirstAddress": 30314
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 4168,
+      "FirstSequence": 1354,
+      "FirstAddress": 29679
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2066,
+      "FirstSequence": 1758,
+      "FirstAddress": 30394
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1567,
+      "FirstSequence": 1759,
+      "FirstAddress": 30397
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 71,
+      "FirstSequence": 60136,
+      "FirstAddress": 57972
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 146839,
+      "FirstAddress": 27994
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 1,
+      "FirstSequence": 164072,
+      "FirstAddress": 43629
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 4,
+      "FirstSequence": 172714,
+      "FirstAddress": 26513
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 1,
+      "FirstSequence": 221928,
+      "FirstAddress": 92393
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 221946,
+      "FirstAddress": 31028
+    }
+  ],
+  "routeIdentity": {
+    "Version": 3,
+    "Release": 15,
+    "Serial": "851108",
+    "Checksum": 10467,
+    "Sha256": "ab7911c2d7f7f3b146cd71d31da992bce1759a254c1ce41bb4e3654699db6bca"
+  },
+  "routeCheckpoints": [
+    {
+      "CommandNumber": 1,
+      "Location": "Your Quarters",
+      "Score": 5
+    },
+    {
+      "CommandNumber": 19,
+      "Location": "Lobby",
+      "Score": 15
+    },
+    {
+      "CommandNumber": 22,
+      "Location": "Library",
+      "Score": 25
+    },
+    {
+      "CommandNumber": 28,
+      "Location": "Lobby",
+      "Score": 35
+    },
+    {
+      "CommandNumber": 32,
+      "Location": "Belboz's Quarters",
+      "Score": 50
+    },
+    {
+      "CommandNumber": 46,
+      "Location": "Cellar",
+      "Score": 75
+    },
+    {
+      "CommandNumber": 52,
+      "Location": "Twisted Forest",
+      "Score": 95
+    },
+    {
+      "CommandNumber": 59,
+      "Location": "Hidden Cave",
+      "Score": 115
+    },
+    {
+      "CommandNumber": 77,
+      "Location": "Gun Emplacement",
+      "Score": 125
+    },
+    {
+      "CommandNumber": 95,
+      "Location": "Tree Room",
+      "Score": 140
+    },
+    {
+      "CommandNumber": 108,
+      "Location": "Toll Gate",
+      "Score": 160
+    },
+    {
+      "CommandNumber": 135,
+      "Location": "Hollow",
+      "Score": 180
+    },
+    {
+      "CommandNumber": 140,
+      "Location": "Stone Hut",
+      "Score": 205,
+      "ContainsText": "You have died"
+    },
+    {
+      "CommandNumber": 162,
+      "Location": "Arcade",
+      "Score": 215
+    },
+    {
+      "CommandNumber": 171,
+      "Location": "Sooty Room",
+      "Score": 235
+    },
+    {
+      "CommandNumber": 180,
+      "Location": "Dial Room",
+      "Score": 255
+    },
+    {
+      "CommandNumber": 193,
+      "Location": "Slanted Room",
+      "Score": 275
+    },
+    {
+      "CommandNumber": 197,
+      "Location": "Slanted Room",
+      "Score": 300
+    },
+    {
+      "CommandNumber": 200,
+      "Location": "Lagoon Shore",
+      "Score": 320
+    },
+    {
+      "CommandNumber": 215,
+      "Location": "Lagoon Shore",
+      "Score": 335
+    },
+    {
+      "CommandNumber": 222,
+      "Location": "Mammoth Cavern",
+      "Score": 355
+    },
+    {
+      "CommandNumber": 223,
+      "Location": "Belboz's Hideout",
+      "Score": 375
+    },
+    {
+      "CommandNumber": 227,
+      "Location": "Chamber of the Circle",
+      "Score": 400,
+      "ContainsText": "Here ends the second chapter"
+    },
+    {
+      "CommandNumber": 228,
+      "Location": "Chamber of the Circle",
+      "Score": 400,
+      "ContainsText": "Type RESTART, RESTORE, or QUIT",
+      "Halted": true
+    }
+  ]
+}
