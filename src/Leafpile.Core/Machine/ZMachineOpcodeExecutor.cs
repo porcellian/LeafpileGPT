@@ -12,6 +12,7 @@ public sealed class ZMachineOpcodeExecutor
     private readonly IZMachineSound? _sound;
     private readonly IZMachineDisplay? _display;
     private readonly Action<ZMachineInstruction>? _instructionObserver;
+    private readonly Action<ZMachineInstruction>? _successfullyExecutedInstructionObserver;
     private readonly ConcurrentQueue<ushort> _soundCompletions = new();
     private ZMachineTextParser _textParser;
     private ZMachineOutputStreams _outputStreams;
@@ -20,6 +21,7 @@ public sealed class ZMachineOpcodeExecutor
     private bool _insideTimedInputRoutine;
     private int? _activeSoundCallbackDepth;
 
+    /// <param name="successfullyExecutedInstructionObserver">Receives an instruction only after its execution completes successfully.</param>
     public ZMachineOpcodeExecutor(
         ZMachineState state,
         IZMachineSaveRestoreService? saveRestore = null,
@@ -27,7 +29,8 @@ public sealed class ZMachineOpcodeExecutor
         IZMachineInputOutput? inputOutput = null,
         IZMachineSound? sound = null,
         IZMachineDisplay? display = null,
-        Action<ZMachineInstruction>? instructionObserver = null)
+        Action<ZMachineInstruction>? instructionObserver = null,
+        Action<ZMachineInstruction>? successfullyExecutedInstructionObserver = null)
     {
         ArgumentNullException.ThrowIfNull(state);
 
@@ -38,6 +41,7 @@ public sealed class ZMachineOpcodeExecutor
         _sound = sound;
         _display = display;
         _instructionObserver = instructionObserver;
+        _successfullyExecutedInstructionObserver = successfullyExecutedInstructionObserver;
         _outputStreams = new ZMachineOutputStreams(state, inputOutput);
         ConfigureInputCapabilities();
         ConfigureSoundCapabilities();
@@ -52,6 +56,7 @@ public sealed class ZMachineOpcodeExecutor
             var instruction = _state.Instructions.Decode(_state.ProgramCounter);
             _instructionObserver?.Invoke(instruction);
             var result = Execute(instruction);
+            _successfullyExecutedInstructionObserver?.Invoke(instruction);
             _display?.Present(_state.Screen);
             return result;
         }

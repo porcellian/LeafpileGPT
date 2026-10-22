@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Leafpile.Desktop.InstructionWindow"
+        Title="Executed Instructions"
+        Width="760"
+        Height="640"
+        MinWidth="520"
+        MinHeight="320">
+  <DockPanel Margin="8">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Spacing="8" Margin="0,0,0,8">
+      <Button Content="Save Audit…" Click="OnSaveAudit" />
+      <Button Content="Clear History" Click="OnClearHistory" />
+      <TextBlock x:Name="ErrorText" VerticalAlignment="Center" Foreground="Firebrick" TextWrapping="Wrap" />
+    </StackPanel>
+    <ListBox x:Name="AuditLines" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding}" FontFamily="Courier New, monospace" FontSize="12" TextWrapping="NoWrap" />
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</Window>

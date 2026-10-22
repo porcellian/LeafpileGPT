@@ -19,6 +19,7 @@
       </MenuItem>
       <MenuItem Header="_Tools">
         <MenuItem x:Name="RestartMenuItem" Header="_Restart" Click="OnRestart" IsEnabled="False" />
+        <MenuItem Header="View _Instructions…" Click="OnViewInstructions" />
       </MenuItem>
       <MenuItem Header="_Help">
         <MenuItem Header="Keyboard: type a command and press Enter" IsEnabled="False" />
