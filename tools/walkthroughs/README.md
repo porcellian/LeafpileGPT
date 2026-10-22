@@ -94,3 +94,30 @@ python3 tools/walkthroughs/make_enchanter_walkthrough.py \
 The seed-1 route reaches 400/400 and the Circle ending in 284 moves without a
 player-death event. Keep the Enchanter story, manual, hints, route, and raw trace
 local; automated tests do not require them.
+
+## Infidel maximum-score no-death guide
+
+The Infidel PDF includes the numbered route, four hand-drawn maps of all rooms
+discovered during the route, score checkpoints, and the trace-derived six-column
+opcode inventory. Rebuild it from the committed source data with:
+
+```sh
+python3 tools/walkthroughs/make_infidel_walkthrough.py
+```
+
+After a fresh local replay, refresh the inventory from the ignored trace and
+rebuild the guide:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/infidel.z3 \
+  .agent/regression-routes/infidel-maximum-score.json \
+  .agent/regression-routes/infidel-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_infidel_walkthrough.py \
+  --refresh-trace .agent/regression-routes/infidel-maximum-score.trace.jsonl
+```
+
+The seed-1 route reaches 400/400 in 237 moves and exits without a player death.
+It quits after the statues release the sarcophagus: opening it is the fatal
+ending, so it is intentionally excluded from the no-death walkthrough. Keep the
+Infidel story, manual, hints, route, saves, and trace local; automated tests do
+not require those story assets.
