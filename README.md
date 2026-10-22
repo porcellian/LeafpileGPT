@@ -64,6 +64,16 @@ story area and gray V1–V3 status bar. Timed input, transcript and command file
 and sound playback remain unavailable in the desktop host and are reported via
 the capability flags supported by the core.
 
+The Tools menu's **View Instructions** window shows the successfully executed
+opcodes grouped under startup and each entered command, including sequence,
+program counter, encoding form, opcode number and mnemonic, and encoded operands.
+The read-only history remains available across story restarts and file changes
+until it is cleared or the application closes. Use **Save Audit…** in that
+window to export the current history as a UTF-8 text document. The **Previous**,
+**Current**, and **Next** buttons navigate between entered commands; **Current**
+jumps back to the newest command. New input scrolls to its command row; instruction
+output does not auto-follow, so you can scroll through it manually.
+
 Save and Restore dialogs start in the per-user `LocalApplicationData/LeafpileGPT`
 directory (for example, `%LOCALAPPDATA%/LeafpileGPT` on Windows). Set
 `LEAFPILEGPT_HOME` to use a different save directory; its value is used directly

@@ -23,7 +23,12 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     private string _inputText = string.Empty;
     private string _lowerWindowText = string.Empty;
     private readonly DispatcherTimer _cursorTimer;
+    private readonly DispatcherTimer _auditRefreshTimer;
     private readonly OpenStoryDirectoryStore _openStoryDirectoryStore;
+    private readonly InstructionAuditLog _instructionAuditLog = new();
+    private InstructionWindow? _instructionWindow;
+    private InstructionAuditSession? _auditSession;
+    private int _displayedAuditLineCount;
     private string _storyName = string.Empty;
     private int _renderQueued;
     private (int Window, uint Picture, int X, int Y, uint Width, uint Height)[] _pictureKeys = [];
@@ -41,7 +46,18 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
             _cursorVisible = !_cursorVisible;
             UpdateLowerText();
         };
-        Closing += (_, _) => StopCurrentSession();
+        _auditRefreshTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
+        _auditRefreshTimer.Tick += (_, _) => RefreshInstructionWindow();
+        Closing += (_, _) =>
+        {
+            StopCurrentSession("application closed");
+            _auditRefreshTimer.Stop();
+            if (_instructionWindow is not null)
+            {
+                _instructionWindow.AllowOwnerClose();
+                _instructionWindow.Close();
+            }
+        };
     }
 
     public void Present(ZMachineScreen screen)
@@ -226,6 +242,55 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         Close();
     }
 
+    private void OnViewInstructions(object? sender, Avalonia.Interactivity.RoutedEventArgs args)
+    {
+        _ = sender;
+        _ = args;
+        var created = _instructionWindow is null;
+        if (created)
+        {
+            _instructionWindow = new InstructionWindow();
+            _instructionWindow.BindAuditLog(_instructionAuditLog);
+            _instructionWindow.Closed += (_, _) => _instructionWindow = null;
+            _instructionWindow.HistoryCleared += displayedLines => _displayedAuditLineCount = displayedLines;
+        }
+
+        var window = _instructionWindow!;
+        _displayedAuditLineCount = window.ClearDisplayed();
+        var scaling = Screens.ScreenFromWindow(this)?.Scaling ?? 1;
+        var rightOfMainWindow = Position.X + (int)Math.Round(Bounds.Width * scaling);
+        var screen = Screens.ScreenFromWindow(this);
+        var windowWidthPixels = (int)Math.Round(window.Width * scaling);
+        var windowHeightPixels = (int)Math.Round(Bounds.Height * scaling);
+        var top = Position.Y;
+        if (screen is not null)
+        {
+            if (rightOfMainWindow + windowWidthPixels > screen.WorkingArea.Right)
+            {
+                var leftOfMainWindow = Position.X - windowWidthPixels;
+                rightOfMainWindow = leftOfMainWindow >= screen.WorkingArea.X ? leftOfMainWindow : screen.WorkingArea.X;
+            }
+            top = Math.Clamp(top, screen.WorkingArea.Y, Math.Max(screen.WorkingArea.Y, screen.WorkingArea.Bottom - windowHeightPixels));
+        }
+        window.Position = new PixelPoint(rightOfMainWindow, top);
+        window.Height = Bounds.Height;
+        if (window.IsVisible) window.Activate();
+        else if (created) window.Show(this);
+        else window.Show();
+        StorySurface.Focus();
+        _auditRefreshTimer.Start();
+    }
+
+    private void RefreshInstructionWindow()
+    {
+        if (_instructionWindow is null || !_instructionWindow.IsVisible) return;
+        if (_displayedAuditLineCount > _instructionAuditLog.Count) _displayedAuditLineCount = 0;
+        var lines = _instructionAuditLog.SnapshotFrom(_displayedAuditLineCount);
+        if (lines.Length == 0) return;
+        _instructionWindow.Append(lines);
+        _displayedAuditLineCount += lines.Length;
+    }
+
     private void OnWindowKeyDown(object? sender, KeyEventArgs args)
     {
         if (_currentInput is not null)
@@ -240,6 +305,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
             if (args.Key == Key.Escape)
             {
                 args.Handled = true;
+                if (_auditSession is not null) _instructionAuditLog.BeginCommand(_auditSession, "[cancel input]");
                 _inputOutput?.CancelPendingInput();
                 _currentInput.TrySetResult(new ZMachineInputResponse(string.Empty, 13));
                 _currentInput = null;
@@ -281,6 +347,7 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         {
             var character = args.Text[0];
             var code = character <= byte.MaxValue ? (byte)character : (byte)'?';
+            if (_auditSession is not null) _instructionAuditLog.BeginCommand(_auditSession, args.Text);
             _currentInput.TrySetResult(new ZMachineInputResponse(string.Empty, code));
             _currentInput = null;
             HideInput();
@@ -300,9 +367,11 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
 
     private void StartStory(LoadedStory story, string name)
     {
-        StopCurrentSession();
+        StopCurrentSession("story restarted or replaced");
         _story = story;
         _storyName = name;
+        var auditSession = _instructionAuditLog.StartRun(name);
+        _auditSession = auditSession;
         Title = $"LeafpileGPT — {name}";
         RestartMenuItem.IsEnabled = true;
         WelcomeText.IsVisible = false;
@@ -329,9 +398,10 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
             new QuetzalSaveRestoreService(saveFiles),
             inputOutput: input,
             sound: new DesktopSoundHost(),
-            display: this);
+            display: this,
+            successfullyExecutedInstructionObserver: instruction => _instructionAuditLog.Record(auditSession, instruction));
         Present(state.Screen);
-        _ = Task.Run(() => RunStory(state, executor, input, cancellation.Token), cancellation.Token);
+        _ = Task.Run(() => RunStory(state, executor, input, auditSession, cancellation.Token), cancellation.Token);
     }
 
     private void ConfigureScreenDimensions(ZMachineScreen screen)
@@ -351,8 +421,10 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         screen.SetDimensions(columns, rows, widthUnits, heightUnits);
     }
 
-    private void StopCurrentSession()
+    private void StopCurrentSession(string reason)
     {
+        if (_sessionCancellation is not null && _auditSession is not null)
+            _instructionAuditLog.MarkRunEnded(_auditSession, reason);
         _sessionCancellation?.Cancel();
         _sessionCancellation?.Dispose();
         _sessionCancellation = null;
@@ -362,18 +434,23 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
         HideInput();
     }
 
-    private void RunStory(ZMachineState state, ZMachineOpcodeExecutor executor, DesktopInputOutputHost input, CancellationToken cancellationToken)
+    private void RunStory(ZMachineState state, ZMachineOpcodeExecutor executor, DesktopInputOutputHost input, InstructionAuditSession auditSession, CancellationToken cancellationToken)
     {
         try
         {
             while (!cancellationToken.IsCancellationRequested)
             {
                 var result = executor.ExecuteNext();
-                if (result.Halted) break;
+                if (result.Halted)
+                {
+                    _instructionAuditLog.MarkRunEnded(auditSession, "story halted");
+                    break;
+                }
             }
         }
-        catch (Exception)
+        catch (Exception exception)
         {
+            _instructionAuditLog.MarkRunEnded(auditSession, cancellationToken.IsCancellationRequested ? "session stopped" : $"runtime error: {exception.Message}");
             input.CancelPendingInput();
         }
     }
@@ -397,7 +474,9 @@ public sealed partial class MainWindow : Window, IZMachineDisplay
     {
         if (_inputIsCharacter) return;
         var completion = _currentInput;
-        if (completion is null || !completion.TrySetResult(new ZMachineInputResponse(_inputText, 13))) return;
+        if (completion is null || completion.Task.IsCompleted) return;
+        if (_auditSession is not null) _instructionAuditLog.BeginCommand(_auditSession, _inputText);
+        if (!completion.TrySetResult(new ZMachineInputResponse(_inputText, 13))) return;
         _currentInput = null;
         HideInput();
     }

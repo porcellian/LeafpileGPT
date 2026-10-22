@@ -196,6 +196,30 @@ public sealed class ZMachineOpcodeExecutorTests
     }
 
     [Fact]
+    public void SuccessfulInstructionObserverRunsOnlyAfterExecutionSucceeds()
+    {
+        var successfulState = CreateState(5, 0xb4);
+        var successful = new List<ZMachineInstruction>();
+        var programCounterAtNotification = -1;
+        new ZMachineOpcodeExecutor(successfulState, successfullyExecutedInstructionObserver: instruction =>
+        {
+            successful.Add(instruction);
+            programCounterAtNotification = successfulState.ProgramCounter;
+        }).ExecuteNext();
+
+        Assert.Single(successful);
+        Assert.Equal(0x200, successful[0].Address);
+        Assert.Equal(0x201, programCounterAtNotification);
+
+        var failingState = CreateState(5, 0xbe, 9, 0xff, 0x10);
+        var failed = new List<ZMachineInstruction>();
+        var executor = new ZMachineOpcodeExecutor(failingState, successfullyExecutedInstructionObserver: failed.Add);
+
+        Assert.Throws<ZMachineRuntimeException>(() => executor.ExecuteNext());
+        Assert.Empty(failed);
+    }
+
+    [Fact]
     public void PrintsStringsFromByteAndPackedAddresses()
     {
         var state = CreateState(3, 0x97, 0x80, 0x9d, 0x40);
