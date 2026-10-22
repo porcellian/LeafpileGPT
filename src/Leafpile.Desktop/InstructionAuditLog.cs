@@ -37,7 +37,8 @@ internal sealed class InstructionAuditLog
         {
             session.Command = Escape(command);
             _lines.Add(string.Empty);
-            _lines.Add($"Run {session.RunNumber} command: > {session.Command}");
+            _lines.Add($"> {session.Command}");
+            _lines.Add(string.Empty);
         }
     }
 
@@ -47,12 +48,10 @@ internal sealed class InstructionAuditLog
         ArgumentNullException.ThrowIfNull(instruction);
         lock (_gate)
         {
-            var operands = instruction.Operands.Count == 0
-                ? "-"
-                : string.Join(", ", instruction.Operands.Select(FormatOperand));
+            var operands = string.Join(", ", instruction.Operands.Select(FormatOperand));
             var mnemonic = ZMachineOpcodeNames.GetMnemonic(instruction.OpcodeClass, instruction.Opcode);
             var line = string.Create(CultureInfo.InvariantCulture,
-                $"#{++session.Sequence:000000} PC=0x{instruction.Address:x4} {instruction.Form}/{instruction.OpcodeClass} opcode={instruction.Opcode} {mnemonic} operands=[{operands}]");
+                $"#{++session.Sequence:000000}   PC=0x{instruction.Address:X5}   Form={instruction.Form,-8}   Opcode={instruction.Opcode,2}   {mnemonic,-16} [{operands}]");
             _lines.Add(line);
         }
     }
