@@ -1,0 +1,1281 @@
+{
+  "title": "INFIDEL",
+  "routeTitle": "MAXIMUM-SCORE NO-DEATH WALKTHROUGH",
+  "release": 22,
+  "serial": "830916",
+  "randomSeed": 1,
+  "score": 400,
+  "maximumScore": 400,
+  "rank": "Master Adventurer",
+  "endingVerification": "At 400/400, the statues release the sarcophagus. Quit and confirm \u201cyes\u201d before opening it: the verified perfect-score sarcophagus ending is fatal.",
+  "moves": 237,
+  "commandsCount": 239,
+  "commands": [
+    "get up",
+    "out",
+    "south",
+    "get matchbook",
+    "south",
+    "south",
+    "read note",
+    "open knapsack",
+    "get canteen",
+    "get knapsack",
+    "north",
+    "north",
+    "west",
+    "west",
+    "get axe",
+    "get shovel",
+    "east",
+    "north",
+    "west",
+    "open canteen",
+    "fill canteen",
+    "close canteen",
+    "east",
+    "east",
+    "in",
+    "break lock with axe",
+    "get lock",
+    "drop lock",
+    "open trunk",
+    "get food",
+    "get map",
+    "open map",
+    "get cube",
+    "drop map",
+    "read sticker",
+    "out",
+    "east",
+    "south",
+    "south",
+    "east",
+    "east",
+    "dig in sand with shovel",
+    "dig sand with shovel",
+    "dig with shovel",
+    "dig hole with shovel",
+    "dig in hole with shovel",
+    "open canteen",
+    "drink water",
+    "close canteen",
+    "put cube in hole",
+    "drop shovel",
+    "down",
+    "drop sack",
+    "get rope",
+    "tie rope to altar",
+    "throw rope north",
+    "get torch",
+    "get jar",
+    "open jar",
+    "dip torch in jar",
+    "light match",
+    "light torch with match",
+    "close jar",
+    "put jar in sack",
+    "put matchbook in sack",
+    "get sack",
+    "north",
+    "drop sack",
+    "put gold cluster in sack",
+    "push statue",
+    "get head",
+    "roll statue southwest",
+    "drop head",
+    "northeast",
+    "northeast",
+    "northeast",
+    "get cluster",
+    "southwest",
+    "southwest",
+    "put ruby cluster in sack",
+    "eat beef",
+    "southwest",
+    "get head",
+    "roll statue northeast",
+    "roll statue southeast",
+    "drop head",
+    "northwest",
+    "northwest",
+    "northwest",
+    "get cluster",
+    "open canteen",
+    "drink water",
+    "close canteen",
+    "southeast",
+    "southeast",
+    "put diamond cluster in sack",
+    "southeast",
+    "get head",
+    "roll statue northwest",
+    "roll statue northeast",
+    "drop head",
+    "southwest",
+    "southwest",
+    "southwest",
+    "get cluster",
+    "northeast",
+    "northeast",
+    "put emerald cluster in sack",
+    "northeast",
+    "get head",
+    "roll statue southwest",
+    "roll statue northwest",
+    "drop head",
+    "southeast",
+    "southeast",
+    "southeast",
+    "get cluster",
+    "northwest",
+    "northwest",
+    "put opal cluster in sack",
+    "get sack",
+    "up",
+    "south",
+    "south",
+    "northeast",
+    "northwest",
+    "west",
+    "north",
+    "east",
+    "north",
+    "north",
+    "north",
+    "north",
+    "north",
+    "west",
+    "south",
+    "get gold chalice",
+    "north",
+    "east",
+    "east",
+    "south",
+    "get silver chalice",
+    "north",
+    "west",
+    "south",
+    "south",
+    "south",
+    "south",
+    "south",
+    "west",
+    "south",
+    "east",
+    "north",
+    "examine mast",
+    "east",
+    "down",
+    "west",
+    "examine slot",
+    "get shim",
+    "drop shim",
+    "east",
+    "up",
+    "west",
+    "west",
+    "read scroll",
+    "east",
+    "get beam",
+    "south",
+    "southeast",
+    "southwest",
+    "north",
+    "north",
+    "east",
+    "west",
+    "south",
+    "examine panel",
+    "remove first brick from panel",
+    "drop brick",
+    "remove third brick from panel",
+    "drop brick",
+    "remove fifth brick from panel",
+    "drop brick",
+    "east",
+    "down",
+    "down",
+    "examine hieroglyphics",
+    "dig plaster with pick axe",
+    "west",
+    "west",
+    "west",
+    "read hieroglyphics",
+    "put beam in niches",
+    "stand on beam",
+    "dig plaster with pick axe",
+    "open door",
+    "west",
+    "get beam",
+    "south",
+    "put beam in door",
+    "open door",
+    "west",
+    "drop sack",
+    "put diamond cluster in first hole",
+    "put ruby cluster in second hole",
+    "put emerald cluster in third hole",
+    "put opal cluster in fourth hole",
+    "raise slab",
+    "get spatula",
+    "get book",
+    "put spatula in sack",
+    "put book in sack",
+    "get sack",
+    "east",
+    "get beam",
+    "north",
+    "north",
+    "put beam under timber",
+    "break seal with axe",
+    "open door",
+    "north",
+    "east",
+    "drop sack",
+    "put gold chalice on left disc",
+    "open canteen",
+    "pour water into silver chalice",
+    "put silver chalice on right disc",
+    "get scarab",
+    "get sack",
+    "west",
+    "drop sack",
+    "put book in large recess",
+    "put scarab in small recess",
+    "turn Neith",
+    "turn Selkis",
+    "turn Isis",
+    "turn Nephthys",
+    "score",
+    "quit",
+    "yes"
+  ],
+  "criticalCommands": [
+    26,
+    46,
+    50,
+    67,
+    77,
+    90,
+    105,
+    117,
+    137,
+    142,
+    167,
+    181,
+    187,
+    194,
+    209,
+    219,
+    227,
+    236,
+    237,
+    238,
+    239
+  ],
+  "stepStarts": {
+    "1": "01  |  Prepare the camp and water",
+    "26": "02  |  Open the trunk and recover the cube",
+    "40": "03  |  Bury the cube; descend into the pyramid",
+    "55": "04  |  Light the torch and enter the turning room",
+    "72": "05  |  Collect the four statue-room clusters",
+    "123": "06  |  Cross the landing to the barge",
+    "135": "07  |  Recover both golden and silver chalices",
+    "153": "08  |  Explore the barge; retrieve the beam",
+    "173": "09  |  Open the Cube and reach the stair",
+    "188": "10  |  Break through the plaster passage",
+    "201": "11  |  Solve the alcoves and open the tomb",
+    "220": "12  |  Take the scarab; complete the safe ending"
+  },
+  "checkpoints": [
+    {
+      "heading": "5 / 400",
+      "detail": "Recover the expedition lock; first points at the camp."
+    },
+    {
+      "heading": "50 / 400",
+      "detail": "Use the shovel and cube to expose the pyramid entrance."
+    },
+    {
+      "heading": "200 / 400",
+      "detail": "Collect all four gemstone clusters from the turning halls."
+    },
+    {
+      "heading": "245 / 400",
+      "detail": "Recover the barge beam after reading the scroll."
+    },
+    {
+      "heading": "315 / 400",
+      "detail": "Open the Annex and collect the book and spatula."
+    },
+    {
+      "heading": "400 / 400",
+      "detail": "Set all four statues, then quit without opening the sarcophagus."
+    }
+  ],
+  "totalInstructions": 209967,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 15423,
+      "FirstSequence": 1,
+      "FirstAddress": 24191
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 12141,
+      "FirstSequence": 2,
+      "FirstAddress": 48763
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1449,
+      "FirstSequence": 3,
+      "FirstAddress": 48767
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 4612,
+      "FirstSequence": 4,
+      "FirstAddress": 48769
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 19,
+      "FirstSequence": 6,
+      "FirstAddress": 48777
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 40,
+      "FirstSequence": 7,
+      "FirstAddress": 48781
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 10871,
+      "FirstSequence": 8,
+      "FirstAddress": 48786
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 7624,
+      "FirstSequence": 91,
+      "FirstAddress": 24043
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 23082,
+      "FirstSequence": 93,
+      "FirstAddress": 24051
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 2871,
+      "FirstSequence": 94,
+      "FirstAddress": 24055
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 35696,
+      "FirstSequence": 95,
+      "FirstAddress": 24059
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 5308,
+      "FirstSequence": 97,
+      "FirstAddress": 24070
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1550,
+      "FirstSequence": 98,
+      "FirstAddress": 24075
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 61,
+      "FirstSequence": 143,
+      "FirstAddress": 24238
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 14849,
+      "FirstSequence": 144,
+      "FirstAddress": 24240
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 8780,
+      "FirstSequence": 150,
+      "FirstAddress": 24258
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 180,
+      "FirstSequence": 151,
+      "FirstAddress": 24262
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 665,
+      "FirstSequence": 152,
+      "FirstAddress": 24264
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 710,
+      "FirstSequence": 155,
+      "FirstAddress": 31747
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 157,
+      "FirstAddress": 31844
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 7,
+      "FirstSequence": 158,
+      "FirstAddress": 31850
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 6038,
+      "FirstSequence": 160,
+      "FirstAddress": 31868
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 6515,
+      "FirstSequence": 161,
+      "FirstAddress": 31875
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 162,
+      "FirstAddress": 31879
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1996,
+      "FirstSequence": 187,
+      "FirstAddress": 31886
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 296,
+      "FirstSequence": 189,
+      "FirstAddress": 24272
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1478,
+      "FirstSequence": 193,
+      "FirstAddress": 30412
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 228,
+      "FirstSequence": 195,
+      "FirstAddress": 30421
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 310,
+      "FirstSequence": 198,
+      "FirstAddress": 30523
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 729,
+      "FirstSequence": 200,
+      "FirstAddress": 30529
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 230,
+      "FirstSequence": 201,
+      "FirstAddress": 30533
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 2479,
+      "FirstSequence": 204,
+      "FirstAddress": 30542
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 2631,
+      "FirstSequence": 214,
+      "FirstAddress": 30581
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 4615,
+      "FirstSequence": 231,
+      "FirstAddress": 30642
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 7219,
+      "FirstSequence": 244,
+      "FirstAddress": 31003
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 4064,
+      "FirstSequence": 249,
+      "FirstAddress": 31094
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 2173,
+      "FirstSequence": 363,
+      "FirstAddress": 30670
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 239,
+      "FirstSequence": 417,
+      "FirstAddress": 25400
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1510,
+      "FirstSequence": 424,
+      "FirstAddress": 25438
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 3547,
+      "FirstSequence": 433,
+      "FirstAddress": 26015
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1422,
+      "FirstSequence": 439,
+      "FirstAddress": 26023
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 651,
+      "FirstSequence": 449,
+      "FirstAddress": 25697
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 264,
+      "FirstSequence": 452,
+      "FirstAddress": 25709
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 2921,
+      "FirstSequence": 494,
+      "FirstAddress": 25831
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 102,
+      "FirstSequence": 966,
+      "FirstAddress": 48149
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 275,
+      "FirstSequence": 981,
+      "FirstAddress": 47053
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 2643,
+      "FirstSequence": 1116,
+      "FirstAddress": 62337
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 5010,
+      "FirstSequence": 1129,
+      "FirstAddress": 32610
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2148,
+      "FirstSequence": 1131,
+      "FirstAddress": 32618
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 292,
+      "FirstSequence": 2206,
+      "FirstAddress": 28654
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1852,
+      "FirstSequence": 2232,
+      "FirstAddress": 30189
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 135,
+      "FirstSequence": 2528,
+      "FirstAddress": 33223
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 3,
+      "FirstSequence": 30261,
+      "FirstAddress": 47125
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 4,
+      "FirstSequence": 36301,
+      "FirstAddress": 32681
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 2,
+      "FirstSequence": 46581,
+      "FirstAddress": 63823
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 209967,
+      "FirstAddress": 31593
+    }
+  ],
+  "visitedLocations": [
+    "Your Tent",
+    "Outside Your Tent",
+    "Fire Pit",
+    "Outside Work Tent",
+    "Work Tent",
+    "Outside Supply Tent",
+    "Supply Tent",
+    "Near the Nile",
+    "River Bank",
+    "Northern Path",
+    "Middle Path",
+    "Southern Path",
+    "Desert",
+    "Chamber of Ra",
+    "Circular Room",
+    "Southwest Hallway",
+    "Northeast Hallway",
+    "Room of Selkis",
+    "Southeast Hallway",
+    "Northwest Hallway",
+    "Room of Nephthys",
+    "Room of Isis",
+    "Room of Neith",
+    "South Landing",
+    "Narrow Hallway",
+    "Barge Chamber",
+    "Steep Passageway",
+    "Temple Chamber",
+    "Inner Chamber",
+    "Golden Room",
+    "Golden Alcove",
+    "Silver Room",
+    "Silver Alcove",
+    "Center of Barge",
+    "Aft Cabin",
+    "Below Deck",
+    "West End of Hold",
+    "Fore Cabin",
+    "Cube",
+    "Turning Passage",
+    "Top of Stairway",
+    "Bottom of Stairs",
+    "Narrow Passageway",
+    "Antechamber",
+    "Annex",
+    "Burial Chamber",
+    "Treasury"
+  ],
+  "maps": [
+    {
+      "title": "Encampment and desert approach",
+      "icon": "tent",
+      "rooms": [
+        "Your Tent",
+        "Outside Your Tent",
+        "Fire Pit",
+        "Outside Work Tent",
+        "Work Tent",
+        "Outside Supply Tent",
+        "Supply Tent",
+        "Near the Nile",
+        "River Bank",
+        "Northern Path",
+        "Middle Path",
+        "Southern Path",
+        "Desert"
+      ],
+      "edges": [
+        {
+          "source": "Your Tent",
+          "target": "Outside Your Tent",
+          "label": "out",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Your Tent",
+          "target": "Fire Pit",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Fire Pit",
+          "target": "Outside Work Tent",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Work Tent",
+          "target": "Work Tent",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Fire Pit",
+          "target": "Outside Supply Tent",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Supply Tent",
+          "target": "Supply Tent",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Supply Tent",
+          "target": "Near the Nile",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Near the Nile",
+          "target": "River Bank",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Outside Your Tent",
+          "target": "Northern Path",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Northern Path",
+          "target": "Middle Path",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Middle Path",
+          "target": "Southern Path",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Southern Path",
+          "target": "Desert",
+          "label": "east",
+          "firstArrival": true
+        }
+      ],
+      "iconCaption": "the camp, water, tools, and desert route",
+      "portal": "Down from Desert to Chamber of Ra (Map 2)."
+    },
+    {
+      "title": "Chamber of Ra and the turning halls",
+      "icon": "pyramid",
+      "rooms": [
+        "Chamber of Ra",
+        "Circular Room",
+        "Southwest Hallway",
+        "Northeast Hallway",
+        "Room of Selkis",
+        "Southeast Hallway",
+        "Northwest Hallway",
+        "Room of Nephthys",
+        "Room of Isis",
+        "Room of Neith",
+        "South Landing",
+        "Narrow Hallway"
+      ],
+      "edges": [
+        {
+          "source": "Chamber of Ra",
+          "target": "Circular Room",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Circular Room",
+          "target": "Southwest Hallway",
+          "label": "roll statue southwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Circular Room",
+          "target": "Northeast Hallway",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Northeast Hallway",
+          "target": "Room of Selkis",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Circular Room",
+          "target": "Southeast Hallway",
+          "label": "roll statue southeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Circular Room",
+          "target": "Northwest Hallway",
+          "label": "northwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Northwest Hallway",
+          "target": "Room of Nephthys",
+          "label": "northwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Southwest Hallway",
+          "target": "Room of Isis",
+          "label": "southwest",
+          "firstArrival": true
+        },
+        {
+          "source": "Southeast Hallway",
+          "target": "Room of Neith",
+          "label": "southeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Chamber of Ra",
+          "target": "South Landing",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "South Landing",
+          "target": "Narrow Hallway",
+          "label": "south",
+          "firstArrival": true
+        }
+      ],
+      "iconCaption": "the circular puzzle and four statue rooms",
+      "portal": "From Narrow Hallway go northwest to Barge Chamber (Map 3); Chamber of Ra leads east to the Cube (Map 4)."
+    },
+    {
+      "title": "The barge and inner chambers",
+      "icon": "barge",
+      "rooms": [
+        "Barge Chamber",
+        "Steep Passageway",
+        "Temple Chamber",
+        "Inner Chamber",
+        "Golden Room",
+        "Golden Alcove",
+        "Silver Room",
+        "Silver Alcove",
+        "Center of Barge",
+        "Aft Cabin",
+        "Below Deck",
+        "West End of Hold",
+        "Fore Cabin"
+      ],
+      "edges": [
+        {
+          "source": "Barge Chamber",
+          "target": "Steep Passageway",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Steep Passageway",
+          "target": "Temple Chamber",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Temple Chamber",
+          "target": "Inner Chamber",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Inner Chamber",
+          "target": "Golden Room",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Golden Room",
+          "target": "Golden Alcove",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Inner Chamber",
+          "target": "Silver Room",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Silver Room",
+          "target": "Silver Alcove",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Barge Chamber",
+          "target": "Center of Barge",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Center of Barge",
+          "target": "Aft Cabin",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Aft Cabin",
+          "target": "Below Deck",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Below Deck",
+          "target": "West End of Hold",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Center of Barge",
+          "target": "Fore Cabin",
+          "label": "west",
+          "firstArrival": true
+        }
+      ],
+      "iconCaption": "the buried barge and paired treasure alcoves",
+      "portal": "Enter from Map 2: Narrow Hallway northwest to Barge Chamber."
+    },
+    {
+      "title": "The cube, stair, and tomb",
+      "icon": "tomb",
+      "rooms": [
+        "Cube",
+        "Turning Passage",
+        "Top of Stairway",
+        "Bottom of Stairs",
+        "Narrow Passageway",
+        "Antechamber",
+        "Annex",
+        "Burial Chamber",
+        "Treasury"
+      ],
+      "edges": [
+        {
+          "source": "Cube",
+          "target": "Turning Passage",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Turning Passage",
+          "target": "Top of Stairway",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Top of Stairway",
+          "target": "Bottom of Stairs",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Bottom of Stairs",
+          "target": "Narrow Passageway",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Narrow Passageway",
+          "target": "Antechamber",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Antechamber",
+          "target": "Annex",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Antechamber",
+          "target": "Burial Chamber",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Burial Chamber",
+          "target": "Treasury",
+          "label": "east",
+          "firstArrival": true
+        }
+      ],
+      "iconCaption": "the false brick, stairs, and final chambers",
+      "portal": "Enter from Chamber of Ra via its east passage (Map 2)."
+    }
+  ],
+  "intro": [
+    "Begin from a fresh Release 22 game with random seed 1. This route reaches the full 400/400 score in 237 moves and exits without a player death.",
+    "Keep the torch lit through the tomb sequence. Refill the canteen whenever the route says to drink; the named gemstone clusters and paired chalices must be placed in their matching recesses and discs.",
+    "Important ending choice: turning all four statues releases the sarcophagus and triggers the final torch burnout. The score is already perfect. Enter \u201cquit\u201d and confirm \u201cyes\u201d; opening the sarcophagus causes the player\u2019s unavoidable fatal ending."
+  ],
+  "routeIdentity": {
+    "Version": 3,
+    "Release": 22,
+    "Serial": "830916",
+    "Checksum": 16674,
+    "Sha256": "739570dd8c998a7e9bc9fd4e016139e2c5679e47d6feab2daeb1bca0bc0c23b7"
+  },
+  "routeCheckpoints": [
+    {
+      "CommandNumber": 26,
+      "Location": "Your Tent",
+      "Score": 5
+    },
+    {
+      "CommandNumber": 46,
+      "Location": "Desert",
+      "Score": 30
+    },
+    {
+      "CommandNumber": 50,
+      "Location": "Desert",
+      "Score": 50
+    },
+    {
+      "CommandNumber": 67,
+      "Location": "Circular Room",
+      "Score": 80
+    },
+    {
+      "CommandNumber": 77,
+      "Location": "Room of Selkis",
+      "Score": 110
+    },
+    {
+      "CommandNumber": 90,
+      "Location": "Room of Nephthys",
+      "Score": 140
+    },
+    {
+      "CommandNumber": 105,
+      "Location": "Room of Isis",
+      "Score": 170
+    },
+    {
+      "CommandNumber": 117,
+      "Location": "Room of Neith",
+      "Score": 200
+    },
+    {
+      "CommandNumber": 137,
+      "Location": "Golden Alcove",
+      "Score": 215
+    },
+    {
+      "CommandNumber": 142,
+      "Location": "Silver Alcove",
+      "Score": 230
+    },
+    {
+      "CommandNumber": 167,
+      "Location": "Center of Barge",
+      "Score": 245
+    },
+    {
+      "CommandNumber": 181,
+      "Location": "Cube",
+      "Score": 270
+    },
+    {
+      "CommandNumber": 187,
+      "Location": "Bottom of Stairs",
+      "Score": 280
+    },
+    {
+      "CommandNumber": 194,
+      "Location": "Narrow Passageway",
+      "Score": 305
+    },
+    {
+      "CommandNumber": 209,
+      "Location": "Annex",
+      "Score": 315
+    },
+    {
+      "CommandNumber": 219,
+      "Location": "Antechamber",
+      "Score": 355
+    },
+    {
+      "CommandNumber": 227,
+      "Location": "Treasury",
+      "Score": 365
+    },
+    {
+      "CommandNumber": 236,
+      "Location": "Burial Chamber",
+      "Score": 400
+    },
+    {
+      "CommandNumber": 237,
+      "Location": "Burial Chamber",
+      "Score": 400,
+      "ContainsText": "master adventurer"
+    },
+    {
+      "CommandNumber": 239,
+      "Location": "Burial Chamber",
+      "Score": 400,
+      "ContainsText": "master adventurer",
+      "Halted": true
+    }
+  ]
+}
