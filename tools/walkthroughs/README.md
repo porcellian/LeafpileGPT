@@ -121,3 +121,29 @@ It quits after the statues release the sarcophagus: opening it is the fatal
 ending, so it is intentionally excluded from the no-death walkthrough. Keep the
 Infidel story, manual, hints, route, saves, and trace local; automated tests do
 not require those story assets.
+
+## Sorcerer maximum-score guide
+
+`make_sorcerer_walkthrough.py` rebuilds the Sorcerer guide, including its
+228-command route, four hand-drawn maps covering all 62 route-discovered
+locations, score checkpoints, and the six-column opcode inventory:
+
+```sh
+python3 tools/walkthroughs/make_sorcerer_walkthrough.py
+```
+
+After a fresh local replay, refresh the opcode table from its ignored trace:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/sorcerer.z3 \
+  .agent/regression-routes/sorcerer-maximum-score.json \
+  .agent/regression-routes/sorcerer-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_sorcerer_walkthrough.py \
+  --refresh-trace .agent/regression-routes/sorcerer-maximum-score.trace.jsonl
+```
+
+The route reaches 400/400 in 379 moves with the winning Circle of Enchanters
+ending. It intentionally includes one player death at Hollow, required for the
+verified maximum-score route, and avoids additional deaths. Keep the story,
+manual, hints, route, saves, and raw trace local; automated tests do not require
+those assets.
