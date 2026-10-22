@@ -1,0 +1,1672 @@
+{
+  "title": "PLANETFALL",
+  "routeTitle": "NO-DEATH MAXIMUM-SCORE ROUTE",
+  "release": 37,
+  "serial": "851003",
+  "commands": [
+    "wait",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "west",
+    "enter webbing",
+    "wait",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "exit webbing",
+    "take survival kit",
+    "open door",
+    "out",
+    "up",
+    "up",
+    "up",
+    "up",
+    "north",
+    "ne",
+    "east",
+    "east",
+    "east",
+    "drop survival kit",
+    "south",
+    "east",
+    "take bedistor",
+    "west",
+    "south",
+    "south",
+    "sw",
+    "take bar",
+    "ne",
+    "north",
+    "north",
+    "north",
+    "north",
+    "hold bar over crevice",
+    "drop all but key",
+    "south",
+    "west",
+    "west",
+    "unlock padlock",
+    "take padlock",
+    "drop padlock",
+    "drop key",
+    "open door",
+    "north",
+    "take ladder",
+    "south",
+    "east",
+    "east",
+    "drop ladder",
+    "take survival kit",
+    "open survival kit",
+    "eat red goo",
+    "drop survival kit",
+    "take ladder",
+    "north",
+    "north",
+    "north",
+    "drop ladder",
+    "extend ladder",
+    "put ladder over rift",
+    "north",
+    "west",
+    "open small desk",
+    "get all from desk",
+    "west",
+    "open wooden desk",
+    "take shuttle card",
+    "east",
+    "east",
+    "south",
+    "south",
+    "south",
+    "south",
+    "south",
+    "south",
+    "se",
+    "search robot",
+    "activate robot",
+    "nw",
+    "north",
+    "north",
+    "north",
+    "drop kitchen card",
+    "drop shuttle card",
+    "drop lower elevator card",
+    "take survival kit",
+    "south",
+    "south",
+    "south",
+    "sw",
+    "take flask",
+    "take pliers",
+    "ne",
+    "north",
+    "north",
+    "north",
+    "east",
+    "press blue button",
+    "wait",
+    "wait",
+    "north",
+    "slide upper elevator card through slot",
+    "press up button",
+    "wait",
+    "wait",
+    "south",
+    "ne",
+    "sw",
+    "north",
+    "slide upper elevator card through slot",
+    "press down button",
+    "wait",
+    "wait",
+    "south",
+    "west",
+    "south",
+    "south",
+    "south",
+    "south",
+    "put flask under spout",
+    "press brown button",
+    "take flask",
+    "north",
+    "north",
+    "north",
+    "north",
+    "east",
+    "press blue button",
+    "wait",
+    "wait",
+    "north",
+    "slide upper elevator card through slot",
+    "press up button",
+    "wait",
+    "wait",
+    "south",
+    "ne",
+    "empty flask into funnel",
+    "eat brown goo",
+    "sw",
+    "north",
+    "slide upper elevator card through slot",
+    "press down button",
+    "wait",
+    "wait",
+    "south",
+    "west",
+    "west",
+    "north",
+    "lie down",
+    "wait",
+    "stand up",
+    "take survival kit",
+    "take pliers",
+    "take flask",
+    "take upper elevator card",
+    "south",
+    "east",
+    "south",
+    "south",
+    "south",
+    "south",
+    "put flask under spout",
+    "press green button",
+    "take flask",
+    "north",
+    "north",
+    "north",
+    "north",
+    "east",
+    "press blue button",
+    "wait",
+    "wait",
+    "north",
+    "slide upper elevator card through slot",
+    "press up button",
+    "wait",
+    "wait",
+    "south",
+    "ne",
+    "empty flask into funnel",
+    "eat green goo",
+    "sw",
+    "north",
+    "slide upper elevator card through slot",
+    "press down button",
+    "wait",
+    "wait",
+    "south",
+    "west",
+    "drop upper elevator card",
+    "drop survival kit",
+    "drop flask",
+    "drop pliers",
+    "take kitchen card",
+    "west",
+    "west",
+    "south",
+    "take canteen",
+    "slide kitchen card through slot",
+    "south",
+    "open canteen",
+    "put canteen under spout",
+    "press brown button",
+    "close canteen",
+    "take canteen",
+    "north",
+    "drop kitchen card",
+    "north",
+    "east",
+    "east",
+    "take lower elevator card",
+    "take shuttle card",
+    "east",
+    "press red button",
+    "wait",
+    "wait",
+    "wait",
+    "south",
+    "slide lower elevator card through slot",
+    "press down button",
+    "drop lower elevator card",
+    "wait",
+    "wait",
+    "wait",
+    "north",
+    "east",
+    "south",
+    "east",
+    "slide shuttle card through slot",
+    "push lever",
+    "drop shuttle card",
+    "open canteen",
+    "drink from canteen",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "drink from canteen",
+    "pull lever",
+    "pull lever",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "west",
+    "north",
+    "east",
+    "east",
+    "se",
+    "east",
+    "east",
+    "east",
+    "south",
+    "open lab pocket",
+    "take teleport card",
+    "take battery",
+    "north",
+    "west",
+    "north",
+    "east",
+    "slide teleport card through slot",
+    "press 2",
+    "west",
+    "west",
+    "drop canteen",
+    "take pliers",
+    "take upper elevator card",
+    "north",
+    "take bedistor",
+    "south",
+    "east",
+    "east",
+    "slide teleport card through slot",
+    "press 3",
+    "west",
+    "north",
+    "north",
+    "open lid",
+    "remove fused bedistor with pliers",
+    "put good bedistor in cube",
+    "south",
+    "west",
+    "west",
+    "north",
+    "wait",
+    "wait",
+    "wait",
+    "floyd, n",
+    "floyd, get board",
+    "south",
+    "east",
+    "north",
+    "open panel",
+    "get second board",
+    "put shiny board in panel",
+    "south",
+    "west",
+    "nw",
+    "take bottle",
+    "open bottle",
+    "drink from bottle",
+    "drop bottle",
+    "look",
+    "se",
+    "east",
+    "east",
+    "south",
+    "east",
+    "slide teleport card through slot",
+    "press 2",
+    "west",
+    "west",
+    "east",
+    "east",
+    "slide teleport card through slot",
+    "press 3",
+    "drop teleport card",
+    "west",
+    "south",
+    "south",
+    "ne",
+    "open bio-lock door",
+    "se",
+    "east",
+    "look through window",
+    "open door",
+    "close door",
+    "wait",
+    "open door",
+    "close door",
+    "take mini card",
+    "west",
+    "open bio-lock door",
+    "west",
+    "west",
+    "south",
+    "south",
+    "slide mini card through slot",
+    "type 384",
+    "east",
+    "west",
+    "north",
+    "north",
+    "north",
+    "east",
+    "take teleport card",
+    "slide teleport card through slot",
+    "press 2",
+    "west",
+    "west",
+    "south",
+    "south",
+    "south",
+    "sw",
+    "take laser",
+    "get laser",
+    "remove old battery from laser",
+    "put new battery in laser",
+    "drop old battery",
+    "get laser",
+    "take teleport card",
+    "ne",
+    "north",
+    "north",
+    "north",
+    "east",
+    "east",
+    "slide teleport card through slot",
+    "press 3",
+    "west",
+    "south",
+    "south",
+    "south",
+    "slide mini card through slot",
+    "type 384",
+    "east",
+    "north",
+    "north",
+    "look into relay",
+    "set dial to 1",
+    "shoot speck with laser",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "set dial to 6",
+    "south",
+    "shoot microbe with laser",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "g",
+    "throw laser at microbe",
+    "south",
+    "west",
+    "north",
+    "open desk",
+    "take gas mask",
+    "wear gas mask",
+    "press red button",
+    "open door",
+    "west",
+    "open lab door",
+    "west",
+    "west",
+    "open bio-lock door",
+    "west",
+    "west",
+    "west",
+    "south",
+    "south",
+    "press button",
+    "wait",
+    "wait",
+    "wait",
+    "north",
+    "quit"
+  ],
+  "commandsCount": 457,
+  "moves": 7007,
+  "score": 80,
+  "maximumScore": 80,
+  "rank": "Galactic Overlord",
+  "playerDeaths": 0,
+  "randomSeed": 3919,
+  "totalInstructions": 401875,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 507,
+      "FirstSequence": 1,
+      "FirstAddress": 22133
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 22938,
+      "FirstSequence": 2,
+      "FirstAddress": 22138
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 25520,
+      "FirstSequence": 4,
+      "FirstAddress": 23643
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 56224,
+      "FirstSequence": 6,
+      "FirstAddress": 23651
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 5085,
+      "FirstSequence": 7,
+      "FirstAddress": 23655
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 61632,
+      "FirstSequence": 8,
+      "FirstAddress": 23659
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 10547,
+      "FirstSequence": 10,
+      "FirstAddress": 23670
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 4274,
+      "FirstSequence": 11,
+      "FirstAddress": 23675
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 38268,
+      "FirstSequence": 20,
+      "FirstAddress": 23677
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 36466,
+      "FirstSequence": 23,
+      "FirstAddress": 23691
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 28538,
+      "FirstSequence": 155,
+      "FirstAddress": 22221
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 477,
+      "FirstSequence": 156,
+      "FirstAddress": 22224
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 2,
+      "FirstSequence": 157,
+      "FirstAddress": 22228
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 10741,
+      "FirstSequence": 164,
+      "FirstAddress": 22252
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 1188,
+      "FirstSequence": 166,
+      "FirstAddress": 49511
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 169,
+      "FirstAddress": 49659
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 31,
+      "FirstSequence": 170,
+      "FirstAddress": 49665
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 11366,
+      "FirstSequence": 172,
+      "FirstAddress": 49683
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 9885,
+      "FirstSequence": 173,
+      "FirstAddress": 49690
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 174,
+      "FirstAddress": 49694
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 1215,
+      "FirstSequence": 198,
+      "FirstAddress": 49700
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 3185,
+      "FirstSequence": 199,
+      "FirstAddress": 49701
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 2422,
+      "FirstSequence": 208,
+      "FirstAddress": 47880
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 414,
+      "FirstSequence": 210,
+      "FirstAddress": 47889
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 176,
+      "FirstSequence": 213,
+      "FirstAddress": 47955
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 341,
+      "FirstSequence": 216,
+      "FirstAddress": 47965
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 4532,
+      "FirstSequence": 217,
+      "FirstAddress": 47967
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 3390,
+      "FirstSequence": 223,
+      "FirstAddress": 47997
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 2180,
+      "FirstSequence": 234,
+      "FirstAddress": 25588
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 329,
+      "FirstSequence": 235,
+      "FirstAddress": 26216
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 3677,
+      "FirstSequence": 240,
+      "FirstAddress": 48058
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 14157,
+      "FirstSequence": 253,
+      "FirstAddress": 48331
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 3465,
+      "FirstSequence": 258,
+      "FirstAddress": 48419
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 2511,
+      "FirstSequence": 273,
+      "FirstAddress": 48086
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 3010,
+      "FirstSequence": 328,
+      "FirstAddress": 42187
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 457,
+      "FirstSequence": 335,
+      "FirstAddress": 42207
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 4851,
+      "FirstSequence": 351,
+      "FirstAddress": 42925
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 6761,
+      "FirstSequence": 356,
+      "FirstAddress": 42929
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1915,
+      "FirstSequence": 357,
+      "FirstAddress": 42933
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 910,
+      "FirstSequence": 367,
+      "FirstAddress": 42523
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 3698,
+      "FirstSequence": 394,
+      "FirstAddress": 44222
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 4995,
+      "FirstSequence": 446,
+      "FirstAddress": 54273
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 2732,
+      "FirstSequence": 448,
+      "FirstAddress": 54280
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 42,
+      "FirstSequence": 777,
+      "FirstAddress": 71915
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 458,
+      "FirstSequence": 1855,
+      "FirstAddress": 28351
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1345,
+      "FirstSequence": 2286,
+      "FirstAddress": 28306
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 221,
+      "FirstSequence": 2295,
+      "FirstAddress": 28324
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 19,
+      "FirstSequence": 3588,
+      "FirstAddress": 28215
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 20,
+      "FirstSequence": 4748,
+      "FirstAddress": 48672
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 75,
+      "FirstSequence": 4829,
+      "FirstAddress": 30904
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 206,
+      "FirstSequence": 5184,
+      "FirstAddress": 45885
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 2158,
+      "FirstSequence": 5210,
+      "FirstAddress": 47493
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 2253,
+      "FirstSequence": 5272,
+      "FirstAddress": 47327
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 31832,
+      "FirstAddress": 45168
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 3,
+      "FirstSequence": 142096,
+      "FirstAddress": 33410
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 28,
+      "FirstSequence": 142100,
+      "FirstAddress": 33429
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 24,
+      "FirstSequence": 195790,
+      "FirstAddress": 23186
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 2,
+      "FirstSequence": 366647,
+      "FirstAddress": 50358
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 401875,
+      "FirstAddress": 49365
+    }
+  ],
+  "visitedLocations": [
+    "Deck Nine",
+    "Escape Pod",
+    "Underwater",
+    "Crag",
+    "Balcony",
+    "Winding Stair",
+    "Courtyard",
+    "Plain Hall",
+    "Rec Corridor",
+    "Mess Corridor",
+    "Dorm Corridor",
+    "Corridor Junction",
+    "Mech Corridor North",
+    "Storage East",
+    "Mech Corridor",
+    "Mech Corridor South",
+    "Tool Room",
+    "Admin Corridor South",
+    "Storage West",
+    "Admin Corridor",
+    "Admin Corridor North",
+    "Small Office",
+    "Large Office",
+    "Robot Shop",
+    "Elevator Lobby",
+    "Upper Elevator",
+    "Tower Core",
+    "Comm Room",
+    "Machine Shop",
+    "Dorm D",
+    "Mess Hall",
+    "Kitchen",
+    "Lower Elevator",
+    "Waiting Area",
+    "Kalamontee Platform",
+    "Shuttle Car Alfie",
+    "Alfie Control East",
+    "Lawanda Platform",
+    "Escalator",
+    "Fork",
+    "Project Corridor West",
+    "Project Corridor",
+    "Project Corridor East",
+    "Main Lab",
+    "Lab Storage",
+    "Library Lobby",
+    "Booth 3",
+    "Booth 2",
+    "Systems Corridor East",
+    "Course Control",
+    "Systems Corridor",
+    "Systems Corridor West",
+    "Repair Room",
+    "Planetary Defense",
+    "Infirmary",
+    "Computer Room",
+    "Bio Lock West",
+    "Bio Lock East",
+    "Miniaturization Booth",
+    "Station 384",
+    "Strip Near Station",
+    "Middle of Strip",
+    "Strip Near Relay",
+    "Auxiliary Booth",
+    "Lab Office",
+    "Bio Lab",
+    "ProjCon Office",
+    "Cryo-Elevator",
+    "Cryo-Anteroom"
+  ],
+  "scoreCheckpoints": [
+    {
+      "commandNumber": 1,
+      "location": "Deck Nine",
+      "score": 0
+    },
+    {
+      "commandNumber": 10,
+      "location": "Escape Pod",
+      "score": 3
+    },
+    {
+      "commandNumber": 28,
+      "location": "Crag",
+      "score": 6
+    },
+    {
+      "commandNumber": 61,
+      "location": "Storage West",
+      "score": 10
+    },
+    {
+      "commandNumber": 78,
+      "location": "Admin Corridor North",
+      "score": 14
+    },
+    {
+      "commandNumber": 81,
+      "location": "Small Office",
+      "score": 16
+    },
+    {
+      "commandNumber": 84,
+      "location": "Large Office",
+      "score": 17
+    },
+    {
+      "commandNumber": 94,
+      "location": "Robot Shop",
+      "score": 18
+    },
+    {
+      "commandNumber": 95,
+      "location": "Robot Shop",
+      "score": 20
+    },
+    {
+      "commandNumber": 123,
+      "location": "Tower Core",
+      "score": 24
+    },
+    {
+      "commandNumber": 198,
+      "location": "Comm Room",
+      "score": 30
+    },
+    {
+      "commandNumber": 218,
+      "location": "Kitchen",
+      "score": 34
+    },
+    {
+      "commandNumber": 244,
+      "location": "Kalamontee Platform",
+      "score": 38
+    },
+    {
+      "commandNumber": 274,
+      "location": "Lawanda Platform",
+      "score": 42
+    },
+    {
+      "commandNumber": 308,
+      "location": "Course Control",
+      "score": 48
+    },
+    {
+      "commandNumber": 323,
+      "location": "Planetary Defense",
+      "score": 54
+    },
+    {
+      "commandNumber": 358,
+      "location": "Bio Lock East",
+      "score": 56
+    },
+    {
+      "commandNumber": 359,
+      "location": "Bio Lock East",
+      "score": 57
+    },
+    {
+      "commandNumber": 368,
+      "location": "Strip Near Station",
+      "score": 61
+    },
+    {
+      "commandNumber": 409,
+      "location": "Strip Near Relay",
+      "score": 63
+    },
+    {
+      "commandNumber": 414,
+      "location": "Strip Near Relay",
+      "score": 71
+    },
+    {
+      "commandNumber": 435,
+      "location": "Auxiliary Booth",
+      "score": 75
+    },
+    {
+      "commandNumber": 452,
+      "location": "Cryo-Elevator",
+      "score": 80
+    }
+  ],
+  "endingText": "The cure is discovered; the planetary systems are repaired. Veldina offers leadership of Resida, a medical robot administers the antidote, Floyd is revived, and the score is 80/80 with the rank Galactic Overlord.",
+  "intro": [
+    "Fresh-start route for Planetfall Release 37. Enter each numbered command at the prompt. The route reaches the 80/80 Galactic Overlord rank and the Cryo-Anteroom ending with zero player deaths.",
+    "Keep the brown-liquid canteen, repair Course Control and Planetary Defense, and follow the timing instructions at the Bio Lock. Floyd\u2019s scripted sacrifice is a story event; the player survives.",
+    "Replay uses deterministic seed 3919. The ending screen confirms the cure, repaired planetary systems, antidote, Floyd\u2019s return, and the 80/80 score."
+  ],
+  "checkpoints": [
+    {
+      "heading": "Repair the ship",
+      "detail": "By command 218, score 34; preserve the canteen and access cards."
+    },
+    {
+      "heading": "Resida repairs",
+      "detail": "Course Control and Planetary Defense restored; score 54."
+    },
+    {
+      "heading": "Micro work",
+      "detail": "Mini card recovered; speck and microbe cleared; score 71."
+    },
+    {
+      "heading": "Best ending",
+      "detail": "Cryo-Anteroom, cure administered, Floyd returns; 80/80, zero player deaths."
+    }
+  ],
+  "stepStarts": {
+    "1": "WAKE AND ESCAPE",
+    "24": "KEEP THE POD DOOR OPEN",
+    "32": "FIND THE CREW DECKS",
+    "64": "RECOVER ACCESS AND REPAIR SUPPLIES",
+    "123": "RESTORE TOWER POWER",
+    "198": "REPAIR COMM COOLING",
+    "234": "LAUNCH ALFIE TO RESIDA",
+    "274": "REPAIR THE PLANETARY SYSTEMS",
+    "334": "RETURN TO THE BIO LOCK",
+    "353": "FLOYD VOLUNTEERS AT THE BIO LOCK",
+    "359": "TAKE FLOYD'S MINI CARD",
+    "367": "ENTER STATION 384",
+    "407": "FIND THE SPECK",
+    "420": "STOP THE MICROBE",
+    "433": "THROW THE HOT LASER",
+    "436": "REACH THE CRYO-ANTEROOM",
+    "452": "CLOSE THE ELEVATOR DOOR"
+  },
+  "criticalCommands": [
+    1,
+    21,
+    64,
+    94,
+    95,
+    198,
+    218,
+    244,
+    273,
+    308,
+    323,
+    335,
+    351,
+    355,
+    357,
+    358,
+    359,
+    366,
+    367,
+    374,
+    376,
+    386,
+    387,
+    388,
+    389,
+    395,
+    396,
+    397,
+    409,
+    414,
+    420,
+    430,
+    434,
+    435,
+    436,
+    437,
+    438,
+    439,
+    440,
+    441,
+    442,
+    443,
+    444,
+    445,
+    446,
+    447,
+    448,
+    449,
+    450,
+    451,
+    452,
+    456,
+    457
+  ],
+  "maps": [
+    {
+      "title": "The first escape and crew decks",
+      "rooms": [
+        "Deck Nine",
+        "Escape Pod",
+        "Underwater",
+        "Crag",
+        "Balcony",
+        "Winding Stair",
+        "Courtyard",
+        "Plain Hall",
+        "Rec Corridor",
+        "Mess Corridor",
+        "Dorm Corridor",
+        "Corridor Junction",
+        "Mech Corridor North",
+        "Storage East",
+        "Mech Corridor",
+        "Mech Corridor South",
+        "Tool Room",
+        "Admin Corridor South"
+      ],
+      "edges": [
+        {
+          "source": "Deck Nine",
+          "target": "Escape Pod",
+          "label": "west"
+        },
+        {
+          "source": "Escape Pod",
+          "target": "Underwater",
+          "label": "out"
+        },
+        {
+          "source": "Underwater",
+          "target": "Crag",
+          "label": "up"
+        },
+        {
+          "source": "Crag",
+          "target": "Balcony",
+          "label": "up"
+        },
+        {
+          "source": "Balcony",
+          "target": "Winding Stair",
+          "label": "up"
+        },
+        {
+          "source": "Winding Stair",
+          "target": "Courtyard",
+          "label": "up"
+        },
+        {
+          "source": "Courtyard",
+          "target": "Plain Hall",
+          "label": "north"
+        },
+        {
+          "source": "Plain Hall",
+          "target": "Rec Corridor",
+          "label": "ne"
+        },
+        {
+          "source": "Rec Corridor",
+          "target": "Mess Corridor",
+          "label": "east"
+        },
+        {
+          "source": "Mess Corridor",
+          "target": "Dorm Corridor",
+          "label": "east"
+        },
+        {
+          "source": "Dorm Corridor",
+          "target": "Corridor Junction",
+          "label": "east"
+        },
+        {
+          "source": "Corridor Junction",
+          "target": "Mech Corridor North",
+          "label": "south"
+        },
+        {
+          "source": "Mech Corridor North",
+          "target": "Storage East",
+          "label": "east"
+        },
+        {
+          "source": "Mech Corridor North",
+          "target": "Mech Corridor",
+          "label": "south"
+        },
+        {
+          "source": "Mech Corridor",
+          "target": "Mech Corridor South",
+          "label": "south"
+        },
+        {
+          "source": "Mech Corridor South",
+          "target": "Tool Room",
+          "label": "sw"
+        },
+        {
+          "source": "Corridor Junction",
+          "target": "Admin Corridor South",
+          "label": "north"
+        }
+      ]
+    },
+    {
+      "title": "Elevators, supplies, and the shuttle",
+      "rooms": [
+        "Storage West",
+        "Admin Corridor",
+        "Admin Corridor North",
+        "Small Office",
+        "Large Office",
+        "Robot Shop",
+        "Elevator Lobby",
+        "Upper Elevator",
+        "Tower Core",
+        "Comm Room",
+        "Machine Shop",
+        "Dorm D",
+        "Mess Hall",
+        "Kitchen",
+        "Lower Elevator",
+        "Waiting Area",
+        "Kalamontee Platform",
+        "Shuttle Car Alfie"
+      ],
+      "edges": [
+        {
+          "source": "Mess Corridor",
+          "target": "Storage West",
+          "label": "north"
+        },
+        {
+          "source": "Admin Corridor South",
+          "target": "Admin Corridor",
+          "label": "north"
+        },
+        {
+          "source": "Admin Corridor",
+          "target": "Admin Corridor North",
+          "label": "north"
+        },
+        {
+          "source": "Admin Corridor North",
+          "target": "Small Office",
+          "label": "west"
+        },
+        {
+          "source": "Small Office",
+          "target": "Large Office",
+          "label": "west"
+        },
+        {
+          "source": "Mech Corridor South",
+          "target": "Robot Shop",
+          "label": "se"
+        },
+        {
+          "source": "Corridor Junction",
+          "target": "Elevator Lobby",
+          "label": "east"
+        },
+        {
+          "source": "Elevator Lobby",
+          "target": "Upper Elevator",
+          "label": "north"
+        },
+        {
+          "source": "Upper Elevator",
+          "target": "Tower Core",
+          "label": "south"
+        },
+        {
+          "source": "Tower Core",
+          "target": "Comm Room",
+          "label": "ne"
+        },
+        {
+          "source": "Mech Corridor South",
+          "target": "Machine Shop",
+          "label": "south"
+        },
+        {
+          "source": "Dorm Corridor",
+          "target": "Dorm D",
+          "label": "north"
+        },
+        {
+          "source": "Mess Corridor",
+          "target": "Mess Hall",
+          "label": "south"
+        },
+        {
+          "source": "Mess Hall",
+          "target": "Kitchen",
+          "label": "south"
+        },
+        {
+          "source": "Elevator Lobby",
+          "target": "Lower Elevator",
+          "label": "south"
+        },
+        {
+          "source": "Lower Elevator",
+          "target": "Waiting Area",
+          "label": "north"
+        },
+        {
+          "source": "Waiting Area",
+          "target": "Kalamontee Platform",
+          "label": "east"
+        },
+        {
+          "source": "Kalamontee Platform",
+          "target": "Shuttle Car Alfie",
+          "label": "south"
+        }
+      ]
+    },
+    {
+      "title": "Arrival on Resida and the repair complex",
+      "rooms": [
+        "Alfie Control East",
+        "Lawanda Platform",
+        "Escalator",
+        "Fork",
+        "Project Corridor West",
+        "Project Corridor",
+        "Project Corridor East",
+        "Main Lab",
+        "Lab Storage",
+        "Library Lobby",
+        "Booth 3",
+        "Booth 2",
+        "Systems Corridor East",
+        "Course Control",
+        "Systems Corridor",
+        "Systems Corridor West",
+        "Repair Room",
+        "Planetary Defense"
+      ],
+      "edges": [
+        {
+          "source": "Shuttle Car Alfie",
+          "target": "Alfie Control East",
+          "label": "east"
+        },
+        {
+          "source": "Shuttle Car Alfie",
+          "target": "Lawanda Platform",
+          "label": "north"
+        },
+        {
+          "source": "Lawanda Platform",
+          "target": "Escalator",
+          "label": "east"
+        },
+        {
+          "source": "Escalator",
+          "target": "Fork",
+          "label": "east"
+        },
+        {
+          "source": "Fork",
+          "target": "Project Corridor West",
+          "label": "se"
+        },
+        {
+          "source": "Project Corridor West",
+          "target": "Project Corridor",
+          "label": "east"
+        },
+        {
+          "source": "Project Corridor",
+          "target": "Project Corridor East",
+          "label": "east"
+        },
+        {
+          "source": "Project Corridor East",
+          "target": "Main Lab",
+          "label": "east"
+        },
+        {
+          "source": "Main Lab",
+          "target": "Lab Storage",
+          "label": "south"
+        },
+        {
+          "source": "Project Corridor East",
+          "target": "Library Lobby",
+          "label": "north"
+        },
+        {
+          "source": "Library Lobby",
+          "target": "Booth 3",
+          "label": "east"
+        },
+        {
+          "source": "Booth 3",
+          "target": "Booth 2",
+          "label": "press 2"
+        },
+        {
+          "source": "Library Lobby",
+          "target": "Systems Corridor East",
+          "label": "north"
+        },
+        {
+          "source": "Systems Corridor East",
+          "target": "Course Control",
+          "label": "north"
+        },
+        {
+          "source": "Systems Corridor East",
+          "target": "Systems Corridor",
+          "label": "west"
+        },
+        {
+          "source": "Systems Corridor",
+          "target": "Systems Corridor West",
+          "label": "west"
+        },
+        {
+          "source": "Systems Corridor West",
+          "target": "Repair Room",
+          "label": "north"
+        },
+        {
+          "source": "Systems Corridor",
+          "target": "Planetary Defense",
+          "label": "north"
+        }
+      ]
+    },
+    {
+      "title": "Station 384 and the cure",
+      "rooms": [
+        "Infirmary",
+        "Computer Room",
+        "Bio Lock West",
+        "Bio Lock East",
+        "Miniaturization Booth",
+        "Station 384",
+        "Strip Near Station",
+        "Middle of Strip",
+        "Strip Near Relay",
+        "Auxiliary Booth",
+        "Lab Office",
+        "Bio Lab",
+        "ProjCon Office",
+        "Cryo-Elevator",
+        "Cryo-Anteroom"
+      ],
+      "edges": [
+        {
+          "source": "Systems Corridor West",
+          "target": "Infirmary",
+          "label": "nw"
+        },
+        {
+          "source": "Project Corridor East",
+          "target": "Computer Room",
+          "label": "south"
+        },
+        {
+          "source": "Main Lab",
+          "target": "Bio Lock West",
+          "label": "se"
+        },
+        {
+          "source": "Bio Lock West",
+          "target": "Bio Lock East",
+          "label": "east"
+        },
+        {
+          "source": "Computer Room",
+          "target": "Miniaturization Booth",
+          "label": "south"
+        },
+        {
+          "source": "Miniaturization Booth",
+          "target": "Station 384",
+          "label": "type 384"
+        },
+        {
+          "source": "Station 384",
+          "target": "Strip Near Station",
+          "label": "east"
+        },
+        {
+          "source": "Strip Near Station",
+          "target": "Middle of Strip",
+          "label": "north"
+        },
+        {
+          "source": "Middle of Strip",
+          "target": "Strip Near Relay",
+          "label": "north"
+        },
+        {
+          "source": "Strip Near Station",
+          "target": "Auxiliary Booth",
+          "label": "west"
+        },
+        {
+          "source": "Auxiliary Booth",
+          "target": "Lab Office",
+          "label": "north"
+        },
+        {
+          "source": "Lab Office",
+          "target": "Bio Lab",
+          "label": "west"
+        },
+        {
+          "source": "Project Corridor",
+          "target": "ProjCon Office",
+          "label": "south"
+        },
+        {
+          "source": "ProjCon Office",
+          "target": "Cryo-Elevator",
+          "label": "south"
+        },
+        {
+          "source": "Cryo-Elevator",
+          "target": "Cryo-Anteroom",
+          "label": "north"
+        }
+      ]
+    }
+  ]
+}

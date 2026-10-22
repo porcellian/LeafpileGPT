@@ -223,3 +223,6 @@
 - 2026-10-22T01:28Z [USER] Start the checklist PR for Task 19.8, Planetfall (`stories/planetfa.z3`); wait for its merge before beginning the walkthrough.
 - 2026-10-22T01:28Z [TOOL] Created `feature/19.8-planetfall-task` from refreshed `origin/main` at `d168af9`; the available hints are `stories/planetfa.txt` (the prompt's `/suspend/planetfa.txt` path is incorrect). Checklist PR pending.
 - 2026-10-22T01:29Z [TOOL] Committed checklist entry as `012d346`, pushed the branch, and opened PR #38 at `https://github.com/porcellian/LeafpileGPT/pull/38`; awaiting manual merge before beginning the Planetfall playthrough.
+- 2026-10-22T02:48Z [USER] PR #38 merged; Task 19.8 Planetfall walkthrough work is authorized.
+- 2026-10-22T02:48Z [CODE] Task 19.8 produces a no-player-death 80/80 Planetfall route and a Starcross-style 18-page PDF with four maps for all 69 route-discovered locations and a six-column opcode inventory.
+- 2026-10-22T02:48Z [TOOL] Fresh Planetfall replay passes: 457 commands, 401,875 instructions, score 80, 7,007 moves, Cryo-Anteroom, halted. All seven previous story routes passed fresh replay. Release solution build, formatting verification, and all 372 xUnit tests passed. Task 19 remains unchecked; Task 19.8 is complete pending commit and PR.
