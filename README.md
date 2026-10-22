@@ -71,7 +71,8 @@ The read-only history remains available across story restarts and file changes
 until it is cleared or the application closes. Use **Save Audit…** in that
 window to export the current history as a UTF-8 text document. The **Previous**,
 **Current**, and **Next** buttons navigate between entered commands; **Current**
-jumps back to the newest command.
+jumps back to the newest command. New input scrolls to its command row; instruction
+output does not auto-follow, so you can scroll through it manually.
 
 Save and Restore dialogs start in the per-user `LocalApplicationData/LeafpileGPT`
 directory (for example, `%LOCALAPPDATA%/LeafpileGPT` on Windows). Set

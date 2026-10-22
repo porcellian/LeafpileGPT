@@ -19,8 +19,8 @@ public sealed class InstructionAuditLogTests
 
         Assert.Contains("Run 1: fixture.z3", text);
         Assert.Contains("Startup instructions", text);
-        Assert.Contains("#000001   PC=0x00200   Form=Short      Opcode= 4   nop              []", text);
-        Assert.Contains("#000002   PC=0x00201   Form=Variable   Opcode= 4   read             [sm:0x000a]", text);
+        Assert.Contains("#000001   PC=0x00200   Form=Short      OP= 4   nop              []", text);
+        Assert.Contains("#000002   PC=0x00201   Form=Var        OP= 4   read             [sm:0x000a]", text);
         var lines = text.Split(Environment.NewLine, StringSplitOptions.None);
         var commandLine = Array.IndexOf(lines, "> look");
         Assert.True(commandLine > 0);
@@ -64,16 +64,9 @@ public sealed class InstructionAuditLogTests
         var lines = log.ExportText().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
         Assert.Contains(lines, line => line == "> open mailbox");
-        Assert.Contains(lines, line => line == "#000001   PC=0x00240   Form=Long       Opcode= 1   je               [lg:0x1234, sm:0x000c, var:0x0010]");
+        Assert.Contains(lines, line => line == "#000001   PC=0x00240   Form=Long       OP= 1   je               [lg:0x1234, sm:0x000c, var:0x0010]");
         Assert.DoesNotContain(lines, line => line.Contains("operands=", StringComparison.Ordinal));
         Assert.Contains(lines, line => line == "[Run 1 ended: story halted]");
-    }
-
-    [Fact]
-    public void NewCommandLineForcesInstructionWindowToFollowNewOutput()
-    {
-        Assert.True(InstructionWindow.ContainsCommandLine([string.Empty, "> take lamp", string.Empty]));
-        Assert.False(InstructionWindow.ContainsCommandLine(["#000010   PC=0x00100   Form=Short"]));
     }
 
     [Fact]

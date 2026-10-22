@@ -2,7 +2,6 @@ using System.Collections.ObjectModel;
 using System.Text;
 using Avalonia.Controls;
 using Avalonia.Platform.Storage;
-using Avalonia.VisualTree;
 
 namespace Leafpile.Desktop;
 
@@ -27,25 +26,22 @@ public sealed partial class InstructionWindow : Window
     public void Append(IEnumerable<string> lines)
     {
         var additions = lines.ToArray();
-        var scrollViewer = AuditLines.GetVisualDescendants().OfType<ScrollViewer>().FirstOrDefault();
-        var wasAtBottom = scrollViewer is null || scrollViewer.Offset.Y >= scrollViewer.Extent.Height - scrollViewer.Viewport.Height - 2;
-        var commandAdded = false;
+        var latestCommandLineIndex = -1;
         foreach (var line in additions)
         {
             var lineIndex = _lines.Count;
             _lines.Add(new InstructionAuditLine(line));
             if (!line.StartsWith("> ", StringComparison.Ordinal)) continue;
             _commandNavigator.Add(lineIndex);
-            commandAdded = true;
+            latestCommandLineIndex = lineIndex;
         }
-        if (commandAdded) AuditLines.SelectedIndex = _commandNavigator.CurrentLineIndex;
+        if (latestCommandLineIndex >= 0)
+        {
+            AuditLines.SelectedIndex = latestCommandLineIndex;
+            AuditLines.ScrollIntoView(_lines[latestCommandLineIndex]);
+        }
         UpdateCommandNavigationButtons();
-        if ((wasAtBottom || ContainsCommandLine(additions)) && _lines.Count > 0)
-            AuditLines.ScrollIntoView(_lines[^1]);
     }
-
-    internal static bool ContainsCommandLine(IEnumerable<string> lines) =>
-        lines.Any(line => line.StartsWith("> ", StringComparison.Ordinal));
 
     public int ClearDisplayed()
     {
