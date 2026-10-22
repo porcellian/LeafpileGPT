@@ -17,40 +17,47 @@ routine and stack state, and version-aware packed Z-text conversion. Text suppor
 includes abbreviations, custom alphabets, dictionary-form encoding, ZSCII, and
 story-specific Unicode translation tables. The instruction decoder handles all
 four instruction forms, typed operands, version-specific opcode layouts, stores,
-branches, and inline print strings. A control-flow executor now handles
-conditional branches, routine calls and returns, stack-frame catch/throw,
-versioned save/restore control flow through a host service, restart, verification,
-and related routine opcodes. It also executes signed and bitwise arithmetic,
-indirect variable operations, memory and table access, random-number control,
-and logical/arithmetic shifts. Object operations now support versioned object
-tables, attributes, tree mutation, short names, and versioned property headers,
-defaults, lookup, iteration, and updates. Dictionary search supports sorted
-story dictionaries and unsorted user dictionaries; text parsing handles word
-separators and versioned text/parse buffers. `tokenise`, `encode_text`,
-`check_unicode`, and versioned `scan_table` execution are covered. The executor
-supports host-provided line and character input, timed-input callbacks, terminating
-characters, command input and recording streams, transcript and screen selection,
-nested memory output streams, standardized suggested filenames, and streamed text
-output. The V1–V5 screen model tracks versioned header dimensions, V1–V3 status
-updates, split-window behavior, cursor positions, screen clearing, text styles,
-V5 colors, and lower-window word wrapping and buffering. V6 adds eight pixel
-windows, per-window geometry, cursor, style, color, font, margins, attributes and
-properties, scrolling, screen buffering, and formatted output streams. Font 3 is
-available for character graphics. The core dispatches sound effects through the
-`IZMachineSound` host contract, including volume, repeats, stop/finish operations,
-and completion routines; actual resource lookup and playback are supplied by a
-host. Blorb containers expose indexed resources, validated metadata, image bytes,
-dimensions, and scaling information through the loaded story. V6 draw and erase
-operations are available to a display host. Sound capability bits are set or
-cleared from host support. Mouse, menu, and transparency capabilities remain
-unavailable. Versions 7 and 8 retain the V5 text-window model. Quetzal support writes compressed CMem
-or optional UMem saves and restores either encoding for V1–V8. It validates story
-identity and IFZS chunk bounds, restores versioned call frames and stack values,
-resumes at the original save instruction's success continuation, and supports
-ANNO and IntD chunks. `QuetzalSaveRestoreService` uses the core
-`IZMachineSaveFileAccess` boundary for host-selected files and includes
-in-memory `save_undo` / `restore_undo` support. The Avalonia desktop host now
-provides Quetzal save and restore file pickers, story open and restart commands,
+branches, and inline print strings.
+
+A control-flow executor now handles conditional branches, routine calls and
+returns, stack-frame catch/throw, versioned save/restore control flow through a
+host service, restart, verification, and related routine opcodes. It also
+executes signed and bitwise arithmetic, indirect variable operations, memory and
+table access, random-number control, and logical/arithmetic shifts. Object
+operations now support versioned object tables, attributes, tree mutation, short
+names, and versioned property headers, defaults, lookup, iteration, and updates.
+
+Dictionary search supports sorted story dictionaries and unsorted user
+dictionaries; text parsing handles word separators and versioned text/parse
+buffers. `tokenise`, `encode_text`, `check_unicode`, and versioned `scan_table`
+execution are covered. The executor supports host-provided line and character
+input, timed-input callbacks, terminating characters, command input and recording
+streams, transcript and screen selection, nested memory output streams,
+standardized suggested filenames, and streamed text output.
+
+The V1–V5 screen model tracks versioned header dimensions, V1–V3 status updates,
+split-window behavior, cursor positions, screen clearing, text styles, V5 colors,
+and lower-window word wrapping and buffering. V6 adds eight pixel windows,
+per-window geometry, cursor, style, color, font, margins, attributes and
+properties, scrolling, screen buffering, and formatted output streams.
+
+Font 3 is available for character graphics. The core dispatches sound effects
+through the `IZMachineSound` host contract, including volume, repeats,
+stop/finish operations, and completion routines; actual resource lookup and
+playback are supplied by a host. Blorb containers expose indexed resources,
+validated metadata, image bytes, dimensions, and scaling information through the
+loaded story. V6 draw and erase operations are available to a display host. Sound
+capability bits are set or cleared from host support. Mouse, menu, and
+transparency capabilities remain unavailable. Versions 7 and 8 retain the V5
+text-window model.
+
+Quetzal support writes compressed CMem or optional UMem saves and restores either
+encoding for V1–V8. It validates story identity and IFZS chunk bounds, restores
+versioned call frames and stack values, resumes at the original save instruction's
+success continuation, and supports ANNO and IntD chunks. `QuetzalSaveRestoreService`
+uses the core `IZMachineSaveFileAccess` boundary for host-selected files and
+includes in-memory `save_undo` / `restore_undo` support. The Avalonia desktop host
+now provides Quetzal save and restore file pickers, story open and restart commands,
 keyboard text and character input, renderer-neutral display updates, Blorb image
 rendering, and runtime error reporting. It uses a Courier-style font with a blue
 story area and gray V1–V3 status bar. Timed input, transcript and command files,
