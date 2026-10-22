@@ -263,6 +263,8 @@
 - 2026-10-22T17:54Z [USER] Make the prompt and entered command bold in the instruction audit to improve visibility while scrolling.
 - 2026-10-22T17:54Z [CODE] PR #48 binds audit row font weight to row type: `> command` rows are bold and opcode rows remain normal; added a focused style-model test.
 - 2026-10-22T17:54Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting verification passed, and all 387 xUnit tests passed. Native GUI interaction remains unverified.
+- 2026-10-22T17:59Z [USER] Add all untracked images under `reference/` to the active PR #48.
+- 2026-10-22T17:59Z [TOOL] Confirmed the untracked reference images are `evo1.png` through `evo8.png`; other images in `reference/` are already tracked. Added these eight images to the PR branch.
 - 2026-10-22T03:34Z [USER] PR #41 is merged; Task 19.9 is complete. User requested the Task 19.10 Infidel checklist PR; do not begin the playthrough before that checklist PR is merged.
 - 2026-10-22T03:36Z [TOOL] Started `feature/19.10-infidel-task` from refreshed `origin/main` at `181b329`. Local Infidel story, manual, and hints are present and ignored. The unchecked Task 19.10 checklist requires the best verified no-death score and ending, Starcross-style guide/maps/opcode table, local route/trace, fixes with generated tests, and fresh replay of all nine earlier walkthrough routes.
 - 2026-10-22T03:37Z [TOOL] Committed the checklist as `05c3d32`, pushed `feature/19.10-infidel-task`, and opened PR #42 at `https://github.com/porcellian/LeafpileGPT/pull/42` after a successful dry-run preview. Wait for manual merge before starting the Infidel playthrough.
