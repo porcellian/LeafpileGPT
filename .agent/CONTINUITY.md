@@ -212,3 +212,4 @@
 - 2026-10-21T21:27Z [USER] PR #35 is merged [TOOL]; Task 19.6 is complete. User requested standby; do not begin the next task until instructed.
 - 2026-10-22T00:46Z [USER] Add an unchecked Task 19.7 for the `stories/witness.z3` maximum-score walkthrough and fresh regression replays; this request creates the task entry but does not start the playthrough.
 - 2026-10-22T00:46Z [TOOL] Started `feature/19.7-witness-task` from merged `origin/main` at `382019c`. Local assets are `stories/witness.z3`, `stories/witness.pdf`, and `stories/witness.txt`; the supplied hints path `/suspend/witness.txt` is absent, while `stories/witness.txt` is present.
+- 2026-10-22T00:47Z [TOOL] Pushed commit `47202c0` and opened PR #36 at `https://github.com/porcellian/LeafpileGPT/pull/36` for the Task 19.7 checklist entry; the playthrough has not started.
