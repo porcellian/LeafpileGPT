@@ -50,3 +50,25 @@ python3 tools/walkthroughs/make_suspended_walkthrough.py \
 The route uses no numeric score global; it validates casualty checkpoints from
 the story text and tracks the current robot's parent room as its location. Keep
 the Suspended story, manual, hints, route, and raw trace local.
+
+## Witness conviction guide
+
+`make_witness_walkthrough.py` rebuilds the Witness guide, including the numbered
+route, two hand-sketched room maps, and the six-column opcode inventory. Its
+committed data lives in `walkthroughs/source-data/witness.json`.
+
+After a fresh local replay, refresh the inventory from the ignored trace and
+rebuild the PDF with:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/witness.z3 \
+  .agent/regression-routes/witness-no-death.json \
+  .agent/regression-routes/witness-no-death-trace.jsonl
+python3 tools/walkthroughs/make_witness_walkthrough.py \
+  --refresh-trace .agent/regression-routes/witness-no-death-trace.jsonl
+```
+
+The fresh route ends with the police-chief letter confirming Monica Linder's
+conviction. Witness exposes no numeric score global, so the guide verifies the
+best-ending result instead. The story, manual, hints, route, saves, and trace
+stay local and remain unnecessary for CI.

@@ -123,7 +123,7 @@ public sealed class ZMachineObjectTableTests
     }
 
     [Fact]
-    public void RejectsMissingPropertiesInvalidNumbersAndNullObjectMutation()
+    public void RejectsMissingPropertiesAndInvalidNumbers()
     {
         var table = new ZMachineObjectTable(CreatePopulatedState(5));
 
@@ -131,7 +131,18 @@ public sealed class ZMachineObjectTableTests
         Assert.Throws<ZMachineRuntimeException>(() => table.GetProperty(1, 64));
         Assert.Throws<ZMachineRuntimeException>(() => table.GetProperty(1, 0));
         Assert.Throws<ZMachineRuntimeException>(() => table.RemoveObject(0));
-        Assert.Throws<ZMachineRuntimeException>(() => table.SetAttribute(0, 0));
+    }
+
+    [Fact]
+    public void IgnoresAttributeMutationsOnNullObjectForInfocomCompatibility()
+    {
+        var table = new ZMachineObjectTable(CreatePopulatedState(3));
+
+        table.SetAttribute(0, 22);
+        table.ClearAttribute(0, 22);
+
+        Assert.False(table.HasAttribute(0, 22));
+        Assert.Throws<ZMachineRuntimeException>(() => table.SetAttribute(0, 32));
     }
 
     [Fact]
