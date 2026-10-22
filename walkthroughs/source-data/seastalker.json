@@ -1,0 +1,1051 @@
+{
+  "title": "SEA STALKER",
+  "routeTitle": "100-POINT NO-DEATH MISSION WALKTHROUGH",
+  "release": 15,
+  "serial": "840522",
+  "randomSeed": 1035,
+  "score": 100,
+  "maximumScore": 100,
+  "rank": "famous adventurer",
+  "moves": 213,
+  "commandsCount": 202,
+  "totalInstructions": 383400,
+  "requiredDeaths": 0,
+  "endingVerification": "The Scimitar destroys the Sea Cat power pod. Sharon reports Thorpe incapacitated, then confirms the mission is complete. The story awards 100/100 and presents the restore/restart/quit prompt; choose QUIT.",
+  "intro": [
+    "Start a fresh Sea Stalker Release 15 game and enter the requested name. This deterministic route uses seed 1035 and reaches 100/100 in 213 story moves.",
+    "The route clears the lab alert, prepares the Scimitar, crosses Frobton Bay without grounding, fixes the depth regulator, and docks at the Aquadome.",
+    "At the Aquadome, gather evidence, identify the threat, prepare the dart gun and bazooka, install the fine sonar grid, and expose Bill Greenup before returning to sea.",
+    "The final encounter requires the exact response sequence to Tip, Dr. Thorpe, and Sharon. The route ends after the winning scene and quits at the post-ending prompt; no player death occurs."
+  ],
+  "checkpoints": [
+    {
+      "heading": "24 / 100",
+      "detail": "The reactor, engine, gate, and throttle are ready; enter Frobton Bay."
+    },
+    {
+      "heading": "34 / 100",
+      "detail": "Reach open ocean and set the Scimitar on autopilot."
+    },
+    {
+      "heading": "49 / 100",
+      "detail": "Dock at the Aquadome and install the relay in the air system."
+    },
+    {
+      "heading": "69 / 100",
+      "detail": "Prepare the dart gun and attach it to the Scimitar’s claw."
+    },
+    {
+      "heading": "84 / 100",
+      "detail": "Expose Bill, stop his escape, and restore docking tank power."
+    },
+    {
+      "heading": "100 / 100",
+      "detail": "Aim at and destroy the Sea Cat power pod; Sharon confirms mission success."
+    }
+  ],
+  "visitedLocations": [
+    "Lab center",
+    "North part",
+    "West part",
+    "East part",
+    "South part",
+    "Corridor",
+    "Kemp office",
+    "Storage closet",
+    "North walkway",
+    "West walkway",
+    "South walkway",
+    "SCIMITAR",
+    "Frobton Bay",
+    "Open ocean",
+    "Aqua lab",
+    "Comm center",
+    "Work shop",
+    "Northwest deck",
+    "Northeast deck",
+    "Galley",
+    "Female dorm",
+    "Southwest deck",
+    "Reception area",
+    "Southeast deck",
+    "Aquadome office",
+    "Male dorm",
+    "Docking tank entrance",
+    "Storage room",
+    "Docking tank",
+    "Dome center",
+    "Silt cloud",
+    "Whale pass",
+    "Snark encounter",
+    "Sea Cat range"
+  ],
+  "maps": [
+    {
+      "title": "Research laboratory and launch",
+      "icon": "sub",
+      "caption": "Launch from the Scimitar to Frobton Bay; the shaded side rooms are optional to visit.",
+      "rooms": [
+        "North part",
+        "West part",
+        "Lab center",
+        "East part",
+        "Corridor",
+        "Kemp office",
+        "South part",
+        "Storage closet",
+        "North walkway",
+        "West walkway",
+        "South walkway",
+        "SCIMITAR",
+        "Frobton Bay",
+        "Open ocean"
+      ],
+      "edges": [
+        {
+          "source": "North part",
+          "target": "Lab center",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "West part",
+          "target": "Lab center",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Lab center",
+          "target": "East part",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "East part",
+          "target": "Corridor",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Corridor",
+          "target": "Kemp office",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Lab center",
+          "target": "South part",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "South part",
+          "target": "Storage closet",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "South part",
+          "target": "North walkway",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "North walkway",
+          "target": "West walkway",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "West walkway",
+          "target": "SCIMITAR",
+          "label": "in",
+          "firstArrival": true
+        },
+        {
+          "source": "SCIMITAR",
+          "target": "Frobton Bay",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Frobton Bay",
+          "target": "Open ocean",
+          "label": "northeast",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Aquadome station",
+      "icon": "dome",
+      "caption": "The lower docking tank links the station to the Scimitar; the selected route visits the office, decks, shop, and storage.",
+      "rooms": [
+        "Aqua lab",
+        "Comm center",
+        "Work shop",
+        "Northwest deck",
+        "Northeast deck",
+        "Galley",
+        "Female dorm",
+        "Southwest deck",
+        "Reception area",
+        "Southeast deck",
+        "Aquadome office",
+        "Male dorm",
+        "Docking tank entrance",
+        "Storage room",
+        "Docking tank",
+        "Dome center"
+      ],
+      "edges": [
+        {
+          "source": "Aqua lab",
+          "target": "Northwest deck",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Northwest deck",
+          "target": "Work shop",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Northwest deck",
+          "target": "Northeast deck",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Northeast deck",
+          "target": "Comm center",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Northeast deck",
+          "target": "Galley",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Northwest deck",
+          "target": "Dome center",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Dome center",
+          "target": "Reception area",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Reception area",
+          "target": "Southwest deck",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Southwest deck",
+          "target": "Female dorm",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Reception area",
+          "target": "Southeast deck",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Southeast deck",
+          "target": "Aquadome office",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Southwest deck",
+          "target": "Male dorm",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Reception area",
+          "target": "Docking tank entrance",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Docking tank entrance",
+          "target": "Docking tank",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Docking tank entrance",
+          "target": "Storage room",
+          "label": "east",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Open-ocean route and encounter notes",
+      "icon": "octopus",
+      "caption": "Event locations are schematic sea squares, not land rooms. Keep the Scimitar moving through the silt field.",
+      "rooms": [
+        "Frobton Bay",
+        "Open ocean",
+        "Silt cloud",
+        "Whale pass",
+        "Snark encounter",
+        "Sea Cat range"
+      ],
+      "edges": [
+        {
+          "source": "Frobton Bay",
+          "target": "Open ocean",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Open ocean",
+          "target": "Whale pass",
+          "label": "starboard",
+          "firstArrival": true
+        },
+        {
+          "source": "Whale pass",
+          "target": "Silt cloud",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Silt cloud",
+          "target": "Snark encounter",
+          "label": "hold course",
+          "firstArrival": true
+        },
+        {
+          "source": "Snark encounter",
+          "target": "Sea Cat range",
+          "label": "east",
+          "firstArrival": true
+        }
+      ]
+    }
+  ],
+  "commands": [
+    "Alex",
+    "Morgan",
+    "yes",
+    "turn on videophone",
+    "get microphone",
+    "turn on microphone",
+    "tune videophone",
+    "ask bly about problem",
+    "bye",
+    "drop microphone",
+    "east",
+    "east",
+    "look at panel",
+    "close breaker",
+    "west",
+    "south",
+    "south",
+    "west",
+    "take capsule",
+    "north",
+    "in",
+    "ask tip for magazine",
+    "open magazine",
+    "read article",
+    "close hatch",
+    "fill tank",
+    "put capsule in reactor",
+    "close reactor",
+    "turn on reactor",
+    "turn on engine",
+    "open gate",
+    "open throttle",
+    "east",
+    "down",
+    "set depth to 5 meters",
+    "east",
+    "east",
+    "east",
+    "east",
+    "look at sonar",
+    "northeast",
+    "east",
+    "look at sonar",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "look at sonar",
+    "northeast",
+    "look at sonar",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "look at sonar",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "northeast",
+    "look at sonar",
+    "north",
+    "look at sonar",
+    "east",
+    "look at sonar",
+    "north",
+    "look at sonar",
+    "northwest",
+    "look at sonar",
+    "northwest",
+    "northwest",
+    "northwest",
+    "look at sonar",
+    "northeast",
+    "northeast",
+    "northeast",
+    "turn on autopilot",
+    "set throttle to fast",
+    "wait",
+    "no",
+    "close throttle",
+    "turn off engine",
+    "ask tip for tool",
+    "open access panel with tool",
+    "enter crawl space",
+    "fix regulator with tool",
+    "exit crawl space",
+    "turn on engine",
+    "open throttle",
+    "set throttle to fast",
+    "wait",
+    "no",
+    "aim search light to starboard",
+    "wait",
+    "no",
+    "get phone",
+    "wait",
+    "dock",
+    "wait",
+    "open hatch",
+    "out",
+    "north",
+    "north",
+    "north",
+    "open air supply system with tool",
+    "get relay",
+    "screw relay into space",
+    "southeast",
+    "south",
+    "take bazooka",
+    "north",
+    "east",
+    "wait",
+    "yes",
+    "no",
+    "ask bly about evidence",
+    "open box with tool",
+    "look in box",
+    "west",
+    "get wrench",
+    "open office door",
+    "wait",
+    "no",
+    "west",
+    "yes",
+    "yes",
+    "yes",
+    "yes",
+    "yes",
+    "west",
+    "wait",
+    "wait",
+    "yes",
+    "no",
+    "give magazine to doc",
+    "yes",
+    "wait",
+    "no",
+    "put dart on claw",
+    "south",
+    "put bazooka on claw",
+    "yes",
+    "no",
+    "ask tip about grid",
+    "yes",
+    "yes",
+    "wait",
+    "no",
+    "south",
+    "south",
+    "get syringe",
+    "open hatch",
+    "out",
+    "north",
+    "north",
+    "show syringe to doc",
+    "wait",
+    "no",
+    "south",
+    "south",
+    "arrest bill",
+    "turn off electricity",
+    "turn on electricity",
+    "west",
+    "west",
+    "south",
+    "south",
+    "south",
+    "fill tank",
+    "wait",
+    "no",
+    "turn on engine",
+    "open gate",
+    "open throttle",
+    "south",
+    "east",
+    "east",
+    "southeast",
+    "wait",
+    "wait",
+    "yes",
+    "no",
+    "yes",
+    "no",
+    "yes",
+    "east",
+    "east",
+    "wait",
+    "aim bazooka at pod",
+    "shoot bazooka",
+    "yes",
+    "quit"
+  ],
+  "criticalCommands": [
+    14,
+    19,
+    30,
+    87,
+    115,
+    117,
+    120,
+    143,
+    147,
+    149,
+    171,
+    172,
+    185,
+    195,
+    199,
+    200,
+    201,
+    202
+  ],
+  "stepStarts": {
+    "1": "LAB ALERT",
+    "25": "PREPARE THE SCIMITAR",
+    "34": "FROBTON BAY",
+    "87": "OPEN OCEAN",
+    "105": "AQUADOME",
+    "121": "INVESTIGATE THE SABOTAGE",
+    "136": "DECK INTERVIEWS",
+    "145": "PREPARE THE CLAW",
+    "160": "THE SABOTAGE REVEALED",
+    "181": "RETURN TO THE OCEAN",
+    "188": "THE SNARK ENCOUNTER"
+  },
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 17033,
+      "FirstSequence": 1,
+      "FirstAddress": 23095
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 204,
+      "FirstSequence": 2,
+      "FirstAddress": 23098
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 25410,
+      "FirstSequence": 15,
+      "FirstAddress": 23157
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 60251,
+      "FirstSequence": 16,
+      "FirstAddress": 24453
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 46899,
+      "FirstSequence": 17,
+      "FirstAddress": 24456
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 13805,
+      "FirstSequence": 18,
+      "FirstAddress": 24464
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 22119,
+      "FirstSequence": 19,
+      "FirstAddress": 24468
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 2137,
+      "FirstSequence": 21,
+      "FirstAddress": 24477
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 173,
+      "FirstSequence": 22,
+      "FirstAddress": 23163
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 11048,
+      "FirstSequence": 42,
+      "FirstAddress": 25383
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 9088,
+      "FirstSequence": 45,
+      "FirstAddress": 25395
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 4249,
+      "FirstSequence": 48,
+      "FirstAddress": 25410
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 2235,
+      "FirstSequence": 49,
+      "FirstAddress": 25415
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 33238,
+      "FirstSequence": 58,
+      "FirstAddress": 25417
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 21492,
+      "FirstSequence": 61,
+      "FirstAddress": 25431
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 8,
+      "FirstSequence": 121,
+      "FirstAddress": 23722
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 3543,
+      "FirstSequence": 340,
+      "FirstAddress": 23215
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 676,
+      "FirstSequence": 341,
+      "FirstAddress": 23336
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 187,
+      "FirstSequence": 344,
+      "FirstAddress": 62193
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 202,
+      "FirstSequence": 347,
+      "FirstAddress": 62201
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 4197,
+      "FirstSequence": 348,
+      "FirstAddress": 62205
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 742,
+      "FirstSequence": 356,
+      "FirstAddress": 62312
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1827,
+      "FirstSequence": 357,
+      "FirstAddress": 62316
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 3789,
+      "FirstSequence": 365,
+      "FirstAddress": 62434
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 17499,
+      "FirstSequence": 368,
+      "FirstAddress": 62447
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1116,
+      "FirstSequence": 369,
+      "FirstAddress": 62451
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 8228,
+      "FirstSequence": 400,
+      "FirstAddress": 62343
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 201,
+      "FirstSequence": 426,
+      "FirstAddress": 62502
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 1916,
+      "FirstSequence": 665,
+      "FirstAddress": 86679
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 2798,
+      "FirstSequence": 667,
+      "FirstAddress": 86687
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 3049,
+      "FirstSequence": 670,
+      "FirstAddress": 86701
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 12,
+      "FirstSequence": 886,
+      "FirstAddress": 93037
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 48,
+      "FirstSequence": 887,
+      "FirstAddress": 93043
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 540,
+      "FirstSequence": 963,
+      "FirstAddress": 23479
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 151,
+      "FirstSequence": 976,
+      "FirstAddress": 23669
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1331,
+      "FirstSequence": 982,
+      "FirstAddress": 93614
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 154,
+      "FirstSequence": 984,
+      "FirstAddress": 93623
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 366,
+      "FirstSequence": 987,
+      "FirstAddress": 93633
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 1735,
+      "FirstSequence": 993,
+      "FirstAddress": 93650
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 1443,
+      "FirstSequence": 996,
+      "FirstAddress": 93699
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 263,
+      "FirstSequence": 1077,
+      "FirstAddress": 93711
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 6236,
+      "FirstSequence": 1081,
+      "FirstAddress": 93573
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 6466,
+      "FirstSequence": 1099,
+      "FirstAddress": 95325
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 5997,
+      "FirstSequence": 1171,
+      "FirstAddress": 71190
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 301,
+      "FirstSequence": 1337,
+      "FirstAddress": 85752
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 12413,
+      "FirstSequence": 1415,
+      "FirstAddress": 85933
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 178,
+      "FirstSequence": 1840,
+      "FirstAddress": 89648
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 11085,
+      "FirstSequence": 1847,
+      "FirstAddress": 90607
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 5594,
+      "FirstSequence": 1853,
+      "FirstAddress": 90710
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 9303,
+      "FirstSequence": 1854,
+      "FirstAddress": 90713
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 27,
+      "FirstSequence": 2701,
+      "FirstAddress": 107322
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 188,
+      "FirstSequence": 17375,
+      "FirstAddress": 61586
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 58,
+      "FirstSequence": 18852,
+      "FirstAddress": 61047
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 52,
+      "FirstSequence": 46250,
+      "FirstAddress": 108221
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 17,
+      "FirstSequence": 59355,
+      "FirstAddress": 39304
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 59,
+      "FirstSequence": 61080,
+      "FirstAddress": 30938
+    },
+    {
+      "Form": "Long",
+      "Opcode": 8,
+      "Mnemonic": "or",
+      "Count": 22,
+      "FirstSequence": 73780,
+      "FirstAddress": 41843
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 1,
+      "FirstSequence": 370417,
+      "FirstAddress": 44761
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 383400,
+      "FirstAddress": 107615
+    }
+  ]
+}
