@@ -257,6 +257,9 @@
 - 2026-10-22T17:44Z [USER] Reduce the form field width by five characters and tighten whitespace between mnemonics and operand lists.
 - 2026-10-22T17:44Z [CODE] PR #48 now uses a three-character form field and a 12-character mnemonic field, shifting `OP` left five columns for `Var` and reducing mnemonic-to-operands spacing.
 - 2026-10-22T17:44Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting verification passed, and all 385 xUnit tests passed.
+- 2026-10-22T17:49Z [USER] Fix the misaligned audit columns reported in `reference/gui06.png`.
+- 2026-10-22T17:49Z [CODE] Expanded the form field to five characters to align `OP` after `Short`, mapped `Extended` to `Ext` so it fits, and set the mnemonic field to 15 characters so operands share a column even after the longest current mnemonic.
+- 2026-10-22T17:49Z [TOOL] Release solution build succeeded with zero warnings/errors, formatting verification passed, and all 386 xUnit tests passed; generated tests assert OP and operand column positions across all four instruction forms and varying mnemonic lengths.
 - 2026-10-22T03:34Z [USER] PR #41 is merged; Task 19.9 is complete. User requested the Task 19.10 Infidel checklist PR; do not begin the playthrough before that checklist PR is merged.
 - 2026-10-22T03:36Z [TOOL] Started `feature/19.10-infidel-task` from refreshed `origin/main` at `181b329`. Local Infidel story, manual, and hints are present and ignored. The unchecked Task 19.10 checklist requires the best verified no-death score and ending, Starcross-style guide/maps/opcode table, local route/trace, fixes with generated tests, and fresh replay of all nine earlier walkthrough routes.
 - 2026-10-22T03:37Z [TOOL] Committed the checklist as `05c3d32`, pushed `feature/19.10-infidel-task`, and opened PR #42 at `https://github.com/porcellian/LeafpileGPT/pull/42` after a successful dry-run preview. Wait for manual merge before starting the Infidel playthrough.

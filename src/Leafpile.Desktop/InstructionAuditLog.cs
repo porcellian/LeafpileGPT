@@ -50,9 +50,14 @@ internal sealed class InstructionAuditLog
         {
             var operands = string.Join(", ", instruction.Operands.Select(FormatOperand));
             var mnemonic = ZMachineOpcodeNames.GetMnemonic(instruction.OpcodeClass, instruction.Opcode);
-            var form = instruction.Form == ZMachineInstructionForm.Variable ? "Var" : instruction.Form.ToString();
+            var form = instruction.Form switch
+            {
+                ZMachineInstructionForm.Variable => "Var",
+                ZMachineInstructionForm.Extended => "Ext",
+                _ => instruction.Form.ToString()
+            };
             var line = string.Create(CultureInfo.InvariantCulture,
-                $"#{++session.Sequence:000000}   PC=0x{instruction.Address:X5}   Form={form,-3}   OP={instruction.Opcode,2}   {mnemonic,-12} [{operands}]");
+                $"#{++session.Sequence:000000}   PC=0x{instruction.Address:X5}   Form={form,-5}   OP={instruction.Opcode,2}   {mnemonic,-15} [{operands}]");
             _lines.Add(line);
         }
     }

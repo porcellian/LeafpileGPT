@@ -19,8 +19,8 @@ public sealed class InstructionAuditLogTests
 
         Assert.Contains("Run 1: fixture.z3", text);
         Assert.Contains("Startup instructions", text);
-        Assert.Contains("#000001   PC=0x00200   Form=Short   OP= 4   nop          []", text);
-        Assert.Contains("#000002   PC=0x00201   Form=Var   OP= 4   read         [sm:0x000a]", text);
+        Assert.Contains("#000001   PC=0x00200   Form=Short   OP= 4   nop             []", text);
+        Assert.Contains("#000002   PC=0x00201   Form=Var     OP= 4   read            [sm:0x000a]", text);
         var lines = text.Split(Environment.NewLine, StringSplitOptions.None);
         var commandLine = Array.IndexOf(lines, "> look");
         Assert.True(commandLine > 0);
@@ -64,7 +64,7 @@ public sealed class InstructionAuditLogTests
         var lines = log.ExportText().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
         Assert.Contains(lines, line => line == "> open mailbox");
-        Assert.Contains(lines, line => line == "#000001   PC=0x00240   Form=Long   OP= 1   je           [lg:0x1234, sm:0x000c, var:0x0010]");
+        Assert.Contains(lines, line => line == "#000001   PC=0x00240   Form=Long    OP= 1   je              [lg:0x1234, sm:0x000c, var:0x0010]");
         Assert.DoesNotContain(lines, line => line.Contains("operands=", StringComparison.Ordinal));
         Assert.Contains(lines, line => line == "[Run 1 ended: story halted]");
     }
@@ -96,6 +96,33 @@ public sealed class InstructionAuditLogTests
         Assert.False(navigator.HasCommands);
         Assert.False(navigator.CanGoPrevious);
         Assert.False(navigator.CanGoNext);
+    }
+
+    [Fact]
+    public void AuditColumnsRemainAlignedAcrossAllInstructionFormsAndMnemonics()
+    {
+        var log = new InstructionAuditLog();
+        var session = log.StartRun("fixture.z8");
+        var operand = new ZMachineOperand(ZMachineOperandType.SmallConstant, 1);
+        log.Record(session, CreateInstruction(0x0200, ZMachineInstructionForm.Short, ZMachineOpcodeClass.ZeroOperand, 4, operand));
+        log.Record(session, CreateInstruction(0x0201, ZMachineInstructionForm.Long, ZMachineOpcodeClass.TwoOperand, 1, operand));
+        log.Record(session, CreateInstruction(0x0202, ZMachineInstructionForm.Variable, ZMachineOpcodeClass.Variable, 31, operand));
+        log.Record(session, CreateInstruction(0x0203, ZMachineInstructionForm.Extended, ZMachineOpcodeClass.Extended, 12, operand));
+
+        var instructions = log.ExportText().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
+            .Where(line => line.StartsWith('#'))
+            .ToArray();
+
+        Assert.Equal(new[] { "Short", "Long", "Var", "Ext" }, instructions.Select(GetForm).ToArray());
+        Assert.Single(instructions.Select(line => line.IndexOf("OP=", StringComparison.Ordinal)).Distinct());
+        Assert.Single(instructions.Select(line => line.IndexOf('[')).Distinct());
+    }
+
+    private static string GetForm(string line)
+    {
+        var start = line.IndexOf("Form=", StringComparison.Ordinal) + "Form=".Length;
+        var end = line.IndexOf("   OP=", start, StringComparison.Ordinal);
+        return line[start..end].TrimEnd();
     }
 
     private static ZMachineInstruction CreateInstruction(
