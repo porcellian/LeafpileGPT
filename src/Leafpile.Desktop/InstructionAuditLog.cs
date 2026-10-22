@@ -51,9 +51,8 @@ internal sealed class InstructionAuditLog
                 ? "-"
                 : string.Join(", ", instruction.Operands.Select(FormatOperand));
             var mnemonic = ZMachineOpcodeNames.GetMnemonic(instruction.OpcodeClass, instruction.Opcode);
-            var group = session.Command is null ? "Startup" : $"> {session.Command}";
             var line = string.Create(CultureInfo.InvariantCulture,
-                $"Run={session.RunNumber}  Group={group}  Seq={++session.Sequence,8}  PC=0x{instruction.Address:x4}  {instruction.Form}/{instruction.OpcodeClass}  opcode={instruction.Opcode,2}  {mnemonic}  operands=[{operands}]");
+                $"#{++session.Sequence:000000} PC=0x{instruction.Address:x4} {instruction.Form}/{instruction.OpcodeClass} opcode={instruction.Opcode} {mnemonic} operands=[{operands}]");
             _lines.Add(line);
         }
     }

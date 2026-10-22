@@ -12,10 +12,16 @@
       <Button Content="Clear History" Click="OnClearHistory" />
       <TextBlock x:Name="ErrorText" VerticalAlignment="Center" Foreground="Firebrick" TextWrapping="Wrap" />
     </StackPanel>
-    <ListBox x:Name="AuditLines" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+    <ListBox x:Name="AuditLines" SelectionMode="Single" Padding="0" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+      <ListBox.Styles>
+        <Style Selector="ListBoxItem">
+          <Setter Property="Padding" Value="0" />
+          <Setter Property="Margin" Value="0" />
+        </Style>
+      </ListBox.Styles>
       <ListBox.ItemTemplate>
         <DataTemplate>
-          <TextBlock Text="{Binding}" FontFamily="Courier New, monospace" FontSize="12" TextWrapping="NoWrap" />
+          <TextBlock Text="{Binding}" FontFamily="Courier New, monospace" FontSize="12" TextWrapping="NoWrap" Margin="0" />
         </DataTemplate>
       </ListBox.ItemTemplate>
     </ListBox>

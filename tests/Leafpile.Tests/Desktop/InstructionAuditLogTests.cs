@@ -20,10 +20,10 @@ public sealed class InstructionAuditLogTests
         Assert.Contains("Run 1: fixture.z3", text);
         Assert.Contains("Startup instructions", text);
         Assert.Contains("Run 1 command: > look", text);
-        Assert.Contains("PC=0x0200  Short/ZeroOperand  opcode= 4  nop", text);
-        Assert.Contains("PC=0x0201  Variable/Variable  opcode= 4  read  operands=[small:0x000a]", text);
-        Assert.Contains("Run=1  Group=Startup  Seq=       1  PC=0x0200", text);
-        Assert.Contains("Run=1  Group=> look  Seq=       2  PC=0x0201", text);
+        Assert.Contains("#000001 PC=0x0200 Short/ZeroOperand opcode=4 nop operands=[-]", text);
+        Assert.Contains("#000002 PC=0x0201 Variable/Variable opcode=4 read operands=[small:0x000a]", text);
+        Assert.DoesNotContain("Run=1  Group=Startup", text);
+        Assert.DoesNotContain("Run=1  Group=> look", text);
     }
 
     [Fact]
@@ -35,8 +35,8 @@ public sealed class InstructionAuditLogTests
         var second = log.StartRun("second.z3");
         log.Record(second, CreateInstruction(0x0300, ZMachineInstructionForm.Short, ZMachineOpcodeClass.ZeroOperand, 4));
 
-        Assert.Contains("Run=1  Group=Startup  Seq=       1  PC=0x0200", log.ExportText());
-        Assert.Contains("Run=2  Group=Startup  Seq=       1  PC=0x0300", log.ExportText());
+        Assert.Contains("#000001 PC=0x0200", log.ExportText());
+        Assert.Contains("#000001 PC=0x0300", log.ExportText());
 
         log.Clear();
         log.Record(second, CreateInstruction(0x0301, ZMachineInstructionForm.Short, ZMachineOpcodeClass.ZeroOperand, 4));
@@ -44,7 +44,7 @@ public sealed class InstructionAuditLogTests
         var clearedText = log.ExportText();
         Assert.DoesNotContain("first.z3", clearedText);
         Assert.Contains("history cleared", clearedText, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("Run=2  Group=Startup  Seq=       2  PC=0x0301", clearedText);
+        Assert.Contains("#000002 PC=0x0301", clearedText);
     }
 
     [Fact]
@@ -61,7 +61,7 @@ public sealed class InstructionAuditLogTests
         var lines = log.ExportText().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
         Assert.Contains(lines, line => line == "Run 1 command: > open mailbox");
-        Assert.Contains(lines, line => line.Contains("Long/TwoOperand  opcode= 1  je", StringComparison.Ordinal));
+        Assert.Contains(lines, line => line == "#000001 PC=0x0240 Long/TwoOperand opcode=1 je operands=[small:0x000c, variable:0x0010]");
         Assert.Contains(lines, line => line.Contains("operands=[small:0x000c, variable:0x0010]", StringComparison.Ordinal));
         Assert.Contains(lines, line => line == "[Run 1 ended: story halted]");
     }
