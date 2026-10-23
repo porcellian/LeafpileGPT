@@ -1,0 +1,1315 @@
+{
+  "title": "WISHBRINGER",
+  "routeTitle": "100-POINT, NO-WISH WALKTHROUGH",
+  "release": 68,
+  "serial": "850501",
+  "randomSeed": 1,
+  "score": 100,
+  "maximumScore": 100,
+  "moves": 189,
+  "commandsCount": 205,
+  "totalInstructions": 213729,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 16669,
+      "FirstSequence": 1,
+      "FirstAddress": 22769
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 14697,
+      "FirstSequence": 8,
+      "FirstAddress": 22790
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 270,
+      "FirstSequence": 10,
+      "FirstAddress": 24339
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 8295,
+      "FirstSequence": 11,
+      "FirstAddress": 24345
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 21944,
+      "FirstSequence": 12,
+      "FirstAddress": 24349
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 2605,
+      "FirstSequence": 13,
+      "FirstAddress": 24353
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 37338,
+      "FirstSequence": 14,
+      "FirstAddress": 24357
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 5654,
+      "FirstSequence": 16,
+      "FirstAddress": 24368
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1574,
+      "FirstSequence": 17,
+      "FirstAddress": 24373
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 16543,
+      "FirstSequence": 26,
+      "FirstAddress": 24375
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 13595,
+      "FirstSequence": 29,
+      "FirstAddress": 24389
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 943,
+      "FirstSequence": 170,
+      "FirstAddress": 22877
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 1732,
+      "FirstSequence": 172,
+      "FirstAddress": 40371
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 647,
+      "FirstSequence": 173,
+      "FirstAddress": 40418
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1698,
+      "FirstSequence": 177,
+      "FirstAddress": 40480
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 4077,
+      "FirstSequence": 184,
+      "FirstAddress": 41942
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 931,
+      "FirstSequence": 185,
+      "FirstAddress": 41946
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 226,
+      "FirstSequence": 187,
+      "FirstAddress": 41977
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 4,
+      "FirstSequence": 190,
+      "FirstAddress": 42014
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 69,
+      "FirstSequence": 191,
+      "FirstAddress": 42020
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 4675,
+      "FirstSequence": 193,
+      "FirstAddress": 42038
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 195,
+      "FirstAddress": 42049
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 939,
+      "FirstSequence": 225,
+      "FirstAddress": 49278
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 91,
+      "FirstSequence": 227,
+      "FirstAddress": 49287
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 4291,
+      "FirstSequence": 231,
+      "FirstAddress": 49348
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 262,
+      "FirstSequence": 232,
+      "FirstAddress": 49352
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 1210,
+      "FirstSequence": 234,
+      "FirstAddress": 49358
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 1504,
+      "FirstSequence": 238,
+      "FirstAddress": 49371
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 1177,
+      "FirstSequence": 240,
+      "FirstAddress": 49377
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 1106,
+      "FirstSequence": 273,
+      "FirstAddress": 35519
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 249,
+      "FirstSequence": 275,
+      "FirstAddress": 60822
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 1972,
+      "FirstSequence": 280,
+      "FirstAddress": 33846
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 1690,
+      "FirstSequence": 283,
+      "FirstAddress": 33856
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 731,
+      "FirstSequence": 285,
+      "FirstAddress": 33872
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 533,
+      "FirstSequence": 299,
+      "FirstAddress": 33812
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 329,
+      "FirstSequence": 353,
+      "FirstAddress": 24638
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 447,
+      "FirstSequence": 393,
+      "FirstAddress": 24797
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 205,
+      "FirstSequence": 395,
+      "FirstAddress": 24807
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 25415,
+      "FirstSequence": 398,
+      "FirstAddress": 24819
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 1742,
+      "FirstSequence": 401,
+      "FirstAddress": 24855
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1026,
+      "FirstSequence": 409,
+      "FirstAddress": 24933
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 2112,
+      "FirstSequence": 458,
+      "FirstAddress": 25681
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 5051,
+      "FirstSequence": 459,
+      "FirstAddress": 25685
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1941,
+      "FirstSequence": 462,
+      "FirstAddress": 25697
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 1942,
+      "FirstSequence": 536,
+      "FirstAddress": 47849
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 885,
+      "FirstSequence": 538,
+      "FirstAddress": 47857
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 177,
+      "FirstSequence": 910,
+      "FirstAddress": 61181
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 33,
+      "FirstSequence": 916,
+      "FirstAddress": 37808
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 878,
+      "FirstSequence": 1015,
+      "FirstAddress": 34984
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 512,
+      "FirstSequence": 1186,
+      "FirstAddress": 25227
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 788,
+      "FirstSequence": 2167,
+      "FirstAddress": 31894
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 16,
+      "FirstSequence": 2603,
+      "FirstAddress": 48948
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 258,
+      "FirstSequence": 2697,
+      "FirstAddress": 32681
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 2,
+      "FirstSequence": 6286,
+      "FirstAddress": 29912
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 19,
+      "FirstSequence": 13373,
+      "FirstAddress": 62594
+    },
+    {
+      "Form": "Long",
+      "Opcode": 8,
+      "Mnemonic": "or",
+      "Count": 3,
+      "FirstSequence": 55355,
+      "FirstAddress": 33141
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 213729,
+      "FirstAddress": 41279
+    }
+  ],
+  "commands": [
+    "south",
+    "wait",
+    "take envelope",
+    "north",
+    "west",
+    "west",
+    "yes",
+    "north",
+    "wait",
+    "give envelope",
+    "wait",
+    "down",
+    "take bone",
+    "up",
+    "south",
+    "east",
+    "east",
+    "east",
+    "drop bone",
+    "north",
+    "wait",
+    "take note",
+    "north",
+    "look in fountain",
+    "take coin",
+    "north",
+    "north",
+    "north",
+    "north",
+    "east",
+    "break branch",
+    "up",
+    "west",
+    "north",
+    "up",
+    "east",
+    "south",
+    "up",
+    "open door",
+    "enter",
+    "wait",
+    "wait",
+    "give envelope",
+    "open envelope",
+    "read letter",
+    "wait",
+    "take can",
+    "wait",
+    "wait",
+    "wait",
+    "down",
+    "north",
+    "west",
+    "down",
+    "south",
+    "east",
+    "down",
+    "take branch",
+    "west",
+    "give can to troll",
+    "take can",
+    "squeeze can",
+    "drop can",
+    "take stone",
+    "open gate",
+    "south",
+    "read sign",
+    "south",
+    "west",
+    "south",
+    "look in pit",
+    "put branch in pit",
+    "pull branch",
+    "dig x with branch",
+    "drop branch",
+    "take whistle",
+    "blow whistle",
+    "west",
+    "wait",
+    "take hat",
+    "wait",
+    "blow whistle",
+    "north",
+    "up",
+    "look at stump",
+    "open stump",
+    "in",
+    "east",
+    "south",
+    "look through hole",
+    "move bed",
+    "up",
+    "take blanket",
+    "down",
+    "north",
+    "east",
+    "cover grue with blanket",
+    "open refrigerator",
+    "take earthworm",
+    "west",
+    "west",
+    "up",
+    "take horseshoe",
+    "north",
+    "east",
+    "east",
+    "east",
+    "give hat to pelican",
+    "west",
+    "west",
+    "south",
+    "south",
+    "look in fountain",
+    "put earthworm in water",
+    "take token",
+    "north",
+    "enter",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "exit",
+    "south",
+    "east",
+    "look at marquee",
+    "buy ticket",
+    "enter",
+    "give ticket to gravedigger",
+    "north",
+    "look under seat",
+    "take glasses",
+    "wear glasses",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "remove glasses",
+    "south",
+    "exit",
+    "yes",
+    "east",
+    "south",
+    "look at machine",
+    "insert token in slot",
+    "move joystick west",
+    "g",
+    "move joystick south",
+    "g",
+    "push button",
+    "yes",
+    "yes",
+    "kaluze",
+    "south",
+    "wait",
+    "wait",
+    "wait",
+    "give note to crisp",
+    "take coat",
+    "take key",
+    "unlock chain with key",
+    "pull lever",
+    "drop coat and key",
+    "take note",
+    "open hatch",
+    "up",
+    "up",
+    "wear glasses",
+    "look at panel",
+    "look at first switch",
+    "look at second switch",
+    "turn off second switch",
+    "down",
+    "drop glasses",
+    "move painting",
+    "turn crank",
+    "north",
+    "north",
+    "read note",
+    "east",
+    "alexis, heel",
+    "open door",
+    "east",
+    "take key",
+    "look at message",
+    "west",
+    "north",
+    "unlock door with key",
+    "open door",
+    "enter",
+    "wait",
+    "south",
+    "look at sculpture",
+    "break case with horseshoe",
+    "put stone in sculpture",
+    "yes",
+    "yes",
+    "knock on door",
+    "quit"
+  ],
+  "maps": [
+    {
+      "title": "Festeron and the Witchville grid",
+      "caption": "Start at the Post Office; follow the hill road into the four-sided Rotary and the cemetery lanes. The order follows route notes rather than scale.",
+      "icon": "town",
+      "rooms": [
+        {
+          "id": 226,
+          "label": "Post Office"
+        },
+        {
+          "id": 237,
+          "label": "Hilltop"
+        },
+        {
+          "id": 204,
+          "label": "Outside Cemetery"
+        },
+        {
+          "id": 224,
+          "label": "Spooky Copse"
+        },
+        {
+          "id": 58,
+          "label": "Open Grave"
+        },
+        {
+          "id": 59,
+          "label": "Twilight Glen"
+        },
+        {
+          "id": 62,
+          "label": "Creepy Corner"
+        },
+        {
+          "id": 165,
+          "label": "Rotary West"
+        },
+        {
+          "id": 173,
+          "label": "Park"
+        },
+        {
+          "id": 144,
+          "label": "Rotary North"
+        },
+        {
+          "id": 220,
+          "label": "Rotary South"
+        },
+        {
+          "id": 188,
+          "label": "Rotary East"
+        },
+        {
+          "id": 201,
+          "label": "Outside Cottage"
+        },
+        {
+          "id": 193,
+          "label": "Cottage"
+        },
+        {
+          "id": 222,
+          "label": "Police Station"
+        },
+        {
+          "id": 141,
+          "label": "Church"
+        },
+        {
+          "id": 182,
+          "label": "Theater Lobby"
+        },
+        {
+          "id": 177,
+          "label": "Inside Theater"
+        },
+        {
+          "id": 154,
+          "label": "Circulation Desk"
+        },
+        {
+          "id": 150,
+          "label": "Museum"
+        },
+        {
+          "id": 63,
+          "label": "End of Story"
+        }
+      ],
+      "edges": [
+        [
+          226,
+          237,
+          "north"
+        ],
+        [
+          237,
+          204,
+          "west"
+        ],
+        [
+          204,
+          62,
+          "yes"
+        ],
+        [
+          62,
+          224,
+          "north"
+        ],
+        [
+          224,
+          58,
+          "down"
+        ],
+        [
+          237,
+          201,
+          "east"
+        ],
+        [
+          201,
+          220,
+          "north"
+        ],
+        [
+          220,
+          173,
+          "north"
+        ],
+        [
+          173,
+          144,
+          "north"
+        ],
+        [
+          144,
+          141,
+          "enter"
+        ],
+        [
+          173,
+          188,
+          "east"
+        ],
+        [
+          188,
+          182,
+          "enter"
+        ],
+        [
+          182,
+          177,
+          "north"
+        ],
+        [
+          201,
+          193,
+          "east"
+        ],
+        [
+          220,
+          154,
+          "enter"
+        ],
+        [
+          154,
+          150,
+          "south"
+        ],
+        [
+          224,
+          59,
+          "west"
+        ],
+        [
+          165,
+          222,
+          "enter"
+        ]
+      ],
+      "grid": [
+        [
+          226,
+          237,
+          204,
+          62,
+          224
+        ],
+        [
+          165,
+          201,
+          220,
+          173,
+          58
+        ],
+        [
+          144,
+          141,
+          188,
+          182,
+          59
+        ],
+        [
+          193,
+          222,
+          177,
+          154,
+          150
+        ],
+        [
+          63,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    },
+    {
+      "title": "Bridge road, mountain paths, and shore",
+      "caption": "The cliff route is hazardous after dark. Coast locations fan out from the Witchville park and lighthouse. The order follows route notes rather than scale.",
+      "icon": "cliff",
+      "rooms": [
+        {
+          "id": 89,
+          "label": "North of Bridge"
+        },
+        {
+          "id": 91,
+          "label": "Bridge"
+        },
+        {
+          "id": 93,
+          "label": "South of Bridge"
+        },
+        {
+          "id": 94,
+          "label": "Rocky Path"
+        },
+        {
+          "id": 85,
+          "label": "Cliff Bottom"
+        },
+        {
+          "id": 80,
+          "label": "Steep Trail"
+        },
+        {
+          "id": 79,
+          "label": "Cliff Edge"
+        },
+        {
+          "id": 81,
+          "label": "Fog"
+        },
+        {
+          "id": 123,
+          "label": "River Outlet"
+        },
+        {
+          "id": 130,
+          "label": "Lake Edge"
+        },
+        {
+          "id": 99,
+          "label": "West of House"
+        },
+        {
+          "id": 120,
+          "label": "Lookout Hill"
+        },
+        {
+          "id": 116,
+          "label": "Pleasure Wharf"
+        },
+        {
+          "id": 102,
+          "label": "Tidal Pool"
+        },
+        {
+          "id": 217,
+          "label": "Wharf's End"
+        },
+        {
+          "id": 214,
+          "label": "Lighthouse"
+        }
+      ],
+      "edges": [
+        [
+          93,
+          91,
+          "north"
+        ],
+        [
+          91,
+          89,
+          "north"
+        ],
+        [
+          89,
+          85,
+          "east"
+        ],
+        [
+          93,
+          94,
+          "east"
+        ],
+        [
+          85,
+          80,
+          "up"
+        ],
+        [
+          80,
+          79,
+          "up"
+        ],
+        [
+          79,
+          81,
+          "down"
+        ],
+        [
+          81,
+          85,
+          "down"
+        ],
+        [
+          85,
+          89,
+          "west"
+        ],
+        [
+          93,
+          123,
+          "west"
+        ],
+        [
+          123,
+          130,
+          "south"
+        ],
+        [
+          94,
+          214,
+          "east"
+        ],
+        [
+          94,
+          99,
+          "south"
+        ],
+        [
+          116,
+          102,
+          "north"
+        ],
+        [
+          116,
+          217,
+          "east"
+        ]
+      ],
+      "grid": [
+        [
+          93,
+          91,
+          89,
+          85
+        ],
+        [
+          94,
+          79,
+          80,
+          81
+        ],
+        [
+          123,
+          214,
+          130,
+          120
+        ],
+        [
+          99,
+          116,
+          102,
+          217
+        ]
+      ]
+    },
+    {
+      "title": "Magick, tunnels, and the tower",
+      "caption": "The four Underground room objects are tagged separately because the story reuses that display name. The order follows route notes rather than scale.",
+      "icon": "creature",
+      "rooms": [
+        {
+          "id": 76,
+          "label": "Magick Shoppe"
+        },
+        {
+          "id": 51,
+          "label": "Grue's Nest"
+        },
+        {
+          "id": 52,
+          "label": "Underground A"
+        },
+        {
+          "id": 53,
+          "label": "Underground B"
+        },
+        {
+          "id": 54,
+          "label": "Underground C"
+        },
+        {
+          "id": 132,
+          "label": "Underground D"
+        },
+        {
+          "id": 137,
+          "label": "Jail Cell"
+        },
+        {
+          "id": 28,
+          "label": "Laboratory"
+        },
+        {
+          "id": 29,
+          "label": "Fuzziness"
+        },
+        {
+          "id": 36,
+          "label": "Torture Chamber"
+        },
+        {
+          "id": 37,
+          "label": "Vestibule"
+        },
+        {
+          "id": 42,
+          "label": "Round Chamber"
+        },
+        {
+          "id": 17,
+          "label": "Throne Room"
+        },
+        {
+          "id": 19,
+          "label": "Misty Island"
+        },
+        {
+          "id": 111,
+          "label": "Video Arcade"
+        }
+      ],
+      "edges": [
+        [
+          52,
+          53,
+          "east"
+        ],
+        [
+          53,
+          132,
+          "south"
+        ],
+        [
+          132,
+          137,
+          "up"
+        ],
+        [
+          19,
+          17,
+          "west"
+        ],
+        [
+          37,
+          36,
+          "wait"
+        ],
+        [
+          36,
+          42,
+          "up"
+        ],
+        [
+          42,
+          29,
+          "up"
+        ],
+        [
+          29,
+          28,
+          "glasses"
+        ],
+        [
+          53,
+          51,
+          "east"
+        ],
+        [
+          52,
+          54,
+          "south"
+        ],
+        [
+          54,
+          132,
+          "east"
+        ]
+      ],
+      "grid": [
+        [
+          76,
+          111,
+          19,
+          17,
+          28
+        ],
+        [
+          52,
+          53,
+          132,
+          51,
+          29
+        ],
+        [
+          54,
+          137,
+          37,
+          36,
+          42
+        ]
+      ]
+    }
+  ],
+  "checkpoints": [
+    {
+      "heading": "6 points  |  the envelope",
+      "detail": "Wait for Mr. Crisp to produce it, then take it."
+    },
+    {
+      "heading": "32 points  |  the delivery",
+      "detail": "Reach the Magick Shoppe and complete the handoff before 5:00."
+    },
+    {
+      "heading": "55 points  |  rescue and branch",
+      "detail": "Free Tasmania with the branch, then collect the whistle and hat."
+    },
+    {
+      "heading": "65 points  |  Transmatter",
+      "detail": "Get the piranha token and start the arcade maze."
+    },
+    {
+      "heading": "80 points  |  tower security",
+      "detail": "Enter KALUZE, rescue Tasmania, and disable the second switch."
+    },
+    {
+      "heading": "100 points  |  Chaos restored",
+      "detail": "Break the case with the horseshoe; put the stone into the sculpture twice."
+    }
+  ],
+  "intro": [
+    "Fresh start, deterministic seed 1. Keep every wish unused; the full 100-point route needs no magical wish.",
+    "Act quickly: deliver the envelope at the Magick Shoppe before 5:00. Later, follow the exact mountain directions and stay clear of the moving Boot Patrol.",
+    "The instruction numbers below include every input, including waits and repeated “g” moves. The map sheets name all 52 room objects; arrows show observed connections and the four Underground rooms are distinguished by route identity."
+  ],
+  "endingVerification": "Game text confirms: \"Congratulations! You've finished the story of Wishbringer!\" The score is 100 points out of 100, in 189 moves.",
+  "routeNotes": {
+    "3": [
+      "6 points: envelope collected."
+    ],
+    "64": [
+      "32 points: delivery made before five; the quest begins."
+    ],
+    "108": [
+      "55 points: Tasmania rescued with the branch."
+    ],
+    "127": [
+      "61 points: wizard hat obtained."
+    ],
+    "151": [
+      "65 points: token starts the Transmatter game."
+    ],
+    "158": [
+      "70 points: complete the joystick maze."
+    ],
+    "159": [
+      "73 points: enter the password KALUZE."
+    ],
+    "167": [
+      "77 points: free Tasmania from her chain."
+    ],
+    "178": [
+      "80 points: turn off the second security switch."
+    ],
+    "182": [
+      "81 points: open the hidden exit."
+    ],
+    "185": [
+      "84 points: read Voss’s note before approaching Alexis."
+    ],
+    "187": [
+      "89 points: ALEXIS, HEEL; no fight or death."
+    ],
+    "190": [
+      "92 points: take the cottage key."
+    ],
+    "194": [
+      "95 points: unlock the library door."
+    ],
+    "204": [
+      "100 points: congratulations; 189 moves."
+    ]
+  },
+  "stepStarts": {
+    "1": "POST OFFICE  |  get the envelope",
+    "12": "CEMETERY ROAD  |  bone for the poodle",
+    "24": "THE SHOPPE  |  deliver before five",
+    "64": "AFTER THE SHIFT  |  recover the stone",
+    "83": "RESCUE  |  save Tasmania and get the whistle",
+    "108": "ISLAND  |  trade the whistle for the hat",
+    "127": "UNDERGROUND  |  cell, grue, and horseshoe",
+    "139": "TOWN  |  evade patrol; retrieve token",
+    "151": "TRANSMATTER  |  steer the star to Hilltop",
+    "159": "THE TOWER  |  use the password",
+    "164": "TASMANIA  |  free her; disable security",
+    "183": "ESCAPE  |  read the note and calm Alexis",
+    "188": "COTTAGE  |  get Voss’s key",
+    "193": "MUSEUM  |  return the stone to Chaos"
+  }
+}
