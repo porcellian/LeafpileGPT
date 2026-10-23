@@ -148,6 +148,24 @@ verified maximum-score route, and avoids additional deaths. Keep the story,
 manual, hints, route, saves, and raw trace local; automated tests do not require
 those assets.
 
+## Wishbringer 100-point walkthrough
+
+`make_wishbringer_walkthrough.py` builds the Starcross-style Wishbringer guide
+from the committed route, checkpoint, map, and trace summary in
+`walkthroughs/source-data/wishbringer.json`:
+
+```sh
+python3 tools/walkthroughs/make_wishbringer_walkthrough.py
+```
+
+After replaying the ignored local route with a fresh Wishbringer story, copy the
+trace summary's instruction total and opcode inventory into the source data
+before rebuilding. The guide documents the 205-command, seed-1 route to 100/100
+in 189 moves without using a wish or dying. Its three field sketches name all
+52 room objects, including four separately tagged rooms displayed as
+Underground. Keep the story, manual, hints, route, saves, and raw trace local;
+the PDF generator only needs the committed source data.
+
 ## Sea Stalker no-death walkthrough
 
 `make_seastalker_walkthrough.py` rebuilds the Sea Stalker 100-point guide from
