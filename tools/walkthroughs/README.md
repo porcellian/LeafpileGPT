@@ -242,3 +242,29 @@ The route documents the scoreless New Plan ending, 1,080 commands, and the
 instruction/opcode counts from a fresh replay. The story, manual, hints, route,
 saves, and raw trace remain local and are not needed by CI. The walkthrough
 uses the locally available Z4 release because the requested Z3 file is absent.
+
+## Spellbreaker maximum-score walkthrough
+
+`make_spellbreaker_walkthrough.py` builds the Starcross-style guide from the
+checked-in 348-command route, four hand-drawn maps of all 58 route-discovered
+locations, score checkpoints, and trace-derived opcode inventory in
+`walkthroughs/source-data/spellbreaker.json`:
+
+```sh
+python3 tools/walkthroughs/make_spellbreaker_walkthrough.py
+```
+
+To refresh the opcode table from a fresh local run:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- stories/spellbre.z3 \
+  .agent/regression-routes/spellbre-maximum-score.json \
+  .agent/regression-routes/spellbre-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_spellbreaker_walkthrough.py \
+  --refresh-trace .agent/regression-routes/spellbre-maximum-score.trace.jsonl
+```
+
+The seed-1 route reaches 600/600 and the Scientist ending in 455 moves, then
+quits cleanly. The random vault selection is x7 on this seed. Keep the story,
+manual, hints, route, saves, and raw trace local; automated tests require none
+of those files.
