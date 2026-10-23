@@ -32,7 +32,7 @@ public sealed record StoryRoute(
     IReadOnlyList<RouteCheckpoint> Checkpoints,
     int LocationGlobal = 16,
     int? ScoreGlobal = 17,
-    int MovesGlobal = 18,
+    int? MovesGlobal = 18,
     bool LocationGlobalContainsActor = false)
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
@@ -79,7 +79,7 @@ public sealed record RouteReplayResult(
     int CommandsReplayed,
     int InstructionsExecuted,
     int? Score,
-    int Moves,
+    int? Moves,
     string Location,
     bool Halted,
     IReadOnlyList<InstructionTraceEntry> Trace,
@@ -104,7 +104,7 @@ public sealed record RouteReplayResult(
         .ToArray();
 }
 
-public sealed record RouteProgress(int CommandNumber, string Command, string Location, int? Score, int Moves, string ScreenText);
+public sealed record RouteProgress(int CommandNumber, string Command, string Location, int? Score, int? Moves, string ScreenText);
 
 public static class StoryRouteReplayer
 {
@@ -158,7 +158,7 @@ public static class StoryRouteReplayer
         }
 
         var finalScore = ReadOptionalGlobal(state, route.ScoreGlobal);
-        var moves = ReadGlobal(state, route.MovesGlobal);
+        var moves = ReadOptionalGlobal(state, route.MovesGlobal);
         var location = ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor);
         return new RouteReplayResult(host.CommandsConsumed, instructionCount, finalScore, moves, location, halted, trace, host.Progress);
     }
@@ -185,6 +185,7 @@ public static class StoryRouteReplayer
     {
         private int _nextCommand;
         private int _lastValidatedCommand = -1;
+        private bool _lastInputWasCharacter;
         private readonly List<RouteProgress> _progress = [];
         private byte[]? _saveFile;
         public int LastCommandNumber { get; private set; } = -1;
@@ -205,13 +206,14 @@ public static class StoryRouteReplayer
 
         public ZMachineInputResponse ReadInput(ZMachineInputRequest request, Func<bool>? timedInterrupt)
         {
-            if (_nextCommand > 0)
+            if (_nextCommand > 0 && !_lastInputWasCharacter)
             {
                 ValidateCheckpoint(_nextCommand);
             }
             if (_nextCommand >= route.Commands.Count) throw new InvalidOperationException("Story requested another command after the route ended.");
             LastCommandNumber = _nextCommand;
             var command = route.Commands[_nextCommand++];
+            _lastInputWasCharacter = request.ReadCharacter;
             var terminator = request.ReadCharacter ? ReadRouteCharacter(command) : (byte)13;
             return new ZMachineInputResponse(command, terminator);
         }
@@ -227,13 +229,14 @@ public static class StoryRouteReplayer
         {
             var commandNumber = commandCount - 1;
             if (commandNumber < 0 || commandNumber >= route.Commands.Count || commandNumber <= _lastValidatedCommand) return;
+            if (_lastInputWasCharacter) return;
             _lastValidatedCommand = commandNumber;
             RecordProgress(commandNumber);
             var checkpoint = route.Checkpoints.SingleOrDefault(item => item.CommandNumber == commandNumber + 1);
             if (checkpoint is null) return;
             var location = ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor);
             var score = ReadOptionalGlobal(state, route.ScoreGlobal);
-            var moves = ReadGlobal(state, route.MovesGlobal);
+            var moves = ReadOptionalGlobal(state, route.MovesGlobal);
             var lowerText = state.Screen.LowerWindowText;
             if (checkpoint.Location is not null && !string.Equals(location, checkpoint.Location, StringComparison.OrdinalIgnoreCase))
                 throw new InvalidOperationException($"Checkpoint {commandNumber + 1} expected location '{checkpoint.Location}', got '{location}'.");
@@ -249,7 +252,7 @@ public static class StoryRouteReplayer
         {
             if (commandIndex < 0 || commandIndex >= route.Commands.Count || _progress.Any(item => item.CommandNumber == commandIndex + 1)) return;
             var progress = new RouteProgress(commandIndex + 1, route.Commands[commandIndex],
-                ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor), ReadOptionalGlobal(state, route.ScoreGlobal), ReadGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText);
+                ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor), ReadOptionalGlobal(state, route.ScoreGlobal), ReadOptionalGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText);
             _progress.Add(progress);
             progressObserver?.Invoke(progress);
         }
