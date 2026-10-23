@@ -1,0 +1,866 @@
+{
+  "title": "CUTTHROATS",
+  "subtitle": "Sao Vera maximum-score walkthrough",
+  "routeTitle": "Cutthroats Sao Vera maximum-score no-death route",
+  "release": 23,
+  "serial": "840809",
+  "randomSeed": 1,
+  "score": 250,
+  "commandsCount": 282,
+  "totalInstructions": 400841,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 18122,
+      "FirstSequence": 1,
+      "FirstAddress": 28315
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 24720,
+      "FirstSequence": 3,
+      "FirstAddress": 28027
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 47462,
+      "FirstSequence": 5,
+      "FirstAddress": 28035
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 12201,
+      "FirstSequence": 6,
+      "FirstAddress": 28039
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 15793,
+      "FirstSequence": 8,
+      "FirstAddress": 28047
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 5510,
+      "FirstSequence": 9,
+      "FirstAddress": 28052
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 53009,
+      "FirstSequence": 18,
+      "FirstAddress": 28054
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 36877,
+      "FirstSequence": 21,
+      "FirstAddress": 28068
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 19428,
+      "FirstSequence": 406,
+      "FirstAddress": 28449
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 13526,
+      "FirstSequence": 413,
+      "FirstAddress": 23133
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 67434,
+      "FirstSequence": 415,
+      "FirstAddress": 23144
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 548,
+      "FirstSequence": 421,
+      "FirstAddress": 23170
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 1843,
+      "FirstSequence": 422,
+      "FirstAddress": 23173
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 7655,
+      "FirstSequence": 425,
+      "FirstAddress": 28478
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1726,
+      "FirstSequence": 1103,
+      "FirstAddress": 53615
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 175,
+      "FirstSequence": 1105,
+      "FirstAddress": 29959
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 740,
+      "FirstSequence": 1106,
+      "FirstAddress": 28492
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 1021,
+      "FirstSequence": 1108,
+      "FirstAddress": 38619
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 1110,
+      "FirstAddress": 38728
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 22,
+      "FirstSequence": 1111,
+      "FirstAddress": 38734
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 12499,
+      "FirstSequence": 1113,
+      "FirstAddress": 38752
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 5466,
+      "FirstSequence": 1114,
+      "FirstAddress": 38759
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 1115,
+      "FirstAddress": 38763
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1253,
+      "FirstSequence": 1146,
+      "FirstAddress": 37380
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 308,
+      "FirstSequence": 1148,
+      "FirstAddress": 37389
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 219,
+      "FirstSequence": 1151,
+      "FirstAddress": 37406
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 3658,
+      "FirstSequence": 1153,
+      "FirstAddress": 37412
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 4915,
+      "FirstSequence": 1155,
+      "FirstAddress": 21077
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 374,
+      "FirstSequence": 1157,
+      "FirstAddress": 21091
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 5266,
+      "FirstSequence": 1159,
+      "FirstAddress": 37422
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 215,
+      "FirstSequence": 1165,
+      "FirstAddress": 37438
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 2618,
+      "FirstSequence": 1202,
+      "FirstAddress": 37548
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 11581,
+      "FirstSequence": 1215,
+      "FirstAddress": 37777
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 2383,
+      "FirstSequence": 1223,
+      "FirstAddress": 37877
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1793,
+      "FirstSequence": 1289,
+      "FirstAddress": 37977
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 1796,
+      "FirstSequence": 1359,
+      "FirstAddress": 37576
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 588,
+      "FirstSequence": 1417,
+      "FirstAddress": 31185
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 282,
+      "FirstSequence": 1421,
+      "FirstAddress": 31199
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1463,
+      "FirstSequence": 1432,
+      "FirstAddress": 31374
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 2364,
+      "FirstSequence": 1441,
+      "FirstAddress": 32011
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1380,
+      "FirstSequence": 1447,
+      "FirstAddress": 32019
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 625,
+      "FirstSequence": 1457,
+      "FirstAddress": 31658
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 3658,
+      "FirstSequence": 1601,
+      "FirstAddress": 31860
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 358,
+      "FirstSequence": 1773,
+      "FirstAddress": 35247
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 165,
+      "FirstSequence": 1777,
+      "FirstAddress": 35270
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 3200,
+      "FirstSequence": 1784,
+      "FirstAddress": 36189
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 1734,
+      "FirstSequence": 1790,
+      "FirstAddress": 36306
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 979,
+      "FirstSequence": 1791,
+      "FirstAddress": 36309
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 601,
+      "FirstSequence": 2293,
+      "FirstAddress": 28184
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 4,
+      "FirstSequence": 2411,
+      "FirstAddress": 88083
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 28,
+      "FirstSequence": 2423,
+      "FirstAddress": 53695
+    },
+    {
+      "Form": "Long",
+      "Opcode": 19,
+      "Mnemonic": "get_next_prop",
+      "Count": 616,
+      "FirstSequence": 8560,
+      "FirstAddress": 54725
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 61,
+      "FirstSequence": 12078,
+      "FirstAddress": 56046
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 330,
+      "FirstSequence": 13199,
+      "FirstAddress": 53160
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 231,
+      "FirstSequence": 24457,
+      "FirstAddress": 42563
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 2,
+      "FirstSequence": 41254,
+      "FirstAddress": 98569
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 3,
+      "FirstSequence": 88241,
+      "FirstAddress": 39337
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 3,
+      "FirstSequence": 141350,
+      "FirstAddress": 94231
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 142610,
+      "FirstAddress": 34326
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 1,
+      "FirstSequence": 289369,
+      "FirstAddress": 96205
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 400841,
+      "FirstAddress": 69979
+    }
+  ],
+  "commands": [
+    "get out of bed",
+    "wind watch",
+    "open dresser",
+    "take key",
+    "open door",
+    "north",
+    "close door",
+    "lock door with key",
+    "down",
+    "north",
+    "east",
+    "east",
+    "east",
+    "east",
+    "in",
+    "sit down",
+    "order breakfast",
+    "wait",
+    "wait",
+    "wait",
+    "yes",
+    "order water",
+    "drink water",
+    "eat meal",
+    "score",
+    "stand up",
+    "out",
+    "west",
+    "west",
+    "west",
+    "west",
+    "southwest",
+    "southwest",
+    "northwest",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "southeast",
+    "northeast",
+    "northeast",
+    "south",
+    "up",
+    "unlock bedroom door with key",
+    "open bedroom door",
+    "south",
+    "take passbook",
+    "take book",
+    "north",
+    "close door",
+    "lock door with key",
+    "down",
+    "north",
+    "east",
+    "east",
+    "east",
+    "east",
+    "southeast",
+    "south",
+    "south",
+    "southwest",
+    "north",
+    "withdraw $500",
+    "score",
+    "south",
+    "northeast",
+    "southeast",
+    "drop passbook",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "show money to Johnny",
+    "yes",
+    "score",
+    "northwest",
+    "north",
+    "north",
+    "northwest",
+    "west",
+    "south",
+    "wait",
+    "wait",
+    "wait",
+    "buy flashlight",
+    "pay $401",
+    "buy flashlight",
+    "buy shark repellent",
+    "score",
+    "out",
+    "east",
+    "southeast",
+    "south",
+    "south",
+    "southwest",
+    "west",
+    "west",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "east",
+    "east",
+    "northeast",
+    "north",
+    "north",
+    "southwest",
+    "west",
+    "west",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "west",
+    "open window",
+    "look through window",
+    "enter window",
+    "take envelope",
+    "south",
+    "close window",
+    "east",
+    "north",
+    "north",
+    "look",
+    "inventory",
+    "west",
+    "west",
+    "south",
+    "up",
+    "unlock bedroom door with key",
+    "open bedroom door",
+    "south",
+    "look",
+    "look in closet",
+    "take all from closet",
+    "inventory",
+    "north",
+    "close door",
+    "lock door with key",
+    "down",
+    "north",
+    "east",
+    "east",
+    "east",
+    "east",
+    "west",
+    "west",
+    "north",
+    "look",
+    "east",
+    "north",
+    "down",
+    "hide envelope under bunk",
+    "north",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "take all except machine",
+    "inventory",
+    "south",
+    "south",
+    "eat stew",
+    "drink water",
+    "south",
+    "south",
+    "latitude is 40",
+    "longitude is 45",
+    "north",
+    "north",
+    "north",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "look",
+    "get out of bunk",
+    "north",
+    "look",
+    "take deep-sea diving suit",
+    "south",
+    "take flashlight",
+    "take shark repellent",
+    "take envelope",
+    "inventory",
+    "south",
+    "eat stew",
+    "drink water",
+    "south",
+    "south",
+    "show envelope to Johnny",
+    "look",
+    "north",
+    "north",
+    "up",
+    "look",
+    "inventory",
+    "examine compressor",
+    "look",
+    "aft",
+    "look",
+    "examine compressor",
+    "inventory",
+    "wear deep-sea diving suit",
+    "examine air hose",
+    "connect air hose to suit",
+    "turn on compressor",
+    "dive",
+    "open canister",
+    "turn on flashlight",
+    "down",
+    "down",
+    "down",
+    "down",
+    "down",
+    "down",
+    "down",
+    "look",
+    "down",
+    "south",
+    "take iron bar",
+    "south",
+    "south",
+    "move bunks with bar",
+    "wedge bar under bunks",
+    "south",
+    "down",
+    "north",
+    "north",
+    "north",
+    "examine skeletons",
+    "examine scabbard",
+    "take sword",
+    "north",
+    "push maple chest south",
+    "push maple chest south",
+    "look",
+    "push oak chest west",
+    "wait",
+    "tie line to oak chest",
+    "pull line",
+    "east",
+    "push maple chest south",
+    "push maple chest south",
+    "climb on maple chest",
+    "up",
+    "look",
+    "north",
+    "look",
+    "north",
+    "look",
+    "push cask north",
+    "look",
+    "push cask north",
+    "look",
+    "climb on cask",
+    "cut rope with sword",
+    "drop sword",
+    "up",
+    "up",
+    "up",
+    "up",
+    "up",
+    "up",
+    "up",
+    "up",
+    "up"
+  ],
+  "intro": [
+    "Start a fresh Release 23 game. Enter each numbered command at its own prompt; repeated WAIT commands are intentional. Seed 1 selects the Sao Vera when Johnny shows the coin.",
+    "Take the note and key, secure your bankbook and shipwreck book, withdraw $500, then show the cash to Johnny and accept his deal. Pay the $401 contribution, buy the flashlight and shark repellent, and recover the envelope from McGinty's office after he leaves.",
+    "Hide the envelope under the Mary Margaret bunk before delivery. Set latitude 40 and longitude 45. Before sleeping, eat stew and drink water. Expose the Weasel and connect the deep-sea suit to the running compressor before the dive."
+  ],
+  "checkpoints": [
+    {
+      "heading": "20 pts",
+      "detail": "Breakfast at The Shanty"
+    },
+    {
+      "heading": "50 pts",
+      "detail": "Withdraw $500 at the bank"
+    },
+    {
+      "heading": "70 pts",
+      "detail": "Johnny accepts the deal"
+    },
+    {
+      "heading": "90 pts",
+      "detail": "Flashlight and repellent purchased"
+    },
+    {
+      "heading": "250 pts",
+      "detail": "Oak chest of gold recovered"
+    }
+  ],
+  "endingVerification": "At the final ascent, the diver reboards the Mary Margaret. Johnny opens the oak chest: hundreds of gold escudos, 250/250 points, and the \u201crich diver\u201d rank. The route has no player-death event.",
+  "routeSections": [
+    {
+      "start": 1,
+      "end": 70,
+      "caption": "Start at the Red Boar Inn; meet Johnny and secure the money for the expedition."
+    },
+    {
+      "start": 71,
+      "end": 136,
+      "caption": "Withdraw the stake, pay the outfitter, then retrieve the envelope after McGinty leaves."
+    },
+    {
+      "start": 137,
+      "end": 205,
+      "caption": "Return to the room, outfit the Mary Margaret, hide the envelope, and travel to the Sao Vera."
+    },
+    {
+      "start": 206,
+      "end": 260,
+      "caption": "Expose the Weasel; follow the wreck route and send the oak chest up on the orange line."
+    },
+    {
+      "start": 261,
+      "end": 282,
+      "caption": "Climb out through the mast and ascend until you reboard the boat."
+    }
+  ],
+  "routeNotes": {
+    "25": [
+      "CHECKPOINT 20 / 250 \u2022 Shanty"
+    ],
+    "71": [
+      "CHECKPOINT 50 / 250 \u2022 bank withdrawal"
+    ],
+    "84": [
+      "CHECKPOINT 70 / 250 \u2022 Johnny accepts the deal"
+    ],
+    "98": [
+      "CHECKPOINT 90 / 250 \u2022 gear purchased"
+    ],
+    "206": [
+      "WEASEL EXPOSED \u2022 Johnny takes the envelope"
+    ],
+    "255": [
+      "LIFT LINE TIED"
+    ],
+    "256": [
+      "OAK CHEST RISING"
+    ],
+    "282": [
+      "250 / 250 \u2022 RICH DIVER ENDING"
+    ]
+  }
+}
