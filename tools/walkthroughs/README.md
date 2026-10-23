@@ -217,3 +217,28 @@ The seed-1 route reaches 250/250, earns the “rich diver” rank, and returns t
 treasure to the Mary Margaret without a player death. Keep the Cutthroats story,
 manual, hints, route, saves, and raw trace local; automated tests do not require
 those assets.
+
+## A Mind Forever Voyaging Z4 best-ending guide
+
+The local Z4 walkthrough is built from the checked-in route and map data in
+`walkthroughs/source-data/mind.json`:
+
+```sh
+python3 tools/walkthroughs/make_mind_walkthrough.py
+```
+
+After a clean local replay, refresh the six-column opcode inventory and total
+instruction count directly from its ignored trace, then rebuild the PDF:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- stories/mind.z4 \
+  .agent/regression-routes/mind-maximum-score.json \
+  .agent/regression-routes/mind-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_mind_walkthrough.py \
+  --refresh-trace .agent/regression-routes/mind-maximum-score.trace.jsonl
+```
+
+The route documents the scoreless New Plan ending, 1,080 commands, and the
+instruction/opcode counts from a fresh replay. The story, manual, hints, route,
+saves, and raw trace remain local and are not needed by CI. The walkthrough
+uses the locally available Z4 release because the requested Z3 file is absent.

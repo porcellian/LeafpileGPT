@@ -31,7 +31,7 @@ try
 {
     var story = StoryLoader.LoadFile(args[0]);
     var route = StoryRoute.Load(args[1]);
-    var result = StoryRouteReplayer.Replay(story, route);
+    var result = StoryRouteReplayer.Replay(story, route, progressObserver: showProgress ? PrintProgress : null);
     if (tracePathArgument is not null)
     {
         var tracePath = Path.GetFullPath(tracePathArgument);
@@ -48,15 +48,6 @@ try
 
     var score = result.Score?.ToString() ?? "n/a";
     Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {score}, moves {result.Moves}, location '{result.Location}', halted={result.Halted}.");
-    if (showProgress)
-    {
-        foreach (var progress in result.Progress)
-        {
-            var progressScore = progress.Score?.ToString() ?? "n/a";
-            Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {progressScore,3} points | {progress.Moves,3} moves");
-            Console.WriteLine(progress.ScreenText.Replace("\n", " "));
-        }
-    }
     Console.WriteLine($"Unique opcodes: {result.OpcodeInventory.Count}; total instructions: {result.InstructionsExecuted}");
     foreach (var opcode in result.OpcodeInventory)
         Console.WriteLine($"{opcode.Form,-8} {opcode.Opcode,2} {opcode.Mnemonic,-20} {opcode.Count,8} {opcode.FirstSequence,10} 0x{opcode.FirstAddress:x4}");
@@ -66,4 +57,11 @@ catch (Exception exception)
 {
     Console.Error.WriteLine($"Route replay failed: {exception.Message}");
     return 1;
+}
+
+static void PrintProgress(RouteProgress progress)
+{
+    var score = progress.Score?.ToString() ?? "n/a";
+    Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {score,3} points | {progress.Moves,3} moves");
+    Console.WriteLine(progress.ScreenText.Replace("\n", " "));
 }

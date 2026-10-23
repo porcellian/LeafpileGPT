@@ -120,6 +120,35 @@ public sealed class StoryRouteReplayerTests
     }
 
     [Fact]
+    public void ReplayPublishesProgressAsEachCommandCompletes()
+    {
+        var story = StoryLoader.Load(CreateReadAndQuitStory(score: 123));
+        var route = CreateRoute(story, ["look"]);
+        var observed = new List<RouteProgress>();
+
+        var result = StoryRouteReplayer.Replay(story, route, progressObserver: observed.Add);
+
+        Assert.Equal(result.Progress, observed);
+        Assert.Equal(new[] { 1 }, observed.Select(item => item.CommandNumber));
+        Assert.Equal(new[] { "look" }, observed.Select(item => item.Command));
+    }
+
+    [Fact]
+    public void ReplaySuppliesSingleCharacterCommandsToReadCharAsKeypresses()
+    {
+        var story = StoryLoader.Load(CreateReadCharAndQuitStory());
+        var route = CreateRoute(story, ["Y"], [new RouteCheckpoint(1, Location: "Hall", Halted: true)])
+            with
+        { ScoreGlobal = null, LocationGlobal = 17 };
+
+        var result = StoryRouteReplayer.Replay(story, route);
+
+        Assert.True(result.Halted);
+        Assert.Contains("Variable.22 read_char", result.UniqueOpcodes);
+        Assert.Contains("TwoOperand.01 je", result.UniqueOpcodes);
+    }
+
+    [Fact]
     public void ReplayRejectsDifferentStoryIdentity()
     {
         var original = CreateReadAndQuitStory();
@@ -177,6 +206,42 @@ public sealed class StoryRouteReplayerTests
         data[0x312] = 0;
         data[0x313] = 0;
         new byte[] { 0xe4, 0x0f, 0x01, 0x00, 0x01, 0x50, 0xba }.CopyTo(data, 0x200);
+        return data;
+    }
+
+    private static byte[] CreateReadCharAndQuitStory()
+    {
+        const int length = 4096;
+        const int objectTable = 0x70;
+        const int firstObject = objectTable + 126;
+        const int roomObject = firstObject + 14;
+        var data = new byte[length];
+        data[0] = 4;
+        WriteWord(data, 0x04, 0x0400);
+        WriteWord(data, 0x06, 0x0200);
+        WriteWord(data, 0x08, 0x0410);
+        WriteWord(data, 0x0a, objectTable);
+        WriteWord(data, 0x0c, 0x0040);
+        WriteWord(data, 0x0e, 0x0400);
+        WriteWord(data, 0x18, 0x0100);
+        WriteWord(data, 0x1a, length / 4);
+        WriteWord(data, 0x1c, 0x1234);
+        WriteWord(data, 0x42, 2); // Global 17 names room object 2.
+        WriteWord(data, roomObject + 12, 0x0190);
+        data[0x190] = 1;
+        WriteWord(data, 0x191, 0x34d1); // "Hall"
+        WriteWord(data, 0x193, 0xc400);
+        data[0x410] = 0;
+        data[0x411] = 4;
+        data[0x412] = 0;
+        data[0x413] = 0;
+        new byte[]
+        {
+            0xf6, 0x7f, 0x01, 0x10, // read_char 1 -> global 0
+            0x41, 0x10, 0x59, 0xc6, // if global 0 == 'Y', skip the retry
+            0xf6, 0x7f, 0x01, 0x10, // a wrong character requests another route key
+            0xba
+        }.CopyTo(data, 0x200);
         return data;
     }
 

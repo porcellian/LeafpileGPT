@@ -1280,7 +1280,7 @@ public sealed class ZMachineOpcodeExecutor
             case 2:
                 var packed = operands.Count >= 3
                     ? ReadValue(operands[2])
-                    : _state.Header.Version == 3 ? (ushort)8 : (ushort)0x0108;
+                    : _state.Header.Version < 5 ? (ushort)8 : (ushort)0x0108;
                 var volumeByte = packed & 0xff;
                 var repeatByte = packed >> 8;
                 if (volumeByte != 255 && (volumeByte < 1 || volumeByte > 8))
@@ -1288,12 +1288,12 @@ public sealed class ZMachineOpcodeExecutor
                     throw new ZMachineRuntimeException($"sound_effect volume {volumeByte} is outside 1–8 and the loudest-possible value 255.");
                 }
 
-                if (_state.Header.Version == 3 && repeatByte != 0)
+                if (_state.Header.Version < 5 && repeatByte != 0)
                 {
-                    throw new ZMachineRuntimeException("Version 3 sound_effect does not support repeats; the high volume-repeat byte must be zero.");
+                    throw new ZMachineRuntimeException($"Version {_state.Header.Version} sound_effect does not support repeats; the high volume-repeat byte must be zero.");
                 }
 
-                int? repeats = _state.Header.Version == 3
+                int? repeats = _state.Header.Version < 5
                     ? 1
                     : repeatByte == 255 ? null : repeatByte == 0 ? 1 : repeatByte;
                 var volume = volumeByte == 255 ? -1 : volumeByte;

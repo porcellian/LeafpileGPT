@@ -1,0 +1,2622 @@
+{
+  "title": "A MIND FOREVER VOYAGING",
+  "routeTitle": "BEST-ENDING Z4 ROUTE",
+  "release": 77,
+  "serial": "850814",
+  "checksum": 20529,
+  "randomSeed": 1,
+  "commandsCount": 1080,
+  "moves": 0,
+  "totalInstructions": 2458540,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 19801,
+      "FirstSequence": 1,
+      "FirstAddress": 52281
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 33704,
+      "FirstSequence": 2,
+      "FirstAddress": 52285
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 25,
+      "Mnemonic": "call_2s",
+      "Count": 42671,
+      "FirstSequence": 3,
+      "FirstAddress": 53655
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 221451,
+      "FirstSequence": 4,
+      "FirstAddress": 53677
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 194123,
+      "FirstSequence": 6,
+      "FirstAddress": 53685
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 335107,
+      "FirstSequence": 7,
+      "FirstAddress": 53689
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 12340,
+      "FirstSequence": 8,
+      "FirstAddress": 53692
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 84919,
+      "FirstSequence": 11,
+      "FirstAddress": 53716
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 30191,
+      "FirstSequence": 12,
+      "FirstAddress": 53721
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 197046,
+      "FirstSequence": 20,
+      "FirstAddress": 53723
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 230795,
+      "FirstSequence": 26,
+      "FirstAddress": 53750
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 126655,
+      "FirstSequence": 65,
+      "FirstAddress": 52311
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 66917,
+      "FirstSequence": 66,
+      "FirstAddress": 52316
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 295,
+      "FirstSequence": 69,
+      "FirstAddress": 52325
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 5885,
+      "FirstSequence": 71,
+      "FirstAddress": 177075
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 43198,
+      "FirstSequence": 79,
+      "FirstAddress": 177111
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 397,
+      "FirstSequence": 80,
+      "FirstAddress": 177113
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 16743,
+      "FirstSequence": 81,
+      "FirstAddress": 177118
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "erase_window",
+      "Count": 11,
+      "FirstSequence": 86,
+      "FirstAddress": 105024
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 10,
+      "Mnemonic": "split_window",
+      "Count": 10,
+      "FirstSequence": 87,
+      "FirstAddress": 105028
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 11,
+      "Mnemonic": "set_window",
+      "Count": 11526,
+      "FirstSequence": 91,
+      "FirstAddress": 105040
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 18,
+      "Mnemonic": "buffer_mode",
+      "Count": 11568,
+      "FirstSequence": 92,
+      "FirstAddress": 105043
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 17,
+      "Mnemonic": "set_text_style",
+      "Count": 11752,
+      "FirstSequence": 96,
+      "FirstAddress": 211744
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 15,
+      "Mnemonic": "set_cursor",
+      "Count": 7826,
+      "FirstSequence": 100,
+      "FirstAddress": 211770
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 39072,
+      "FirstSequence": 102,
+      "FirstAddress": 105195
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 23312,
+      "FirstSequence": 103,
+      "FirstAddress": 105199
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 16950,
+      "FirstSequence": 236,
+      "FirstAddress": 211804
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 1326,
+      "FirstSequence": 246,
+      "FirstAddress": 52342
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "call_1s",
+      "Count": 23653,
+      "FirstSequence": 518,
+      "FirstAddress": 52428
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 6261,
+      "FirstSequence": 523,
+      "FirstAddress": 105218
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 22,
+      "Mnemonic": "read_char",
+      "Count": 14,
+      "FirstSequence": 528,
+      "FirstAddress": 105264
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 11001,
+      "FirstSequence": 529,
+      "FirstAddress": 105268
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 19,
+      "Mnemonic": "output_stream",
+      "Count": 1512,
+      "FirstSequence": 584,
+      "FirstAddress": 105304
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 1146,
+      "FirstSequence": 591,
+      "FirstAddress": 52275
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 139896,
+      "FirstSequence": 656,
+      "FirstAddress": 105583
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 13409,
+      "FirstSequence": 657,
+      "FirstAddress": 105595
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 39615,
+      "FirstSequence": 658,
+      "FirstAddress": 105599
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 11461,
+      "FirstSequence": 661,
+      "FirstAddress": 105618
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 7652,
+      "FirstSequence": 663,
+      "FirstAddress": 105624
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 7503,
+      "FirstSequence": 669,
+      "FirstAddress": 105695
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 66203,
+      "FirstSequence": 670,
+      "FirstAddress": 105701
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 168,
+      "FirstSequence": 795,
+      "FirstAddress": 52487
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 800,
+      "FirstAddress": 76937
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 145698,
+      "FirstSequence": 819,
+      "FirstAddress": 54934
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 4980,
+      "FirstSequence": 822,
+      "FirstAddress": 54945
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 95425,
+      "FirstSequence": 1152,
+      "FirstAddress": 77088
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 257,
+      "FirstSequence": 1268,
+      "FirstAddress": 179474
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 3930,
+      "FirstSequence": 1379,
+      "FirstAddress": 55240
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 4261,
+      "FirstSequence": 1380,
+      "FirstAddress": 55243
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 1066,
+      "FirstSequence": 1387,
+      "FirstAddress": 55289
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 36021,
+      "FirstSequence": 1402,
+      "FirstAddress": 56840
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 2280,
+      "FirstSequence": 1979,
+      "FirstAddress": 55969
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 10238,
+      "FirstSequence": 2123,
+      "FirstAddress": 90811
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 5562,
+      "FirstSequence": 2125,
+      "FirstAddress": 90818
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 23,
+      "Mnemonic": "scan_table",
+      "Count": 5277,
+      "FirstSequence": 2127,
+      "FirstAddress": 90825
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1279,
+      "FirstSequence": 2139,
+      "FirstAddress": 52652
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 2214,
+      "FirstSequence": 2215,
+      "FirstAddress": 53773
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 1884,
+      "FirstSequence": 4813,
+      "FirstAddress": 64819
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 2115,
+      "FirstSequence": 8310,
+      "FirstAddress": 90691
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 2520,
+      "FirstSequence": 10627,
+      "FirstAddress": 60657
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 12,
+      "Mnemonic": "call_vs2",
+      "Count": 857,
+      "FirstSequence": 10628,
+      "FirstAddress": 60660
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 5225,
+      "FirstSequence": 10632,
+      "FirstAddress": 61481
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 6787,
+      "FirstSequence": 10638,
+      "FirstAddress": 61572
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 664,
+      "FirstSequence": 10641,
+      "FirstAddress": 60670
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 706,
+      "FirstSequence": 11503,
+      "FirstAddress": 210015
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 14,
+      "FirstSequence": 11599,
+      "FirstAddress": 210609
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 663,
+      "FirstSequence": 11788,
+      "FirstAddress": 210677
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 127,
+      "FirstSequence": 11811,
+      "FirstAddress": 210790
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 2290,
+      "FirstSequence": 11888,
+      "FirstAddress": 55029
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 8,
+      "FirstSequence": 17593,
+      "FirstAddress": 59895
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 157,
+      "FirstSequence": 21014,
+      "FirstAddress": 222723
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 643,
+      "FirstSequence": 22188,
+      "FirstAddress": 83170
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 142,
+      "FirstSequence": 25124,
+      "FirstAddress": 67792
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 133,
+      "FirstSequence": 40629,
+      "FirstAddress": 67283
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sound_effect",
+      "Count": 14,
+      "FirstSequence": 70357,
+      "FirstAddress": 54711
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 15,
+      "FirstSequence": 408178,
+      "FirstAddress": 88937
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "save",
+      "Count": 1,
+      "FirstSequence": 500320,
+      "FirstAddress": 76619
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 2458540,
+      "FirstAddress": 221243
+    }
+  ],
+  "commands": [
+    "x",
+    "z",
+    "z",
+    "z",
+    "superbrief",
+    "go to sim mode",
+    "12",
+    "southwest",
+    "south",
+    "west",
+    "unlock door",
+    "west",
+    "unlock door",
+    "record",
+    "north",
+    "record off",
+    "south",
+    "east",
+    "east",
+    "north",
+    "west",
+    "west",
+    "south",
+    "sit",
+    "record",
+    "order food",
+    "record off",
+    "stand",
+    "north",
+    "east",
+    "east",
+    "record",
+    "northwest",
+    "record off",
+    "southeast",
+    "north",
+    "west",
+    "record",
+    "talk to official",
+    "record off",
+    "east",
+    "northeast",
+    "northeast",
+    "put card in slot",
+    "record",
+    "read paper",
+    "record off",
+    "north",
+    "southwest",
+    "record",
+    "talk to elder",
+    "record off",
+    "northeast",
+    "south",
+    "east",
+    "northwest",
+    "get ticket",
+    "record",
+    "enter hall",
+    "record off",
+    "southeast",
+    "west",
+    "south",
+    "south",
+    "south",
+    "south",
+    "south",
+    "southeast",
+    "southeast",
+    "record",
+    "south",
+    "record off",
+    "north",
+    "northwest",
+    "down",
+    "wait",
+    "in",
+    "record",
+    "wait",
+    "wait",
+    "abort",
+    "peof",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "x",
+    "go to sim mode",
+    "12",
+    "20",
+    "up",
+    "northwest",
+    "record",
+    "west",
+    "record off",
+    "east",
+    "record",
+    "north",
+    "record off",
+    "south",
+    "south",
+    "east",
+    "south",
+    "west",
+    "unlock door",
+    "west",
+    "unlock door",
+    "north",
+    "record",
+    "wait",
+    "comfort jill",
+    "record off",
+    "open door",
+    "south",
+    "east",
+    "east",
+    "north",
+    "west",
+    "west",
+    "south",
+    "sit",
+    "record",
+    "order food",
+    "record off",
+    "stand",
+    "north",
+    "east",
+    "east",
+    "record",
+    "northwest",
+    "record off",
+    "southeast",
+    "north",
+    "west",
+    "record",
+    "talk to official",
+    "record off",
+    "east",
+    "northeast",
+    "northeast",
+    "put card in slot",
+    "record",
+    "read paper",
+    "record off",
+    "north",
+    "southwest",
+    "record",
+    "talk to elder",
+    "record off",
+    "northeast",
+    "south",
+    "east",
+    "northwest",
+    "get ticket",
+    "record",
+    "enter hall",
+    "record off",
+    "southeast",
+    "west",
+    "southeast",
+    "get pamphlet",
+    "record",
+    "read pamphlet",
+    "record off",
+    "abort",
+    "peof",
+    "z",
+    "z",
+    "z",
+    "z",
+    "tell perelman about recordings",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "z",
+    "go to sim mode",
+    "12",
+    "20",
+    "t",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "abort",
+    "go to sim mode",
+    "12",
+    "30",
+    "record",
+    "look",
+    "record off",
+    "west",
+    "west",
+    "west",
+    "record",
+    "look",
+    "record off",
+    "unlock door",
+    "west",
+    "unlock door",
+    "north",
+    "wait",
+    "record",
+    "wait",
+    "wait",
+    "record off",
+    "open door",
+    "south",
+    "east",
+    "east",
+    "east",
+    "record",
+    "northwest",
+    "record off",
+    "west",
+    "north",
+    "record",
+    "northwest",
+    "record off",
+    "southeast",
+    "north",
+    "northeast",
+    "northeast",
+    "record",
+    "east",
+    "record off",
+    "northwest",
+    "get ticket",
+    "record",
+    "enter hall",
+    "record off",
+    "southeast",
+    "west",
+    "north",
+    "record",
+    "north",
+    "wait",
+    "wait",
+    "record off",
+    "north",
+    "record",
+    "southwest",
+    "record off",
+    "northwest",
+    "south",
+    "record",
+    "west",
+    "save",
+    "south",
+    "look",
+    "record off",
+    "north",
+    "north",
+    "record",
+    "north",
+    "record off",
+    "east",
+    "east",
+    "east",
+    "east",
+    "south",
+    "south",
+    "southeast",
+    "get pamphlet",
+    "record",
+    "read pamphlet",
+    "record off",
+    "abort",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "yes",
+    "x",
+    "x",
+    "x",
+    "x",
+    "x",
+    "x",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "go to sim mode",
+    "12",
+    "30",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "abort",
+    "go to sim mode",
+    "12",
+    "40",
+    "down",
+    "record",
+    "record off",
+    "southeast",
+    "get pamphlet",
+    "northwest",
+    "east",
+    "northwest",
+    "southeast",
+    "west",
+    "south",
+    "record",
+    "west",
+    "record off",
+    "east",
+    "southeast",
+    "southwest",
+    "west",
+    "south",
+    "record",
+    "south",
+    "record off",
+    "west",
+    "west",
+    "west",
+    "put pamphlet in door",
+    "west",
+    "put pamphlet in door",
+    "north",
+    "wait",
+    "wait",
+    "record",
+    "wait",
+    "record off",
+    "open door",
+    "wait until 12",
+    "wait until 1",
+    "south",
+    "east",
+    "east",
+    "northwest",
+    "record",
+    "read list",
+    "record off",
+    "southeast",
+    "north",
+    "record",
+    "northwest",
+    "record off",
+    "southeast",
+    "west",
+    "northwest",
+    "record",
+    "west",
+    "y",
+    "abort",
+    "peof",
+    "t",
+    "wait until 1 am",
+    "wait until 2 am",
+    "wait until 3 am",
+    "wait until 4 am",
+    "wait until 5 am",
+    "wait until 6 am",
+    "wait until 7 am",
+    "wait until 8 am",
+    "wait until 9 am",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "go to sim mode",
+    "12",
+    "40",
+    "record",
+    "down",
+    "record off",
+    "southeast",
+    "get pamphlet",
+    "northwest",
+    "east",
+    "northwest",
+    "record",
+    "read marquee",
+    "record off",
+    "southeast",
+    "west",
+    "south",
+    "record",
+    "west",
+    "record off",
+    "east",
+    "record",
+    "southeast",
+    "record off",
+    "record",
+    "southwest",
+    "record off",
+    "west",
+    "south",
+    "south",
+    "west",
+    "west",
+    "west",
+    "put pamphlet in door",
+    "west",
+    "put pamphlet in door",
+    "north",
+    "wait",
+    "wait",
+    "record",
+    "wait",
+    "record off",
+    "open door",
+    "wait until 12",
+    "wait until 1",
+    "south",
+    "east",
+    "east",
+    "northwest",
+    "record",
+    "read list",
+    "record off",
+    "southeast",
+    "north",
+    "record",
+    "northwest",
+    "record off",
+    "southeast",
+    "west",
+    "northwest",
+    "record",
+    "west",
+    "y",
+    "abort",
+    "peof",
+    "t",
+    "wait until 2 am",
+    "wait until 3 am",
+    "wait until 4 am",
+    "wait until 5 am",
+    "wait until 6 am",
+    "wait until 7 am",
+    "wait until 8 am",
+    "wait until 9 am",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "wait until 4 am",
+    "wait until 5 am",
+    "wait until 6 am",
+    "wait until 7 am",
+    "wait until 8 am",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "go to sim mode",
+    "12",
+    "40",
+    "down",
+    "record",
+    "record off",
+    "southeast",
+    "get pamphlet",
+    "record",
+    "read pamphlet",
+    "record off",
+    "abort",
+    "peof",
+    "t",
+    "wait until 3 am",
+    "wait until 4 am",
+    "wait until 5 am",
+    "wait until 6 am",
+    "wait until 7 am",
+    "wait until 8 am",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "go to sim mode",
+    "12",
+    "50",
+    "40",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "abort",
+    "go to sim mode",
+    "12",
+    "50",
+    "50",
+    "record",
+    "look",
+    "north",
+    "record off",
+    "read sign",
+    "southwest",
+    "eat mold",
+    "northeast",
+    "east",
+    "examine sack",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "t",
+    "wait until 1 am",
+    "wait until 2 am",
+    "wait until 3 am",
+    "wait until 4 am",
+    "wait until 5 am",
+    "wait until 6 am",
+    "wait until 7 am",
+    "wait until 8 am",
+    "wait until 9 am",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "t",
+    "go to sim mode",
+    "12",
+    "50",
+    "record",
+    "look",
+    "north",
+    "record off",
+    "read sign",
+    "southwest",
+    "record",
+    "eat mold",
+    "record off",
+    "northeast",
+    "east",
+    "record",
+    "examine sack",
+    "wait",
+    "wait",
+    "peof",
+    "t",
+    "tell perelman about recordings",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "x",
+    "x",
+    "peof",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "record",
+    "wait until 10:30 am",
+    "look",
+    "wait",
+    "look",
+    "record off",
+    "go to interface mode",
+    "n",
+    "hvac, turn off ventilation in delta sector",
+    "go to comm mode",
+    "rcro",
+    "wait until 11:30 am",
+    "look",
+    "maco",
+    "wait",
+    "look",
+    "wait",
+    "look",
+    "wait",
+    "look",
+    "wait",
+    "look",
+    "wait",
+    "look",
+    "wait",
+    "look",
+    "go to interface mode",
+    "y",
+    "t",
+    "go to comm mode",
+    "maco",
+    "wait until 12:30",
+    "go to interface mode",
+    "y",
+    "go to comm mode",
+    "maco",
+    "wait until 1:30",
+    "go to interface mode",
+    "y",
+    "wnn feeder, transmit record buffer",
+    "go to comm mode",
+    "wnnf",
+    "peof",
+    "wait",
+    "x",
+    "x",
+    "go to sim mode",
+    "north",
+    "read newspaper",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "x"
+  ],
+  "intro": [
+    "Begin with the available local Z4 release (release 77, serial 850814); the requested Z3 file was not present. The route uses a fresh story, deterministic seed 1, and 2,458,540 executed instructions.",
+    "A Mind Forever Voyaging has no numeric score. This route records the needed future evidence, captures Senator Ryder threatening Perelman, disables Delta ventilation so the saboteurs are subdued, broadcasts the buffer, and reaches the New Plan ending.",
+    "Deaths and assaults in the 2051-2081 sections happen inside simulations. Perry is killed in some futures; PRISM survives in the real facility, stops Ryder, and completes the final 2091 simulation."
+  ],
+  "checkpoints": [
+    {
+      "heading": "2071 EVIDENCE",
+      "detail": "Church pamphlet and public events move Perelman\u2019s report forward."
+    },
+    {
+      "heading": "2081 EVIDENCE",
+      "detail": "Record the starving city, cemetery assault, bloody sack, and dog attack."
+    },
+    {
+      "heading": "RYDER EXPOSED",
+      "detail": "Record Ryder threatening Perelman during the lockdown."
+    },
+    {
+      "heading": "PLAN DEFEATED",
+      "detail": "WNN broadcast prompts the Guard recall and Perelman\u2019s victory message."
+    },
+    {
+      "heading": "2091",
+      "detail": "Read the New Plan newspaper; complete the Silver Dove voyage."
+    }
+  ],
+  "endingVerification": "Perelman confirms that the broadcast exposed Ryder, the National Guard is recalled, and the Plan is dead in the water. The epilogue then allows the 2091 New Plan simulation; the route reads its newspaper and reaches the final voyage to the Silver Dove.",
+  "stepStarts": {
+    "1": "START FRESH | PRISM AWAKENS IN 2031",
+    "14": "2041 | RECORD THE FIRST SIMULATION",
+    "97": "2051 | SELECT THE 20-YEAR SIMULATION",
+    "196": "2061 | SELECT THE 30-YEAR SIMULATION",
+    "221": "2061 | REVISIT THE 30-YEAR SIMULATION",
+    "397": "2061 | RETRY THE 30-YEAR SIMULATION",
+    "419": "2071 | SELECT THE 40-YEAR SIMULATION",
+    "523": "2071 | REVISIT THE 40-YEAR SIMULATION",
+    "767": "2071 | RETRY THE 40-YEAR SIMULATION",
+    "854": "2081 LOCKED | FALL BACK TO 2071",
+    "877": "2081 | SELECT THE 50-YEAR SIMULATION",
+    "985": "2081 | RECORD FINAL EVIDENCE",
+    "1003": "REPORT FINAL EVIDENCE",
+    "1024": "LOCKDOWN | RECORD RYDER",
+    "1030": "STOP THE SABOTEURS",
+    "1070": "2091 | NEW PLAN SIMULATION"
+  },
+  "routeNotes": {
+    "180": [
+      "Perelman needs evidence from additional future years; continue to the 30-year simulation."
+    ],
+    "350": [
+      "The report still needs evidence from years beyond 2061; continue through the later simulations."
+    ],
+    "1005": [
+      "Report the completed 2081 recordings to Perelman."
+    ],
+    "1010": [
+      "Perelman accepts the evidence and says the Plan must be cancelled."
+    ],
+    "1025": [
+      "After lockdown, record Ryder\u2019s threats before moving on."
+    ],
+    "1032": [
+      "Disable only Delta ventilation; this fills the core with zeeron fumes."
+    ],
+    "1035": [
+      "The saboteurs arrive on the rooftop and enter the stairwell."
+    ],
+    "1048": [
+      "The four saboteurs pass out; leave ventilation off."
+    ],
+    "1055": [
+      "A National Guard patrol removes the living saboteurs."
+    ],
+    "1063": [
+      "The World News Network begins transmitting the recorded buffer."
+    ],
+    "1067": [
+      "Perelman confirms Ryder is disgraced, the Guard recalled, and the Plan defeated."
+    ],
+    "1070": [
+      "Enter the final 60-year simulation with security waived."
+    ],
+    "1072": [
+      "The newspaper describes the better New Plan future."
+    ],
+    "1080": [
+      "The final voyage concludes; the game reaches its acknowledgements."
+    ]
+  },
+  "maps": [
+    {
+      "title": "Rockvil: home, west side, and civic center",
+      "caption": "The early and mid-century route links Perry\u2019s apartment to the courthouse, university edge, and central square.",
+      "icon": "town",
+      "note": "The first simulations share this street plan; raids, church notices, and public scenes change by decade.",
+      "rooms": [
+        {
+          "id": "main-library",
+          "label": "Main Library"
+        },
+        {
+          "id": "courthouse",
+          "label": "Courthouse"
+        },
+        {
+          "id": "rockvil-centre",
+          "label": "Rockvil Centre"
+        },
+        {
+          "id": "centre-kennedy",
+          "label": "Centre & Kennedy"
+        },
+        {
+          "id": "bodanski",
+          "label": "Bodanski Square"
+        },
+        {
+          "id": "southway-kennedy",
+          "label": "Southway & Kennedy"
+        },
+        {
+          "id": "elm-park",
+          "label": "Elm & Park"
+        },
+        {
+          "id": "elm-university",
+          "label": "Elm & University"
+        },
+        {
+          "id": "city-hall",
+          "label": "City Hall"
+        },
+        {
+          "id": "elm-underpass",
+          "label": "Elm Underpass"
+        },
+        {
+          "id": "parkview",
+          "label": "Parkview Apartments"
+        },
+        {
+          "id": "southway-park",
+          "label": "Southway & Park"
+        },
+        {
+          "id": "hall-apartment",
+          "label": "Hall Near Your Apartment"
+        },
+        {
+          "id": "living-room",
+          "label": "Living Room"
+        },
+        {
+          "id": "roys-pagoda",
+          "label": "Roy's Pagoda"
+        }
+      ],
+      "grid": [
+        [
+          "main-library",
+          "courthouse",
+          "rockvil-centre",
+          "centre-kennedy",
+          "bodanski"
+        ],
+        [
+          "southway-kennedy",
+          "elm-park",
+          "elm-university",
+          "city-hall",
+          "elm-underpass"
+        ],
+        [
+          "parkview",
+          "southway-park",
+          "hall-apartment",
+          "living-room",
+          "roys-pagoda"
+        ]
+      ],
+      "edges": [
+        [
+          "southway-park",
+          "main-library",
+          "NW"
+        ],
+        [
+          "courthouse",
+          "elm-park",
+          "SE"
+        ],
+        [
+          "elm-park",
+          "rockvil-centre",
+          "N"
+        ],
+        [
+          "rockvil-centre",
+          "city-hall",
+          "W"
+        ],
+        [
+          "rockvil-centre",
+          "centre-kennedy",
+          "NE"
+        ],
+        [
+          "centre-kennedy",
+          "bodanski",
+          "NE"
+        ],
+        [
+          "southway-kennedy",
+          "southway-park",
+          "W"
+        ],
+        [
+          "elm-park",
+          "southway-park",
+          "S"
+        ],
+        [
+          "elm-park",
+          "elm-university",
+          "W"
+        ],
+        [
+          "elm-university",
+          "elm-underpass",
+          "W"
+        ],
+        [
+          "elm-underpass",
+          "roys-pagoda",
+          "S"
+        ],
+        [
+          "parkview",
+          "hall-apartment",
+          "W"
+        ],
+        [
+          "hall-apartment",
+          "living-room",
+          "N"
+        ]
+      ]
+    },
+    {
+      "title": "The river corridor, industry, and underground",
+      "caption": "From Bodanski Square, the route follows the river south to the power station and down to the closed tube.",
+      "icon": "core",
+      "note": "The tube becomes inaccessible in later simulations. The power-station edge is a recorded west-bank branch.",
+      "rooms": [
+        {
+          "id": "first-methodist",
+          "label": "First Methodist Church"
+        },
+        {
+          "id": "aquarium-river",
+          "label": "Aquarium & River"
+        },
+        {
+          "id": "bodanski",
+          "label": "Bodanski Square"
+        },
+        {
+          "id": "museum-entrance",
+          "label": "Museum Entrance"
+        },
+        {
+          "id": "cinema",
+          "label": "Cinema"
+        },
+        {
+          "id": "church-lobby",
+          "label": "Church Lobby"
+        },
+        {
+          "id": "midland-river",
+          "label": "Midland & River"
+        },
+        {
+          "id": "main-river",
+          "label": "Main & River"
+        },
+        {
+          "id": "elm-river",
+          "label": "Elm & River"
+        },
+        {
+          "id": "southway-river",
+          "label": "Southway & River"
+        },
+        {
+          "id": "bend",
+          "label": "Bend"
+        },
+        {
+          "id": "tube-station",
+          "label": "Tube Station"
+        },
+        {
+          "id": "wicker-river",
+          "label": "Wicker & River"
+        },
+        {
+          "id": "power-entry",
+          "label": "Power Station Entrance"
+        },
+        {
+          "id": "power-station",
+          "label": "Power Station"
+        },
+        {
+          "id": "tubecar",
+          "label": "Tubecar"
+        }
+      ],
+      "grid": [
+        [
+          "first-methodist",
+          "aquarium-river",
+          "bodanski",
+          "museum-entrance",
+          "cinema"
+        ],
+        [
+          "church-lobby",
+          null,
+          "midland-river",
+          null,
+          null
+        ],
+        [
+          null,
+          "main-river",
+          "elm-river",
+          "southway-river",
+          "bend"
+        ],
+        [
+          null,
+          "tube-station",
+          "wicker-river",
+          "power-entry",
+          "power-station"
+        ],
+        [
+          null,
+          "tubecar",
+          null,
+          null,
+          null
+        ]
+      ],
+      "edges": [
+        [
+          "aquarium-river",
+          "first-methodist",
+          "SW"
+        ],
+        [
+          "bodanski",
+          "aquarium-river",
+          "N"
+        ],
+        [
+          "bodanski",
+          "museum-entrance",
+          "E"
+        ],
+        [
+          "museum-entrance",
+          "cinema",
+          "NW"
+        ],
+        [
+          "bodanski",
+          "midland-river",
+          "S"
+        ],
+        [
+          "midland-river",
+          "main-river",
+          "S"
+        ],
+        [
+          "main-river",
+          "elm-river",
+          "S"
+        ],
+        [
+          "elm-river",
+          "southway-river",
+          "S"
+        ],
+        [
+          "southway-river",
+          "bend",
+          "S"
+        ],
+        [
+          "bend",
+          "wicker-river",
+          "SE"
+        ],
+        [
+          "wicker-river",
+          "power-entry",
+          "SE"
+        ],
+        [
+          "power-entry",
+          "power-station",
+          "S"
+        ],
+        [
+          "wicker-river",
+          "tube-station",
+          "DOWN"
+        ],
+        [
+          "tube-station",
+          "tubecar",
+          "IN"
+        ],
+        [
+          "bodanski",
+          "church-lobby",
+          "SE"
+        ]
+      ]
+    },
+    {
+      "title": "North Rockvil and the late-simulation ruins",
+      "caption": "Campus, zoo, stadium, cemetery, and the 2081 street where the final recording route ends.",
+      "icon": "church",
+      "note": "The cemetery assault returns Perry to Main & Wicker; the bridge dogs end that simulation, not PRISM\u2019s life.",
+      "rooms": [
+        {
+          "id": "airportway-river",
+          "label": "Airportway & River"
+        },
+        {
+          "id": "river-kennedy",
+          "label": "River & Kennedy"
+        },
+        {
+          "id": "river-park",
+          "label": "River & Park"
+        },
+        {
+          "id": "rockvil-university",
+          "label": "Rockvil University"
+        },
+        {
+          "id": "halley-university",
+          "label": "Halley & University"
+        },
+        {
+          "id": "aquarium-park",
+          "label": "Aquarium & Park"
+        },
+        {
+          "id": "athletic-field",
+          "label": "Athletic Field"
+        },
+        {
+          "id": "stadium-lot-a",
+          "label": "Stadium Lot A"
+        },
+        {
+          "id": "dorm",
+          "label": "Dorm"
+        },
+        {
+          "id": "midland-church",
+          "label": "Midland & Church"
+        },
+        {
+          "id": "zoo-entrance",
+          "label": "Zoo Entrance"
+        },
+        {
+          "id": "zoo",
+          "label": "Zoo"
+        },
+        {
+          "id": "rockvil-stadium",
+          "label": "Rockvil Stadium"
+        },
+        {
+          "id": "cemetery",
+          "label": "Cemetery"
+        },
+        {
+          "id": "main-church",
+          "label": "Main & Church"
+        },
+        {
+          "id": "stadium-lot-b",
+          "label": "Stadium Lot B"
+        },
+        {
+          "id": "main-wicker",
+          "label": "Main & Wicker"
+        },
+        {
+          "id": "foodville",
+          "label": "Foodville"
+        },
+        {
+          "id": "main-street-bridge",
+          "label": "Main Street Bridge"
+        }
+      ],
+      "grid": [
+        [
+          "airportway-river",
+          "river-kennedy",
+          "river-park",
+          "rockvil-university",
+          "halley-university"
+        ],
+        [
+          "aquarium-park",
+          "athletic-field",
+          "stadium-lot-a",
+          "dorm",
+          "midland-church"
+        ],
+        [
+          "zoo-entrance",
+          "zoo",
+          "rockvil-stadium",
+          "cemetery",
+          "main-church"
+        ],
+        [
+          "stadium-lot-b",
+          "main-wicker",
+          "foodville",
+          "main-street-bridge",
+          null
+        ]
+      ],
+      "edges": [
+        [
+          "aquarium-park",
+          "river-park",
+          "N"
+        ],
+        [
+          "river-park",
+          "athletic-field",
+          "NW"
+        ],
+        [
+          "athletic-field",
+          "river-kennedy",
+          "NW"
+        ],
+        [
+          "river-kennedy",
+          "airportway-river",
+          "N"
+        ],
+        [
+          "zoo-entrance",
+          "aquarium-park",
+          "W"
+        ],
+        [
+          "zoo-entrance",
+          "zoo",
+          "S"
+        ],
+        [
+          "zoo-entrance",
+          "stadium-lot-a",
+          "N"
+        ],
+        [
+          "stadium-lot-a",
+          "rockvil-stadium",
+          "N"
+        ],
+        [
+          "rockvil-stadium",
+          "stadium-lot-b",
+          "E"
+        ],
+        [
+          "stadium-lot-b",
+          "river-park",
+          "E"
+        ],
+        [
+          "rockvil-university",
+          "dorm",
+          "W"
+        ],
+        [
+          "rockvil-university",
+          "halley-university",
+          "N"
+        ],
+        [
+          "midland-church",
+          "cemetery",
+          "SE"
+        ],
+        [
+          "cemetery",
+          "main-church",
+          "SW"
+        ],
+        [
+          "cemetery",
+          "main-wicker",
+          "KO return"
+        ],
+        [
+          "main-wicker",
+          "foodville",
+          "SW"
+        ],
+        [
+          "main-wicker",
+          "main-street-bridge",
+          "E"
+        ]
+      ]
+    },
+    {
+      "title": "PRISM control links and the 2091 voyage",
+      "caption": "Communications outlets, the sabotage controls, and the final New Plan scenes observed after the broadcast.",
+      "icon": "skyvan",
+      "note": "The last route reads the newspaper in the 2091 Living Room, then follows the family\u2019s voyage to the Silver Dove.",
+      "rooms": [
+        {
+          "id": "ppcc",
+          "label": "PRISM Project Control Center"
+        },
+        {
+          "id": "peof",
+          "label": "Perelman\u2019s Office"
+        },
+        {
+          "id": "pcaf",
+          "label": "Facility Cafeteria"
+        },
+        {
+          "id": "rcro",
+          "label": "Research Center Rooftop"
+        },
+        {
+          "id": "maco",
+          "label": "Maintenance Core"
+        },
+        {
+          "id": "wnnf",
+          "label": "World News Network Feed"
+        },
+        {
+          "id": "interface",
+          "label": "Interface Mode"
+        },
+        {
+          "id": "hvac",
+          "label": "HVAC Controller"
+        },
+        {
+          "id": "sim-controller",
+          "label": "Simulation Controller"
+        },
+        {
+          "id": "solarium",
+          "label": "2091 Solarium"
+        },
+        {
+          "id": "future-living",
+          "label": "2091 Living Room"
+        },
+        {
+          "id": "roofpad",
+          "label": "Roofpad"
+        },
+        {
+          "id": "skycab",
+          "label": "Skycab"
+        },
+        {
+          "id": "halley-park",
+          "label": "Halley Park vista"
+        },
+        {
+          "id": "rockvil-pier",
+          "label": "Rockvil Pier vista"
+        },
+        {
+          "id": "receiver",
+          "label": "Receiver Station vista"
+        },
+        {
+          "id": "bsf-museum",
+          "label": "BSF Base Museum vista"
+        },
+        {
+          "id": "spaceport",
+          "label": "Spaceport Terminal"
+        },
+        {
+          "id": "silver-dove",
+          "label": "Silver Dove"
+        }
+      ],
+      "grid": [
+        [
+          "ppcc",
+          "peof",
+          "pcaf",
+          "rcro",
+          "maco"
+        ],
+        [
+          "wnnf",
+          "interface",
+          "hvac",
+          "sim-controller",
+          null
+        ],
+        [
+          "solarium",
+          "future-living",
+          "roofpad",
+          "skycab",
+          "halley-park"
+        ],
+        [
+          "rockvil-pier",
+          "receiver",
+          "bsf-museum",
+          "spaceport",
+          "silver-dove"
+        ]
+      ],
+      "edges": [
+        [
+          "ppcc",
+          "peof",
+          "port"
+        ],
+        [
+          "ppcc",
+          "pcaf",
+          "port"
+        ],
+        [
+          "ppcc",
+          "rcro",
+          "port"
+        ],
+        [
+          "ppcc",
+          "maco",
+          "port"
+        ],
+        [
+          "ppcc",
+          "wnnf",
+          "port"
+        ],
+        [
+          "interface",
+          "hvac",
+          "device"
+        ],
+        [
+          "interface",
+          "sim-controller",
+          "device"
+        ],
+        [
+          "solarium",
+          "future-living",
+          "N"
+        ],
+        [
+          "future-living",
+          "roofpad",
+          "N"
+        ],
+        [
+          "roofpad",
+          "skycab",
+          "BOARD"
+        ],
+        [
+          "skycab",
+          "halley-park",
+          "vista"
+        ],
+        [
+          "halley-park",
+          "rockvil-pier",
+          "vista"
+        ],
+        [
+          "rockvil-pier",
+          "receiver",
+          "vista"
+        ],
+        [
+          "receiver",
+          "bsf-museum",
+          "vista"
+        ],
+        [
+          "bsf-museum",
+          "spaceport",
+          "vista"
+        ],
+        [
+          "spaceport",
+          "silver-dove",
+          "journey"
+        ]
+      ]
+    }
+  ],
+  "allMapLabels": [
+    "Airportway & River",
+    "Aquarium & Park",
+    "Aquarium & River",
+    "Athletic Field",
+    "Bend",
+    "Bodanski Square",
+    "Cemetery",
+    "Centre & Kennedy",
+    "Church Lobby",
+    "Cinema",
+    "City Hall",
+    "Courthouse",
+    "Dorm",
+    "Elm & Park",
+    "Elm & River",
+    "Elm & University",
+    "Elm Underpass",
+    "First Methodist Church",
+    "Foodville",
+    "Hall Near Your Apartment",
+    "Halley & University",
+    "Living Room",
+    "Main & Church",
+    "Main & River",
+    "Main & Wicker",
+    "Main Library",
+    "Main Street Bridge",
+    "Midland & Church",
+    "Midland & River",
+    "Museum Entrance",
+    "Parkview Apartments",
+    "Power Station",
+    "Power Station Entrance",
+    "River & Kennedy",
+    "River & Park",
+    "Rockvil Centre",
+    "Rockvil Stadium",
+    "Rockvil University",
+    "Roy's Pagoda",
+    "Southway & Kennedy",
+    "Southway & Park",
+    "Southway & River",
+    "Stadium Lot A",
+    "Stadium Lot B",
+    "Tube Station",
+    "Tubecar",
+    "Wicker & River",
+    "Zoo",
+    "Zoo Entrance",
+    "PRISM Project Control Center",
+    "Perelman\u2019s Office",
+    "Facility Cafeteria",
+    "Research Center Rooftop",
+    "Maintenance Core",
+    "World News Network Feed",
+    "Interface Mode",
+    "HVAC Controller",
+    "Simulation Controller",
+    "2091 Solarium",
+    "2091 Living Room",
+    "Roofpad",
+    "Skycab",
+    "Halley Park vista",
+    "Rockvil Pier vista",
+    "Receiver Station vista",
+    "BSF Base Museum vista",
+    "Spaceport Terminal",
+    "Silver Dove"
+  ]
+}
