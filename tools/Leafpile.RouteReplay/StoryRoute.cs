@@ -220,6 +220,7 @@ public static class StoryRouteReplayer
 
         private static byte ReadRouteCharacter(string command)
         {
+            if (string.Equals(command, "<ENTER>", StringComparison.OrdinalIgnoreCase)) return 13;
             if (command.Length != 1 || command[0] > 0x7f)
                 throw new InvalidDataException($"A character-input route command must contain one ASCII character; got '{command}'.");
             return (byte)command[0];

@@ -152,6 +152,21 @@ public sealed class StoryRouteReplayerTests
     }
 
     [Fact]
+    public void ReplayMapsEnterTokenToCarriageReturnForCharacterInput()
+    {
+        var story = StoryLoader.Load(CreateReadCharAndQuitStory());
+        var route = CreateRoute(story, ["<ENTER>", "Y"], [new RouteCheckpoint(2, Location: "Hall", Halted: true)])
+            with
+        { ScoreGlobal = null, LocationGlobal = 17 };
+
+        var result = StoryRouteReplayer.Replay(story, route);
+
+        Assert.True(result.Halted);
+        Assert.Equal(2, result.CommandsReplayed);
+        Assert.Contains("Variable.22 read_char", result.UniqueOpcodes);
+    }
+
+    [Fact]
     public void ReplayDefersProgressCaptureUntilAfterStartupCharacterInput()
     {
         var image = CreateReadCharAndQuitStory();
