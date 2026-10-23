@@ -351,9 +351,12 @@ public sealed class ZMachineScreen
             return;
         }
 
-        if (row == 0 || column == 0 || row > UpperWindowHeight || column > WidthCharacters)
+        // A restore can resume a story that selects the upper window before splitting it again.
+        // Keep its cursor addressable within the screen while the upper window is collapsed.
+        var rowLimit = UpperWindowHeight == 0 ? HeightLines : UpperWindowHeight;
+        if (row == 0 || column == 0 || row > rowLimit || column > WidthCharacters)
         {
-            throw new ZMachineRuntimeException("set_cursor position is outside the current upper window.");
+            throw new ZMachineRuntimeException($"set_cursor position ({row}, {column}) is outside the current upper window ({UpperWindowHeight} rows by {WidthCharacters} columns).");
         }
 
         _upperCursorRow = row - 1;

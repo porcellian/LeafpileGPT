@@ -138,6 +138,19 @@ public sealed class ZMachineScreenTests
     }
 
     [Fact]
+    public void VersionFourCanPositionTheHiddenUpperWindowCursorBeforeResplitting()
+    {
+        var screen = CreateState(4).Screen;
+        screen.SelectWindow(1);
+
+        screen.SetCursor(1, 9);
+
+        Assert.Equal(0, screen.UpperWindowHeight);
+        Assert.Equal(0, screen.CursorRow);
+        Assert.Equal(8, screen.CursorColumn);
+    }
+
+    [Fact]
     public void GetCursorStoresOneBasedRowAndColumnInTheSuppliedArray()
     {
         var state = CreateState(4,

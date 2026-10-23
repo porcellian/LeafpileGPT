@@ -119,8 +119,20 @@ public sealed class ZMachineSoundTests
         Assert.Equal(new ZMachineSoundRequest(3, 6, 1, 0), Assert.Single(sound.Played));
     }
 
+    [Fact]
+    public void VersionFourSoundEffectUsesVersionThreeOperandsAndDoesNotRepeat()
+    {
+        var state = CreateState(4, [0xf5, 0x53, 3, 2, 0, 6]);
+        var sound = new FakeSound();
+
+        new ZMachineOpcodeExecutor(state, sound: sound).ExecuteNext();
+
+        Assert.Equal(new ZMachineSoundRequest(3, 6, 1, 0), Assert.Single(sound.Played));
+    }
+
     [Theory]
     [InlineData(3)]
+    [InlineData(4)]
     [InlineData(5)]
     [InlineData(8)]
     public void UsesVersionCorrectDefaultVolumeAndRepeatCount(byte version)
@@ -138,10 +150,12 @@ public sealed class ZMachineSoundTests
     {
         var badVolume = CreateState(5, [0xf5, 0x53, 3, 2, 0, 0]);
         var badV3Repeats = CreateState(3, [0xf5, 0x53, 3, 2, 1, 6]);
+        var badV4Repeats = CreateState(4, [0xf5, 0x53, 3, 2, 1, 6]);
         var sound = new FakeSound();
 
         Assert.Throws<ZMachineRuntimeException>(() => new ZMachineOpcodeExecutor(badVolume, sound: sound).ExecuteNext());
         Assert.Throws<ZMachineRuntimeException>(() => new ZMachineOpcodeExecutor(badV3Repeats, sound: sound).ExecuteNext());
+        Assert.Throws<ZMachineRuntimeException>(() => new ZMachineOpcodeExecutor(badV4Repeats, sound: sound).ExecuteNext());
     }
 
     [Fact]

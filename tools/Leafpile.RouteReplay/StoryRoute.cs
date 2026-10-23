@@ -108,7 +108,11 @@ public sealed record RouteProgress(int CommandNumber, string Command, string Loc
 
 public static class StoryRouteReplayer
 {
-    public static RouteReplayResult Replay(LoadedStory story, StoryRoute route, int? instructionLimit = null)
+    public static RouteReplayResult Replay(
+        LoadedStory story,
+        StoryRoute route,
+        int? instructionLimit = null,
+        Action<RouteProgress>? progressObserver = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         ArgumentNullException.ThrowIfNull(route);
@@ -124,7 +128,7 @@ public static class StoryRouteReplayer
 
         var state = new ZMachineState(story);
         state.Random.UseDeterministicSeed(route.RandomSeed);
-        var host = new RouteHost(state, route);
+        var host = new RouteHost(state, route, progressObserver);
         var saveRestore = new QuetzalSaveRestoreService(host);
         var trace = new List<InstructionTraceEntry>();
         var sequence = 0;
@@ -177,7 +181,7 @@ public static class StoryRouteReplayer
         return objectNumber == 0 ? string.Empty : new ZMachineObjectTable(state).GetShortName(objectNumber).Trim();
     }
 
-    private sealed class RouteHost(ZMachineState state, StoryRoute route) : IZMachineInputOutput, IZMachineSaveFileAccess
+    private sealed class RouteHost(ZMachineState state, StoryRoute route, Action<RouteProgress>? progressObserver) : IZMachineInputOutput, IZMachineSaveFileAccess
     {
         private int _nextCommand;
         private int _lastValidatedCommand = -1;
@@ -208,7 +212,15 @@ public static class StoryRouteReplayer
             if (_nextCommand >= route.Commands.Count) throw new InvalidOperationException("Story requested another command after the route ended.");
             LastCommandNumber = _nextCommand;
             var command = route.Commands[_nextCommand++];
-            return new ZMachineInputResponse(command, 13);
+            var terminator = request.ReadCharacter ? ReadRouteCharacter(command) : (byte)13;
+            return new ZMachineInputResponse(command, terminator);
+        }
+
+        private static byte ReadRouteCharacter(string command)
+        {
+            if (command.Length != 1 || command[0] > 0x7f)
+                throw new InvalidDataException($"A character-input route command must contain one ASCII character; got '{command}'.");
+            return (byte)command[0];
         }
 
         public void ValidateCheckpoint(int commandCount, bool halted = false)
@@ -236,8 +248,10 @@ public static class StoryRouteReplayer
         private void RecordProgress(int commandIndex)
         {
             if (commandIndex < 0 || commandIndex >= route.Commands.Count || _progress.Any(item => item.CommandNumber == commandIndex + 1)) return;
-            _progress.Add(new RouteProgress(commandIndex + 1, route.Commands[commandIndex],
-                ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor), ReadOptionalGlobal(state, route.ScoreGlobal), ReadGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText));
+            var progress = new RouteProgress(commandIndex + 1, route.Commands[commandIndex],
+                ReadLocation(state, route.LocationGlobal, route.LocationGlobalContainsActor), ReadOptionalGlobal(state, route.ScoreGlobal), ReadGlobal(state, route.MovesGlobal), state.Screen.LowerWindowText);
+            _progress.Add(progress);
+            progressObserver?.Invoke(progress);
         }
 
         public void WriteScreenOutput(string text) { }

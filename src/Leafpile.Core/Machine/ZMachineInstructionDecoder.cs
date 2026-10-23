@@ -255,7 +255,7 @@ public sealed class ZMachineInstructionDecoder
         19 when _header.Version == 5 => new(1, 2),
         19 when _header.Version == 6 => new(1, 3),
         20 when _header.Version >= 3 => new(1, 1),
-        21 when _header.Version == 3 => new(0, 3),
+        21 when _header.Version is 3 or 4 => new(0, 3),
         21 when _header.Version >= 5 => new(0, 4),
         22 when _header.Version >= 4 => new(1, 3, store: true, rejectedOperandCounts: [2]),
         23 when _header.Version >= 4 => new(3, 4, store: true, branch: true),
