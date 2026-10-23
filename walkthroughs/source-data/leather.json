@@ -1,0 +1,1884 @@
+{
+  "title": "LEATHER GODDESSES OF PHOBOS",
+  "subtitle": "Maximum-score, Earth-safe walkthrough",
+  "routeTitle": "Leather Goddesses of Phobos 248-point best-ending route",
+  "score": 248,
+  "maximumScore": 248,
+  "commandsCount": 446,
+  "moves": 479,
+  "location": "Plaza",
+  "randomSeed": 10,
+  "release": 59,
+  "serial": "860730",
+  "checksum": "D070",
+  "endingVerification": "Earth is safe; final score 248 / 248, rank Interplanetary Emperor, after 479 story turns. No player death occurs.",
+  "totalInstructions": 889981,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 37718,
+      "FirstSequence": 1,
+      "FirstAddress": 24415
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "show_status",
+      "Count": 2,
+      "FirstSequence": 2,
+      "FirstAddress": 24418
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 2966,
+      "FirstSequence": 3,
+      "FirstAddress": 24419
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 802,
+      "FirstSequence": 4,
+      "FirstAddress": 24856
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 446,
+      "FirstSequence": 8,
+      "FirstAddress": 24968
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 41332,
+      "FirstSequence": 9,
+      "FirstAddress": 24972
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 1365,
+      "FirstSequence": 10,
+      "FirstAddress": 25115
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 590,
+      "FirstSequence": 11,
+      "FirstAddress": 25116
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 100642,
+      "FirstSequence": 12,
+      "FirstAddress": 25118
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 5214,
+      "FirstSequence": 82,
+      "FirstAddress": 25122
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 44816,
+      "FirstSequence": 90,
+      "FirstAddress": 36333
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 91,
+      "FirstAddress": 36337
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 11,
+      "FirstSequence": 97,
+      "FirstAddress": 36464
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 86012,
+      "FirstSequence": 99,
+      "FirstAddress": 36482
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 93761,
+      "FirstSequence": 100,
+      "FirstAddress": 36489
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 25,
+      "FirstSequence": 101,
+      "FirstAddress": 36493
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 75579,
+      "FirstSequence": 102,
+      "FirstAddress": 36496
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 56392,
+      "FirstSequence": 129,
+      "FirstAddress": 41749
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 22539,
+      "FirstSequence": 130,
+      "FirstAddress": 41763
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 18442,
+      "FirstSequence": 134,
+      "FirstAddress": 49059
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 457,
+      "FirstSequence": 135,
+      "FirstAddress": 49066
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 3163,
+      "FirstSequence": 140,
+      "FirstAddress": 24291
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 447,
+      "FirstSequence": 142,
+      "FirstAddress": 24305
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 4639,
+      "FirstSequence": 147,
+      "FirstAddress": 49114
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 9445,
+      "FirstSequence": 164,
+      "FirstAddress": 49206
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 9298,
+      "FirstSequence": 175,
+      "FirstAddress": 49261
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 5513,
+      "FirstSequence": 208,
+      "FirstAddress": 49441
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 7228,
+      "FirstSequence": 211,
+      "FirstAddress": 49455
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 49134,
+      "FirstSequence": 255,
+      "FirstAddress": 26627
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 7229,
+      "FirstSequence": 259,
+      "FirstAddress": 26649
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 7020,
+      "FirstSequence": 260,
+      "FirstAddress": 26677
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 29864,
+      "FirstSequence": 264,
+      "FirstAddress": 26692
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 7240,
+      "FirstSequence": 266,
+      "FirstAddress": 26731
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 5210,
+      "FirstSequence": 270,
+      "FirstAddress": 26748
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1917,
+      "FirstSequence": 271,
+      "FirstAddress": 60208
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 165,
+      "FirstSequence": 274,
+      "FirstAddress": 60217
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 80929,
+      "FirstSequence": 385,
+      "FirstAddress": 28527
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 28304,
+      "FirstSequence": 390,
+      "FirstAddress": 28550
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 3156,
+      "FirstSequence": 1240,
+      "FirstAddress": 27756
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 2747,
+      "FirstSequence": 1258,
+      "FirstAddress": 28741
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 3712,
+      "FirstSequence": 1262,
+      "FirstAddress": 28755
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1983,
+      "FirstSequence": 1284,
+      "FirstAddress": 25275
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 12857,
+      "FirstSequence": 1336,
+      "FirstAddress": 47476
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 5118,
+      "FirstSequence": 1338,
+      "FirstAddress": 47484
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 541,
+      "FirstSequence": 1347,
+      "FirstAddress": 59233
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 95,
+      "FirstSequence": 1351,
+      "FirstAddress": 59245
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 565,
+      "FirstSequence": 1367,
+      "FirstAddress": 54343
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 499,
+      "FirstSequence": 1677,
+      "FirstAddress": 26810
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 340,
+      "FirstSequence": 2896,
+      "FirstAddress": 32901
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 4769,
+      "FirstSequence": 2926,
+      "FirstAddress": 34739
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 7445,
+      "FirstSequence": 2939,
+      "FirstAddress": 34505
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 246,
+      "FirstSequence": 14689,
+      "FirstAddress": 51416
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 36,
+      "FirstSequence": 66310,
+      "FirstAddress": 40921
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 83415,
+      "FirstAddress": 31613
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 5,
+      "FirstSequence": 276370,
+      "FirstAddress": 70566
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 7,
+      "FirstSequence": 276373,
+      "FirstAddress": 70591
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 1,
+      "FirstSequence": 629234,
+      "FirstAddress": 47551
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 889981,
+      "FirstAddress": 36214
+    }
+  ],
+  "intro": [
+    "Start a fresh Leather Goddesses of Phobos (V3) game and enter the commands below exactly. The numbered route includes every typed command, including the final QUIT.",
+    "The Martian Canal beam is lethal. After the frog, acquire the mouse by the cell-and-roof loop, return to the Palace, send the barge away with “push orange,” then use the well route to arrive at Icy Dock without crossing the beam.",
+    "After rescuing Elysia, follow the corridor to the hidden circle and return to My Kinda Dock. At Trent’s Plaza exchange, give the eight listed items in order. Use <ENTER> for the scratch-and-sniff input, then QUIT after the 248-point ending."
+  ],
+  "checkpoints": [
+    {
+      "command": 1,
+      "heading": "Opening scene",
+      "detail": "0 points · Joe’s Bar. Take the key items before leaving."
+    },
+    {
+      "command": 67,
+      "heading": "Laboratory",
+      "detail": "36 points · protect Trent and prepare the jar, hose, food, and flashlight."
+    },
+    {
+      "command": 79,
+      "heading": "Princess rescued",
+      "detail": "53 points · Throne Room; secure the angle."
+    },
+    {
+      "command": 113,
+      "heading": "Cleveland",
+      "detail": "70 points · headlight gained; collect the rake on the Lawn."
+    },
+    {
+      "command": 168,
+      "heading": "Palace audience",
+      "detail": "88 points · solve the audience riddle and recover the phone book."
+    },
+    {
+      "command": 204,
+      "heading": "Forgotten Storehouse",
+      "detail": "108 points · record the phone-book clue and move back toward the raft."
+    },
+    {
+      "command": 228,
+      "heading": "Burial Chamber",
+      "detail": "118 points · finish the raft passage; the canal beam is still lethal."
+    },
+    {
+      "command": 264,
+      "heading": "Ruined Castle",
+      "detail": "140 points · kiss the frog, then use the cell-and-roof loop for the mouse."
+    },
+    {
+      "command": 289,
+      "heading": "Hickory & Dickory Dock",
+      "detail": "162 points · mouse secured; send the barge away before the well bypass."
+    },
+    {
+      "command": 307,
+      "heading": "Orphanage",
+      "detail": "176 points · use the well teleport to reach Icy Dock without crossing the beam."
+    },
+    {
+      "command": 323,
+      "heading": "Cotton balls",
+      "detail": "196 points · collect the orphan’s cotton balls, then return through Allusion Room."
+    },
+    {
+      "command": 362,
+      "heading": "Exit recovered",
+      "detail": "202 points · rake dust, open the tube, and take Exit."
+    },
+    {
+      "command": 413,
+      "heading": "Space route",
+      "detail": "216 points · board the space route with the headlight."
+    },
+    {
+      "command": 417,
+      "heading": "Elysia rescued",
+      "detail": "234 points · Elysia rescued; obtain her photo for Trent."
+    },
+    {
+      "command": 445,
+      "heading": "Final exchange",
+      "detail": "248 / 248 · give Trent eight items in order; press Enter at the sniff prompt."
+    }
+  ],
+  "stepStarts": {
+    "1": "Joe’s Bar and the first supplies",
+    "34": "Jungle route to the Laboratory",
+    "67": "Laboratory and Trent",
+    "79": "Princess and the Palace",
+    "113": "Cleveland and the first city visit",
+    "168": "Audience Chamber and the clue",
+    "204": "Burial Chamber, raft, and return",
+    "228": "The frog, mouse, and safe polar route",
+    "307": "Icy Dock to the orphanage",
+    "323": "Cotton balls and the Exit Shop",
+    "362": "Exit item acquired",
+    "413": "Space route and Elysia",
+    "417": "Rescue sequence",
+    "436": "Plaza exchanges and ending"
+  },
+  "criticalCommands": [
+    67,
+    79,
+    113,
+    168,
+    204,
+    228,
+    264,
+    289,
+    307,
+    323,
+    362,
+    413,
+    417,
+    445,
+    446
+  ],
+  "visitedLocations": [
+    "Joe's Bar",
+    "Gents' Room",
+    "Cell",
+    "End of Hallway",
+    "Other Cell",
+    "Observation Room",
+    "Closet",
+    "Jungle",
+    "Spawning Ground",
+    "Fork, Of Sorts",
+    "Clearing",
+    "Back Door",
+    "Looks Can Be Deceiving",
+    "Laboratory",
+    "Vizicomm Booth",
+    "Rocky Clifftop",
+    "Royal Docks",
+    "Throne Room",
+    "Ruined Castle",
+    "Martian Desert",
+    "Martian Dessert",
+    "Oasis",
+    "Cleveland",
+    "Lawn",
+    "Teensy-Weensy House",
+    "Bedroom",
+    "Garden",
+    "Roof",
+    "Martian Canal",
+    "Baby Dock",
+    "Among the Dunes",
+    "Donald Dock",
+    "My Kinda Dock!",
+    "Main Hall of Palace",
+    "Laundry Room",
+    "Oriental Garden",
+    "Audience Chamber",
+    "Harem",
+    "Inner Harem",
+    "Catacombs",
+    "Forgotten Storehouse",
+    "Ladder Room",
+    "Burial Chamber",
+    "Well Bottom",
+    "Base of Tower",
+    "Minaret",
+    "Cramped Space",
+    "Hickory & Dickory Dock",
+    "Basement",
+    "Icy Dock",
+    "Edge of Polar Ice Cap",
+    "Penguin Park",
+    "Gypsy Camp",
+    "Inside the Tent",
+    "South Pole",
+    "Orphanage Foyer",
+    "Allusion Room",
+    "Wattz-Upp Dock",
+    "Front Door",
+    "Dunetop",
+    "Canalview Mall",
+    "Exit Shop",
+    "Abandoned Dock",
+    "Hold",
+    "Stable",
+    "At Main Hatch",
+    "In Space",
+    "Space Yacht",
+    "Long Corridor",
+    "Boudoir",
+    "Plaza"
+  ],
+  "maps": [
+    {
+      "title": "Earth and the Palace",
+      "rooms": [
+        "Joe's Bar",
+        "Gents' Room",
+        "Cell",
+        "End of Hallway",
+        "Other Cell",
+        "Observation Room",
+        "Closet",
+        "Jungle",
+        "Spawning Ground",
+        "Fork, Of Sorts",
+        "Clearing",
+        "Back Door",
+        "Looks Can Be Deceiving",
+        "Laboratory",
+        "Vizicomm Booth",
+        "Rocky Clifftop",
+        "Royal Docks",
+        "Throne Room"
+      ],
+      "icon": "glass",
+      "caption": "Joe’s Bar, the cells, jungle trail, laboratory, and first Palace visit.",
+      "layout": {
+        "Joe's Bar": [
+          0,
+          0
+        ],
+        "Gents' Room": [
+          1,
+          0
+        ],
+        "Cell": [
+          2,
+          0
+        ],
+        "End of Hallway": [
+          2,
+          1
+        ],
+        "Other Cell": [
+          1,
+          1
+        ],
+        "Observation Room": [
+          0,
+          1
+        ],
+        "Closet": [
+          0,
+          2
+        ],
+        "Jungle": [
+          1,
+          2
+        ],
+        "Spawning Ground": [
+          2,
+          2
+        ],
+        "Fork, Of Sorts": [
+          2,
+          3
+        ],
+        "Clearing": [
+          1,
+          3
+        ],
+        "Back Door": [
+          0,
+          3
+        ],
+        "Looks Can Be Deceiving": [
+          0,
+          4
+        ],
+        "Laboratory": [
+          1,
+          4
+        ],
+        "Vizicomm Booth": [
+          2,
+          4
+        ],
+        "Rocky Clifftop": [
+          2,
+          5
+        ],
+        "Royal Docks": [
+          1,
+          5
+        ],
+        "Throne Room": [
+          0,
+          5
+        ]
+      },
+      "edges": [
+        {
+          "source": "Joe's Bar",
+          "target": "Gents' Room",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Joe's Bar",
+          "target": "Cell",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Cell",
+          "target": "End of Hallway",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "End of Hallway",
+          "target": "Other Cell",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "End of Hallway",
+          "target": "Observation Room",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Observation Room",
+          "target": "Closet",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Closet",
+          "target": "Jungle",
+          "label": "circle",
+          "firstArrival": true
+        },
+        {
+          "source": "Jungle",
+          "target": "Spawning Ground",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Jungle",
+          "target": "Fork, Of Sorts",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Fork, Of Sorts",
+          "target": "Clearing",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Clearing",
+          "target": "Back Door",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Back Door",
+          "target": "Looks Can Be Deceiving",
+          "label": "door",
+          "firstArrival": true
+        },
+        {
+          "source": "Looks Can Be Deceiving",
+          "target": "Laboratory",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Laboratory",
+          "target": "Vizicomm Booth",
+          "label": "circle",
+          "firstArrival": true
+        },
+        {
+          "source": "Vizicomm Booth",
+          "target": "Rocky Clifftop",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Rocky Clifftop",
+          "target": "Royal Docks",
+          "label": "circle",
+          "firstArrival": true
+        },
+        {
+          "source": "Royal Docks",
+          "target": "Throne Room",
+          "label": "south",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Castle, Cleveland, and the canal docks",
+      "rooms": [
+        "Ruined Castle",
+        "Martian Desert",
+        "Martian Dessert",
+        "Oasis",
+        "Cleveland",
+        "Lawn",
+        "Teensy-Weensy House",
+        "Bedroom",
+        "Garden",
+        "Roof",
+        "Martian Canal",
+        "Baby Dock",
+        "Among the Dunes",
+        "Donald Dock",
+        "My Kinda Dock!",
+        "Hickory & Dickory Dock",
+        "Basement",
+        "Icy Dock"
+      ],
+      "icon": "planet",
+      "caption": "Mars, Cleveland, the Palace return route, and the well bypass.",
+      "layout": {
+        "Ruined Castle": [
+          0,
+          0
+        ],
+        "Martian Desert": [
+          1,
+          0
+        ],
+        "Martian Dessert": [
+          2,
+          0
+        ],
+        "Oasis": [
+          2,
+          1
+        ],
+        "Cleveland": [
+          1,
+          1
+        ],
+        "Lawn": [
+          0,
+          1
+        ],
+        "Teensy-Weensy House": [
+          0,
+          2
+        ],
+        "Bedroom": [
+          1,
+          2
+        ],
+        "Garden": [
+          2,
+          2
+        ],
+        "Roof": [
+          2,
+          3
+        ],
+        "Martian Canal": [
+          1,
+          3
+        ],
+        "Baby Dock": [
+          0,
+          3
+        ],
+        "Among the Dunes": [
+          0,
+          4
+        ],
+        "Donald Dock": [
+          1,
+          4
+        ],
+        "My Kinda Dock!": [
+          2,
+          4
+        ],
+        "Hickory & Dickory Dock": [
+          2,
+          5
+        ],
+        "Basement": [
+          1,
+          5
+        ],
+        "Icy Dock": [
+          0,
+          5
+        ]
+      },
+      "edges": [
+        {
+          "source": "Ruined Castle",
+          "target": "Martian Desert",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Ruined Castle",
+          "target": "Martian Dessert",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Martian Dessert",
+          "target": "Oasis",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Oasis",
+          "target": "Cleveland",
+          "label": "circle",
+          "firstArrival": true
+        },
+        {
+          "source": "Cleveland",
+          "target": "Lawn",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Cleveland",
+          "target": "Teensy-Weensy House",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Teensy-Weensy House",
+          "target": "Bedroom",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Teensy-Weensy House",
+          "target": "Garden",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Martian Canal",
+          "target": "Baby Dock",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Baby Dock",
+          "target": "Among the Dunes",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Martian Canal",
+          "target": "Donald Dock",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Martian Canal",
+          "target": "My Kinda Dock!",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Ruined Castle",
+          "target": "Hickory & Dickory Dock",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Ruined Castle",
+          "target": "Basement",
+          "label": "circle",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "The Palace and the buried route",
+      "rooms": [
+        "My Kinda Dock!",
+        "Main Hall of Palace",
+        "Laundry Room",
+        "Oriental Garden",
+        "Audience Chamber",
+        "Harem",
+        "Inner Harem",
+        "Catacombs",
+        "Forgotten Storehouse",
+        "Ladder Room",
+        "Burial Chamber",
+        "Well Bottom",
+        "Base of Tower",
+        "Minaret",
+        "Cramped Space"
+      ],
+      "icon": "planet",
+      "caption": "The Palace riddle, catacombs, tower, and teleport back to My Kinda Dock.",
+      "layout": {
+        "My Kinda Dock!": [
+          0,
+          0
+        ],
+        "Main Hall of Palace": [
+          1,
+          0
+        ],
+        "Laundry Room": [
+          2,
+          0
+        ],
+        "Oriental Garden": [
+          2,
+          1
+        ],
+        "Audience Chamber": [
+          1,
+          1
+        ],
+        "Harem": [
+          0,
+          1
+        ],
+        "Inner Harem": [
+          0,
+          2
+        ],
+        "Catacombs": [
+          1,
+          2
+        ],
+        "Forgotten Storehouse": [
+          2,
+          2
+        ],
+        "Ladder Room": [
+          2,
+          3
+        ],
+        "Burial Chamber": [
+          1,
+          3
+        ],
+        "Well Bottom": [
+          0,
+          3
+        ],
+        "Base of Tower": [
+          0,
+          4
+        ],
+        "Minaret": [
+          1,
+          4
+        ],
+        "Cramped Space": [
+          2,
+          4
+        ]
+      },
+      "edges": [
+        {
+          "source": "My Kinda Dock!",
+          "target": "Main Hall of Palace",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Main Hall of Palace",
+          "target": "Laundry Room",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Main Hall of Palace",
+          "target": "Oriental Garden",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Main Hall of Palace",
+          "target": "Audience Chamber",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Audience Chamber",
+          "target": "Harem",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Harem",
+          "target": "Inner Harem",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Inner Harem",
+          "target": "Catacombs",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Catacombs",
+          "target": "Forgotten Storehouse",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Catacombs",
+          "target": "Ladder Room",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Catacombs",
+          "target": "Burial Chamber",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Catacombs",
+          "target": "Well Bottom",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Oriental Garden",
+          "target": "Base of Tower",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Base of Tower",
+          "target": "Minaret",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Minaret",
+          "target": "Cramped Space",
+          "label": "circle",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "The polar route and final rescue",
+      "rooms": [
+        "Edge of Polar Ice Cap",
+        "Penguin Park",
+        "Gypsy Camp",
+        "Inside the Tent",
+        "South Pole",
+        "Orphanage Foyer",
+        "Allusion Room",
+        "Wattz-Upp Dock",
+        "Front Door",
+        "Dunetop",
+        "Canalview Mall",
+        "Exit Shop",
+        "Abandoned Dock",
+        "Hold",
+        "Stable",
+        "At Main Hatch",
+        "In Space",
+        "Space Yacht",
+        "Long Corridor",
+        "Boudoir",
+        "Plaza"
+      ],
+      "icon": "rocket",
+      "caption": "The orphanage, Exit Shop, spaceship, Elysia rescue, and final exchange.",
+      "layout": {
+        "Edge of Polar Ice Cap": [
+          0,
+          0
+        ],
+        "Penguin Park": [
+          1,
+          0
+        ],
+        "Gypsy Camp": [
+          2,
+          0
+        ],
+        "Inside the Tent": [
+          2,
+          1
+        ],
+        "South Pole": [
+          1,
+          1
+        ],
+        "Orphanage Foyer": [
+          0,
+          1
+        ],
+        "Allusion Room": [
+          0,
+          2
+        ],
+        "Wattz-Upp Dock": [
+          1,
+          2
+        ],
+        "Front Door": [
+          2,
+          2
+        ],
+        "Dunetop": [
+          2,
+          3
+        ],
+        "Canalview Mall": [
+          1,
+          3
+        ],
+        "Exit Shop": [
+          0,
+          3
+        ],
+        "Abandoned Dock": [
+          0,
+          4
+        ],
+        "Hold": [
+          1,
+          4
+        ],
+        "Stable": [
+          2,
+          4
+        ],
+        "At Main Hatch": [
+          2,
+          5
+        ],
+        "In Space": [
+          1,
+          5
+        ],
+        "Space Yacht": [
+          0,
+          5
+        ],
+        "Long Corridor": [
+          0,
+          6
+        ],
+        "Boudoir": [
+          1,
+          6
+        ],
+        "Plaza": [
+          2,
+          6
+        ]
+      },
+      "edges": [
+        {
+          "source": "Edge of Polar Ice Cap",
+          "target": "Penguin Park",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Penguin Park",
+          "target": "Gypsy Camp",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Gypsy Camp",
+          "target": "Inside the Tent",
+          "label": "",
+          "firstArrival": true
+        },
+        {
+          "source": "Gypsy Camp",
+          "target": "South Pole",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "South Pole",
+          "target": "Orphanage Foyer",
+          "label": "in",
+          "firstArrival": true
+        },
+        {
+          "source": "Penguin Park",
+          "target": "Allusion Room",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Allusion Room",
+          "target": "Wattz-Upp Dock",
+          "label": "circle",
+          "firstArrival": true
+        },
+        {
+          "source": "Dunetop",
+          "target": "Canalview Mall",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Canalview Mall",
+          "target": "Exit Shop",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Hold",
+          "target": "Stable",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Stable",
+          "target": "At Main Hatch",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "At Main Hatch",
+          "target": "In Space",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "In Space",
+          "target": "Space Yacht",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "At Main Hatch",
+          "target": "Long Corridor",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Boudoir",
+          "target": "Plaza",
+          "label": "",
+          "firstArrival": true
+        }
+      ]
+    }
+  ],
+  "commands": [
+    "x",
+    "northwest",
+    "use bathroom",
+    "out",
+    "order drink",
+    "open door",
+    "turn on flashlight",
+    "open door",
+    "take flashlight",
+    "turn on flashlight",
+    "south",
+    "open narrow door",
+    "south",
+    "get paper",
+    "read paper",
+    "north",
+    "up",
+    "north",
+    "stand on trent",
+    "get basket",
+    "south",
+    "down",
+    "north",
+    "take painting",
+    "put painting in basket",
+    "take blanket",
+    "put blanket in basket",
+    "take food",
+    "put food in basket",
+    "south",
+    "up",
+    "north",
+    "stand on circle",
+    "hiss at flytrap",
+    "turn off flashlight",
+    "west",
+    "get jar",
+    "examine jar",
+    "east",
+    "east",
+    "east",
+    "take can",
+    "northwest",
+    "offer flashlight",
+    "salesman",
+    "open machine",
+    "put jar in machine",
+    "close machine",
+    "turn on machine",
+    "open machine",
+    "get jar",
+    "knock on back door",
+    "down",
+    "throw food in cage",
+    "wait",
+    "wait",
+    "wait",
+    "kiss female gorilla",
+    "get hose",
+    "get food",
+    "eat food",
+    "open cage",
+    "out",
+    "drop hose",
+    "unstrap trent",
+    "unstrap your body",
+    "pull switch",
+    "get off first slab",
+    "get hose",
+    "put hose in basket",
+    "stand on circle",
+    "turn knob",
+    "open return box",
+    "get coin",
+    "examine coin",
+    "southeast",
+    "stand on circle",
+    "south",
+    "rub cream on princess",
+    "take angle",
+    "put angle in basket",
+    "south",
+    "south",
+    "east",
+    "east",
+    "kiss frog",
+    "west",
+    "north",
+    "south",
+    "east",
+    "east",
+    "southeast",
+    "get rabbit",
+    "pour black stain on circle",
+    "stand on circle",
+    "south",
+    "take sack",
+    "open sack",
+    "empty sack",
+    "put angle in sack",
+    "put hose in sack",
+    "put painting in sack",
+    "put can in sack",
+    "north",
+    "northeast",
+    "up",
+    "get sheet",
+    "tear sheet into strips",
+    "tie strips together",
+    "tie rope to bed",
+    "throw rope out window",
+    "wait",
+    "open sack",
+    "get headlight",
+    "put headlight in sack",
+    "climb down stairs",
+    "east",
+    "move sod",
+    "look under sod",
+    "stand on circle",
+    "up",
+    "up",
+    "up",
+    "look",
+    "stand on circle",
+    "north",
+    "north",
+    "north",
+    "board barge",
+    "examine controls",
+    "push orange button",
+    "push purple button",
+    "wait",
+    "push orange button",
+    "exit",
+    "north",
+    "exit",
+    "north",
+    "get chapstick",
+    "get message",
+    "read message",
+    "south",
+    "board barge",
+    "push orange button",
+    "push purple button",
+    "push orange button",
+    "wait",
+    "exit",
+    "north",
+    "exit",
+    "board barge",
+    "push orange button",
+    "push purple button",
+    "push orange button",
+    "wait",
+    "exit",
+    "look",
+    "east",
+    "south",
+    "get clothespin",
+    "north",
+    "east",
+    "down",
+    "exit",
+    "east",
+    "northeast",
+    "yes",
+    "say \"riddle\"",
+    "west",
+    "103",
+    "west",
+    "wait",
+    "wife, kiss my kneecaps",
+    "put rabbit in basket",
+    "put jar in basket",
+    "get map",
+    "get torch",
+    "drop scrap",
+    "drop coded message",
+    "down",
+    "northwest",
+    "north",
+    "northeast",
+    "east",
+    "clap",
+    "northeast",
+    "northeast",
+    "southeast",
+    "hop",
+    "clap",
+    "kweepa",
+    "down",
+    "northwest",
+    "northeast",
+    "clap",
+    "north",
+    "south",
+    "hop",
+    "northeast",
+    "clap",
+    "up",
+    "kweepa",
+    "northwest",
+    "get phone book",
+    "clap",
+    "northwest",
+    "hop",
+    "south",
+    "southeast",
+    "clap",
+    "southeast",
+    "down",
+    "kweepa",
+    "northeast",
+    "clap",
+    "hop",
+    "west",
+    "north",
+    "northwest",
+    "clap",
+    "east",
+    "west",
+    "kweepa",
+    "hop",
+    "clap",
+    "southwest",
+    "southwest",
+    "get raft",
+    "north",
+    "clap",
+    "northeast",
+    "east",
+    "hop",
+    "kweepa",
+    "clap",
+    "northwest",
+    "northeast",
+    "southeast",
+    "up",
+    "clap",
+    "northwest",
+    "hop",
+    "stand on circle",
+    "exit",
+    "east",
+    "south",
+    "get pin",
+    "north",
+    "east",
+    "southeast",
+    "up",
+    "stand on circle",
+    "south",
+    "south",
+    "up",
+    "up",
+    "stand on circle",
+    "east",
+    "put pin on nose",
+    "put lip balm on lips",
+    "drop all",
+    "cover ears with hands",
+    "close eyes",
+    "kiss frog",
+    "open eyes",
+    "get blender",
+    "get sack",
+    "put blender in sack",
+    "remove pin",
+    "drop pin",
+    "get coin",
+    "get phone book",
+    "get basket",
+    "get raft",
+    "east",
+    "southeast",
+    "stand on circle",
+    "northeast",
+    "east",
+    "stand on circle",
+    "up",
+    "up",
+    "stand on circle",
+    "west",
+    "northwest",
+    "open sack",
+    "get painting",
+    "show painting to mouse",
+    "get mouse",
+    "south",
+    "stand on circle",
+    "up",
+    "north",
+    "stand on circle",
+    "west",
+    "push orange",
+    "east",
+    "east",
+    "look into well",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "climb down well",
+    "exit",
+    "south",
+    "southeast",
+    "give coin to penguin",
+    "southeast",
+    "enter tent",
+    "get baby",
+    "put baby in basket",
+    "exit",
+    "south",
+    "put basket on doorstep",
+    "wait",
+    "wait",
+    "open door",
+    "in",
+    "get cotton balls",
+    "south",
+    "north",
+    "northwest",
+    "west",
+    "stand on circle",
+    "west",
+    "stand on circle",
+    "south",
+    "get rake",
+    "north",
+    "northeast",
+    "east",
+    "stand on circle",
+    "up",
+    "north",
+    "stand on circle",
+    "east",
+    "east",
+    "northeast",
+    "east",
+    "stand on circle",
+    "put raft in water",
+    "board raft",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "grab dock",
+    "get raft",
+    "put raft in water",
+    "board raft",
+    "wait",
+    "grab dock",
+    "south",
+    "east",
+    "south",
+    "buy exit",
+    "give coin to proprietor",
+    "rake dust",
+    "get tube",
+    "open tube",
+    "get exit",
+    "north",
+    "west",
+    "north",
+    "get raft",
+    "put raft in water",
+    "board raft",
+    "wait",
+    "wait",
+    "wait",
+    "grab dock",
+    "get raft",
+    "put raft in water",
+    "board raft",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "grab dock",
+    "west",
+    "stand on circle",
+    "northeast",
+    "east",
+    "stand on circle",
+    "up",
+    "north",
+    "stand on circle",
+    "west",
+    "stand on circle",
+    "get sword",
+    "south",
+    "mount stallion",
+    "kick stallion",
+    "west",
+    "dismount",
+    "get white suit",
+    "wear white suit",
+    "open hatch",
+    "north",
+    "attack thorbast",
+    "attack thorbast",
+    "attack thorbast",
+    "attack thorbast",
+    "attack thorbast",
+    "attack thorbast",
+    "get sword",
+    "give his sword to thorbast",
+    "look",
+    "attack monster",
+    "untie woman",
+    "north",
+    "get photo",
+    "open door",
+    "east",
+    "south",
+    "south",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "look",
+    "stand on circle",
+    "drop exit",
+    "stand on exit",
+    "wait",
+    "wait",
+    "give blender to trent",
+    "give rubber hose to trent",
+    "give cotton balls to trent",
+    "give angle to trent",
+    "give headlight to trent",
+    "give mouse to trent",
+    "give photo to trent",
+    "give phone book to trent",
+    "<ENTER>",
+    "quit"
+  ]
+}

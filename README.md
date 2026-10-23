@@ -126,7 +126,8 @@ builds or tests.
 checks story identity and score/location checkpoints, and reports the executed
 opcode inventory. An optional JSONL trace records each instruction. Routes and
 traces under `.agent/regression-routes/` are local regression data and stay out
-of Git; automated tests use generated stories.
+of Git; automated tests use generated stories. For character input, a route can
+use `<ENTER>` to send the Enter key; one-character commands are sent as typed.
 
 ```sh
 dotnet run --project tools/Leafpile.RouteReplay -c Release -- \

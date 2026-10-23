@@ -323,3 +323,31 @@ The seed-1 route reaches 100/100 and the Tourist ending in 465 moves, then
 halts cleanly. The transcript confirms the player survives. Keep the Trinity
 story, manual, hints, route, saves, and raw trace local; automated tests do not
 require them.
+
+## Leather maximum-score walkthrough
+
+`make_leather_walkthrough.py` builds the 248-point Earth-safe guide from
+`walkthroughs/source-data/leather.json`. It contains all 446 numbered inputs,
+four hand-sketched maps covering all 71 locations visited on the route, score
+and item checkpoints, and the trace-derived six-column opcode table:
+
+```sh
+python3 tools/walkthroughs/make_leather_walkthrough.py
+```
+
+Replay the local story to refresh the instruction inventory and total:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- stories/leather.z3 \
+  .agent/regression-routes/leather-maximum-score.json \
+  .agent/regression-routes/leather-opcode-trace.jsonl
+python3 tools/walkthroughs/make_leather_walkthrough.py \
+  --refresh-trace .agent/regression-routes/leather-opcode-trace.jsonl
+```
+
+The deterministic seed-10 route reaches 248/248, the Interplanetary Emperor
+rank, and the Earth-safe ending in 479 story turns without a player death. The
+route uses the well to bypass the lethal canal beam and ends by giving Trent
+the eight required items in order, pressing Enter at the scratch-and-sniff
+prompt, and quitting. Keep the story, manual, hints, route, saves, and raw trace
+local; automated tests require none of those files.
