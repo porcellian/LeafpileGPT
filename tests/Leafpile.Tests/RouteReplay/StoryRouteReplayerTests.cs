@@ -10,7 +10,7 @@ public sealed class StoryRouteReplayerTests
     public void RouteCanBeSavedAndLoaded()
     {
         var story = StoryLoader.Load(CreateReadAndQuitStory());
-        var route = CreateRoute(story, ["look"]) with { ScoreGlobal = null, LocationGlobalContainsActor = true };
+        var route = CreateRoute(story, ["look"]) with { ScoreGlobal = null, MovesGlobal = null, LocationGlobalContainsActor = true };
         var path = Path.Combine(Path.GetTempPath(), $"leafpile-route-{Guid.NewGuid():N}.json");
         try
         {
@@ -20,6 +20,7 @@ public sealed class StoryRouteReplayerTests
             Assert.Equal(route.Story, loaded.Story);
             Assert.Equal(route.Commands, loaded.Commands);
             Assert.Null(loaded.ScoreGlobal);
+            Assert.Null(loaded.MovesGlobal);
             Assert.True(loaded.LocationGlobalContainsActor);
         }
         finally
@@ -109,14 +110,16 @@ public sealed class StoryRouteReplayerTests
         Assert.Equal("Room", new ZMachineObjectTable(state).GetShortName(2).Trim(), ignoreCase: true);
         var route = new StoryRoute("generated fixture", StoryIdentity.From(story), 31415, 1000, ["look"],
             [new RouteCheckpoint(1, Location: "Room", ContainsText: "look", Halted: true)],
-            ScoreGlobal: null, LocationGlobalContainsActor: true);
+            ScoreGlobal: null, MovesGlobal: null, LocationGlobalContainsActor: true);
 
         var result = StoryRouteReplayer.Replay(story, route);
 
         Assert.Null(result.Score);
+        Assert.Null(result.Moves);
         Assert.Equal("Room", result.Location);
         Assert.Equal("Room", Assert.Single(result.Progress).Location);
         Assert.Null(Assert.Single(result.Progress).Score);
+        Assert.Null(Assert.Single(result.Progress).Moves);
     }
 
     [Fact]
@@ -146,6 +149,30 @@ public sealed class StoryRouteReplayerTests
         Assert.True(result.Halted);
         Assert.Contains("Variable.22 read_char", result.UniqueOpcodes);
         Assert.Contains("TwoOperand.01 je", result.UniqueOpcodes);
+    }
+
+    [Fact]
+    public void ReplayDefersProgressCaptureUntilAfterStartupCharacterInput()
+    {
+        var image = CreateReadCharAndQuitStory();
+        new byte[] { 0xf6, 0x7f, 0x01, 0x10, 0xe4, 0x0f, 0x01, 0x00, 0x01, 0x50, 0xba }
+            .CopyTo(image, 0x200); // startup key, line input, quit
+        image[0x100] = 16; // V4 text buffer capacity
+        image[0x150] = 8; // V4 parse buffer capacity
+        image[0x411] = 6; // V4 dictionary entry length
+        var story = StoryLoader.Load(image);
+        var route = CreateRoute(story, ["x", "look"],
+            [new RouteCheckpoint(2, Location: "Hall", Halted: true)]) with
+        { ScoreGlobal = null, LocationGlobal = 17 };
+
+        var result = StoryRouteReplayer.Replay(story, route);
+
+        Assert.True(result.Halted);
+        Assert.Equal(2, result.CommandsReplayed);
+        var progress = Assert.Single(result.Progress);
+        Assert.Equal(2, progress.CommandNumber);
+        Assert.Equal("look", progress.Command);
+        Assert.Equal("Hall", progress.Location, ignoreCase: true);
     }
 
     [Fact]

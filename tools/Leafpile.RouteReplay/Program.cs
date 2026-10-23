@@ -47,7 +47,8 @@ try
     }
 
     var score = result.Score?.ToString() ?? "n/a";
-    Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {score}, moves {result.Moves}, location '{result.Location}', halted={result.Halted}.");
+    var moves = result.Moves?.ToString() ?? "n/a";
+    Console.WriteLine($"Route '{route.Name}' passed: {result.CommandsReplayed} commands, {result.InstructionsExecuted} instructions, score {score}, moves {moves}, location '{result.Location}', halted={result.Halted}.");
     Console.WriteLine($"Unique opcodes: {result.OpcodeInventory.Count}; total instructions: {result.InstructionsExecuted}");
     foreach (var opcode in result.OpcodeInventory)
         Console.WriteLine($"{opcode.Form,-8} {opcode.Opcode,2} {opcode.Mnemonic,-20} {opcode.Count,8} {opcode.FirstSequence,10} 0x{opcode.FirstAddress:x4}");
@@ -62,6 +63,7 @@ catch (Exception exception)
 static void PrintProgress(RouteProgress progress)
 {
     var score = progress.Score?.ToString() ?? "n/a";
-    Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {score,3} points | {progress.Moves,3} moves");
+    var moves = progress.Moves?.ToString() ?? "n/a";
+    Console.WriteLine($"{progress.CommandNumber,3}: {progress.Command,-32} | {progress.Location,-24} | {score,3} points | {moves,3} moves");
     Console.WriteLine(progress.ScreenText.Replace("\n", " "));
 }

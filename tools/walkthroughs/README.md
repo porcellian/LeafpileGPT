@@ -296,3 +296,30 @@ banner after one fall, then says the report is exaggerated and the player only
 suffers injured pride; the hints explicitly describe this as a lie. The route
 does not restart or lose progress. Keep the story, manual, hints, route, saves,
 and raw trace local; automated tests require none of them.
+
+## Trinity maximum-score walkthrough
+
+`make_trinity_walkthrough.py` builds the 100-point best-ending guide from
+`walkthroughs/source-data/trinity.json`. The committed source data preserves the
+458-command route, four hand-drawn map sheets for 69 route-discovered locations,
+score checkpoints, and the trace-derived opcode table:
+
+```sh
+python3 tools/walkthroughs/make_trinity_walkthrough.py
+```
+
+After a fresh local replay, refresh the opcode inventory and instruction total
+from its ignored trace:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- stories/trinity.z4 \
+  .agent/regression-routes/trinity-maximum-score.json \
+  .agent/regression-routes/trinity-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_trinity_walkthrough.py \
+  --refresh-trace .agent/regression-routes/trinity-maximum-score.trace.jsonl
+```
+
+The seed-1 route reaches 100/100 and the Tourist ending in 465 moves, then
+halts cleanly. The transcript confirms the player survives. Keep the Trinity
+story, manual, hints, route, saves, and raw trace local; automated tests do not
+require them.
