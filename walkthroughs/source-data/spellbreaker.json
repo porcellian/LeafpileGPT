@@ -1,0 +1,1631 @@
+{
+  "title": "SPELLBREAKER",
+  "subtitle": "A no-death route through the disappearing magic",
+  "routeTitle": "MAXIMUM-SCORE VICTORY WALKTHROUGH",
+  "release": 87,
+  "serial": "860904",
+  "randomSeed": 1,
+  "score": 600,
+  "maximumScore": 600,
+  "rank": "Scientist",
+  "endingVerification": "The shadow is destroyed, magic ends, and Belboz confirms the new age in Belwit Square. Score: 600/600; no player death.",
+  "moves": 455,
+  "commandsCount": 348,
+  "commands": [
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "south",
+    "get fish",
+    "south",
+    "learn lesoch",
+    "lesoch smoke",
+    "get cube",
+    "write \"earth\" on cube",
+    "learn blorple",
+    "blorple \"earth\" cube",
+    "frotz spell book",
+    "east",
+    "south",
+    "get zipper",
+    "open zipper",
+    "frotz knife",
+    "put knife in zipper",
+    "look in zipper",
+    "get flimsy scroll",
+    "read scroll",
+    "learn blorple",
+    "blorple \"earth\" cube",
+    "down",
+    "down",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "get stained scroll",
+    "learn blorple",
+    "blorple \"earth\" cube",
+    "read stained scroll",
+    "gnusto caskly",
+    "south",
+    "get dirty scroll",
+    "read dirty scroll",
+    "up",
+    "up",
+    "girgol",
+    "up",
+    "up",
+    "up",
+    "up",
+    "west",
+    "learn caskly",
+    "caskly hut",
+    "get cube",
+    "write \"soft\" on cube",
+    "learn blorple",
+    "blorple \"soft\" cube",
+    "south",
+    "get weed",
+    "get weed",
+    "learn blorple",
+    "blorple \"earth\" cube",
+    "west",
+    "north",
+    "plant weed",
+    "throck weed",
+    "down",
+    "get all",
+    "read dusty scroll",
+    "put \"soft\" cube in zipper",
+    "open gold box",
+    "get cube",
+    "write \"water\" on cube",
+    "learn blorple",
+    "blorple \"water\" cube",
+    "learn blorple",
+    "put all but fish and \"earth\" cube in zipper",
+    "close zipper",
+    "south",
+    "drop smoked fish",
+    "get \"water\" cube",
+    "get bottle",
+    "blorple \"earth\" cube",
+    "open zipper",
+    "get spell book",
+    "get burin",
+    "get dusty scroll",
+    "open bottle",
+    "look in bottle",
+    "get damp scroll",
+    "drop bottle",
+    "read damp scroll",
+    "gnusto liskon",
+    "east",
+    "north",
+    "sleep",
+    "learn liskon",
+    "liskon snake",
+    "north",
+    "north",
+    "learn malyon",
+    "malyon idol",
+    "wait",
+    "espnis idol",
+    "wait",
+    "climb idol",
+    "look in mouth",
+    "get cube",
+    "write \"air\" on cube",
+    "pry eye with burin",
+    "get opal eye",
+    "learn blorple",
+    "blorple \"air\" cube",
+    "north",
+    "get white scroll",
+    "read white scroll",
+    "gnusto tinsot",
+    "learn blorple",
+    "blorple \"air\" cube",
+    "west",
+    "east",
+    "buy blue carpet with opal",
+    "inventory",
+    "give red carpet",
+    "west",
+    "learn blorple",
+    "blorple \"water\" cube",
+    "north",
+    "learn liskon",
+    "learn blorple",
+    "put spell book in zipper",
+    "put \"air\" cube in zipper",
+    "put \"earth\" cube in zipper",
+    "get knife",
+    "close zipper",
+    "liskon me",
+    "enter outflow pipe",
+    "west",
+    "get cube",
+    "write \"change\" on cube",
+    "learn blorple",
+    "blorple \"water\" cube",
+    "north",
+    "open zipper",
+    "get spell book",
+    "learn tinsot",
+    "learn tinsot",
+    "learn tinsot",
+    "learn tinsot",
+    "learn tinsot",
+    "put spell book in zipper",
+    "close zipper",
+    "tinsot water",
+    "tinsot water",
+    "tinsot water",
+    "get on floe",
+    "wait",
+    "open trap door",
+    "up",
+    "get cube",
+    "write \"bones\" on cube",
+    "east",
+    "north",
+    "open zipper",
+    "put knife in zipper",
+    "put \"bones\" cube in zipper",
+    "get spell book",
+    "rezrov cabinet",
+    "get moldy book",
+    "learn caskly",
+    "caskly moldy book",
+    "read moldy book",
+    "gnusto snavig",
+    "south",
+    "west",
+    "up",
+    "drop blue carpet",
+    "sit on carpet",
+    "fly",
+    "west",
+    "west",
+    "west",
+    "west",
+    "land",
+    "get off carpet",
+    "get cube",
+    "write \"string\" on cube",
+    "learn blorple",
+    "blorple \"change\" cube",
+    "north",
+    "get compass rose",
+    "learn blorple",
+    "blorple \"change\" cube",
+    "west",
+    "put rose in north carving",
+    "get rose",
+    "north",
+    "touch rose to nw rune",
+    "nw",
+    "touch rose to w rune",
+    "west",
+    "touch rose to ne rune",
+    "ne",
+    "rezrov plug",
+    "west",
+    "drop rose",
+    "get cube",
+    "write \"noplac\" on cube",
+    "learn blorple",
+    "blorple \"water\" cube",
+    "learn snavig",
+    "learn blorple",
+    "put spell book in zipper",
+    "put \"change\" cube in zipper",
+    "close zipper",
+    "south",
+    "get \"water\" cube",
+    "snavig grouper",
+    "down",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "get all",
+    "inventory",
+    "up",
+    "write \"light\" on cube",
+    "learn blorple",
+    "blorple \"light\" cube",
+    "west",
+    "open zipper",
+    "get spell book",
+    "learn tinsot",
+    "tinsot fragment",
+    "get fragment",
+    "learn blorple",
+    "blorple \"noplac\" cube",
+    "south",
+    "give fragment to rock",
+    "get on rock",
+    "rock, north",
+    "rock, southwest",
+    "rock, east",
+    "rock, south",
+    "rock, east",
+    "rock, south",
+    "jump to brown rock",
+    "get cube",
+    "write \"dark\" on cube",
+    "sleep",
+    "learn blorple",
+    "blorple \"dark\" cube",
+    "down",
+    "learn snavig",
+    "drop spell book",
+    "put \"dark\" cube in zipper",
+    "put \"light\" cube in zipper",
+    "put \"water\" cube in zipper",
+    "close zipper",
+    "down",
+    "snavig grue",
+    "down",
+    "climb pillar",
+    "get cube",
+    "down",
+    "up",
+    "up",
+    "write \"fire\" on cube",
+    "get spell book",
+    "wait",
+    "learn blorple",
+    "blorple \"fire\" cube",
+    "north",
+    "examine outcropping",
+    "open zipper",
+    "get gold box",
+    "put \"fire\" cube in box",
+    "get \"fire\" cube",
+    "throw box to outcropping",
+    "learn blorple",
+    "blorple \"fire\" cube",
+    "east",
+    "get cube",
+    "write \"magic\" on cube",
+    "learn blorple",
+    "blorple \"string\" cube",
+    "south",
+    "belboz, help",
+    "say \"barsap\"",
+    "learn blorple",
+    "blorple \"noplac\" cube",
+    "east",
+    "rezrov door",
+    "learn blorple",
+    "learn jindak",
+    "learn jindak",
+    "learn jindak",
+    "put all in zipper",
+    "north",
+    "get x1,x2,x7,x8",
+    "jindak",
+    "get x3,x4",
+    "put x1,x2 on first pile",
+    "jindak",
+    "get x1",
+    "put x7 on first pile",
+    "jindak",
+    "get x7",
+    "blorple x7",
+    "down",
+    "unlock cabinet with key",
+    "open cabinet",
+    "get vellum scroll",
+    "open zipper",
+    "get spell book",
+    "learn blorple",
+    "learn blorple",
+    "put spell book in cabinet",
+    "close cabinet",
+    "lock cabinet with key",
+    "inventory",
+    "rezrov door",
+    "blorple x7",
+    "up",
+    "get sack",
+    "open sack",
+    "get flimsy scroll",
+    "read flimsy scroll",
+    "get burin",
+    "copy flimsy scroll to vellum scroll",
+    "empty zipper into sack",
+    "put flimsy scroll in zipper",
+    "close zipper",
+    "drop zipper",
+    "get \"magic\" cube from sack",
+    "blorple \"magic\" cube",
+    "east",
+    "wait",
+    "attack figure",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "wait",
+    "girgol shadow",
+    "get \"magic\" cube",
+    "put sack in hypercube",
+    "quit"
+  ],
+  "totalInstructions": 917003,
+  "opcodeInventory": [
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 49171,
+      "FirstSequence": 1,
+      "FirstAddress": 23363
+    },
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 35969,
+      "FirstSequence": 2,
+      "FirstAddress": 110213
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 32350,
+      "FirstSequence": 4,
+      "FirstAddress": 110219
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 44985,
+      "FirstSequence": 5,
+      "FirstAddress": 110226
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 165,
+      "FirstSequence": 6,
+      "FirstAddress": 110230
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 48340,
+      "FirstSequence": 7,
+      "FirstAddress": 110235
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 20696,
+      "FirstSequence": 8,
+      "FirstAddress": 110239
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 26382,
+      "FirstSequence": 66,
+      "FirstAddress": 110242
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 5070,
+      "FirstSequence": 68,
+      "FirstAddress": 110250
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 64548,
+      "FirstSequence": 69,
+      "FirstAddress": 23368
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 74193,
+      "FirstSequence": 74,
+      "FirstAddress": 24769
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 136076,
+      "FirstSequence": 75,
+      "FirstAddress": 24773
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 9647,
+      "FirstSequence": 76,
+      "FirstAddress": 24782
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 9951,
+      "FirstSequence": 80,
+      "FirstAddress": 24829
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 49765,
+      "FirstSequence": 110,
+      "FirstAddress": 32373
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 1788,
+      "FirstSequence": 119,
+      "FirstAddress": 46567
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 121,
+      "FirstAddress": 46700
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 3,
+      "FirstSequence": 122,
+      "FirstAddress": 46706
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 86001,
+      "FirstSequence": 124,
+      "FirstAddress": 46724
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 526,
+      "FirstSequence": 125,
+      "FirstAddress": 46728
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 849,
+      "FirstSequence": 142,
+      "FirstAddress": 46736
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 6834,
+      "FirstSequence": 143,
+      "FirstAddress": 46737
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 6552,
+      "FirstSequence": 148,
+      "FirstAddress": 54455
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 370,
+      "FirstSequence": 149,
+      "FirstAddress": 54459
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 6434,
+      "FirstSequence": 150,
+      "FirstAddress": 54461
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 3517,
+      "FirstSequence": 154,
+      "FirstAddress": 54508
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 569,
+      "FirstSequence": 156,
+      "FirstAddress": 54527
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 570,
+      "FirstSequence": 158,
+      "FirstAddress": 54534
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 3371,
+      "FirstSequence": 164,
+      "FirstAddress": 54569
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 10625,
+      "FirstSequence": 180,
+      "FirstAddress": 54621
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 16970,
+      "FirstSequence": 193,
+      "FirstAddress": 54865
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 16071,
+      "FirstSequence": 202,
+      "FirstAddress": 54997
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 4835,
+      "FirstSequence": 276,
+      "FirstAddress": 54649
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 348,
+      "FirstSequence": 378,
+      "FirstAddress": 25201
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 24811,
+      "FirstSequence": 396,
+      "FirstAddress": 26686
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 45416,
+      "FirstSequence": 748,
+      "FirstAddress": 26754
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 7155,
+      "FirstSequence": 1138,
+      "FirstAddress": 26871
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 2198,
+      "FirstSequence": 1144,
+      "FirstAddress": 26879
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 3124,
+      "FirstSequence": 1179,
+      "FirstAddress": 28779
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 7059,
+      "FirstSequence": 1183,
+      "FirstAddress": 28796
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 13597,
+      "FirstSequence": 1286,
+      "FirstAddress": 58848
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 1144,
+      "FirstSequence": 1317,
+      "FirstAddress": 24908
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 1582,
+      "FirstSequence": 1347,
+      "FirstAddress": 24941
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 368,
+      "FirstSequence": 4713,
+      "FirstAddress": 34010
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 454,
+      "FirstSequence": 4723,
+      "FirstAddress": 34520
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 22541,
+      "FirstSequence": 7086,
+      "FirstAddress": 53550
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 7440,
+      "FirstSequence": 7088,
+      "FirstAddress": 53558
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 614,
+      "FirstSequence": 8476,
+      "FirstAddress": 30714
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 5343,
+      "FirstSequence": 8506,
+      "FirstAddress": 32531
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 318,
+      "FirstSequence": 9122,
+      "FirstAddress": 53006
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 43,
+      "FirstSequence": 14232,
+      "FirstAddress": 59829
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 198,
+      "FirstSequence": 19923,
+      "FirstAddress": 111750
+    },
+    {
+      "Form": "Short",
+      "Opcode": 9,
+      "Mnemonic": "remove_obj",
+      "Count": 50,
+      "FirstSequence": 23942,
+      "FirstAddress": 60405
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 286146,
+      "FirstAddress": 30045
+    },
+    {
+      "Form": "Short",
+      "Opcode": 14,
+      "Mnemonic": "load",
+      "Count": 1,
+      "FirstSequence": 480716,
+      "FirstAddress": 53621
+    },
+    {
+      "Form": "Long",
+      "Opcode": 8,
+      "Mnemonic": "or",
+      "Count": 3,
+      "FirstSequence": 485476,
+      "FirstAddress": 120058
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 917003,
+      "FirstAddress": 46316
+    }
+  ],
+  "visitedLocations": [
+    "Council Chamber",
+    "Guild Hall",
+    "Belwit Square",
+    "Packed Earth",
+    "Hall of Stone",
+    "Ruins Room",
+    "Midair",
+    "In Roc Nest",
+    "Cliff Middle",
+    "Cliff Top",
+    "Boulder",
+    "Mountain Top",
+    "Stone Hut",
+    "Soft Room",
+    "Meadow",
+    "Cave Entrance",
+    "Cave",
+    "Ogre Lair",
+    "Water Room",
+    "Mid-Ocean",
+    "Smooth Room",
+    "North of Serpent",
+    "Temple",
+    "Air Room",
+    "Glacier",
+    "Bazaar",
+    "Emporium",
+    "Oubliette",
+    "In Pipe",
+    "Ruined Pipe",
+    "Dungeon",
+    "Dungeon East End",
+    "Dungeon Cell",
+    "Guard Tower",
+    "Changing Room",
+    "Bare Room",
+    "Carving Room",
+    "Octagonal Room",
+    "Ocean Floor",
+    "Light Room",
+    "Volcano Base",
+    "No Place",
+    "Plain",
+    "Dark Room",
+    "Dark Cave",
+    "Grue Cave",
+    "Light Pool",
+    "On Pillar",
+    "Fire Room",
+    "Volcano",
+    "Outcropping",
+    "String Room",
+    "Enchanters' Retreat",
+    "Inner Vault",
+    "Outer Vault",
+    "Sand Room",
+    "Magic Room",
+    "Castle"
+  ],
+  "maps": [
+    {
+      "title": "The Guild, Earth and the cliffs",
+      "icon": "book",
+      "rooms": [
+        "Council Chamber",
+        "Guild Hall",
+        "Belwit Square",
+        "Packed Earth",
+        "Hall of Stone",
+        "Ruins Room",
+        "Midair",
+        "In Roc Nest",
+        "Cliff Middle",
+        "Cliff Top",
+        "Boulder",
+        "Mountain Top",
+        "Stone Hut",
+        "Soft Room",
+        "Meadow",
+        "Cave Entrance",
+        "Cave",
+        "Ogre Lair"
+      ],
+      "edges": [
+        {
+          "source": "Council Chamber",
+          "target": "Guild Hall",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Guild Hall",
+          "target": "Belwit Square",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Belwit Square",
+          "target": "Packed Earth",
+          "label": "Earth",
+          "firstArrival": true
+        },
+        {
+          "source": "Packed Earth",
+          "target": "Hall of Stone",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Hall of Stone",
+          "target": "Ruins Room",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Cliff Middle",
+          "target": "Cliff Top",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Cliff Top",
+          "target": "Boulder",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Boulder",
+          "target": "Mountain Top",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Midair",
+          "target": "In Roc Nest",
+          "label": "wait",
+          "firstArrival": true
+        },
+        {
+          "source": "Stone Hut",
+          "target": "Soft Room",
+          "label": "Soft",
+          "firstArrival": true
+        },
+        {
+          "source": "Soft Room",
+          "target": "Meadow",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Cave Entrance",
+          "target": "Cave",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Cave",
+          "target": "Ogre Lair",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Packed Earth",
+          "target": "Midair",
+          "label": "down",
+          "firstArrival": true
+        }
+      ],
+      "caption": "first cubes, cliffs, and the ogre cave; the Earth cube links back to the cave route",
+      "layout": {
+        "Council Chamber": [
+          0,
+          0
+        ],
+        "Guild Hall": [
+          0,
+          1
+        ],
+        "Belwit Square": [
+          0,
+          2
+        ],
+        "Packed Earth": [
+          0,
+          3
+        ],
+        "Hall of Stone": [
+          0,
+          4
+        ],
+        "Ruins Room": [
+          0,
+          5
+        ],
+        "Mountain Top": [
+          1,
+          0
+        ],
+        "Boulder": [
+          1,
+          1
+        ],
+        "Cliff Top": [
+          1,
+          2
+        ],
+        "Cliff Middle": [
+          1,
+          3
+        ],
+        "In Roc Nest": [
+          1,
+          4
+        ],
+        "Midair": [
+          1,
+          5
+        ],
+        "Stone Hut": [
+          2,
+          0
+        ],
+        "Soft Room": [
+          2,
+          1
+        ],
+        "Meadow": [
+          2,
+          2
+        ],
+        "Cave Entrance": [
+          2,
+          3
+        ],
+        "Cave": [
+          2,
+          4
+        ],
+        "Ogre Lair": [
+          2,
+          5
+        ]
+      }
+    },
+    {
+      "title": "The water, serpent and air routes",
+      "icon": "book",
+      "rooms": [
+        "Water Room",
+        "Mid-Ocean",
+        "Ocean Floor",
+        "Smooth Room",
+        "North of Serpent",
+        "Temple",
+        "Air Room",
+        "Glacier",
+        "Bazaar",
+        "Emporium",
+        "Oubliette",
+        "In Pipe",
+        "Ruined Pipe",
+        "Light Room"
+      ],
+      "edges": [
+        {
+          "source": "Water Room",
+          "target": "Mid-Ocean",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Mid-Ocean",
+          "target": "Ocean Floor",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Oubliette",
+          "target": "In Pipe",
+          "label": "pipe",
+          "firstArrival": true
+        },
+        {
+          "source": "In Pipe",
+          "target": "Ruined Pipe",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Smooth Room",
+          "target": "North of Serpent",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "North of Serpent",
+          "target": "Temple",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Temple",
+          "target": "Air Room",
+          "label": "Air",
+          "firstArrival": true
+        },
+        {
+          "source": "Air Room",
+          "target": "Glacier",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Air Room",
+          "target": "Bazaar",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Bazaar",
+          "target": "Emporium",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Oubliette",
+          "target": "Dungeon",
+          "label": "up",
+          "firstArrival": true
+        }
+      ],
+      "caption": "Water Room opens north to Oubliette; distant lands connect by Blorple",
+      "layout": {
+        "Water Room": [
+          0,
+          0
+        ],
+        "Mid-Ocean": [
+          0,
+          1
+        ],
+        "Ocean Floor": [
+          0,
+          2
+        ],
+        "Light Room": [
+          0,
+          4
+        ],
+        "Smooth Room": [
+          1,
+          0
+        ],
+        "North of Serpent": [
+          1,
+          1
+        ],
+        "Temple": [
+          1,
+          2
+        ],
+        "Air Room": [
+          1,
+          3
+        ],
+        "Glacier": [
+          1,
+          4
+        ],
+        "Oubliette": [
+          2,
+          0
+        ],
+        "In Pipe": [
+          2,
+          1
+        ],
+        "Ruined Pipe": [
+          2,
+          2
+        ],
+        "Bazaar": [
+          2,
+          3
+        ],
+        "Emporium": [
+          2,
+          4
+        ]
+      }
+    },
+    {
+      "title": "Change, the vault and the Sand Room",
+      "icon": "book",
+      "rooms": [
+        "Dungeon",
+        "Dungeon East End",
+        "Dungeon Cell",
+        "Guard Tower",
+        "Bare Room",
+        "Changing Room",
+        "Carving Room",
+        "Octagonal Room",
+        "No Place",
+        "Sand Room",
+        "Inner Vault",
+        "Outer Vault",
+        "String Room",
+        "Enchanters' Retreat"
+      ],
+      "edges": [
+        {
+          "source": "Dungeon Cell",
+          "target": "Dungeon East End",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Dungeon East End",
+          "target": "Dungeon",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Dungeon",
+          "target": "Guard Tower",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Changing Room",
+          "target": "Bare Room",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Changing Room",
+          "target": "Carving Room",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Carving Room",
+          "target": "Octagonal Room",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Octagonal Room",
+          "target": "No Place",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "No Place",
+          "target": "Inner Vault",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Inner Vault",
+          "target": "Outer Vault",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Outer Vault",
+          "target": "Sand Room",
+          "label": "x7",
+          "firstArrival": true
+        },
+        {
+          "source": "String Room",
+          "target": "Enchanters' Retreat",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "In Roc Nest",
+          "target": "Changing Room",
+          "label": "Change",
+          "firstArrival": true
+        },
+        {
+          "source": "Outcropping",
+          "target": "String Room",
+          "label": "String",
+          "firstArrival": true
+        }
+      ],
+      "caption": "the carved maze, hidden vault, Sand Room, dungeon, and Enchanters\u2019 Retreat",
+      "layout": {
+        "Dungeon": [
+          0,
+          0
+        ],
+        "Dungeon East End": [
+          0,
+          1
+        ],
+        "Dungeon Cell": [
+          0,
+          2
+        ],
+        "Guard Tower": [
+          0,
+          3
+        ],
+        "Bare Room": [
+          0,
+          4
+        ],
+        "Changing Room": [
+          0,
+          5
+        ],
+        "Sand Room": [
+          1,
+          0
+        ],
+        "Outer Vault": [
+          1,
+          1
+        ],
+        "Inner Vault": [
+          1,
+          2
+        ],
+        "No Place": [
+          1,
+          3
+        ],
+        "Octagonal Room": [
+          1,
+          4
+        ],
+        "Carving Room": [
+          1,
+          5
+        ],
+        "String Room": [
+          2,
+          0
+        ],
+        "Enchanters' Retreat": [
+          2,
+          1
+        ]
+      }
+    },
+    {
+      "title": "The Plain, darkness, and the ending",
+      "icon": "spark",
+      "rooms": [
+        "Plain",
+        "Dark Room",
+        "Dark Cave",
+        "Grue Cave",
+        "Light Pool",
+        "On Pillar",
+        "Fire Room",
+        "Volcano",
+        "Volcano Base",
+        "Outcropping",
+        "Castle",
+        "Magic Room"
+      ],
+      "edges": [
+        {
+          "source": "Plain",
+          "target": "Dark Room",
+          "label": "Dark",
+          "firstArrival": true
+        },
+        {
+          "source": "Dark Room",
+          "target": "Dark Cave",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Dark Cave",
+          "target": "Grue Cave",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Grue Cave",
+          "target": "Light Pool",
+          "label": "down",
+          "firstArrival": true
+        },
+        {
+          "source": "Light Pool",
+          "target": "On Pillar",
+          "label": "climb",
+          "firstArrival": true
+        },
+        {
+          "source": "Dark Cave",
+          "target": "Fire Room",
+          "label": "Fire",
+          "firstArrival": true
+        },
+        {
+          "source": "Fire Room",
+          "target": "Volcano",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Volcano",
+          "target": "Outcropping",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Volcano Base",
+          "target": "Plain",
+          "label": "Noplac",
+          "firstArrival": true
+        },
+        {
+          "source": "Outcropping",
+          "target": "Magic Room",
+          "label": "Magic",
+          "firstArrival": true
+        },
+        {
+          "source": "Magic Room",
+          "target": "Castle",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Light Room",
+          "target": "Volcano Base",
+          "label": "west",
+          "firstArrival": true
+        }
+      ],
+      "caption": "the Plain\u2019s moving rocks, dark maze, fire land, and the final throne room",
+      "layout": {
+        "Plain": [
+          0,
+          0
+        ],
+        "Dark Room": [
+          0,
+          1
+        ],
+        "Dark Cave": [
+          0,
+          2
+        ],
+        "Grue Cave": [
+          0,
+          3
+        ],
+        "Light Pool": [
+          0,
+          4
+        ],
+        "On Pillar": [
+          0,
+          5
+        ],
+        "Fire Room": [
+          1,
+          2
+        ],
+        "Volcano": [
+          1,
+          3
+        ],
+        "Outcropping": [
+          1,
+          4
+        ],
+        "Volcano Base": [
+          2,
+          0
+        ],
+        "Magic Room": [
+          2,
+          4
+        ],
+        "Castle": [
+          2,
+          5
+        ]
+      }
+    }
+  ],
+  "intro": [
+    "This fresh Z3 route uses seed 1 and reaches the story\u2019s stated 600-point maximum. It escapes the alarm in the Outer Vault, rescues Belboz\u2019s key, and replaces the shadow\u2019s magic cube with the sack.",
+    "Learn spells only when prompted. The simulated transformations are temporary. At the grouper nest, wait until you become yourself again before taking the loose items; the vault\u2019s correct cube is seed-dependent.",
+    "The route ends after the Scientist ending by answering QUIT. It records 348 commands and 455 moves with no player-death message."
+  ],
+  "checkpoints": [
+    {
+      "heading": "EARTH + SOFT",
+      "detail": "105 points after the Soft cube; Caskly and Throck are recorded."
+    },
+    {
+      "heading": "WATER + AIR",
+      "detail": "185 points after the Air cube; obtain the opal eye and blue carpet."
+    },
+    {
+      "heading": "THE DARK CUBE",
+      "detail": "390 points after the brown rock\u2019s cube; rest before learning Blorple."
+    },
+    {
+      "heading": "THE VAULT",
+      "detail": "490 points after escaping with cube x7; 525 after preparing the cabinet."
+    },
+    {
+      "heading": "THE MAGIC CUBE",
+      "detail": "550 points after retrieving it from the sack; the finale raises score to 600."
+    },
+    {
+      "heading": "SCIENTIST",
+      "detail": "600/600 at 455 moves; shadow destroyed; no player death."
+    }
+  ],
+  "stepStarts": {
+    "1": "1  |  FIRST CUBE AND THE EARTH ROOM",
+    "15": "2  |  GIRGOL SCROLL AND CASKLY",
+    "38": "3  |  SOFT AND WATER CUBES",
+    "71": "4  |  FIND LISKON",
+    "91": "5  |  AIR CUBE AND THE CARPET",
+    "138": "6  |  CHANGE AND THE OUBLIETTE",
+    "157": "7  |  BONES, SNAVIG AND STRING",
+    "186": "8  |  THE NOPLAC CUBE",
+    "206": "9  |  LIGHT, DARK AND FIRE",
+    "282": "10  |  MAGIC AND BELBOZ\u2019S KEY",
+    "287": "11  |  FIND THE VAULT CUBE",
+    "307": "12  |  PREPARE THE CABINET AND SACK",
+    "332": "13  |  DESTROY THE SHADOW"
+  },
+  "criticalCommands": [
+    10,
+    14,
+    24,
+    37,
+    43,
+    50,
+    54,
+    63,
+    69,
+    87,
+    95,
+    101,
+    105,
+    108,
+    121,
+    133,
+    136,
+    153,
+    168,
+    170,
+    181,
+    183,
+    188,
+    193,
+    201,
+    204,
+    216,
+    221,
+    231,
+    234,
+    243,
+    245,
+    249,
+    261,
+    268,
+    269,
+    273,
+    276,
+    280,
+    285,
+    286,
+    288,
+    290,
+    295,
+    297,
+    298,
+    301,
+    304,
+    306,
+    308,
+    310,
+    315,
+    317,
+    319,
+    320,
+    327,
+    328,
+    332,
+    333,
+    334,
+    336,
+    346,
+    347
+  ],
+  "totalRouteCommands": 348
+}
