@@ -369,3 +369,4 @@
 - 2026-10-23T18:13Z [TOOL] Committed Task 19.20 as `6fdab04`, pushed `feature/19.20-trinity-walkthrough`, and opened PR #66 at `https://github.com/porcellian/LeafpileGPT/pull/66`; awaiting manual review and merge.
 - 2026-10-23T18:37Z [USER] PR #66 was merged; add Task 19.21 for `stories/leather.z3` as a checklist-only PR and wait for its merge before starting the playthrough.
 - 2026-10-23T18:37Z [TOOL] Fetched `origin/main` at `749fa4b` and started `feature/19.21-leather-task`. Leather story, manual, and hints are present locally and ignored. Added the unchecked Task 19.21 checklist; no gameplay work has started.
+- 2026-10-23T18:38Z [TOOL] Committed Task 19.21 checklist as `e51e933`, pushed `feature/19.21-leather-task`, and opened PR #67 at `https://github.com/porcellian/LeafpileGPT/pull/67`; awaiting manual merge. Do not start the Leather playthrough before merge.
