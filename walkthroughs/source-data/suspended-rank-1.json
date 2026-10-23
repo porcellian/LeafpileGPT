@@ -1,0 +1,1006 @@
+{
+  "title": "Suspended — Rank 1 Maximum-Score Route",
+  "outcome": "Winning ending at rank 1: 8,000 casualties, zero projected recovery casualties, 70 cycles. Poet and Waldo die on the acid route; Sensa dies after installing the primary cable. Whiz recovers Waldo’s cable and completes the secondary repair.",
+  "totalInstructions": 249718,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 13679,
+      "FirstSequence": 1,
+      "FirstAddress": 24809
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 16881,
+      "FirstSequence": 5,
+      "FirstAddress": 24821
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 5712,
+      "FirstSequence": 7,
+      "FirstAddress": 24661
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 39202,
+      "FirstSequence": 9,
+      "FirstAddress": 24669
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 6012,
+      "FirstSequence": 10,
+      "FirstAddress": 24673
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 39285,
+      "FirstSequence": 11,
+      "FirstAddress": 24677
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 4751,
+      "FirstSequence": 13,
+      "FirstAddress": 24688
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 1150,
+      "FirstSequence": 14,
+      "FirstAddress": 24693
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 21275,
+      "FirstSequence": 23,
+      "FirstAddress": 24695
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 10282,
+      "FirstSequence": 26,
+      "FirstAddress": 24709
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 11246,
+      "FirstSequence": 493,
+      "FirstAddress": 24989
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 362,
+      "FirstSequence": 495,
+      "FirstAddress": 33605
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 497,
+      "FirstAddress": 33754
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 8,
+      "FirstSequence": 498,
+      "FirstAddress": 33760
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 11170,
+      "FirstSequence": 500,
+      "FirstAddress": 33778
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 5099,
+      "FirstSequence": 501,
+      "FirstAddress": 33785
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 6,
+      "FirstSequence": 502,
+      "FirstAddress": 33789
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 290,
+      "FirstSequence": 526,
+      "FirstAddress": 33795
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 1466,
+      "FirstSequence": 527,
+      "FirstAddress": 33796
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 2416,
+      "FirstSequence": 534,
+      "FirstAddress": 25072
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 4289,
+      "FirstSequence": 536,
+      "FirstAddress": 25080
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 1205,
+      "FirstSequence": 539,
+      "FirstAddress": 25097
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 375,
+      "FirstSequence": 540,
+      "FirstAddress": 25100
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 1160,
+      "FirstSequence": 541,
+      "FirstAddress": 25104
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 2143,
+      "FirstSequence": 552,
+      "FirstAddress": 42232
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 6151,
+      "FirstSequence": 579,
+      "FirstAddress": 25978
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 4348,
+      "FirstSequence": 590,
+      "FirstAddress": 26245
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 239,
+      "FirstSequence": 626,
+      "FirstAddress": 44915
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 107,
+      "FirstSequence": 632,
+      "FirstAddress": 42520
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 50,
+      "FirstSequence": 633,
+      "FirstAddress": 42522
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 1128,
+      "FirstSequence": 1145,
+      "FirstAddress": 42306
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 756,
+      "FirstSequence": 1251,
+      "FirstAddress": 26685
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 69,
+      "FirstSequence": 1254,
+      "FirstAddress": 26719
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 1040,
+      "FirstSequence": 1262,
+      "FirstAddress": 26772
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 3808,
+      "FirstSequence": 1272,
+      "FirstAddress": 27421
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 618,
+      "FirstSequence": 1303,
+      "FirstAddress": 27469
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 5057,
+      "FirstSequence": 1407,
+      "FirstAddress": 27275
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 275,
+      "FirstSequence": 1420,
+      "FirstAddress": 26850
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 206,
+      "FirstSequence": 1428,
+      "FirstAddress": 26894
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 4780,
+      "FirstSequence": 1526,
+      "FirstAddress": 31265
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 8511,
+      "FirstSequence": 1529,
+      "FirstAddress": 31288
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 4293,
+      "FirstSequence": 1535,
+      "FirstAddress": 32088
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 4112,
+      "FirstSequence": 1536,
+      "FirstAddress": 32091
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 4330,
+      "FirstSequence": 1560,
+      "FirstAddress": 31398
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 81,
+      "FirstSequence": 6015,
+      "FirstAddress": 48266
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 200,
+      "FirstSequence": 6201,
+      "FirstAddress": 55671
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 34,
+      "FirstSequence": 18906,
+      "FirstAddress": 35318
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 47,
+      "FirstSequence": 18907,
+      "FirstAddress": 35321
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 8,
+      "FirstSequence": 77571,
+      "FirstAddress": 56288
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 2,
+      "FirstSequence": 111629,
+      "FirstAddress": 24337
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 1,
+      "FirstSequence": 249681,
+      "FirstAddress": 44103
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 1,
+      "FirstSequence": 249682,
+      "FirstAddress": 44109
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 249718,
+      "FirstAddress": 48198
+    }
+  ],
+  "commands": [
+    "poet, go to weather control",
+    "sensa, go to sub supply room",
+    "whiz, go to secondary channel",
+    "sensa, take ramp",
+    "sensa, go west",
+    "sensa, take container and grasper",
+    "sensa, go to hallway junction",
+    "waldo, go to hallway junction",
+    "auda, go to gamma repair",
+    "poet, turn second dial to 100",
+    "poet, go to hallway end",
+    "iris, go to main supply room",
+    "sensa, put ramp at dropoff",
+    "auda, listen",
+    "waldo, take container and grasper",
+    "waldo, go to main supply room",
+    "waldo, install grasper",
+    "waldo, take red ic and yellow ic",
+    "sensa, go north",
+    "sensa, take ramp",
+    "sensa, go to small supply room",
+    "waldo, open panel",
+    "waldo, replace rough device with rough object",
+    "waldo, close panel",
+    "poet, get in car",
+    "poet, get out of car",
+    "poet, go to biology lab",
+    "waldo, take burned and fried chip",
+    "poet, take camera",
+    "sensa, put ramp at holder",
+    "sensa, get on ramp",
+    "sensa, take cutter",
+    "sensa, get off ramp",
+    "sensa, take ramp",
+    "sensa, go to sloping corridor",
+    "poet, go to vehicle debarkation",
+    "waldo, put red ic in red socket",
+    "waldo, put yellow ic in yellow socket",
+    "poet, get in car",
+    "poet, get out of car",
+    "poet, go to primary channel",
+    "sensa, put ramp at dropoff",
+    "sensa, go to gamma repair",
+    "waldo, push button",
+    "iris, take fuse",
+    "waldo, take cable",
+    "waldo, go to the secondary channel",
+    "iris, go to middle supply room",
+    "iris, take cable",
+    "iris, go to main supply",
+    "sensa, examine object",
+    "sensa, turn flowswitch",
+    "both sensa and auda, move fred",
+    "sensa, cut cable with cutter",
+    "poet, plug tv1 in",
+    "poet, aim tv1 at sign",
+    "sensa, take cable",
+    "sensa, go to primary channel",
+    "iris, put cable in machine",
+    "iris, put fuse in machine",
+    "whiz, go to waldo",
+    "whiz, take fourteen-inch cable",
+    "whiz, replace the nine-inch cable with the fourteen-inch cable",
+    "whiz, drag waldo to the east end",
+    "auda, go to sleep chamber",
+    "wait",
+    "sensa, replace four-inch cable with twelve-inch cable",
+    "iris, press fourth circle",
+    "iris, press fifth circle"
+  ],
+  "stepStarts": {
+    "1": "Dispatch the crew",
+    "10": "Stabilize surface weather",
+    "15": "Prepare Waldo and Sensa",
+    "22": "Repair Iris and the reset machine",
+    "25": "Retrieve the camera",
+    "41": "Reach the filtering computers",
+    "44": "Open the reset machine",
+    "53": "Free Fred and read the code",
+    "59": "Replace both FC cables",
+    "66": "Finish the primary cable and reset"
+  },
+  "criticalCommands": [
+    10,
+    11,
+    13,
+    17,
+    18,
+    23,
+    25,
+    27,
+    29,
+    32,
+    37,
+    38,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    52,
+    53,
+    54,
+    55,
+    56,
+    57,
+    58,
+    59,
+    60,
+    61,
+    62,
+    63,
+    66,
+    67,
+    68,
+    69
+  ],
+  "intro": [
+    "Begin from a fresh Release 8 story with deterministic seed 1035. Enter the 69 commands in order; robot-specific commands can run while other robots continue moving. The route sets Weather Tower 2 to 100 before the third quake and finishes in 70 cycles.",
+    "Verified result: 8,000 current casualties, zero projected casualties during recovery, 30,164,000 possible survivors, rank 1 (best), and the winning reset ending. There is no numeric score global; verify the ending text. This improves on Task 19.6’s no-robot-death result of 114,000 casualties and rank 3. Poet dies after sending the reset code; Waldo dies carrying the fourteen-inch cable, which Whiz retrieves and installs; Sensa dies after replacing the primary cable.",
+    "Key item chain: Sensa brings the ramp and cutter; Waldo takes the grasping extension, fixes Iris, fits the red and yellow ICs, and carries the fourteen-inch cable; Iris installs that cable and the fuse; Sensa frees Fred’s twelve-inch cable and installs it in the Primary Channel; Poet carries the camera to read the sign. For seed 1035, the code is BARKLA: BAR is circle 4, KLA is circle 5. Other seeds produce a different code; use the printed halves-to-circles key.",
+    "All commands are one input apiece. The deterministic route halts immediately after the second reset circle is accepted. The full local instruction trace records the exact execution count and opcode inventory."
+  ],
+  "visitedLocations": [
+    "Central Chamber",
+    "Entry Area",
+    "Weather Monitors",
+    "Advisory Peripheral",
+    "Weather Control Area",
+    "Sub Supply Room",
+    "Middle Supply Room",
+    "Hallway Junction",
+    "Access Hallway",
+    "Sloping Corridor",
+    "Small Supply Room",
+    "Main Supply Room",
+    "Gamma Repair",
+    "Beta Repair",
+    "Hallway End",
+    "Vehicle Debarkation Area",
+    "Biological Laboratory",
+    "Primary Channel",
+    "Beta FC",
+    "Secondary Channel",
+    "East End",
+    "Sleep Chamber",
+    "Activities Area",
+    "Bending Corridor",
+    "Bending Passage",
+    "Southeast Passage"
+  ],
+  "maps": [
+    {
+      "title": "Service, Controls & Habitation",
+      "rooms": [
+        "Central Chamber",
+        "Entry Area",
+        "Cryogenic Area",
+        "Hallway",
+        "Activities Area",
+        "Sleep Chamber",
+        "Hallway Corner",
+        "Hallway Branch",
+        "Hallway T",
+        "Hallway End",
+        "Hallway Junction",
+        "Access Hallway",
+        "Maintenance Access",
+        "Sloping Corridor",
+        "Small Supply Room",
+        "Main Supply Room",
+        "Middle Supply Room",
+        "Sub Supply Room",
+        "Weather Monitors",
+        "Hydroponics Monitors",
+        "Transit Monitors",
+        "Weather Control Area",
+        "Skywalk Alpha",
+        "Hydroponics Control Area",
+        "Skywalk Beta",
+        "Transit Control Area",
+        "Skywalk Gamma"
+      ],
+      "edges": [
+        [
+          "Central Chamber",
+          "Entry Area",
+          false
+        ],
+        [
+          "Entry Area",
+          "Cryogenic Area",
+          false
+        ],
+        [
+          "Cryogenic Area",
+          "Hallway",
+          false
+        ],
+        [
+          "Hallway",
+          "Activities Area",
+          false
+        ],
+        [
+          "Activities Area",
+          "Sleep Chamber",
+          false
+        ],
+        [
+          "Sleep Chamber",
+          "Hallway Corner",
+          false
+        ],
+        [
+          "Hallway Corner",
+          "Hallway Branch",
+          false
+        ],
+        [
+          "Hallway Branch",
+          "Hallway T",
+          false
+        ],
+        [
+          "Hallway T",
+          "Hallway End",
+          false
+        ],
+        [
+          "Hallway Junction",
+          "Access Hallway",
+          false
+        ],
+        [
+          "Access Hallway",
+          "Maintenance Access",
+          false
+        ],
+        [
+          "Maintenance Access",
+          "Sloping Corridor",
+          false
+        ],
+        [
+          "Sloping Corridor",
+          "Small Supply Room",
+          false
+        ],
+        [
+          "Hallway Junction",
+          "Sloping Corridor",
+          false
+        ],
+        [
+          "Small Supply Room",
+          "Main Supply Room",
+          false
+        ],
+        [
+          "Main Supply Room",
+          "Middle Supply Room",
+          false
+        ],
+        [
+          "Middle Supply Room",
+          "Sub Supply Room",
+          false
+        ],
+        [
+          "Weather Monitors",
+          "Hydroponics Monitors",
+          false
+        ],
+        [
+          "Weather Monitors",
+          "Transit Monitors",
+          false
+        ],
+        [
+          "Weather Monitors",
+          "Weather Control Area",
+          false
+        ],
+        [
+          "Weather Control Area",
+          "Skywalk Alpha",
+          false
+        ],
+        [
+          "Skywalk Alpha",
+          "Hydroponics Control Area",
+          false
+        ],
+        [
+          "Hydroponics Control Area",
+          "Skywalk Beta",
+          false
+        ],
+        [
+          "Skywalk Beta",
+          "Transit Control Area",
+          false
+        ],
+        [
+          "Transit Control Area",
+          "Skywalk Gamma",
+          false
+        ]
+      ]
+    },
+    {
+      "title": "Passages, Library & Filtering Computers",
+      "rooms": [
+        "Angling Corridor",
+        "Southeast Junction",
+        "Top Passage",
+        "Rising Passage",
+        "Short Corridor",
+        "UD Tube",
+        "East End",
+        "Bending Corridor",
+        "Bending Passage",
+        "Southeast Passage",
+        "Vehicle Debarkation Area",
+        "Dead End",
+        "Biology Corridor",
+        "Biological Laboratory",
+        "Cavernous Room",
+        "Primary Channel",
+        "Alpha FC",
+        "Beta FC",
+        "Secondary Channel",
+        "Gamma FC",
+        "Gamma Repair",
+        "Alpha Repair",
+        "Beta Repair",
+        "Central Core",
+        "Outer Library Area",
+        "Library Entrance",
+        "Library Core",
+        "Historical Peripheral",
+        "Technical Peripheral",
+        "Index Peripheral",
+        "Advisory Peripheral",
+        "Hell",
+        "Hallway (east)",
+        "Hallway (south)",
+        "Sterilization Chamber",
+        "Decontamination Chamber"
+      ],
+      "edges": [
+        [
+          "Angling Corridor",
+          "Southeast Junction",
+          false
+        ],
+        [
+          "Southeast Junction",
+          "Top Passage",
+          false
+        ],
+        [
+          "Top Passage",
+          "Rising Passage",
+          false
+        ],
+        [
+          "Rising Passage",
+          "Short Corridor",
+          false
+        ],
+        [
+          "Short Corridor",
+          "UD Tube",
+          false
+        ],
+        [
+          "UD Tube",
+          "East End",
+          false
+        ],
+        [
+          "East End",
+          "Vehicle Debarkation Area",
+          false
+        ],
+        [
+          "East End",
+          "Bending Corridor",
+          false
+        ],
+        [
+          "Bending Corridor",
+          "Bending Passage",
+          false
+        ],
+        [
+          "Bending Passage",
+          "Southeast Passage",
+          false
+        ],
+        [
+          "Southeast Passage",
+          "East End",
+          false
+        ],
+        [
+          "Vehicle Debarkation Area",
+          "Biology Corridor",
+          false
+        ],
+        [
+          "Biology Corridor",
+          "Biological Laboratory",
+          false
+        ],
+        [
+          "East End",
+          "Cavernous Room",
+          false
+        ],
+        [
+          "Cavernous Room",
+          "Primary Channel",
+          false
+        ],
+        [
+          "Primary Channel",
+          "Alpha FC",
+          false
+        ],
+        [
+          "Primary Channel",
+          "Beta FC",
+          false
+        ],
+        [
+          "Beta FC",
+          "Secondary Channel",
+          false
+        ],
+        [
+          "Secondary Channel",
+          "Gamma FC",
+          false
+        ],
+        [
+          "Gamma FC",
+          "Gamma Repair",
+          false
+        ],
+        [
+          "Alpha FC",
+          "Alpha Repair",
+          false
+        ],
+        [
+          "Beta FC",
+          "Beta Repair",
+          false
+        ],
+        [
+          "Central Core",
+          "Outer Library Area",
+          false
+        ],
+        [
+          "Outer Library Area",
+          "Library Entrance",
+          false
+        ],
+        [
+          "Library Entrance",
+          "Library Core",
+          false
+        ],
+        [
+          "Central Core",
+          "Historical Peripheral",
+          false
+        ],
+        [
+          "Historical Peripheral",
+          "Technical Peripheral",
+          false
+        ],
+        [
+          "Technical Peripheral",
+          "Index Peripheral",
+          false
+        ],
+        [
+          "Index Peripheral",
+          "Advisory Peripheral",
+          false
+        ],
+        [
+          "Advisory Peripheral",
+          "Library Core",
+          false
+        ],
+        [
+          "Central Core",
+          "Hell",
+          false
+        ],
+        [
+          "Hallway (east)",
+          "Hallway (south)",
+          false
+        ],
+        [
+          "Dead End",
+          "Sterilization Chamber",
+          false
+        ],
+        [
+          "Sterilization Chamber",
+          "Decontamination Chamber",
+          false
+        ]
+      ]
+    }
+  ],
+  "randomSeed": 1035,
+  "release": 8,
+  "serial": "840521",
+  "moves": 70,
+  "commandsCount": 69,
+  "checkpoints": [
+    {
+      "heading": "70 cycles",
+      "detail": "Winning reset at the earliest verified finish"
+    },
+    {
+      "heading": "8,000 casualties",
+      "detail": "No projected casualties during recovery"
+    },
+    {
+      "heading": "Rank 1 / 7",
+      "detail": "Best ending rank on the story scale"
+    },
+    {
+      "heading": "Three robot failures",
+      "detail": "Poet, Waldo, Sensa die; Whiz retrieves the cable"
+    }
+  ],
+  "endingVerification": "Two reset circles accepted; all systems return to normal; recovery completes in 0 cycles; rank 1; task completed in 70 cycles.",
+  "routePages": [
+    {
+      "start": 1,
+      "end": 24,
+      "caption": "Dispatch all six robots; stabilize Tower 2 and prepare the repair crew."
+    },
+    {
+      "start": 25,
+      "end": 40,
+      "caption": "Repair Iris, retrieve the camera, and collect Sensa’s cutter."
+    },
+    {
+      "start": 41,
+      "end": 58,
+      "caption": "Reach the FC area, remove Fred’s cable, and transmit the random reset code."
+    },
+    {
+      "start": 59,
+      "end": 69,
+      "caption": "Replace the long cables, install the reset code, and verify the winning result."
+    }
+  ],
+  "routeNotes": {}
+}
