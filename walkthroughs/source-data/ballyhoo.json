@@ -1,0 +1,1423 @@
+{
+  "title": "BALLYHOO",
+  "subtitle": "Maximum-score rescue walkthrough",
+  "routeTitle": "Ballyhoo 200-point best-ending no-death route",
+  "score": 200,
+  "maximumScore": 200,
+  "commandsCount": 388,
+  "moves": 385,
+  "location": "Left Hanging",
+  "randomSeed": 1,
+  "release": 97,
+  "serial": "851218",
+  "checksum": "78AE",
+  "endingVerification": "Chelsea is caught; the crowd saves you. The circus is safe (200 / 200).",
+  "totalInstructions": 795578,
+  "opcodeInventory": [
+    {
+      "Form": "Long",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 32707,
+      "FirstSequence": 1,
+      "FirstAddress": 22675
+    },
+    {
+      "Form": "Long",
+      "Opcode": 14,
+      "Mnemonic": "insert_obj",
+      "Count": 1522,
+      "FirstSequence": 4,
+      "FirstAddress": 22684
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 0,
+      "Mnemonic": "call_vs",
+      "Count": 31218,
+      "FirstSequence": 5,
+      "FirstAddress": 22687
+    },
+    {
+      "Form": "Long",
+      "Opcode": 15,
+      "Mnemonic": "loadw",
+      "Count": 71917,
+      "FirstSequence": 6,
+      "FirstAddress": 33679
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1,
+      "FirstSequence": 7,
+      "FirstAddress": 33683
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "print",
+      "Count": 2116,
+      "FirstSequence": 8,
+      "FirstAddress": 33689
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 6,
+      "Mnemonic": "print_num",
+      "Count": 10,
+      "FirstSequence": 9,
+      "FirstAddress": 33774
+    },
+    {
+      "Form": "Long",
+      "Opcode": 5,
+      "Mnemonic": "inc_chk",
+      "Count": 47315,
+      "FirstSequence": 11,
+      "FirstAddress": 33792
+    },
+    {
+      "Form": "Long",
+      "Opcode": 16,
+      "Mnemonic": "loadb",
+      "Count": 56521,
+      "FirstSequence": 12,
+      "FirstAddress": 33799
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 5,
+      "Mnemonic": "print_char",
+      "Count": 18,
+      "FirstSequence": 13,
+      "FirstAddress": 33803
+    },
+    {
+      "Form": "Short",
+      "Opcode": 12,
+      "Mnemonic": "jump",
+      "Count": 76902,
+      "FirstSequence": 14,
+      "FirstAddress": 33806
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "new_line",
+      "Count": 1398,
+      "FirstSequence": 37,
+      "FirstAddress": 33809
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "rtrue",
+      "Count": 3388,
+      "FirstSequence": 38,
+      "FirstAddress": 33810
+    },
+    {
+      "Form": "Short",
+      "Opcode": 0,
+      "Mnemonic": "jz",
+      "Count": 75767,
+      "FirstSequence": 45,
+      "FirstAddress": 46505
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 8,
+      "Mnemonic": "push",
+      "Count": 2014,
+      "FirstSequence": 46,
+      "FirstAddress": 46508
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 9,
+      "Mnemonic": "pull",
+      "Count": 189,
+      "FirstSequence": 48,
+      "FirstAddress": 46527
+    },
+    {
+      "Form": "Long",
+      "Opcode": 10,
+      "Mnemonic": "test_attr",
+      "Count": 11630,
+      "FirstSequence": 50,
+      "FirstAddress": 46549
+    },
+    {
+      "Form": "Long",
+      "Opcode": 11,
+      "Mnemonic": "set_attr",
+      "Count": 479,
+      "FirstSequence": 51,
+      "FirstAddress": 46553
+    },
+    {
+      "Form": "Long",
+      "Opcode": 6,
+      "Mnemonic": "jin",
+      "Count": 5256,
+      "FirstSequence": 53,
+      "FirstAddress": 46559
+    },
+    {
+      "Form": "Long",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 102608,
+      "FirstSequence": 54,
+      "FirstAddress": 46563
+    },
+    {
+      "Form": "Long",
+      "Opcode": 17,
+      "Mnemonic": "get_prop",
+      "Count": 3664,
+      "FirstSequence": 56,
+      "FirstAddress": 22657
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "print_obj",
+      "Count": 718,
+      "FirstSequence": 58,
+      "FirstAddress": 22671
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "get_parent",
+      "Count": 4953,
+      "FirstSequence": 60,
+      "FirstAddress": 46573
+    },
+    {
+      "Form": "Short",
+      "Opcode": 13,
+      "Mnemonic": "print_paddr",
+      "Count": 204,
+      "FirstSequence": 86,
+      "FirstAddress": 59454
+    },
+    {
+      "Form": "Short",
+      "Opcode": 2,
+      "Mnemonic": "get_child",
+      "Count": 5168,
+      "FirstSequence": 93,
+      "FirstAddress": 46906
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "get_sibling",
+      "Count": 5023,
+      "FirstSequence": 96,
+      "FirstAddress": 46916
+    },
+    {
+      "Form": "Long",
+      "Opcode": 12,
+      "Mnemonic": "clear_attr",
+      "Count": 890,
+      "FirstSequence": 130,
+      "FirstAddress": 48303
+    },
+    {
+      "Form": "Short",
+      "Opcode": 8,
+      "Mnemonic": "ret_popped",
+      "Count": 2479,
+      "FirstSequence": 143,
+      "FirstAddress": 47371
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "storeb",
+      "Count": 46831,
+      "FirstSequence": 145,
+      "FirstAddress": 23095
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "storew",
+      "Count": 27529,
+      "FirstSequence": 156,
+      "FirstAddress": 24629
+    },
+    {
+      "Form": "Short",
+      "Opcode": 11,
+      "Mnemonic": "ret",
+      "Count": 5779,
+      "FirstSequence": 248,
+      "FirstAddress": 32655
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 1,
+      "Mnemonic": "je",
+      "Count": 24192,
+      "FirstSequence": 249,
+      "FirstAddress": 24809
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 4,
+      "Mnemonic": "read",
+      "Count": 388,
+      "FirstSequence": 252,
+      "FirstAddress": 24821
+    },
+    {
+      "Form": "Long",
+      "Opcode": 22,
+      "Mnemonic": "mul",
+      "Count": 24427,
+      "FirstSequence": 268,
+      "FirstAddress": 26396
+    },
+    {
+      "Form": "Long",
+      "Opcode": 20,
+      "Mnemonic": "add",
+      "Count": 79083,
+      "FirstSequence": 269,
+      "FirstAddress": 26400
+    },
+    {
+      "Form": "Long",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 5136,
+      "FirstSequence": 864,
+      "FirstAddress": 25393
+    },
+    {
+      "Form": "Long",
+      "Opcode": 4,
+      "Mnemonic": "dec_chk",
+      "Count": 2120,
+      "FirstSequence": 874,
+      "FirstAddress": 25430
+    },
+    {
+      "Form": "Long",
+      "Opcode": 7,
+      "Mnemonic": "test",
+      "Count": 4264,
+      "FirstSequence": 910,
+      "FirstAddress": 26575
+    },
+    {
+      "Form": "Long",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 5226,
+      "FirstSequence": 911,
+      "FirstAddress": 26579
+    },
+    {
+      "Form": "Long",
+      "Opcode": 9,
+      "Mnemonic": "and",
+      "Count": 1904,
+      "FirstSequence": 912,
+      "FirstAddress": 26583
+    },
+    {
+      "Form": "Short",
+      "Opcode": 5,
+      "Mnemonic": "inc",
+      "Count": 1928,
+      "FirstSequence": 914,
+      "FirstAddress": 26591
+    },
+    {
+      "Form": "Short",
+      "Opcode": 1,
+      "Mnemonic": "rfalse",
+      "Count": 3584,
+      "FirstSequence": 962,
+      "FirstAddress": 51215
+    },
+    {
+      "Form": "Long",
+      "Opcode": 18,
+      "Mnemonic": "get_prop_addr",
+      "Count": 6187,
+      "FirstSequence": 997,
+      "FirstAddress": 44140
+    },
+    {
+      "Form": "Short",
+      "Opcode": 4,
+      "Mnemonic": "get_prop_len",
+      "Count": 3181,
+      "FirstSequence": 999,
+      "FirstAddress": 44148
+    },
+    {
+      "Form": "Short",
+      "Opcode": 3,
+      "Mnemonic": "print_ret",
+      "Count": 362,
+      "FirstSequence": 1282,
+      "FirstAddress": 97022
+    },
+    {
+      "Form": "Long",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 4212,
+      "FirstSequence": 2217,
+      "FirstAddress": 26123
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 13,
+      "Mnemonic": "store",
+      "Count": 214,
+      "FirstSequence": 2352,
+      "FirstAddress": 31047
+    },
+    {
+      "Form": "Long",
+      "Opcode": 23,
+      "Mnemonic": "div",
+      "Count": 2804,
+      "FirstSequence": 2370,
+      "FirstAddress": 32767
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "put_prop",
+      "Count": 5,
+      "FirstSequence": 40145,
+      "FirstAddress": 58809
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 7,
+      "Mnemonic": "random",
+      "Count": 80,
+      "FirstSequence": 93607,
+      "FirstAddress": 101667
+    },
+    {
+      "Form": "Short",
+      "Opcode": 7,
+      "Mnemonic": "print_addr",
+      "Count": 1,
+      "FirstSequence": 190653,
+      "FirstAddress": 29841
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 3,
+      "Mnemonic": "jg",
+      "Count": 10,
+      "FirstSequence": 202512,
+      "FirstAddress": 27170
+    },
+    {
+      "Form": "Short",
+      "Opcode": 6,
+      "Mnemonic": "dec",
+      "Count": 41,
+      "FirstSequence": 207299,
+      "FirstAddress": 22585
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 21,
+      "Mnemonic": "sub",
+      "Count": 1,
+      "FirstSequence": 240507,
+      "FirstAddress": 69707
+    },
+    {
+      "Form": "Variable",
+      "Opcode": 2,
+      "Mnemonic": "jl",
+      "Count": 6,
+      "FirstSequence": 303431,
+      "FirstAddress": 112897
+    },
+    {
+      "Form": "Long",
+      "Opcode": 24,
+      "Mnemonic": "mod",
+      "Count": 7,
+      "FirstSequence": 414510,
+      "FirstAddress": 53306
+    },
+    {
+      "Form": "Short",
+      "Opcode": 10,
+      "Mnemonic": "quit",
+      "Count": 1,
+      "FirstSequence": 795578,
+      "FirstAddress": 33566
+    }
+  ],
+  "commands": [
+    "south",
+    "help midget",
+    "south",
+    "get pole",
+    "north",
+    "north",
+    "north",
+    "up",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "get balloon",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "west",
+    "down",
+    "down",
+    "get all",
+    "south",
+    "south",
+    "west",
+    "get clown mask",
+    "south",
+    "wait",
+    "untie balloon",
+    "inhale helium",
+    "hello, harry",
+    "south",
+    "west",
+    "wear clown mask",
+    "knock on door",
+    "south",
+    "close door",
+    "examine ash tray",
+    "get ash",
+    "get newsprint",
+    "wait",
+    "go under wall",
+    "hide behind taft",
+    "wait",
+    "wait",
+    "wait",
+    "go under wall",
+    "go under wall",
+    "hit wood with pole",
+    "get mousetrap",
+    "east",
+    "northeast",
+    "north",
+    "northeast",
+    "search garbage",
+    "get ticket",
+    "punch blue dot",
+    "southwest",
+    "south",
+    "put ticket in slot",
+    "east",
+    "south",
+    "southeast",
+    "look into cage",
+    "get keys with pole",
+    "drop pole",
+    "unlock cage",
+    "open cage",
+    "enter cage",
+    "get bucket",
+    "get headphones",
+    "south",
+    "northwest",
+    "north",
+    "west",
+    "southwest",
+    "west",
+    "drop mousetrap",
+    "drop meat",
+    "get meat",
+    "east",
+    "west",
+    "east",
+    "west",
+    "east",
+    "west",
+    "catch mouse with bucket",
+    "east",
+    "northeast",
+    "put ticket in slot",
+    "east",
+    "south",
+    "east",
+    "get mouse",
+    "show mouse to elephant",
+    "g",
+    "put meat in bucket",
+    "southwest",
+    "drop all",
+    "up",
+    "open panel",
+    "knock on door",
+    "in",
+    "lock door",
+    "search desk",
+    "get spreadsheet",
+    "push desk",
+    "get on desk",
+    "down",
+    "get all",
+    "northeast",
+    "north",
+    "east",
+    "north",
+    "show ticket",
+    "hypnotize me",
+    "wait",
+    "wait",
+    "wait",
+    "wave at hawker",
+    "pass $1.85 to hawker",
+    "get up",
+    "east",
+    "up",
+    "east",
+    "down",
+    "east",
+    "up",
+    "east",
+    "down",
+    "south",
+    "get in line",
+    "wait",
+    "wait",
+    "wait",
+    "get out of long line",
+    "get in short line",
+    "wait",
+    "wait",
+    "wait",
+    "get out of long line",
+    "yes",
+    "get in long line",
+    "eat banana",
+    "drop banana",
+    "north",
+    "ask hawker about money",
+    "up",
+    "west",
+    "down",
+    "west",
+    "up",
+    "west",
+    "down",
+    "west",
+    "get up",
+    "south",
+    "west",
+    "go under wall",
+    "search garbage",
+    "get granola bar",
+    "go under wall",
+    "east",
+    "east",
+    "north",
+    "northeast",
+    "give bar to tina",
+    "tina, hello",
+    "take hand",
+    "kiss hand",
+    "get stool",
+    "northwest",
+    "get radio",
+    "south",
+    "west",
+    "west",
+    "south",
+    "southwest",
+    "rewind tape",
+    "drop all but radio and headphones",
+    "up",
+    "turn radio to 1170",
+    "record tape",
+    "wait",
+    "g",
+    "stop tape",
+    "rewind tape",
+    "down",
+    "get all",
+    "northeast",
+    "unlock cage",
+    "open cage",
+    "enter cage",
+    "search straw",
+    "play tape",
+    "open trap door",
+    "get red ribbon",
+    "east",
+    "close cage",
+    "lock cage",
+    "north",
+    "drop meat",
+    "get meat",
+    "west",
+    "put water in bucket",
+    "put ticket in slot",
+    "east",
+    "pour water on detective",
+    "ask detective about ransom",
+    "put meat in bucket",
+    "get ransom note",
+    "get trade card",
+    "south",
+    "southeast",
+    "drop all but ticket",
+    "slide ticket under front",
+    "east",
+    "get ticket",
+    "open panel",
+    "no",
+    "open panel",
+    "west",
+    "northwest",
+    "southwest",
+    "wait",
+    "wait",
+    "northeast",
+    "southeast",
+    "slide ticket under front",
+    "east",
+    "look under table",
+    "get suitcase",
+    "wait",
+    "west",
+    "up",
+    "up",
+    "wait",
+    "move",
+    "wait",
+    "get prod",
+    "pull prod",
+    "down",
+    "down",
+    "get all but pole",
+    "northwest",
+    "southwest",
+    "west",
+    "west",
+    "go under wall",
+    "east",
+    "unlock compartment",
+    "open compartment",
+    "get bullwhip",
+    "north",
+    "northeast",
+    "north",
+    "north",
+    "unlock lion cage",
+    "open cage",
+    "enter cage",
+    "whip smooth lion",
+    "g",
+    "g",
+    "open grate",
+    "throw meat into passage",
+    "east",
+    "drop bucket, bullwhip, and stool",
+    "west",
+    "close grate",
+    "move stand",
+    "get cigarette case",
+    "east",
+    "south",
+    "south",
+    "south",
+    "west",
+    "give cigarette case to harry",
+    "east",
+    "northeast",
+    "north",
+    "east",
+    "south",
+    "show case to andrew",
+    "show case to jenny",
+    "up",
+    "get all",
+    "open pocket",
+    "get veil",
+    "up",
+    "north",
+    "west",
+    "west",
+    "southwest",
+    "read spreadsheet",
+    "ask harry about eddie",
+    "west",
+    "go under wall",
+    "east",
+    "eddie, hello",
+    "show newsprint to chuckles",
+    "show spreadsheet to chuckles",
+    "show ribbon to chuckles",
+    "show note to chuckles",
+    "show card to chuckles",
+    "wear dress",
+    "wear shawl",
+    "wear veil",
+    "knock on door",
+    "in",
+    "close door",
+    "take crowbar",
+    "move moose head",
+    "open door",
+    "west",
+    "west",
+    "open door with crowbar",
+    "south",
+    "remove veil",
+    "remove shawl",
+    "remove dress",
+    "drop all but radio",
+    "get thumb",
+    "north",
+    "east",
+    "east",
+    "put thumb in space",
+    "wait",
+    "wait",
+    "get chelsea",
+    "west",
+    "north",
+    "east",
+    "northeast",
+    "north",
+    "west",
+    "north",
+    "north",
+    "south",
+    "south",
+    "south",
+    "northeast",
+    "southeast",
+    "get pole",
+    "northwest",
+    "north",
+    "west",
+    "north",
+    "north",
+    "west",
+    "get lion stand",
+    "east",
+    "drop pole",
+    "drop stand",
+    "clap hands",
+    "roustabout, get net",
+    "wait",
+    "wait",
+    "get on stand",
+    "up",
+    "up",
+    "east",
+    "east",
+    "west",
+    "west",
+    "west",
+    "west",
+    "down",
+    "south",
+    "south",
+    "south",
+    "enter wagon",
+    "phone WPDL",
+    "west",
+    "north",
+    "north",
+    "north",
+    "get on stand",
+    "up",
+    "up",
+    "east",
+    "east",
+    "east",
+    "east",
+    "east",
+    "let go",
+    "quit"
+  ],
+  "intro": [
+    "Fresh deterministic replay: seed 1035. Enter one command per prompt, in order. The route earns the full 200 points in 385 moves and reaches the rescue ending.",
+    "The script prints a comic death banner once after a fall from the cage, then immediately says the report is exaggerated and you suffer only injured pride. The game continues without restarting or losing score; this is a nonfatal gag, not a death ending.",
+    "For the finale, take the lion stand from the Lions\u2019 Den, put it in the ring and call for the net. Phone WPDL during its pledge appeal, then use the radio\u2019s classical music to calm Mahler on the wire. Do not let go until Chelsea has fallen into the net."
+  ],
+  "checkpoints": [
+    {
+      "heading": "Early acts",
+      "detail": "10 to 70 points: tightrope, clown alley, mouse and circus clues."
+    },
+    {
+      "heading": "Hypnosis",
+      "detail": "100 points: finish the hypnotist\u2019s sequence and hawker act."
+    },
+    {
+      "heading": "Radio",
+      "detail": "120 points: record and play the tune that calms Mahler."
+    },
+    {
+      "heading": "Evidence",
+      "detail": "160 points: collect the case and show it to Jenny."
+    },
+    {
+      "heading": "Chelsea",
+      "detail": "180 points: free Chelsea from the trailer compartment."
+    },
+    {
+      "heading": "Best ending",
+      "detail": "190 net points, then 200 / 200 for the rescue."
+    }
+  ],
+  "stepStarts": {
+    "1": "01  OPENING AND TIGHTROPE",
+    "29": "02  BALLOON, CLOWN ALLEY AND MOUSE",
+    "64": "03  MIDWAY, HYPNOTIST AND RADIO",
+    "197": "04  MAHLER, BLUE ROOM AND PROD",
+    "262": "05  LIONS, EVIDENCE AND COSTUMES",
+    "306": "06  CHUCKLES AND TRAILER",
+    "331": "07  FREE CHELSEA",
+    "340": "08  RETURN TO THE BIG TOP",
+    "357": "09  SAFETY NET AND HIGH-WIRE RESCUE"
+  },
+  "criticalCommands": [
+    14,
+    33,
+    37,
+    44,
+    57,
+    67,
+    89,
+    99,
+    105,
+    150,
+    175,
+    197,
+    218,
+    243,
+    272,
+    286,
+    306,
+    331,
+    357,
+    386,
+    387,
+    388
+  ],
+  "visitedLocations": [
+    "Connection",
+    "Near White Wagon",
+    "In the Wings",
+    "Performance Ring",
+    "Platform",
+    "Walking a Tightrope",
+    "Beside the Big Top",
+    "Back Yard",
+    "Camp, East",
+    "Camp, West",
+    "Clown Alley",
+    "Inside Prop Tent",
+    "Under the Bleachers",
+    "Midway Entrance",
+    "Menagerie",
+    "Menagerie Nook",
+    "Inside Cage",
+    "On the Wagon",
+    "Office",
+    "Midway of Midway",
+    "Hypnotist's Parlor",
+    "Standing Room Only",
+    "Far End of Midway",
+    "West Half of Fat Lady",
+    "East Half of Fat Lady",
+    "Inside Mahler's Cage",
+    "Blue Room",
+    "Top of Cage",
+    "On the Tent",
+    "Lions' Den",
+    "Jennifer's Boudoir",
+    "Wardrobe Closet",
+    "Inside Trailer",
+    "Left Hanging"
+  ],
+  "maps": [
+    {
+      "title": "Canvas, wagons & the midway entrance",
+      "icon": "circus",
+      "caption": "First impressions: canvas lanes, wagon yards and the turnstiles.",
+      "rooms": [
+        "Connection",
+        "Near White Wagon",
+        "In the Wings",
+        "Performance Ring",
+        "Platform",
+        "Walking a Tightrope",
+        "Beside the Big Top",
+        "Back Yard",
+        "Camp, East",
+        "Camp, West",
+        "Clown Alley",
+        "Inside Prop Tent",
+        "Under the Bleachers",
+        "Midway Entrance",
+        "Menagerie",
+        "Menagerie Nook",
+        "Inside Cage"
+      ],
+      "layout": {
+        "Connection": [
+          0,
+          0
+        ],
+        "Near White Wagon": [
+          0,
+          1
+        ],
+        "Beside the Big Top": [
+          0,
+          2
+        ],
+        "Back Yard": [
+          0,
+          3
+        ],
+        "Camp, East": [
+          0,
+          4
+        ],
+        "Camp, West": [
+          1,
+          4
+        ],
+        "Clown Alley": [
+          2,
+          4
+        ],
+        "Inside Prop Tent": [
+          2,
+          3
+        ],
+        "Under the Bleachers": [
+          2,
+          2
+        ],
+        "Midway Entrance": [
+          2,
+          1
+        ],
+        "Menagerie": [
+          2,
+          0
+        ],
+        "In the Wings": [
+          1,
+          0
+        ],
+        "Performance Ring": [
+          1,
+          1
+        ],
+        "Platform": [
+          1,
+          2
+        ],
+        "Walking a Tightrope": [
+          1,
+          3
+        ],
+        "Menagerie Nook": [
+          2,
+          5
+        ],
+        "Inside Cage": [
+          1,
+          5
+        ]
+      },
+      "edges": [
+        {
+          "source": "Connection",
+          "target": "Near White Wagon",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Connection",
+          "target": "In the Wings",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "In the Wings",
+          "target": "Performance Ring",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Performance Ring",
+          "target": "Platform",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Platform",
+          "target": "Walking a Tightrope",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Connection",
+          "target": "Beside the Big Top",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Beside the Big Top",
+          "target": "Back Yard",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Back Yard",
+          "target": "Camp, East",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Camp, East",
+          "target": "Camp, West",
+          "label": "west",
+          "firstArrival": true
+        },
+        {
+          "source": "Camp, West",
+          "target": "Clown Alley",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Camp, West",
+          "target": "Inside Prop Tent",
+          "label": "go under wall",
+          "firstArrival": true
+        },
+        {
+          "source": "In the Wings",
+          "target": "Under the Bleachers",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Connection",
+          "target": "Midway Entrance",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway Entrance",
+          "target": "Menagerie",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie",
+          "target": "Menagerie Nook",
+          "label": "southeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie Nook",
+          "target": "Inside Cage",
+          "label": "enter cage",
+          "firstArrival": true
+        },
+        {
+          "source": "Near White Wagon",
+          "target": "On the Wagon",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway Entrance",
+          "target": "Midway of Midway",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie",
+          "target": "Inside Mahler's Cage",
+          "label": "enter cage",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie Nook",
+          "target": "Blue Room",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie Nook",
+          "target": "Top of Cage",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Performance Ring",
+          "target": "Lions' Den",
+          "label": "enter cage",
+          "firstArrival": true
+        },
+        {
+          "source": "Camp, East",
+          "target": "Inside Trailer",
+          "label": "in",
+          "firstArrival": true
+        },
+        {
+          "source": "Walking a Tightrope",
+          "target": "Left Hanging",
+          "label": "east",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "The midway acts & hypnotist\u2019s parlor",
+      "icon": "ticket",
+      "caption": "Follow the clues from the cage acts into the hypnotist\u2019s audience.",
+      "rooms": [
+        "On the Wagon",
+        "Office",
+        "Midway of Midway",
+        "Hypnotist's Parlor",
+        "Standing Room Only",
+        "Far End of Midway",
+        "West Half of Fat Lady",
+        "East Half of Fat Lady"
+      ],
+      "layout": {
+        "On the Wagon": [
+          0,
+          0
+        ],
+        "Office": [
+          0,
+          1
+        ],
+        "Midway of Midway": [
+          1,
+          1
+        ],
+        "Hypnotist's Parlor": [
+          1,
+          0
+        ],
+        "Standing Room Only": [
+          1,
+          2
+        ],
+        "Far End of Midway": [
+          2,
+          2
+        ],
+        "West Half of Fat Lady": [
+          2,
+          1
+        ],
+        "East Half of Fat Lady": [
+          2,
+          0
+        ]
+      },
+      "edges": [
+        {
+          "source": "Near White Wagon",
+          "target": "On the Wagon",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "On the Wagon",
+          "target": "Office",
+          "label": "in",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway Entrance",
+          "target": "Midway of Midway",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway of Midway",
+          "target": "Hypnotist's Parlor",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "Hypnotist's Parlor",
+          "target": "Standing Room Only",
+          "label": "hypnotize me",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway of Midway",
+          "target": "Far End of Midway",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Far End of Midway",
+          "target": "West Half of Fat Lady",
+          "label": "north",
+          "firstArrival": true
+        },
+        {
+          "source": "West Half of Fat Lady",
+          "target": "East Half of Fat Lady",
+          "label": "northeast",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway of Midway",
+          "target": "Jennifer's Boudoir",
+          "label": "south",
+          "firstArrival": true
+        }
+      ]
+    },
+    {
+      "title": "Mahler\u2019s cages, lion act & finale",
+      "icon": "lion",
+      "caption": "A trail of evidence, costumes and a phone call leads to the high-wire rescue.",
+      "rooms": [
+        "Inside Mahler's Cage",
+        "Blue Room",
+        "Top of Cage",
+        "On the Tent",
+        "Lions' Den",
+        "Jennifer's Boudoir",
+        "Wardrobe Closet",
+        "Inside Trailer",
+        "Left Hanging"
+      ],
+      "layout": {
+        "Inside Mahler's Cage": [
+          0,
+          0
+        ],
+        "Blue Room": [
+          1,
+          0
+        ],
+        "Top of Cage": [
+          1,
+          1
+        ],
+        "On the Tent": [
+          2,
+          1
+        ],
+        "Lions' Den": [
+          0,
+          1
+        ],
+        "Jennifer's Boudoir": [
+          0,
+          2
+        ],
+        "Wardrobe Closet": [
+          1,
+          2
+        ],
+        "Inside Trailer": [
+          2,
+          2
+        ],
+        "Left Hanging": [
+          2,
+          0
+        ]
+      },
+      "edges": [
+        {
+          "source": "Menagerie",
+          "target": "Inside Mahler's Cage",
+          "label": "enter cage",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie Nook",
+          "target": "Blue Room",
+          "label": "east",
+          "firstArrival": true
+        },
+        {
+          "source": "Menagerie Nook",
+          "target": "Top of Cage",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Top of Cage",
+          "target": "On the Tent",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Performance Ring",
+          "target": "Lions' Den",
+          "label": "enter cage",
+          "firstArrival": true
+        },
+        {
+          "source": "Midway of Midway",
+          "target": "Jennifer's Boudoir",
+          "label": "south",
+          "firstArrival": true
+        },
+        {
+          "source": "Jennifer's Boudoir",
+          "target": "Wardrobe Closet",
+          "label": "up",
+          "firstArrival": true
+        },
+        {
+          "source": "Camp, East",
+          "target": "Inside Trailer",
+          "label": "in",
+          "firstArrival": true
+        },
+        {
+          "source": "Walking a Tightrope",
+          "target": "Left Hanging",
+          "label": "east",
+          "firstArrival": true
+        }
+      ]
+    }
+  ]
+}

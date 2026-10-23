@@ -268,3 +268,31 @@ The seed-1 route reaches 600/600 and the Scientist ending in 455 moves, then
 quits cleanly. The random vault selection is x7 on this seed. Keep the story,
 manual, hints, route, saves, and raw trace local; automated tests require none
 of those files.
+
+## Ballyhoo maximum-score walkthrough
+
+`make_ballyhoo_walkthrough.py` builds the 200-point rescue guide from
+`walkthroughs/source-data/ballyhoo.json`. It includes the 388-command route,
+three hand-drawn maps of all 34 route-discovered locations, score checkpoints,
+and the trace-derived six-column opcode inventory:
+
+```sh
+python3 tools/walkthroughs/make_ballyhoo_walkthrough.py
+```
+
+To replay and refresh the opcode inventory from the local story:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -c Release -- stories/ballyhoo.z3 \
+  .agent/regression-routes/ballyhoo-maximum-score.json \
+  .agent/regression-routes/ballyhoo-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_ballyhoo_walkthrough.py \
+  --refresh-trace .agent/regression-routes/ballyhoo-maximum-score.trace.jsonl
+```
+
+The deterministic seed-1035 route reaches 200/200 in 385 moves and ends with
+Chelsea rescued and the circus safe. The story deliberately prints a death
+banner after one fall, then says the report is exaggerated and the player only
+suffers injured pride; the hints explicitly describe this as a lie. The route
+does not restart or lose progress. Keep the story, manual, hints, route, saves,
+and raw trace local; automated tests require none of them.
