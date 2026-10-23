@@ -173,3 +173,29 @@ python3 tools/walkthroughs/make_seastalker_walkthrough.py \
 The deterministic seed-1035 route reaches 100/100 in 213 moves and completes
 the mission with no player deaths. Keep the Sea Stalker story, manual, hints,
 route, saves, and raw trace local; automated tests do not require those files.
+
+## Cutthroats maximum-score walkthrough
+
+`make_cutthroats_walkthrough.py` builds the Sao Vera guide from
+`walkthroughs/source-data/cutthroats.json`. The source data contains the clean
+282-command route, score checkpoints, hand-sketched maps, and trace-derived
+opcode inventory:
+
+```sh
+python3 tools/walkthroughs/make_cutthroats_walkthrough.py
+```
+
+To refresh the instruction total and opcode inventory from a fresh local run:
+
+```sh
+dotnet run --project tools/Leafpile.RouteReplay -- stories/cutthroats.z3 \
+  .agent/regression-routes/cutthroats-maximum-score.json \
+  .agent/regression-routes/cutthroats-maximum-score.trace.jsonl
+python3 tools/walkthroughs/make_cutthroats_walkthrough.py \
+  --refresh-trace .agent/regression-routes/cutthroats-maximum-score.trace.jsonl
+```
+
+The seed-1 route reaches 250/250, earns the “rich diver” rank, and returns the
+treasure to the Mary Margaret without a player death. Keep the Cutthroats story,
+manual, hints, route, saves, and raw trace local; automated tests do not require
+those assets.
