@@ -6,7 +6,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 
 | Standard area | Implementation tasks | Coverage / acceptance evidence |
 |---|---:|---|
-| 1. Memory map and addresses | 3–4 | `StoryFile` validates dynamic/static/high boundaries, story size limits, and table bounds; generated V1–V8 tests cover malformed ranges. Task 4 adds address translation and write protection. |
+| 1. Memory map and addresses | 3–4 | `StoryFile` validates dynamic/static/high boundaries, story size limits, and table bounds. `ZMachineMemory` classifies regions, bounds game-visible and VM-internal reads, and protects static/high memory from writes. `ZMachineAddressing` converts byte, word, and V1–V8 packed addresses, including separate V6/V7 routine and string offsets. Generated xUnit fixtures cover boundaries, overlap, overflow, and write protection. |
 | 2. Numbers and arithmetic | 7 | Signed arithmetic/comparisons; 16-bit wrapping; divide-by-zero; deterministic and random modes. |
 | 3. Text and character encoding | 8, 10 | Z-character decoding, shifts, abbreviations, custom alphabets, Unicode/ZSCII tables, incomplete sequences, dictionary truncation. |
 | 4. Instruction encoding | 5–7 | All forms and operand widths; evaluation order; store/branch decoding; inline text; legal version gates. |
