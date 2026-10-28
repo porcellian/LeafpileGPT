@@ -61,7 +61,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
-- 2026-10-28T18:51Z [TOOL] Task 24 startup, File menu, persisted dialog locations, Quetzal menu actions, docs, and generated coverage are implemented. Formatting, Release build (0 warnings/errors), 496 xUnit tests, and `git diff --check` pass; final commit and PR #28 remain.
+- 2026-10-28T18:52Z [TOOL] Task 24 is committed as `6d3f4c6`, pushed, and open as PR #28 at https://github.com/porcellian/LeafpileGPT/pull/28. Formatting, Release build (0 warnings/errors), 496 xUnit tests, and `git diff --check` pass; wait for review and merge before Task 25.
 - 2026-10-28T18:41Z [TOOL] Supersedes prior Task 23 progress: commit `6a42852` is pushed on `feature/23-app-data-preferences`; PR #27 is open at https://github.com/porcellian/LeafpileGPT/pull/27. Wait for review and merge before Task 24.
 - 2026-10-28T18:40Z [TOOL] Task 23 adds `AppDataPaths`, persistent preferences, generated tests, README and spec-matrix updates. Release build passes (0 warnings/errors), all 489 xUnit tests pass, and formatting verification passes; final diff review, commit, and PR remain.
 - 2026-10-28T18:35Z [TOOL] Supersedes the prior Task 22 progress entry: commit `085c943` plus continuity follow-up are pushed on `feature/22-save-restore-undo`; PR #26 is open at https://github.com/porcellian/LeafpileGPT/pull/26. Wait for review and merge before Task 23.
