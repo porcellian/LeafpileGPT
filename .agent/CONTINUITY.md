@@ -76,6 +76,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T21:29Z [TOOL] Supersedes pending commit/push state: commit `0577c85` is pushed to PR #31; the working tree is clean. CI status was not checked.
 - 2026-10-28T21:29Z [TOOL] Score/moves visibility now follows loaded-story state; MORE display is bold `[MORE]` only. Added generated model assertions and tracked `gui11.png`/`gui12.png`. Formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass; commit/push remain.
 - 2026-10-28T21:20Z [TOOL] Supersedes the pending-push note: commit `49fc8d7` is pushed to PR #31. Worktree is clean; CI status has not been rechecked.
 - 2026-10-28T21:20Z [TOOL] Reduced the rendered-page line limit by one additional row after the user confirmed a single line still scrolls off before MORE. Updated generated version 3/5 expectations; formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass. Commit and push to PR #31 remain.
