@@ -13,8 +13,8 @@ public partial class MainWindow : Window
     private BlorbFile? _blorb;
     private ZMachineExecutionState? _state;
     private string? _storyPath;
-    private TextBlock _gameStatusText = null!;
     private TextBlock _appStatusText = null!;
+    private GameDisplayView _gameDisplay = null!;
     private MenuItem _saveMenuItem = null!;
     private MenuItem _restoreMenuItem = null!;
     private MenuItem _restartMenuItem = null!;
@@ -24,8 +24,9 @@ public partial class MainWindow : Window
         AvaloniaXamlLoader.Load(this);
         _appDataPaths = new AppDataPaths();
         _preferences = new UserPreferencesStore(_appDataPaths);
-        _gameStatusText = this.FindControl<TextBlock>("GameStatusText")!;
         _appStatusText = this.FindControl<TextBlock>("AppStatusText")!;
+        _gameDisplay = this.FindControl<GameDisplayView>("GameDisplay")!;
+        _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;
@@ -52,7 +53,10 @@ public partial class MainWindow : Window
             _state = state;
             _storyPath = fullPath;
             UpdateLoadedStoryDisplay();
-            _appStatusText.Text = $"Loaded {Path.GetFileName(fullPath)} (Z-machine version {story.Header.Version}).";
+            _gameDisplay.Model.ClearOutput();
+            _gameDisplay.Model.SetStatusLine(string.Empty, "Score: 0  Moves: 0");
+            _gameDisplay.FocusPrompt();
+            _appStatusText.Text = $"Loaded {Path.GetFileName(fullPath)} (Z-machine version {story.Header.Version}); waiting for game-session integration.";
             RememberSelectedDirectory(FileDialogPurpose.PlayGame, fullPath);
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or StoryFileFormatException or BlorbFormatException)
@@ -217,6 +221,9 @@ public partial class MainWindow : Window
 
     private void OnExitClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => Close();
 
+    private void OnCommandSubmitted(string command) =>
+        _appStatusText.Text = "Game input will be connected when story execution is integrated in Task 26.";
+
     private IStorageProvider? GetStorageProvider() => TopLevel.GetTopLevel(this)?.StorageProvider;
 
     private static async Task SetSuggestedStartLocationAsync(IStorageProvider provider, PickerOptions options, string? path)
@@ -248,7 +255,6 @@ public partial class MainWindow : Window
         _saveMenuItem.IsEnabled = true;
         _restoreMenuItem.IsEnabled = true;
         _restartMenuItem.IsEnabled = true;
-        _gameStatusText.Text = $"{Path.GetFileName(_storyPath)}\nZ-machine version {_story!.Header.Version}";
         Title = $"LeafpileGPT — {Path.GetFileName(_storyPath)}";
     }
 
