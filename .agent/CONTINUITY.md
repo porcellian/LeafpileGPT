@@ -69,6 +69,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T19:56Z [TOOL] Supersedes prior follow-up status: commit `bf57a98` is pushed to PR #31 and adds `reference/gui02.png`. The displayed input is now appended to the story's trailing `>` line, with the duplicate host prompt row removed. Formatter, Release build, 510 xUnit tests, and diff check pass. Wait for review and merge.
 - 2026-10-28T19:56Z [TOOL] Revised PR #31 per `gui02.png`: removed the separate bottom prompt, append input and the blinking block run after the story's prompt, and made the keyboard TextBox fully transparent. Formatter passes, Release build has 0 warnings/errors, all 510 tests pass, and `git diff --check` passes; add `gui02.png`, commit, and push remain.
 - 2026-10-28T19:45Z [TOOL] `reference/gui-design.png` was ignored by a path-specific rule and `reference/gui01.png` was untracked. Remove the reference-image ignore rules and add both user-supplied PNGs to PR #31; `.DS_Store` remains ignored.
 - 2026-10-28T19:45Z [TOOL] Commit `4baceb0` is pushed on `fix/inline-command-prompt`; PR #31 is open at https://github.com/porcellian/LeafpileGPT/pull/31. User README edits are included. Wait for review and merge; Task 27 remains paused.
