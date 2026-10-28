@@ -22,7 +22,9 @@ public readonly record struct DesktopScreenMetrics(int WidthInCharacters, int Vi
     public (int HeightInLines, int MorePageLineLimit) ForStoryVersion(int version)
     {
         var screenHeight = Math.Min(byte.MaxValue, VisibleRows + (version == 3 ? 1 : 0));
-        var pageLimit = Math.Max(1, VisibleRows - 1);
+        // Leave a row for MORE and one row of margin because VM line advances
+        // and Avalonia's wrapped transcript do not share identical boundaries.
+        var pageLimit = Math.Max(1, VisibleRows - 2);
         return (screenHeight, pageLimit);
     }
 }

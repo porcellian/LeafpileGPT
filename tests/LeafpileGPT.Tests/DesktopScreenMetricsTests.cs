@@ -14,9 +14,9 @@ public sealed class DesktopScreenMetricsTests
     }
 
     [Theory]
-    [InlineData(3, 31, 29)]
-    [InlineData(5, 30, 29)]
-    public void PageLimitReservesOneVisibleRowForMorePrompt(int version, int expectedHeight, int expectedPageLimit)
+    [InlineData(3, 31, 28)]
+    [InlineData(5, 30, 28)]
+    public void PageLimitReservesPromptAndLineTransitionRows(int version, int expectedHeight, int expectedPageLimit)
     {
         var metrics = new DesktopScreenMetrics(80, 30);
 

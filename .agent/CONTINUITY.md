@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T21:20Z [USER] PR #31 follow-up: `gui10.png` still loses exactly one line above the viewport; correct the remaining MORE threshold boundary.
 - 2026-10-28T21:12Z [USER] PR #31 follow-up: diagnose and correct early MORE in `gui09.png` and late MORE in `gui10.png`; track both references.
 - 2026-10-28T20:51Z [USER] Follow-up for PR #31 based on `gui07.png`/`gui08.png`: page output only when more text would overflow the visible page; show MORE and continue on any key. Track both screenshots.
 - 2026-10-28T20:25Z [USER] Follow-up for PR #31: remove unnecessary desktop MORE waits so the game's normal prompt and cursor appear immediately after each command; track `reference/gui06.png`.
@@ -74,6 +75,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T21:20Z [TOOL] Reduced the rendered-page line limit by one additional row after the user confirmed a single line still scrolls off before MORE. Updated generated version 3/5 expectations; formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass. Commit and push to PR #31 remain.
 - 2026-10-28T21:12Z [TOOL] Commit `47510aa` is pushed to PR #31; worktree is clean. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass. `gh pr checks 31` could not connect to GitHub API.
 - 2026-10-28T21:12Z [TOOL] MORE now resets on accepted line input and uses a page limit measured from the transcript viewport; V3 includes its status row and one viewport row is reserved for MORE. Added `gui09.png`/`gui10.png` and five generated tests. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass; commit and PR #31 push remain.
 - 2026-10-28T20:53Z [TOOL] Supersedes the 20:52Z push failure: commit `f1f1b41` is now pushed to PR #31 after increasing Git's HTTP buffer. Worktree is clean. Formatter, Release build, and all 513 tests pass; GitHub API checks remain unreachable for now.
