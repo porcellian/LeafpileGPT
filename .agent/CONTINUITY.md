@@ -114,7 +114,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
-- 2026-10-28T17:26Z [TOOL] Task 20 implements validated Blorb sound catalogs, SONG sample references, Loop metadata, and host sound requests with resolved resources, sample/music channels, volume, loop state, and completion callbacks. Formatting passes, Release build succeeds with 0 warnings/errors, and all 433 xUnit tests pass. Final full-diff review, commit, and PR #24 remain.
+- 2026-10-28T17:28Z [TOOL] Task 20 is committed as `c4defa7` on `feature/20-blorb-audio`; PR #24 is open at https://github.com/porcellian/LeafpileGPT/pull/24. Local format verification, Release build (0 warnings/errors), and all 433 xUnit tests pass; Windows, macOS, and Ubuntu CI jobs are queued. Wait for review and merge before Task 21.
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 PR status: Task 2 is committed as `610d0e6` with an additional continuity update, and PR #2 is open for review. Do not start Task 3 before the user merges PR #2.
 - 2026-10-28T02:53Z [TOOL] PR #2 received a follow-up LF checkout fix; rerun CI and keep the PR open for review. Do not start Task 3 before merge.
