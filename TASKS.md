@@ -10,7 +10,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **4. Implement memory and address translation.** Support dynamic/static/high memory, protected writes, byte/word/packed addresses, and V1–V8 packed-address rules.
 - [x] **5. Decode instructions.** Implement instruction forms, operands, branches, stores, inline text, and version-gated metadata for all standard opcodes.
 - [x] **6. Implement execution state and calls.** Add stacks, locals, globals, call frames, argument counts, catch/throw, and V6 main-routine and user-stack behavior.
-- [ ] **7. Implement arithmetic and VM operations.** Cover signed arithmetic, shifts, comparisons, random modes, memory/table operations, control flow, and remaining standard opcodes.
+- [x] **7. Implement arithmetic and VM operations.** Add signed 16-bit arithmetic and comparisons, shifts, random modes, variable and array access, table copying/search, stack and routine operations, branches, returns, and fail-fast dispatch for opcodes assigned to later tasks.
 - [ ] **8. Implement text and character encoding.** Add Z-characters, abbreviations, alphabets, ZSCII, Unicode tables, dictionary encoding, and safe invalid-character handling.
 - [ ] **9. Implement objects and properties.** Support version-specific layouts, attributes, object trees, property tables, defaults, and related opcodes.
 - [ ] **10. Implement dictionaries and command parsing.** Add separators, sorted and unsorted dictionaries, tokenization, parse buffers, and V1–V8 input-buffer behavior.

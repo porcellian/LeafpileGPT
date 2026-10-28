@@ -50,6 +50,10 @@ public sealed class ZMachineMemory
         return ZMachineMemoryRegion.Static;
     }
 
+    public void ValidateReadableRange(uint byteAddress, int size) => ValidateDirectRange(byteAddress, size);
+
+    public void ValidateWritableRange(uint byteAddress, int size) => ValidateDynamicRange(byteAddress, size);
+
     /// <summary>Reads a byte using a game-visible 16-bit byte address.</summary>
     public byte ReadByte(ushort byteAddress)
     {

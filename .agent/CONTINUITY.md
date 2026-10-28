@@ -17,6 +17,7 @@
 - 2026-10-28T03:49Z [TOOL] PR #7 merged to main as `04d9903`; Task 4 started on `feature/4-memory-address-translation`.
 - 2026-10-28T04:11Z [USER] PR #8 is merged; Task 5 proceeds on `feature/5-instruction-decoder`.
 - 2026-10-28T04:20Z [USER] PR #9 is merged as `0913bf7`; Task 6 proceeds on `feature/6-execution-state-calls` from merged main.
+- 2026-10-28T04:30Z [USER] PR #10 is merged; proceed with Task 7 on `feature/7-arithmetic-vm-operations`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -24,6 +25,7 @@
 - 2026-10-28T02:42Z [TOOL] Central package versions pin Avalonia 12.1.4 and xUnit v3 4.0.2; SDK selection starts at 10.0.100 and rolls forward within the .NET 10 feature band.
 - 2026-10-28T04:25Z [CODE] Default the combined routine-frame and evaluation stack budget to 32,768 words; reject configurations below the standard's 1,024-word minimum.
 - 2026-10-28T04:25Z [CODE] Represent catch tokens as active call-stack indices; throw removes the indexed routine and deeper frames, then stores its return value in the target caller.
+- 2026-10-28T04:34Z [CODE] Task 7 executes decoded opcodes; variable-reference operands use their encoded variable number, while value operands are read through execution state.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -44,6 +46,9 @@
 - 2026-10-28T04:14Z [TOOL] Opened PR #9 for Task 5 at https://github.com/porcellian/LeafpileGPT/pull/9; waiting for review and merge before Task 6.
 - 2026-10-28T04:26Z [TOOL] Task 6 adds execution state, routine frames, variables, catch/throw, and V6 stacks. Formatting verification, Release build (0 warnings/errors), and all 151 tests pass locally.
 - 2026-10-28T04:25Z [TOOL] Opened PR #10 for Task 6 at https://github.com/porcellian/LeafpileGPT/pull/10; waiting for review and merge before Task 7.
+- 2026-10-28T04:35Z [USER] Supersedes prior PR #10 status: PR #10 merged; Task 7 is active on `feature/7-arithmetic-vm-operations`.
+- 2026-10-28T04:35Z [TOOL] Task 7 implements arithmetic, comparisons, shifts, random modes, variable/array/table access, control flow, routine and stack opcodes, and fail-fast dispatch for deferred opcodes. Formatting and Release build pass; 177 xUnit tests pass.
+- 2026-10-28T04:38Z [TOOL] Final Task 7 review confirmed division-by-zero halts execution, unsupported opcodes preserve the faulting PC, and generated tests cover these failure paths. Task checkbox and spec coverage matrix are updated; commit and PR #11 remain.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -56,6 +61,8 @@
 - 2026-10-28T04:11Z [CODE] `call_vs2` and `call_vn2` are the only instructions using a second operand-type byte; omitted types must remain omitted across both bytes.
 - 2026-10-28T04:13Z [CODE] Inline Z-text termination is bit 15 of each word, the high bit of its first byte; the second byte's high bit does not terminate the string.
 - 2026-10-28T04:20Z [CODE] V6 user-stack word slots grow downward from the last slot: push writes at `table + 2 * spareSlots`, then decrements spare slots; pull increments first, then reads that slot. The standard deliberately does not require an underflow guard.
+- 2026-10-28T04:35Z [CODE] je is the one 2OP opcode that accepts two to four operands; metadata was corrected so decoder and executor accept all of its comparison operands.
+- 2026-10-28T04:38Z [CODE] Division by zero halts the execution state; unsupported-opcode dispatch restores the faulting PC before raising a contextual exception.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -75,3 +82,4 @@
 - 2026-10-28T04:14Z [TOOL] Supersedes prior Task 4 PR status: PR #8 is merged. Task 5 is committed as `6efb985`, with PR #9 open for review. Do not begin Task 6 until the user confirms merge.
 - 2026-10-28T04:20Z [USER] Supersedes prior Task 5 PR status: PR #9 is merged as `0913bf7`. Task 6 is implemented on `feature/6-execution-state-calls`; final full review, commit, and PR creation remain.
 - 2026-10-28T04:25Z [TOOL] Supersedes prior Task 6 status: committed as `c0f1c36`; PR #10 is open for review. Do not begin Task 7 until the user confirms merge.
+- 2026-10-28T04:35Z [TOOL] Supersedes prior Task 6 PR status: PR #10 merged. Task 7 is implemented and checked locally; full diff review, commit, and PR #11 remain.

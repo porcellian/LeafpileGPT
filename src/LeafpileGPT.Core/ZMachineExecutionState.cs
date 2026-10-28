@@ -1,6 +1,7 @@
 namespace LeafpileGPT.Core;
 
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 
 /// <summary>The private interpreter state required to execute routines and variables.</summary>
 public sealed class ZMachineExecutionState
@@ -11,6 +12,10 @@ public sealed class ZMachineExecutionState
     private readonly List<ushort> _evaluationStack = [];
     private readonly List<ExecutionFrame> _callStack = [];
     private readonly int _maximumStackWords;
+    private bool _isPredictableRandomMode;
+    private int _predictableSeed;
+    private int _nextPredictableNumber;
+    private uint _largePredictableState;
 
     private ZMachineExecutionState(ZMachineMemory memory, int maximumStackWords)
     {
@@ -22,9 +27,13 @@ public sealed class ZMachineExecutionState
 
     public int MaximumStackWords => _maximumStackWords;
 
+    public bool IsPredictableRandomMode => _isPredictableRandomMode;
+
     public byte Version => Memory.Header.Version;
 
     public uint ProgramCounter { get; private set; }
+
+    public bool IsHalted { get; private set; }
 
     public ImmutableArray<ushort> EvaluationStack => _evaluationStack.ToImmutableArray();
 
@@ -35,6 +44,44 @@ public sealed class ZMachineExecutionState
         _callStack[^1].Snapshot(checked((ushort)(_callStack.Count - 1)));
 
     public byte CurrentArgumentCount => _callStack[^1].ArgumentCount;
+
+    /// <summary>Implements the random opcode's random, seeded, and random-mode reset behavior.</summary>
+    public ushort GetRandomNumber(short range)
+    {
+        if (range == 0)
+        {
+            _isPredictableRandomMode = false;
+            return 0;
+        }
+
+        if (range < 0)
+        {
+            _predictableSeed = Math.Abs((int)range);
+            _nextPredictableNumber = 1;
+            _largePredictableState = (uint)_predictableSeed;
+            _isPredictableRandomMode = true;
+            return 0;
+        }
+
+        if (!_isPredictableRandomMode)
+        {
+            return (ushort)RandomNumberGenerator.GetInt32(1, range + 1);
+        }
+
+        if (_predictableSeed < 1_000)
+        {
+            var next = _nextPredictableNumber;
+            _nextPredictableNumber = next == _predictableSeed ? 1 : next + 1;
+            return (ushort)(((next - 1) % range) + 1);
+        }
+
+        _largePredictableState ^= _largePredictableState << 13;
+        _largePredictableState ^= _largePredictableState >> 17;
+        _largePredictableState ^= _largePredictableState << 5;
+        return (ushort)((_largePredictableState % (uint)range) + 1);
+    }
+
+    public void Halt() => IsHalted = true;
 
     public static ZMachineExecutionState Start(StoryFile story, int maximumStackWords = DefaultMaximumStackWords)
     {
