@@ -5,6 +5,7 @@
 - 2026-10-28T02:49Z [TOOL] Task 1 PR #1 merged; Task 2 is complete locally on `feature/2-solution-build-pipeline` and awaiting PR creation/review.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 status: PR #2 is open at https://github.com/porcellian/LeafpileGPT/pull/2; CI is running.
 - 2026-10-28T03:03Z [TOOL] PR #2 merged; Task 3 is in progress on `feature/3-story-file-validation`.
+- 2026-10-28T03:12Z [TOOL] Task 3 is committed as `70fae26`; PR #3 is open at https://github.com/porcellian/LeafpileGPT/pull/3. Await user review/merge before Task 4.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -19,6 +20,7 @@
 - 2026-10-28T03:07Z [TOOL] Implemented `StoryFile.Load/Parse`, immutable `StoryHeader`, version-scaled lengths, checksum validation, dynamic/static/high memory checks, V6 main-routine resolution, and 27 synthetic-fixture tests. Local-only probe successfully loaded all 37 available story files without adding story dependencies to CI.
 - 2026-10-28T03:10Z [TOOL] Supersedes prior test count: expanded `StoryHeader` to expose version-gated display/interpreter/address fields and boundary coverage; formatting, Release build (0 warnings/errors), and all 47 xUnit tests pass. Repeated local probe loaded all 37/37 story files.
 - 2026-10-28T03:11Z [TOOL] Supersedes prior Task 3 verification: after adding tests for maximum file lengths, empty high memory, and V6 packed address zero with a nonzero offset, formatting and Release build pass and all 49 xUnit tests pass. Final local probe loaded 37/37 story files.
+- 2026-10-28T03:12Z [TOOL] Opened PR #3 for Task 3 after local validation; cross-platform CI is pending.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -37,3 +39,4 @@
 - 2026-10-28T03:07Z [TOOL] PR #2 was merged. Task 3 implementation on `feature/3-story-file-validation` passes formatting, Release build (0 warnings/errors), 27 xUnit tests, and a local-only probe of 37 story files. Task 3 awaits PR review; do not begin Task 4 before merge.
 - 2026-10-28T03:10Z [TOOL] Supersedes prior Task 3 test count; implementation now passes 47 xUnit tests and the local probe remains 37/37. Task 3 awaits PR review; do not begin Task 4 before merge.
 - 2026-10-28T03:11Z [TOOL] Supersedes prior Task 3 verification: 49 xUnit tests and formatting/build pass; the 37-file local probe passes. Task 3 awaits PR creation/review; do not begin Task 4 before merge.
+- 2026-10-28T03:12Z [TOOL] Supersedes prior PR state: PR #3 is open for review after commit `70fae26`; do not start Task 4 before merge.
