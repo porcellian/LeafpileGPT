@@ -109,8 +109,8 @@ public static class ZMachineOpcodeTable
         Add(OpcodeClass.Variable, 19, "output_stream", 5, 5, 1, 2);
         Add(OpcodeClass.Variable, 19, "output_stream", 6, 8, 1, 3);
         Add(OpcodeClass.Variable, 20, "input_stream", 3, 8, 1, 1);
-        Add(OpcodeClass.Variable, 21, "sound_effect", 3, 3, 2, 4);
-        Add(OpcodeClass.Variable, 21, "sound_effect", 5, 8, 2, 4);
+        Add(OpcodeClass.Variable, 21, "sound_effect", 3, 3, 1, 4);
+        Add(OpcodeClass.Variable, 21, "sound_effect", 5, 8, 1, 4);
         Add(OpcodeClass.Variable, 22, "read_char", 4, 8, 1, 3, store: true);
         Add(OpcodeClass.Variable, 23, "scan_table", 4, 8, 3, 4, store: true, branch: true);
         Add(OpcodeClass.Variable, 24, "not", 5, 8, 1, 1, store: true);

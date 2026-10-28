@@ -20,7 +20,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **14. Implement V1–V5 screen behavior.** Model scrolling and MORE prompts, V3–V5 split windows and cursors, status lines, erase operations, text styles, V5 colors, and versioned display dimensions.
 - [x] **15. Implement V6 windows and screen properties.** Add eight windows with independent cursors, geometry, margins, styles, colors, wrapping, scrolling, buffering, and readable/writable window properties.
 - [x] **16. Implement fonts and character graphics.** Add fixed-pitch behavior, font capability reporting, Courier-style text, and the standard 8×8 character graphics font.
-- [ ] **17. Implement mouse, menus, and asynchronous events.** Add mouse support, V6 menus and mouse windows, timed-input routines, newline interrupts, and sound callbacks.
+- [x] **17. Implement mouse, menus, and asynchronous events.** Add host-neutral mouse state and V6 mouse-window constraints, V6 menu creation/removal and input data, timed-input routine integration, V6 newline-countdown callbacks, sound effects and completion callbacks, and capability flags.
 - [ ] **18. Implement Blorb container parsing.** Parse IFF `FORM IFRS`, resource indexes, chunk bounds and padding, Z-code executable chunks, metadata, and resource descriptions; skip unknown chunks.
 - [ ] **19. Implement Blorb images and display hints.** Support PNG, JPEG, rectangles, picture lookup, scaling, palettes, adaptive palettes, frontispiece and release metadata, and V6 picture operations.
 - [ ] **20. Implement Blorb audio.** Support AIFF, Ogg Vorbis, MOD-family formats, legacy SONG resources, sample/music channels, volume, looping, and callbacks.
