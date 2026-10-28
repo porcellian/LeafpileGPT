@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T18:40Z [USER] PR #26 is merged at `c88b39f`; Task 23 is active on `feature/23-app-data-preferences` from updated `origin/main`.
 - 2026-10-28T18:33Z [USER] PR #25 is merged; Task 22 is active on `feature/22-save-restore-undo` from updated `origin/main`.
 - 2026-10-28T18:11Z [USER] PR #24 is merged. Task 21 is active on `feature/21-quetzal-codec` from updated `origin/main`.
 - 2026-10-28T17:26Z [USER] PR #23 is merged. Task 20 is active on `feature/20-blorb-audio` from updated `origin/main`.
@@ -38,6 +39,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-28T18:40Z [CODE] App-data uses .NET `LocalApplicationData`; `UserPreferencesStore` keeps independent absolute last-used directories and atomically replaces a versioned JSON file. Missing Play Game starts unset; Save/Restore start at the app Save directory.
 - 2026-10-28T18:33Z [CODE] Task 22 binds Quetzal bytes to a host `IZMachineSaveStore`, stores IFhd PCs at the version-specific result descriptor, restores flags/header/screen stream state, and keeps one consumable undo snapshot outside saved game state.
 - 2026-10-28T18:11Z [CODE] Task 21 uses immutable Quetzal save snapshots independent of live VM mutation; CMem is the default writer encoding, UMem remains available, and later Task 22 will map snapshots to runtime state.
 - 2026-10-28T17:26Z [CODE] Blorb audio maps AIFF to the sample channel and OGGV/MOD/SONG to music; SONG sample-name references resolve only to AIFF resources. Loop hints are exposed for V3; V5+ loop state comes from `sound_effect` repeats.
@@ -57,6 +59,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T18:41Z [TOOL] Supersedes prior Task 23 progress: commit `6a42852` is pushed on `feature/23-app-data-preferences`; PR #27 is open at https://github.com/porcellian/LeafpileGPT/pull/27. Wait for review and merge before Task 24.
+- 2026-10-28T18:40Z [TOOL] Task 23 adds `AppDataPaths`, persistent preferences, generated tests, README and spec-matrix updates. Release build passes (0 warnings/errors), all 489 xUnit tests pass, and formatting verification passes; final diff review, commit, and PR remain.
 - 2026-10-28T18:35Z [TOOL] Supersedes the prior Task 22 progress entry: commit `085c943` plus continuity follow-up are pushed on `feature/22-save-restore-undo`; PR #26 is open at https://github.com/porcellian/LeafpileGPT/pull/26. Wait for review and merge before Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implementation, full diff review, formatter, Release build (0 warnings/errors), and all 481 xUnit tests pass. Task checkbox and Quetzal spec matrix are updated; commit, push, and PR creation remain.
 - 2026-10-28T18:13Z [TOOL] Task 21 is committed as `f283785` on `feature/21-quetzal-codec`; PR #25 is open at https://github.com/porcellian/LeafpileGPT/pull/25. Local formatting, Release build (0 warnings/errors), and all 463 xUnit tests pass; Windows, macOS, and Ubuntu CI jobs are queued. Wait for review and merge before Task 22.
@@ -91,6 +95,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-28T18:40Z [CODE] Preferences write to a same-directory temporary file and move over the active JSON only after serialization and disk flush succeed; failed writes leave the in-memory preference snapshot unchanged.
 - 2026-10-28T18:33Z [CODE] Quetzal IFhd PC points to the legacy branch descriptor (V1–V3) or result-variable byte (V4+); successful restore must read and apply that saved continuation before executing the next opcode.
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
 - 2026-10-28T02:42Z [TOOL] Avalonia template package installation was blocked by write access to the user-wide template cache; equivalent minimal project files were authored in the repository. NuGet restore succeeded with elevated network access.
@@ -122,6 +127,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-28T18:41Z [TOOL] Task 23 is implemented, verified, committed, and submitted as PR #27. Await user review and merge before starting Task 24.
 - 2026-10-28T18:35Z [TOOL] Task 22 is implemented, validated, committed, and submitted as PR #26. Await user review and merge before starting Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implements Quetzal-backed save/restore, restart, single-step undo, host storage options for extended save opcodes, and generated all-version state restoration tests. Await conventional commit and PR creation.
 - 2026-10-28T18:13Z [TOOL] Task 21 delivers a standalone Quetzal IFZS codec for IFhd, CMem, UMem, Stks, IntD, annotations, padding, unknown chunks, and V1–V8 frame rules. PR #25 is open; local formatting/build/463-test checks pass and cross-platform CI is pending.

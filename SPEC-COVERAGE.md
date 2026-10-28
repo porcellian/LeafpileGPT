@@ -23,7 +23,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 | 15. Opcode dictionary | 5–17 | Per-opcode semantics cross-checked against the standard descriptions. |
 | 16. Font 3 and character graphics | 16 | Fixed-pitch 8x8 glyph behavior and reported capability. |
 | Appendix A. Errors and debugging | 28 | Four configurable error policies, context-rich diagnostics, stack trace, invalid control-character filtering, responsive execution. |
-| Appendix B. Conventional header contents | 3, 23, 28 | Header compatibility and interpreter-owned fields. |
+| Appendix B. Conventional header contents | 3, 28 | Header compatibility and interpreter-owned fields. |
 | Appendix C. Resources | 18–20 | Resource availability and supported media behavior. |
 
 ### Opcode inventory
@@ -61,6 +61,10 @@ The decoder and tests must account for every standard opcode, including version-
 | AUTH, (c), ANNO, deprecated SNam | 18 | Optional user-level metadata; unknown and deprecated chunks do not break loading. |
 | Compatibility and media channels | 17–20 | Sound requests classify AIFF as samples and OGGV/MOD/SONG as music so hosts keep the Blorb-defined channels independent. The single Z-machine capability bit remains set when the host can provide any sound; a host may ignore music when it only supports samples. Resource payloads are exposed to the host decoder; GUI playback integration is completed with Task 26. |
 
+## App-data and preferences
+
+`AppDataPaths` places per-user storage beneath `Environment.SpecialFolder.LocalApplicationData` in the `LeafpileGPT/` directory and creates `Save/` and `Preferences/`. `UserPreferencesStore` persists separate Play Game, Save, and Restore directories as versioned JSON; Save and Restore initially point to `Save/`. Generated xUnit fixtures cover layout, persistence, independent updates, and invalid preference files.
+
 ## Cross-cutting quality checks
 
 - Generated synthetic fixtures cover all eight story versions and do not rely on local licensed stories.
@@ -76,5 +80,6 @@ The decoder and tests must account for every standard opcode, including version-
 - Task 19 Blorb image tests use generated PNG/JPEG/Rect and hint chunks for image dimensions, PNG CRC/structure, Plte and APal rules, Reso scaling bounds, palette updates, metadata, V6 picture-data branches, draw/erase screen operations, and capability flags.
 - Task 20 Blorb sound tests use generated AIFF/OGGV/MOD/SONG resources and Loop chunks for payload validation, sample/music classification, SONG AIFF references, V3 loop semantics, volume/repeat forwarding, and completion callbacks.
 - Task 21 Quetzal tests use generated V1–V8 stories and IFZS images for CMem/UMem, IFhd story identity and PC, V6/non-V6 frame layouts, IntD/annotations, padding, unknown/duplicate chunks, and malformed data. Task 22 adds VM save/restore, version-specific continuation, preserved-header, restart, and undo coverage through a fake host store.
+- Task 23 app-data tests use injected temporary roots to verify directory layout, default Save/Restore locations, independent preference persistence across store instances, paths containing spaces, atomic-write cleanup, and malformed or unsupported preference documents.
 - Malformed input tests cover truncated story, IFF, Blorb, and Quetzal data with bounded, actionable diagnostics.
 - CI builds/tests Windows, macOS, and Linux; local story runs are optional and documented separately.
