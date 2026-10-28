@@ -15,7 +15,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **9. Implement objects and properties.** Support version-specific layouts, attributes, object trees, property tables, defaults, and related opcodes.
 - [x] **10. Implement dictionaries and command parsing.** Add separators, sorted and unsorted dictionaries, tokenization, parse buffers, `encode_text`, and V1–V8 input-buffer behavior.
 - [x] **11. Implement output streams.** Add screen, transcript, nested memory, and command-recording streams, buffering, stream/header synchronization, and standard text output opcodes.
-- [ ] **12. Implement keyboard input and timed reads.** Support `read`, `read_char`, terminating characters, input streams, editing, timed callbacks, and defined ZSCII input.
+- [x] **12. Implement keyboard input and timed reads.** Support asynchronous `read`/`read_char`, terminating characters, keyboard and command-file input streams, line editing and filtering, timed routine callbacks, and defined ZSCII input.
 - [ ] **13. Implement auxiliary file operations.** Add filename sanitization, supported external file operations, and specified error behavior.
 - [ ] **14. Implement V1–V5 screen behavior.** Add scrolling, split windows, cursor and erase behavior, status lines, text styles, colors, dimensions, and MORE prompts.
 - [ ] **15. Implement V6 windows and screen properties.** Add eight windows, independent cursors, geometry, margins, styles, colors, wrapping, scrolling, buffering, and window properties.

@@ -5,6 +5,27 @@ using System.Collections.Immutable;
 /// <summary>Reads and writes the version-specific buffers used by Z-machine line input.</summary>
 public static class ZMachineTextBuffer
 {
+    public static void ClearInput(ZMachineMemory memory, ushort textBufferAddress)
+    {
+        ArgumentNullException.ThrowIfNull(memory);
+        memory.ValidateReadableRange(textBufferAddress, 1);
+        var maximumLength = memory.ReadByte(textBufferAddress);
+        var capacity = maximumLength;
+        var characterAddress = checked((ushort)(textBufferAddress + (memory.Header.Version <= 4 ? 1 : 2)));
+        var requiredLength = Math.Max(3, checked(2 + capacity));
+        memory.ValidateWritableRange(textBufferAddress, requiredLength);
+        if (memory.Header.Version >= 5)
+        {
+            memory.WriteByte(checked((ushort)(textBufferAddress + 1)), 0);
+        }
+
+        var charactersToClear = memory.Header.Version <= 4 ? capacity + 1 : capacity;
+        for (var index = 0; index < charactersToClear; index++)
+        {
+            memory.WriteByte(checked((ushort)(characterAddress + index)), 0);
+        }
+    }
+
     public static ImmutableArray<byte> ReadText(ZMachineMemory memory, ushort textBufferAddress)
     {
         ArgumentNullException.ThrowIfNull(memory);
@@ -12,7 +33,7 @@ public static class ZMachineTextBuffer
         var maximumLength = memory.ReadByte(textBufferAddress);
         if (memory.Header.Version <= 4)
         {
-            var maximumCharacters = maximumLength + 1;
+            var maximumCharacters = maximumLength;
             var bufferLength = checked(1 + maximumCharacters + 1);
             memory.ValidateReadableRange(textBufferAddress, bufferLength);
             var text = ImmutableArray.CreateBuilder<byte>(maximumCharacters);
@@ -66,14 +87,14 @@ public static class ZMachineTextBuffer
         var maximumLength = memory.ReadByte(textBufferAddress);
         var versionFiveOrLater = memory.Header.Version >= 5;
         var existingLength = versionFiveOrLater ? memory.ReadByte(checked((ushort)(textBufferAddress + 1))) : 0;
-        var capacity = versionFiveOrLater ? maximumLength : maximumLength + 1;
+        var capacity = maximumLength;
         if (existingLength > capacity)
         {
             throw new ZMachineExecutionException(
                 $"Text buffer at 0x{textBufferAddress:X4} starts with {existingLength} characters but declares a maximum of {capacity}.");
         }
 
-        var bufferLength = checked(2 + capacity);
+        var bufferLength = Math.Max(3, checked(2 + capacity));
         memory.ValidateWritableRange(textBufferAddress, bufferLength);
         if (versionFiveOrLater && terminatingCharacter != 0 && terminatingCharacter != 10
             && !zscii.IsDefinedInputCode(terminatingCharacter))
@@ -86,7 +107,10 @@ public static class ZMachineTextBuffer
         for (var index = 0; index < input.Length && accepted.Count < availableLength; index++)
         {
             var lower = char.ToLowerInvariant(input[index]);
-            if (!zscii.TryEncodeInput(lower, out var character) || character == 0 || zscii.Decode(character) == '\uFFFD')
+            if (!zscii.TryEncodeInput(lower, out var character)
+                || !zscii.IsDefinedInputCode(character)
+                || character is 0 or 8 or 13 or 27
+                || zscii.Decode(character) == '\uFFFD')
             {
                 throw new ZMachineExecutionException(
                     $"Input character U+{(int)input[index]:X4} at position {index + 1} is not defined for ZSCII input and output.");

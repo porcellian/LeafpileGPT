@@ -152,14 +152,14 @@ public sealed class ZMachineDictionaryTests
     public void StoresLegacyInputLowercaseWithZeroTerminator(byte version)
     {
         var memory = CreateMemory(version);
-        memory.WriteByte(400, 3); // Maximum is the stored value plus one in V1–V4.
+        memory.WriteByte(400, 3); // Maximum typed characters; one extra byte holds the zero terminator.
         var codec = new ZMachineTextCodec(memory);
 
         var terminator = ZMachineTextBuffer.StoreInput(memory, codec.Zscii, 400, "HELLO");
 
         Assert.Equal((byte)13, terminator);
-        Assert.Equal("hell", DecodeInput(memory, 400));
-        Assert.Equal((byte)0, memory.ReadByte(405));
+        Assert.Equal("hel", DecodeInput(memory, 400));
+        Assert.Equal((byte)0, memory.ReadByte(404));
     }
 
     [Theory]
@@ -264,7 +264,7 @@ public sealed class ZMachineDictionaryTests
         var chars = text.Select(character => checked((byte)character)).ToArray();
         if (version <= 4)
         {
-            memory[address] = checked((byte)Math.Max(0, chars.Length - 1));
+            memory[address] = checked((byte)chars.Length);
             for (var index = 0; index < chars.Length; index++)
             {
                 memory[address + 1 + index] = (byte)char.ToLowerInvariant((char)chars[index]);
@@ -289,7 +289,7 @@ public sealed class ZMachineDictionaryTests
         var chars = text.Select(character => checked((byte)character)).ToArray();
         if (version <= 4)
         {
-            writeByte(address, checked((byte)Math.Max(0, chars.Length - 1)));
+            writeByte(address, checked((byte)chars.Length));
             for (var index = 0; index < chars.Length; index++)
             {
                 writeByte(checked((ushort)(address + 1 + index)), (byte)char.ToLowerInvariant((char)chars[index]));
