@@ -16,11 +16,14 @@
 - 2026-10-28T03:47Z [USER] Move terminal play from numbered Task 66 to an unnumbered entry in Future Tasks before Glulx; preserve Task 27 headless replay.
 - 2026-10-28T03:49Z [TOOL] PR #7 merged to main as `04d9903`; Task 4 started on `feature/4-memory-address-translation`.
 - 2026-10-28T04:11Z [USER] PR #8 is merged; Task 5 proceeds on `feature/5-instruction-decoder`.
+- 2026-10-28T04:20Z [USER] PR #9 is merged as `0913bf7`; Task 6 proceeds on `feature/6-execution-state-calls` from merged main.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
 - 2026-10-28T02:34Z [USER] Keep story/manual/hint files, routes, and raw traces local; commit original walkthrough PDFs. Use four runtime error policies, default first-per-type; logs omit player commands/story output.
 - 2026-10-28T02:42Z [TOOL] Central package versions pin Avalonia 12.1.4 and xUnit v3 4.0.2; SDK selection starts at 10.0.100 and rolls forward within the .NET 10 feature band.
+- 2026-10-28T04:25Z [CODE] Default the combined routine-frame and evaluation stack budget to 32,768 words; reject configurations below the standard's 1,024-word minimum.
+- 2026-10-28T04:25Z [CODE] Represent catch tokens as active call-stack indices; throw removes the indexed routine and deeper frames, then stores its return value in the target caller.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -39,6 +42,7 @@
 - 2026-10-28T04:01Z [TOOL] Opened PR #8 for Task 4 at https://github.com/porcellian/LeafpileGPT/pull/8; cross-platform CI is queued.
 - 2026-10-28T04:12Z [TOOL] Task 5 adds a decoder and complete 119-opcode metadata table; formatting verification, Release build (0 warnings/errors), and all 106 xUnit tests pass locally.
 - 2026-10-28T04:14Z [TOOL] Opened PR #9 for Task 5 at https://github.com/porcellian/LeafpileGPT/pull/9; waiting for review and merge before Task 6.
+- 2026-10-28T04:26Z [TOOL] Task 6 adds execution state, routine frames, variables, catch/throw, and V6 stacks. Formatting verification, Release build (0 warnings/errors), and all 151 tests pass locally.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -50,6 +54,7 @@
 - 2026-10-28T03:11Z [TOOL] An empty high-memory region at EOF is valid, as is V6 packed main address zero when the routine offset resolves it into the story; both cases have regression tests.
 - 2026-10-28T04:11Z [CODE] `call_vs2` and `call_vn2` are the only instructions using a second operand-type byte; omitted types must remain omitted across both bytes.
 - 2026-10-28T04:13Z [CODE] Inline Z-text termination is bit 15 of each word, the high bit of its first byte; the second byte's high bit does not terminate the string.
+- 2026-10-28T04:20Z [CODE] V6 user-stack word slots grow downward from the last slot: push writes at `table + 2 * spareSlots`, then decrements spare slots; pull increments first, then reads that slot. The standard deliberately does not require an underflow guard.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -67,3 +72,4 @@
 - 2026-10-28T03:59Z [TOOL] Task 4 implementation is complete locally and ready for PR; no completed story walkthroughs exist to replay.
 - 2026-10-28T04:01Z [TOOL] Supersedes prior Task 4 state: PR #8 is open for review; do not begin Task 5 until it is merged.
 - 2026-10-28T04:14Z [TOOL] Supersedes prior Task 4 PR status: PR #8 is merged. Task 5 is committed as `6efb985`, with PR #9 open for review. Do not begin Task 6 until the user confirms merge.
+- 2026-10-28T04:20Z [USER] Supersedes prior Task 5 PR status: PR #9 is merged as `0913bf7`. Task 6 is implemented on `feature/6-execution-state-calls`; final full review, commit, and PR creation remain.
