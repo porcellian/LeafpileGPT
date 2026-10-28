@@ -27,6 +27,8 @@
 - 2026-10-28T15:13Z [USER] PR #17 is merged. Task 14 is active on `feature/14-v1-v5-screen-behavior` from updated `origin/main`.
 - 2026-10-28T15:18Z [TOOL] Task 14 implementation and local verification are complete; final diff review, commit, and PR #18 remain.
 - 2026-10-28T15:19Z [TOOL] Task 14 is committed as `947f8c4`; PR #18 is open at https://github.com/porcellian/LeafpileGPT/pull/18. Stop for user review and merge before Task 15.
+- 2026-10-28T15:27Z [USER] PR #18 is merged; Task 15 is active on `feature/15-v6-windows` from updated `origin/main`.
+- 2026-10-28T15:43Z [TOOL] Task 15 V6 window implementation, generated coverage, and task/spec matrix updates are complete locally; final review, verification, commit, and PR #19 remain.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -38,6 +40,7 @@
 - 2026-10-28T14:04Z [CODE] Task 9 object support handles version-specific entries and property encodings; attribute 48 accesses in V4+ are safely ignored to accommodate the documented Sherlock bug.
 - 2026-10-28T14:17Z [CODE] Dictionary entry counts are signed: negative counts select linear lookup for unsorted user dictionaries. Parse positions include the character's byte offset within the versioned input text buffer.
 - 2026-10-28T14:32Z [CODE] Output stream 3 suppresses streams 1/2 and nests up to 16 tables; deselection finalizes the selected table and resumes its parent. Stream 2 state mirrors Flags 2 bit 0; stream 4 records input separately.
+- 2026-10-28T15:43Z [CODE] V6 screen state uses eight separate 18-property windows; `-3` resolves to the selected window, properties 16/17 are read-only true colors, and `buffer_screen -1` flushes without changing mode. Window operations are host callbacks; newline countdown events remain for Task 17 to invoke routines.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -93,6 +96,8 @@
 - 2026-10-28T15:02Z [CODE] Story filenames are length-prefixed ASCII arrays; normalized names contain at most eight uppercase ASCII alphanumerics plus an optional three-character extension, defaulting to AUX. The filesystem store returns null for missing reads and wraps reportable I/O failures with operation/name context.
 - 2026-10-28T15:13Z [CODE] V1–V5 screen state is host-neutral: `ZMachineScreenModel` tracks cursors/windows and emits operations for the renderer. MORE pauses subsequent screen output, and keyboard input acknowledges prompts; command-file input bypasses them.
 - 2026-10-28T15:18Z [CODE] V4 lower-window line advances scroll while retaining the bottom-row cursor; V3 status refresh happens before keyboard reads and is skipped for command-file input.
+- 2026-10-28T15:43Z [CODE] V6 cursor positions allow the one-unit boundary after window width/height, while text remains clipped to printable margins. Screen resize refreshes default window-0 MORE count unless the game explicitly set that property.
+- 2026-10-28T15:50Z [CODE] V6 window 0 starts with attribute bits 1–3 enabled (`0x0E`), and cursor coordinates stay relative to each window's own origin after moves; generated tests cover the defaults, moved-window scrolling, transparent erase-all state changes, and screen resize.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -133,3 +138,4 @@
 - 2026-10-28T15:13Z [TOOL] Supersedes prior Task 13 status: PR #17 is merged; Task 14 screen-model implementation and generated tests are in progress on its dedicated branch.
 - 2026-10-28T15:18Z [TOOL] Task 14 implements V1–V5 screen state and opcode handling with generated tests; format verification, Release build (0 warnings/errors), all 375 xUnit tests, and `git diff --check` pass. Final review/commit/PR #18 remain.
 - 2026-10-28T15:19Z [TOOL] Supersedes prior Task 14 status: commit `947f8c4` is pushed and PR #18 is open; wait for user review and merge.
+- 2026-10-28T15:50Z [TOOL] Task 15 implementation and generated V1–V6 coverage pass formatting verification, Release build (0 warnings/errors), all 388 xUnit tests, and `git diff --check`. Final review, commit, and PR #19 remain.

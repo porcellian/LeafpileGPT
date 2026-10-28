@@ -101,7 +101,7 @@ public static class ZMachineOpcodeTable
         Add(OpcodeClass.Variable, 14, "erase_line", 4, 5, 1, 1);
         Add(OpcodeClass.Variable, 14, "erase_line", 6, 8, 1, 1);
         Add(OpcodeClass.Variable, 15, "set_cursor", 4, 5, 2, 2);
-        Add(OpcodeClass.Variable, 15, "set_cursor", 6, 8, 2, 3);
+        Add(OpcodeClass.Variable, 15, "set_cursor", 6, 8, 1, 3);
         Add(OpcodeClass.Variable, 16, "get_cursor", 4, 8, 1, 1);
         Add(OpcodeClass.Variable, 17, "set_text_style", 4, 8, 1, 1);
         Add(OpcodeClass.Variable, 18, "buffer_mode", 4, 8, 1, 1);
@@ -140,7 +140,7 @@ public static class ZMachineOpcodeTable
         Add(OpcodeClass.Extended, 13, "set_true_colour", 6, 8, 2, 3);
         Add(OpcodeClass.Extended, 16, "move_window", 6, 8, 3, 3);
         Add(OpcodeClass.Extended, 17, "window_size", 6, 8, 3, 3);
-        Add(OpcodeClass.Extended, 18, "window_style", 6, 8, 3, 3);
+        Add(OpcodeClass.Extended, 18, "window_style", 6, 8, 2, 3);
         Add(OpcodeClass.Extended, 19, "get_wind_prop", 6, 8, 2, 2, store: true);
         Add(OpcodeClass.Extended, 20, "scroll_window", 6, 8, 2, 2);
         Add(OpcodeClass.Extended, 21, "pop_stack", 6, 8, 1, 2);

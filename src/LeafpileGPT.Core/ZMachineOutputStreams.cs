@@ -103,7 +103,8 @@ public sealed class ZMachineOutputStreams
     /// <summary>Sets the buffering mode for versions where buffer_mode is defined.</summary>
     public void SetBuffering(bool enabled)
     {
-        if (_memory.Header.Version is < 4 or > 5 || BufferingEnabled == enabled)
+        var version = _memory.Header.Version;
+        if (version is < 4 or > 6 || (version != 6 && BufferingEnabled == enabled))
         {
             return;
         }
@@ -129,7 +130,7 @@ public sealed class ZMachineOutputStreams
             Screen.WriteText(text, ScreenWriter);
         }
 
-        if (_transcriptSelected)
+        if (_transcriptSelected && (_memory.Header.Version <= 5 || Screen.CopiesCurrentWindowToTranscript))
         {
             TranscriptWriter?.Invoke(text);
         }
@@ -164,7 +165,7 @@ public sealed class ZMachineOutputStreams
             Screen.WriteText(text, ScreenWriter);
         }
 
-        if (_transcriptSelected)
+        if (_transcriptSelected && (_memory.Header.Version <= 5 || Screen.CopiesCurrentWindowToTranscript))
         {
             TranscriptWriter?.Invoke(text);
         }
