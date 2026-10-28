@@ -22,7 +22,10 @@ public sealed record ZMachineSoundEffectRequest(
     ZMachineSoundAction Action,
     byte Volume,
     byte Repeats,
-    ushort CompletionRoutine);
+    ushort CompletionRoutine,
+    BlorbSoundResource? Resource = null,
+    BlorbSoundChannel? Channel = null,
+    bool LoopIndefinitely = false);
 
 /// <summary>Supplies optional platform mouse, menu, and sound operations to the VM.</summary>
 public interface IZMachineEventServices

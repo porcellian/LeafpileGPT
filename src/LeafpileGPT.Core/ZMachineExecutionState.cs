@@ -21,12 +21,14 @@ public sealed class ZMachineExecutionState
         ZMachineMemory memory,
         int maximumStackWords,
         IZMachineEventServices eventServices,
-        BlorbPictureCatalog? pictureCatalog)
+        BlorbPictureCatalog? pictureCatalog,
+        BlorbSoundCatalog? soundCatalog)
     {
         Memory = memory;
         _maximumStackWords = maximumStackWords;
         EventServices = eventServices;
         PictureCatalog = pictureCatalog;
+        SoundCatalog = soundCatalog;
         OutputStreams = new ZMachineOutputStreams(memory);
         OutputStreams.Screen.NewlineInterruptHandler = routine => RoutineCallRequested?.Invoke(routine);
         InitializePictureCapabilities();
@@ -42,6 +44,9 @@ public sealed class ZMachineExecutionState
 
     /// <summary>Optional Blorb picture resources and display hints for this game session.</summary>
     public BlorbPictureCatalog? PictureCatalog { get; }
+
+    /// <summary>Optional Blorb sound resources and V3 loop metadata for this game session.</summary>
+    public BlorbSoundCatalog? SoundCatalog { get; }
 
     /// <summary>Host callback used to execute a game routine requested by a VM event.</summary>
     public Action<ushort>? RoutineCallRequested { get; set; }
@@ -174,7 +179,8 @@ public sealed class ZMachineExecutionState
         StoryFile story,
         int maximumStackWords = DefaultMaximumStackWords,
         IZMachineEventServices? eventServices = null,
-        BlorbPictureCatalog? pictureCatalog = null)
+        BlorbPictureCatalog? pictureCatalog = null,
+        BlorbSoundCatalog? soundCatalog = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         if (maximumStackWords < 1_024)
@@ -184,7 +190,8 @@ public sealed class ZMachineExecutionState
         }
 
         var state = new ZMachineExecutionState(
-            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance, pictureCatalog);
+            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance,
+            pictureCatalog, soundCatalog);
         if (story.Header.Version == 6)
         {
             var routineAddress = ZMachineAddressing.InitialProgramCounterByteAddress(story.Header);
