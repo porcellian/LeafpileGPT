@@ -13,6 +13,64 @@ public sealed class ZMachineOpcodeExecutor
         _writeText = writeText;
     }
 
+    /// <summary>Executes input opcodes asynchronously; all other opcodes use the synchronous executor.</summary>
+    public async ValueTask ExecuteAsync(
+        DecodedInstruction instruction,
+        ZMachineExecutionState state,
+        IZMachineInputProvider inputProvider,
+        Func<ushort, CancellationToken, ValueTask<bool>>? timedRoutine = null,
+        Action? redrawInput = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(instruction);
+        ArgumentNullException.ThrowIfNull(state);
+        ArgumentNullException.ThrowIfNull(inputProvider);
+        var mnemonic = instruction.Definition.Mnemonic;
+        if (mnemonic is not "sread" and not "aread" and not "read_char")
+        {
+            Execute(instruction, state);
+            return;
+        }
+
+        if (state.IsHalted)
+        {
+            throw new ZMachineExecutionException("Cannot execute an instruction after the machine has halted.");
+        }
+
+        state.SetProgramCounter(instruction.NextProgramCounter);
+        try
+        {
+            var input = new ZMachineInputHandler(state, inputProvider, timedRoutine, redrawInput);
+            if (mnemonic is "sread" or "aread")
+            {
+                var terminatingCharacter = await input.ReadLineAsync(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state),
+                    instruction.Operands.Length > 2 ? ReadValue(instruction.Operands[2], state) : (ushort)0,
+                    instruction.Operands.Length > 3 ? ReadValue(instruction.Operands[3], state) : (ushort)0,
+                    cancellationToken);
+                if (terminatingCharacter is { } result && instruction.StoreVariable is { } storeVariable)
+                {
+                    state.WriteVariable(storeVariable, result);
+                }
+
+                return;
+            }
+
+            var character = await input.ReadCharacterAsync(
+                ReadValue(instruction.Operands[0], state),
+                instruction.Operands.Length > 1 ? ReadValue(instruction.Operands[1], state) : (ushort)0,
+                instruction.Operands.Length > 2 ? ReadValue(instruction.Operands[2], state) : (ushort)0,
+                cancellationToken);
+            StoreResult(instruction, state, character);
+        }
+        catch
+        {
+            state.SetProgramCounter(instruction.ProgramCounter);
+            throw;
+        }
+    }
+
     public void Execute(DecodedInstruction instruction, ZMachineExecutionState state)
     {
         ArgumentNullException.ThrowIfNull(instruction);
@@ -229,6 +287,15 @@ public sealed class ZMachineOpcodeExecutor
             case "buffer_mode":
                 state.OutputStreams.SetBuffering(ReadValue(instruction.Operands[0], state) == 1);
                 break;
+            case "input_stream":
+                state.SelectInputStream(ReadValue(instruction.Operands[0], state));
+                break;
+            case "sread":
+            case "aread":
+            case "read_char":
+                state.SetProgramCounter(instruction.ProgramCounter);
+                throw new ZMachineExecutionException(
+                    $"Opcode {instruction.Definition.Mnemonic} requires an input provider and must run through ExecuteAsync.");
             case "tokenise":
                 new ZMachineDictionary(state.Memory).Tokenise(
                     ReadValue(instruction.Operands[0], state),

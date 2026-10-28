@@ -34,6 +34,8 @@ public sealed class ZMachineExecutionState
 
     public byte Version => Memory.Header.Version;
 
+    public byte CurrentInputStream { get; private set; }
+
     public uint ProgramCounter { get; private set; }
 
     public bool IsHalted { get; private set; }
@@ -85,6 +87,29 @@ public sealed class ZMachineExecutionState
     }
 
     public void Halt() => IsHalted = true;
+
+    public void SelectInputStream(ushort inputStream)
+    {
+        if (Version < 3 || inputStream > 1)
+        {
+            throw new ZMachineExecutionException(
+                $"Input stream {inputStream} is not defined for Z-machine version {Version}.");
+        }
+
+        CurrentInputStream = checked((byte)inputStream);
+    }
+
+    /// <summary>Sets the interpreter capability bit for periodic timed input callbacks.</summary>
+    public void SetTimedInputSupported(bool supported)
+    {
+        if (Version < 4)
+        {
+            return;
+        }
+
+        var flags1 = Memory.ReadByte(0x01);
+        Memory.WriteByte(0x01, supported ? (byte)(flags1 | 0x80) : (byte)(flags1 & 0x7F));
+    }
 
     public static ZMachineExecutionState Start(StoryFile story, int maximumStackWords = DefaultMaximumStackWords)
     {

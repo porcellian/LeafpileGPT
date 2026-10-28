@@ -21,6 +21,7 @@
 - 2026-10-28T14:04Z [USER] Supersedes prior Task 8 pull-request status: PR #12 is merged; Task 9 proceeds from updated `origin/main` on `feature/9-objects-and-properties`.
 - 2026-10-28T14:17Z [USER] PR #13 is merged; Task 10 proceeds from updated `origin/main` on `feature/10-dictionaries-command-parsing`.
 - 2026-10-28T14:32Z [USER] PR #14 is merged; Task 11 proceeds from updated `origin/main` on `feature/11-output-streams`.
+- 2026-10-28T14:51Z [USER] Supersedes prior Task 11 status: PR #15 is merged; Task 12 is active on `feature/12-keyboard-input-timed-reads` from updated `origin/main`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -82,6 +83,7 @@
 - 2026-10-28T14:04Z [CODE] V4+ `get_prop_len` identifies extended properties from the byte immediately before data (bit 7 set), then reads the first size byte two positions back; extended length zero means 64 bytes.
 - 2026-10-28T14:17Z [CODE] Dictionary parse positions include the text-buffer header offset (1 for V1–V4, 2 for V5+); word separators are independent tokens and spaces are discarded.
 - 2026-10-28T14:34Z [CODE] V6 stream-3 width is reported through header word `$30`; a host-provided character-width function supplies units, defaulting to one unit per non-newline scalar.
+- 2026-10-28T14:51Z [CODE] Input providers are host-neutral async interfaces; timed reads race input against periodic callbacks and cancel/observe pending input when a callback ends the read. V1–V4 text-buffer byte 0 limits typed characters, with an additional byte reserved for the zero terminator.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -113,3 +115,5 @@
 - 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 is complete in PR #14; wait for review and merge.
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 is complete in PR #15; wait for review and merge.
+- 2026-10-28T14:51Z [TOOL] Task 12 implements `read`/`read_char`, input stream selection, text editing/filtering, terminating-key tables, timed callbacks, and generated V1–V8 tests. Formatting, Release build (zero warnings/errors), all 348 xUnit tests, and `git diff --check` pass; final review/commit/PR #16 remain.
+- 2026-10-28T14:52Z [TOOL] Task 12 is committed as `5a72219` and PR #16 is open at https://github.com/porcellian/LeafpileGPT/pull/16. macOS, Ubuntu, and Windows CI checks are pending; wait for user review/merge before Task 13.
