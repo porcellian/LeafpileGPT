@@ -73,6 +73,8 @@ public sealed class ZMachineInputHandler
             await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadCharacterAsync, cancellationToken);
         }
 
+        _state.OutputStreams.Screen.FlushBeforeInput();
+
         if (request.ShowStatusLineBeforeInput && _state.CurrentInputStream == 0)
         {
             _state.OutputStreams.Screen.ShowStatusLine(_state);
@@ -153,6 +155,7 @@ public sealed class ZMachineInputHandler
         }
 
         await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadCharacterAsync, cancellationToken);
+        _state.OutputStreams.Screen.FlushBeforeInput();
         var timeoutEnabled = _state.Version >= 4
             && _provider.SupportsTimedInput
             && _timedRoutine is not null

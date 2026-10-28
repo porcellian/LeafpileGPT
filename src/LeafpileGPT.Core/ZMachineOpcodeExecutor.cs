@@ -300,9 +300,22 @@ public sealed class ZMachineOpcodeExecutor
                 state.OutputStreams.Screen.EraseLine(ReadValue(instruction.Operands[0], state));
                 break;
             case "set_cursor":
-                state.OutputStreams.Screen.SetCursor(
-                    ReadValue(instruction.Operands[0], state),
-                    ReadValue(instruction.Operands[1], state));
+                if (state.Version == 6)
+                {
+                    state.OutputStreams.Screen.SetV6Cursor(
+                        ReadValue(instruction.Operands[0], state),
+                        instruction.Operands.Length > 1 ? ReadValue(instruction.Operands[1], state) : (ushort)0,
+                        instruction.Operands.Length > 2
+                            ? unchecked((short)ReadValue(instruction.Operands[2], state))
+                            : (short)-3);
+                }
+                else
+                {
+                    state.OutputStreams.Screen.SetCursor(
+                        ReadValue(instruction.Operands[0], state),
+                        ReadValue(instruction.Operands[1], state));
+                }
+
                 break;
             case "get_cursor":
                 state.OutputStreams.Screen.StoreCursorPosition(ReadValue(instruction.Operands[0], state));
@@ -311,9 +324,73 @@ public sealed class ZMachineOpcodeExecutor
                 state.OutputStreams.Screen.SetTextStyle(ReadValue(instruction.Operands[0], state));
                 break;
             case "set_colour":
-                state.OutputStreams.Screen.SetColours(
+                if (state.Version == 6)
+                {
+                    state.OutputStreams.Screen.SetColours(
+                        ReadValue(instruction.Operands[0], state),
+                        ReadValue(instruction.Operands[1], state),
+                        instruction.Operands.Length > 2
+                            ? unchecked((short)ReadValue(instruction.Operands[2], state))
+                            : (short)-3);
+                }
+                else
+                {
+                    state.OutputStreams.Screen.SetColours(
+                        ReadValue(instruction.Operands[0], state),
+                        ReadValue(instruction.Operands[1], state));
+                }
+
+                break;
+            case "set_true_colour":
+                state.OutputStreams.Screen.SetTrueColours(
                     ReadValue(instruction.Operands[0], state),
-                    ReadValue(instruction.Operands[1], state));
+                    ReadValue(instruction.Operands[1], state),
+                    instruction.Operands.Length > 2
+                        ? unchecked((short)ReadValue(instruction.Operands[2], state))
+                        : null);
+                break;
+            case "set_margins":
+                state.OutputStreams.Screen.SetMargins(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state),
+                    unchecked((short)ReadValue(instruction.Operands[2], state)));
+                break;
+            case "move_window":
+                state.OutputStreams.Screen.MoveWindow(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    ReadValue(instruction.Operands[1], state),
+                    ReadValue(instruction.Operands[2], state));
+                break;
+            case "window_size":
+                state.OutputStreams.Screen.ResizeWindow(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    ReadValue(instruction.Operands[1], state),
+                    ReadValue(instruction.Operands[2], state));
+                break;
+            case "window_style":
+                state.OutputStreams.Screen.ChangeWindowStyle(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    ReadValue(instruction.Operands[1], state),
+                    instruction.Operands.Length > 2 ? ReadValue(instruction.Operands[2], state) : (ushort)0);
+                break;
+            case "get_wind_prop":
+                StoreResult(instruction, state, state.OutputStreams.Screen.GetWindowProperty(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    ReadValue(instruction.Operands[1], state)));
+                break;
+            case "scroll_window":
+                state.OutputStreams.Screen.ScrollWindow(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    unchecked((short)ReadValue(instruction.Operands[1], state)));
+                break;
+            case "put_wind_prop":
+                state.OutputStreams.Screen.PutWindowProperty(
+                    unchecked((short)ReadValue(instruction.Operands[0], state)),
+                    ReadValue(instruction.Operands[1], state),
+                    ReadValue(instruction.Operands[2], state));
+                break;
+            case "buffer_screen":
+                StoreResult(instruction, state, state.OutputStreams.Screen.BufferScreen(ReadValue(instruction.Operands[0], state)));
                 break;
             case "show_status":
                 state.OutputStreams.Screen.ShowStatusLine(state);
