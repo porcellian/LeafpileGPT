@@ -1,8 +1,15 @@
 namespace LeafpileGPT.Core;
 
-/// <summary>Executes the arithmetic, data, stack, call, and control-flow opcodes.</summary>
+/// <summary>Executes implemented arithmetic, object, data, stack, call, and control-flow opcodes.</summary>
 public sealed class ZMachineOpcodeExecutor
 {
+    private readonly Action<string>? _writeText;
+
+    public ZMachineOpcodeExecutor(Action<string>? writeText = null)
+    {
+        _writeText = writeText;
+    }
+
     public void Execute(DecodedInstruction instruction, ZMachineExecutionState state)
     {
         ArgumentNullException.ThrowIfNull(instruction);
@@ -73,6 +80,81 @@ public sealed class ZMachineOpcodeExecutor
                     Branch(instruction, state, (bitmap & flags) == flags);
                     break;
                 }
+            case "jin":
+                {
+                    var objects = new ZMachineObjectTable(state);
+                    Branch(instruction, state, objects.IsChildOf(
+                        ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state)));
+                    break;
+                }
+            case "test_attr":
+                {
+                    var objects = new ZMachineObjectTable(state);
+                    Branch(instruction, state, objects.TestAttribute(
+                        ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state)));
+                    break;
+                }
+            case "set_attr":
+            case "clear_attr":
+                {
+                    var objects = new ZMachineObjectTable(state);
+                    objects.SetAttribute(ReadValue(instruction.Operands[0], state),
+                        ReadValue(instruction.Operands[1], state), instruction.Definition.Mnemonic == "set_attr");
+                    break;
+                }
+            case "insert_obj":
+                new ZMachineObjectTable(state).InsertObject(
+                    ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state));
+                break;
+            case "get_sibling":
+                {
+                    var sibling = new ZMachineObjectTable(state).GetSibling(ReadValue(instruction.Operands[0], state));
+                    StoreResult(instruction, state, sibling);
+                    Branch(instruction, state, sibling != 0);
+                    break;
+                }
+            case "get_child":
+                {
+                    var child = new ZMachineObjectTable(state).GetChild(ReadValue(instruction.Operands[0], state));
+                    StoreResult(instruction, state, child);
+                    Branch(instruction, state, child != 0);
+                    break;
+                }
+            case "get_parent":
+                StoreResult(instruction, state, new ZMachineObjectTable(state).GetParent(ReadValue(instruction.Operands[0], state)));
+                break;
+            case "get_prop":
+                StoreResult(instruction, state, new ZMachineObjectTable(state).GetProperty(
+                    ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state)));
+                break;
+            case "get_prop_addr":
+                StoreResult(instruction, state, new ZMachineObjectTable(state).GetPropertyAddress(
+                    ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state)));
+                break;
+            case "get_next_prop":
+                StoreResult(instruction, state, checked((ushort)new ZMachineObjectTable(state).GetNextProperty(
+                    ReadValue(instruction.Operands[0], state), ReadValue(instruction.Operands[1], state))));
+                break;
+            case "get_prop_len":
+                StoreResult(instruction, state, checked((ushort)new ZMachineObjectTable(state).GetPropertyLength(
+                    ReadValue(instruction.Operands[0], state))));
+                break;
+            case "put_prop":
+                new ZMachineObjectTable(state).SetProperty(ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state), ReadValue(instruction.Operands[2], state));
+                break;
+            case "remove_obj":
+                new ZMachineObjectTable(state).RemoveObject(ReadValue(instruction.Operands[0], state));
+                break;
+            case "print_obj":
+                if (_writeText is null)
+                {
+                    state.SetProgramCounter(instruction.ProgramCounter);
+                    throw new ZMachineExecutionException("print_obj requires a configured text output callback.");
+                }
+
+                _writeText(new ZMachineObjectTable(state).GetShortName(ReadValue(instruction.Operands[0], state)));
+                break;
             case "inc":
                 MutateVariableReference(instruction, state, increment: true);
                 break;

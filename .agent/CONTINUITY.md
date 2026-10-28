@@ -18,6 +18,7 @@
 - 2026-10-28T04:11Z [USER] PR #8 is merged; Task 5 proceeds on `feature/5-instruction-decoder`.
 - 2026-10-28T04:20Z [USER] PR #9 is merged as `0913bf7`; Task 6 proceeds on `feature/6-execution-state-calls` from merged main.
 - 2026-10-28T04:30Z [USER] PR #10 is merged; proceed with Task 7 on `feature/7-arithmetic-vm-operations`.
+- 2026-10-28T14:04Z [USER] Supersedes prior Task 8 pull-request status: PR #12 is merged; Task 9 proceeds from updated `origin/main` on `feature/9-objects-and-properties`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -26,6 +27,7 @@
 - 2026-10-28T04:25Z [CODE] Default the combined routine-frame and evaluation stack budget to 32,768 words; reject configurations below the standard's 1,024-word minimum.
 - 2026-10-28T04:25Z [CODE] Represent catch tokens as active call-stack indices; throw removes the indexed routine and deeper frames, then stores its return value in the target caller.
 - 2026-10-28T04:34Z [CODE] Task 7 executes decoded opcodes; variable-reference operands use their encoded variable number, while value operands are read through execution state.
+- 2026-10-28T14:04Z [CODE] Task 9 object support handles version-specific entries and property encodings; attribute 48 accesses in V4+ are safely ignored to accommodate the documented Sherlock bug.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -53,6 +55,8 @@
 - 2026-10-28T04:42Z [USER] Supersedes prior PR #11 status: PR #11 is merged. Task 8 is active on `feature/8-text-character-encoding` from updated main.
 - 2026-10-28T04:50Z [TOOL] Task 8 adds V1–V8 packed text decoding, abbreviations, alphabet shifts/custom tables, ZSCII/Unicode maps, and fixed-width dictionary encoding. Formatting and Release build pass; all 220 xUnit tests pass locally.
 - 2026-10-28T04:52Z [TOOL] Supersedes prior Task 8 verification: added V6/V7 packed-string offsets, V8 scale, additional V4–V8 shift coverage, and invalid abbreviation-table checks. Formatting and Release build pass with zero warnings/errors; all 231 tests pass. Task 8 review and PR creation remain.
+- 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
+- 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -69,6 +73,7 @@
 - 2026-10-28T04:38Z [CODE] Division by zero halts the execution state; unsupported-opcode dispatch restores the faulting PC before raising a contextual exception.
 - 2026-10-28T04:50Z [CODE] Abbreviation markers select one of three 32-entry groups; Unicode translation table address is extension word 3. The supplied PDF's V1 A2 row includes a leading space before digits.
 - 2026-10-28T04:52Z [TOOL] Reviewed the supplied PDF page image for the V1 A2 alphabet row; the leading space is present, correcting an ambiguity in extracted text.
+- 2026-10-28T14:04Z [CODE] V4+ `get_prop_len` identifies extended properties from the byte immediately before data (bit 7 set), then reads the first size byte two positions back; extended length zero means 64 bytes.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -94,3 +99,7 @@
 - 2026-10-28T04:50Z [TOOL] Task 8 implementation and generated tests are locally complete; documentation review, commit, and PR #12 remain.
 - 2026-10-28T04:52Z [TOOL] Task 8 full diff review and local checks are complete; 231 generated xUnit tests pass. Awaiting conventional commit, push, and PR #12.
 - 2026-10-28T04:54Z [TOOL] Task 8 committed as `eefca70`, pushed to `feature/8-text-character-encoding`, and opened as PR #12 at https://github.com/porcellian/LeafpileGPT/pull/12. Await review and merge before Task 9.
+- 2026-10-28T04:55Z [TOOL] PR #12 CI passed on macOS, Ubuntu, and Windows. GitHub annotations only report existing workflow notices for Node.js 20 action deprecation and ubuntu-latest image migration; no task build/test warnings or failures.
+
+- 2026-10-28T14:04Z [TOOL] Supersedes prior Task 8 PR status: PR #12 is merged to main. Task 9 checks and review are in progress; no Task 9 commit or PR exists yet.
+- 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
