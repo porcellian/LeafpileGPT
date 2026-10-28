@@ -26,6 +26,7 @@
 - 2026-10-28T15:02Z [TOOL] Task 13 implementation and local verification are complete; final full-diff review, commit, and PR #17 remain.
 - 2026-10-28T15:13Z [USER] PR #17 is merged. Task 14 is active on `feature/14-v1-v5-screen-behavior` from updated `origin/main`.
 - 2026-10-28T15:18Z [TOOL] Task 14 implementation and local verification are complete; final diff review, commit, and PR #18 remain.
+- 2026-10-28T15:19Z [TOOL] Task 14 is committed as `947f8c4`; PR #18 is open at https://github.com/porcellian/LeafpileGPT/pull/18. Stop for user review and merge before Task 15.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -131,3 +132,4 @@
 - 2026-10-28T15:03Z [TOOL] Task 13 is committed as `aac6034`, pushed, and PR #17 is open at https://github.com/porcellian/LeafpileGPT/pull/17. GitHub had not reported CI checks at the time of inspection; wait for user review/merge before Task 14.
 - 2026-10-28T15:13Z [TOOL] Supersedes prior Task 13 status: PR #17 is merged; Task 14 screen-model implementation and generated tests are in progress on its dedicated branch.
 - 2026-10-28T15:18Z [TOOL] Task 14 implements V1–V5 screen state and opcode handling with generated tests; format verification, Release build (0 warnings/errors), all 375 xUnit tests, and `git diff --check` pass. Final review/commit/PR #18 remain.
+- 2026-10-28T15:19Z [TOOL] Supersedes prior Task 14 status: commit `947f8c4` is pushed and PR #18 is open; wait for user review and merge.
