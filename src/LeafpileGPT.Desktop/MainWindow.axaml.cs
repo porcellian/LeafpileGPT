@@ -27,6 +27,7 @@ public partial class MainWindow : Window
         _gameDisplay = this.FindControl<GameDisplayView>("GameDisplay")!;
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
         _gameDisplay.MoreKeySubmitted += () => _session?.SubmitMoreKey();
+        _gameDisplay.ScreenMetricsChanged += OnScreenMetricsChanged;
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;
@@ -77,6 +78,11 @@ public partial class MainWindow : Window
             UpdateLoadedStoryDisplay();
             _gameDisplay.Model.ResetPresentation();
             _gameDisplay.ClearPictures();
+            if (story.Header.Version < 6 && _gameDisplay.TryGetScreenMetrics(out var screenMetrics))
+            {
+                await ApplyScreenMetricsAsync(session, story, screenMetrics);
+            }
+
             _gameDisplay.FocusPrompt();
             _appStatusText.Text = $"Playing {Path.GetFileName(fullPath)} (Z-machine version {story.Header.Version}).";
             RememberSelectedDirectory(FileDialogPurpose.PlayGame, fullPath);
@@ -87,6 +93,37 @@ public partial class MainWindow : Window
         {
             _appStatusText.Text = "Could not load the selected story.";
             await ShowErrorAsync("Unable to open story", $"The story could not be loaded from:\n{path}\n\n{exception.Message}");
+        }
+    }
+
+    private void OnScreenMetricsChanged(DesktopScreenMetrics metrics)
+    {
+        var session = _session;
+        var story = _story;
+        if (session is null || story is null || story.Header.Version >= 6)
+        {
+            return;
+        }
+
+        _ = ApplyScreenMetricsAsync(session, story, metrics);
+    }
+
+    private static async Task ApplyScreenMetricsAsync(
+        DesktopGameSession session,
+        StoryFile story,
+        DesktopScreenMetrics metrics)
+    {
+        var (heightInLines, morePageLineLimit) = metrics.ForStoryVersion(story.Header.Version);
+        try
+        {
+            await session.SetScreenDimensionsAsync(
+                metrics.WidthInCharacters,
+                heightInLines,
+                morePageLineLimit);
+        }
+        catch (ObjectDisposedException)
+        {
+            // A resize can race with replacing the current story session.
         }
     }
 

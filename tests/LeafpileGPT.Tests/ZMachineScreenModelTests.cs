@@ -315,6 +315,27 @@ public sealed class ZMachineScreenModelTests
     }
 
     [Fact]
+    public void MorePageStartsFreshWhenThePlayerSubmitsANewCommand()
+    {
+        var screen = CreateState(5).OutputStreams.Screen;
+        screen.SetDimensions(80, 4);
+        screen.SetMorePageLineLimit(3);
+
+        screen.WriteText("previous command\nmore previous output\n", null);
+        screen.ResetMorePageForCommand();
+        screen.WriteText("first response line\nsecond response line\n", null);
+
+        Assert.False(screen.IsWaitingForMore);
+
+        screen.WriteText("third response line\n", null);
+        Assert.False(screen.IsWaitingForMore);
+
+        screen.WriteText("fourth response line", null);
+
+        Assert.True(screen.IsWaitingForMore);
+    }
+
+    [Fact]
     public void ScreenOpcodesDispatchThroughTheExecutor()
     {
         var state = CreateState(5);

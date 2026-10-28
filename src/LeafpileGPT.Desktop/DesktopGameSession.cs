@@ -94,6 +94,24 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
     public bool SubmitCommand(string command) => _input.SubmitLine(command);
 
+    public async Task SetScreenDimensionsAsync(
+        int widthInCharacters,
+        int heightInLines,
+        int morePageLineLimit,
+        CancellationToken cancellationToken = default)
+    {
+        await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            State.OutputStreams.Screen.SetDimensions(widthInCharacters, heightInLines);
+            State.OutputStreams.Screen.SetMorePageLineLimit(morePageLineLimit);
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+    }
+
     public bool SubmitMoreKey() => _input.SubmitMoreKey();
 
     public async Task<QuetzalSaveData> CaptureSaveStateAsync(CancellationToken cancellationToken = default)

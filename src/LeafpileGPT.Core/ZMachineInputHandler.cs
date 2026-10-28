@@ -116,6 +116,7 @@ public sealed class ZMachineInputHandler
 
             typedText = SanitizeLine(inputResult.Text, maximumAdditionalCharacters);
             _ = ZMachineTextBuffer.StoreInput(memory, _zscii, textBufferAddress, typedText.AsSpan(), terminator);
+            _state.OutputStreams.Screen.ResetMorePageForCommand();
         }
 
         var fullLine = DecodeInput(ZMachineTextBuffer.ReadText(memory, textBufferAddress));

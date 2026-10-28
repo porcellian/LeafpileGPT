@@ -102,6 +102,7 @@ public sealed class ZMachineScreenModel
     private bool _lowerBufferingEnabled = true;
     private int _linesSinceMorePrompt;
     private bool _morePending;
+    private int? _morePageLineLimit;
     private Action<ZMachineScreenOperation>? _operationWriter;
     private bool _v6SplitActive;
     private bool _screenUpdatesBuffered;
@@ -1436,6 +1437,31 @@ public sealed class ZMachineScreenModel
         }
     }
 
+    /// <summary>Sets a host-measured page limit; null restores the standard screen-height limit.</summary>
+    public void SetMorePageLineLimit(int? lineCount)
+    {
+        if (lineCount is < 1 or > byte.MaxValue)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lineCount), "The MORE page limit must be from 1 through 255.");
+        }
+
+        _morePageLineLimit = lineCount;
+        _linesSinceMorePrompt = 0;
+        _morePending = false;
+    }
+
+    /// <summary>Starts a fresh MORE page for output produced by the next player command.</summary>
+    public void ResetMorePageForCommand()
+    {
+        if (Version == 6 || IsWaitingForMore)
+        {
+            return;
+        }
+
+        _linesSinceMorePrompt = 0;
+        _morePending = false;
+    }
+
     public async ValueTask WaitForMoreAsync(
         Func<CancellationToken, ValueTask<ushort>> readKey,
         CancellationToken cancellationToken = default)
@@ -1751,7 +1777,7 @@ public sealed class ZMachineScreenModel
         }
 
         _linesSinceMorePrompt++;
-        var visibleLines = Version == 3 ? HeightInLines - 1 : HeightInLines;
+        var visibleLines = _morePageLineLimit ?? (Version == 3 ? HeightInLines - 1 : HeightInLines);
         if (MorePromptsEnabled && visibleLines > 1 && HeightInLines != byte.MaxValue
             && _linesSinceMorePrompt >= visibleLines && !IsWaitingForMore)
         {

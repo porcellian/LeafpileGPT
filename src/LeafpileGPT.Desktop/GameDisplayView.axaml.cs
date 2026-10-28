@@ -1,3 +1,4 @@
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Input;
@@ -12,6 +13,7 @@ namespace LeafpileGPT.Desktop;
 public partial class GameDisplayView : UserControl
 {
     private readonly ScrollViewer _transcriptScrollViewer;
+    private readonly Grid _playArea;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
     private readonly TextBox _promptTextBox;
@@ -19,6 +21,7 @@ public partial class GameDisplayView : UserControl
     private Run? _blockCursorRun;
     private bool _promptInputActive;
     private bool _scrollToEndPending;
+    private DesktopScreenMetrics? _lastScreenMetrics;
     private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
@@ -26,10 +29,14 @@ public partial class GameDisplayView : UserControl
     {
         AvaloniaXamlLoader.Load(this);
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
+        _playArea = this.FindControl<Grid>("PlayArea")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
         _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
+        _playArea.SizeChanged += (_, _) => PublishScreenMetrics();
+        _transcriptScrollViewer.SizeChanged += (_, _) => PublishScreenMetrics();
+        Loaded += (_, _) => PublishScreenMetrics();
         _cursorBlinkTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
         _cursorBlinkTimer.Tick += (_, _) =>
         {
@@ -84,7 +91,51 @@ public partial class GameDisplayView : UserControl
 
     public event Action? MoreKeySubmitted;
 
+    public event Action<DesktopScreenMetrics>? ScreenMetricsChanged;
+
     public void FocusPrompt() => _promptTextBox.Focus();
+
+    public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
+    {
+        var typeface = new Typeface(
+            _transcriptTextBlock.FontFamily,
+            _transcriptTextBlock.FontStyle,
+            _transcriptTextBlock.FontWeight,
+            FontStretch.Normal);
+        var sample = new FormattedText(
+            "M",
+            CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            typeface,
+            _transcriptTextBlock.FontSize,
+            Brushes.White);
+        var padding = _transcriptScrollViewer.Padding;
+        var contentWidth = _transcriptScrollViewer.Viewport.Width;
+        var contentHeight = _transcriptScrollViewer.Bounds.Height - padding.Top - padding.Bottom;
+        if (contentWidth <= 0 || contentHeight <= 0 || sample.WidthIncludingTrailingWhitespace <= 0 || sample.Height <= 0)
+        {
+            metrics = default;
+            return false;
+        }
+
+        metrics = DesktopScreenMetrics.FromViewport(
+            contentWidth,
+            contentHeight,
+            sample.WidthIncludingTrailingWhitespace,
+            sample.Height);
+        return true;
+    }
+
+    private void PublishScreenMetrics()
+    {
+        if (!TryGetScreenMetrics(out var metrics) || _lastScreenMetrics == metrics)
+        {
+            return;
+        }
+
+        _lastScreenMetrics = metrics;
+        ScreenMetricsChanged?.Invoke(metrics);
+    }
 
     public void BeginPromptInput()
     {

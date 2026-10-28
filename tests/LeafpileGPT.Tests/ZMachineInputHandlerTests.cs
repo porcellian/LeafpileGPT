@@ -87,6 +87,32 @@ public sealed class ZMachineInputHandlerTests
     }
 
     [Fact]
+    public async Task AcceptedLineStartsFreshMorePageBeforeEchoingPlayerInput()
+    {
+        var state = CreateState(5);
+        state.Memory.WriteByte(400, 8);
+        state.Memory.WriteByte(401, 0);
+        var screen = state.OutputStreams.Screen;
+        screen.SetDimensions(80, 4);
+        screen.SetMorePageLineLimit(3);
+        screen.WriteText("previous response\nmore previous response\n", null);
+        var provider = new FakeInputProvider
+        {
+            LineResult = new ZMachineLineInputResult("look", 13)
+        };
+
+        await new ZMachineInputHandler(state, provider).ReadLineAsync(
+            400,
+            0,
+            cancellationToken: TestContext.Current.CancellationToken);
+
+        screen.WriteText("first response line\n", null);
+        screen.WriteText("second response line", null);
+
+        Assert.False(screen.IsWaitingForMore);
+    }
+
+    [Fact]
     public async Task ReadDropsCharactersOutsideTheDefinedInputAndOutputSet()
     {
         var state = CreateState(5);

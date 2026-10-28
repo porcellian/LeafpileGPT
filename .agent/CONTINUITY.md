@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T21:12Z [USER] PR #31 follow-up: diagnose and correct early MORE in `gui09.png` and late MORE in `gui10.png`; track both references.
 - 2026-10-28T20:51Z [USER] Follow-up for PR #31 based on `gui07.png`/`gui08.png`: page output only when more text would overflow the visible page; show MORE and continue on any key. Track both screenshots.
 - 2026-10-28T20:25Z [USER] Follow-up for PR #31: remove unnecessary desktop MORE waits so the game's normal prompt and cursor appear immediately after each command; track `reference/gui06.png`.
 - 2026-10-28T20:15Z [USER] Follow-up for PR #31: prevent newly written leaflet text from clipping at the bottom, keep the prompt/cursor visible without requiring another Return, and clear stale text above the play area.
@@ -73,6 +74,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T21:12Z [TOOL] MORE now resets on accepted line input and uses a page limit measured from the transcript viewport; V3 includes its status row and one viewport row is reserved for MORE. Added `gui09.png`/`gui10.png` and five generated tests. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass; commit and PR #31 push remain.
 - 2026-10-28T20:53Z [TOOL] Supersedes the 20:52Z push failure: commit `f1f1b41` is now pushed to PR #31 after increasing Git's HTTP buffer. Worktree is clean. Formatter, Release build, and all 513 tests pass; GitHub API checks remain unreachable for now.
 - 2026-10-28T20:52Z [TOOL] Supersedes the 20:51Z local-completion note: commit `0d0acef` contains the MORE paging correction, tests, and `gui07.png`/`gui08.png`; push to PR #31 failed with HTTP 400, and `git ls-remote` then failed DNS resolution for `github.com`. Retry push when reachable.
 - 2026-10-28T20:51Z [TOOL] Supersedes the 20:25Z global-disable approach: desktop MORE is enabled; the screen model defers a pause until additional text arrives after a full page, the desktop displays `[MORE] Press any key to continue`, and a dedicated key channel resumes queued output immediately. Tracked `gui07.png`/`gui08.png`; formatter, Release build (0 warnings/errors), all 513 tests, and diff check pass. Review, commit, push remain.
@@ -128,6 +130,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-28T21:12Z [TOOL] `gui09`'s early MORE came from carrying the page line counter across prior commands. `gui10` used a fixed VM page height despite a larger/different rendered transcript viewport; screen rows now come from the Courier cell size and live transcript area.
 - 2026-10-28T20:51Z [TOOL] Local Avalonia build telemetry can fail when sandboxed from the user application-support directory; `-p:UsedAvaloniaProducts=` skips that telemetry target while still compiling Core, Desktop, and Tests.
 - 2026-10-28T18:40Z [CODE] Preferences write to a same-directory temporary file and move over the active JSON only after serialization and disk flush succeed; failed writes leave the in-memory preference snapshot unchanged.
 - 2026-10-28T18:33Z [CODE] Quetzal IFhd PC points to the legacy branch descriptor (V1–V3) or result-variable byte (V4+); successful restore must read and apply that saved continuation before executing the next opcode.
