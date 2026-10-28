@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T19:41Z [USER] After PR #30 merged, fix the gameplay prompt to remove its visible TextBox surface, accept commands inline after `>`, and show a blinking block cursor. Preserve the user's README edits and include them in this fix; Task 27 remains paused.
+- 2026-10-28T19:33Z [USER] PR #30 is merged. User requested standby; Task 27 has not started.
 - 2026-10-28T19:26Z [USER] PR #29 is merged; Task 26 is active on `feature/26-app-vm-resource-integration` from updated `origin/main`.
 - 2026-10-28T19:04Z [USER] PR #28 is merged; Task 25 is active on `feature/25-game-display` from updated `main`.
 - 2026-10-28T18:51Z [USER] PR #27 is merged; Task 24 is active on `feature/24-app-startup-file-menu` from updated `main`.
@@ -65,6 +67,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T19:43Z [TOOL] `fix/inline-command-prompt` is ready for review: the TextBox surface/focus visuals are suppressed, an inline text display and 500 ms blinking block cursor are added, and the user's README edits remain. Formatter passes, Release build has 0 warnings/errors, 510 xUnit tests pass, and `git diff --check` passes; commit and PR remain.
+- 2026-10-28T19:33Z [USER] Supersedes the prior Task 26 PR status: PR #30 is merged; wait for the user to resume before starting Task 27.
 - 2026-10-28T19:27Z [TOOL] Supersedes the prior Task 26 status: commit `bd4fb00` is pushed and PR #30 is open at https://github.com/porcellian/LeafpileGPT/pull/30. Wait for user review and merge before Task 27.
 - 2026-10-28T19:26Z [TOOL] Task 26 integration is implemented and locally verified: formatter passes, Release build has 0 warnings/errors, 510 generated xUnit tests pass, `git diff --check` passes, and a local-only Zork I smoke run verifies startup plus `look`. Final full diff review, commit, and PR #30 remain.
 - 2026-10-28T19:04Z [TOOL] Task 25 is committed as `8655a8d`, pushed, and open as PR #29 at https://github.com/porcellian/LeafpileGPT/pull/29. Formatting, Release build (0 warnings/errors), 502 xUnit tests, and `git diff --check` pass; wait for review and merge before Task 26.

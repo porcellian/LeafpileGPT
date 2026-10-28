@@ -14,6 +14,10 @@ public partial class GameDisplayView : UserControl
     private readonly ScrollViewer _transcriptScrollViewer;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
+    private readonly TextBlock _promptInputTextBlock;
+    private readonly TextBlock _blockCursor;
+    private readonly TextBox _promptTextBox;
+    private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
     public GameDisplayView()
@@ -22,13 +26,33 @@ public partial class GameDisplayView : UserControl
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
+        _promptInputTextBlock = this.FindControl<TextBlock>("PromptInputTextBlock")!;
+        _blockCursor = this.FindControl<TextBlock>("BlockCursor")!;
+        _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
+        _cursorBlinkTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        _cursorBlinkTimer.Tick += (_, _) => _blockCursor.IsVisible = !_blockCursor.IsVisible;
+        _promptTextBox.GotFocus += (_, _) =>
+        {
+            _blockCursor.IsVisible = true;
+            _cursorBlinkTimer.Start();
+        };
+        _promptTextBox.LostFocus += (_, _) =>
+        {
+            _cursorBlinkTimer.Stop();
+            _blockCursor.IsVisible = false;
+        };
+        Unloaded += (_, _) => _cursorBlinkTimer.Stop();
         Model = new GameDisplayModel();
         DataContext = Model;
         Model.OutputSegmentAdded += AppendOutputSegment;
         Model.OutputCleared += () => _transcriptTextBlock.Inlines?.Clear();
         Model.PropertyChanged += (_, args) =>
         {
-            if (args.PropertyName == nameof(GameDisplayModel.Transcript))
+            if (args.PropertyName == nameof(GameDisplayModel.InputText))
+            {
+                _promptInputTextBlock.Text = Model.InputText;
+            }
+            else if (args.PropertyName == nameof(GameDisplayModel.Transcript))
             {
                 Dispatcher.UIThread.Post(_transcriptScrollViewer.ScrollToEnd);
             }
@@ -37,7 +61,7 @@ public partial class GameDisplayView : UserControl
 
     public GameDisplayModel Model { get; }
 
-    public void FocusPrompt() => this.FindControl<TextBox>("PromptTextBox")?.Focus();
+    public void FocusPrompt() => _promptTextBox.Focus();
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
     {

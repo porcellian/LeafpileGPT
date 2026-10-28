@@ -57,16 +57,37 @@
                    FontSize="20"
                    Foreground="White"
                    VerticalAlignment="Center" />
-        <TextBox x:Name="PromptTextBox"
-                 Grid.Column="1"
-                 Text="{Binding InputText, Mode=TwoWay}"
-                 FontFamily="Courier New, Courier, monospace"
-                 FontSize="20"
-                 Foreground="White"
-                 Background="Transparent"
-                 BorderThickness="0"
-                 Padding="0"
-                 KeyDown="OnPromptKeyDown" />
+        <Grid Grid.Column="1">
+          <TextBox x:Name="PromptTextBox"
+                   Text="{Binding InputText, Mode=TwoWay}"
+                   FontFamily="Courier New, Courier, monospace"
+                   FontSize="20"
+                   Foreground="Transparent"
+                   CaretBrush="Transparent"
+                   SelectionBrush="Transparent"
+                   Background="Transparent"
+                   BorderBrush="Transparent"
+                   BorderThickness="0"
+                   FocusAdorner="{x:Null}"
+                   Padding="0"
+                   VerticalContentAlignment="Center"
+                   KeyDown="OnPromptKeyDown" />
+          <StackPanel Orientation="Horizontal" IsHitTestVisible="False">
+            <TextBlock x:Name="PromptInputTextBlock"
+                       FontFamily="Courier New, Courier, monospace"
+                       FontSize="20"
+                       Foreground="White"
+                       TextWrapping="NoWrap"
+                       VerticalAlignment="Center" />
+            <TextBlock x:Name="BlockCursor"
+                       Text="█"
+                       FontFamily="Courier New, Courier, monospace"
+                       FontSize="20"
+                       Foreground="White"
+                       IsVisible="False"
+                       VerticalAlignment="Center" />
+          </StackPanel>
+        </Grid>
       </Grid>
     </Border>
   </Grid>
