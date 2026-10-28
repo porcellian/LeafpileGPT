@@ -8,7 +8,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **2. Create the Visual Studio solution and build pipeline.** Add a `.sln`, core, Avalonia desktop, and xUnit projects; configure formatting, builds, and tests on Windows, macOS, and Linux.
 - [x] **3. Load and validate story files.** Parse and validate V1–V8 headers, lengths, checksums, memory limits, and malformed-file errors.
 - [x] **4. Implement memory and address translation.** Support dynamic/static/high memory, protected writes, byte/word/packed addresses, and V1–V8 packed-address rules.
-- [ ] **5. Decode instructions.** Implement instruction forms, operands, branches, stores, inline text, and version-gated metadata for all standard opcodes.
+- [x] **5. Decode instructions.** Implement instruction forms, operands, branches, stores, inline text, and version-gated metadata for all standard opcodes.
 - [ ] **6. Implement execution state and calls.** Add stacks, locals, globals, call frames, argument counts, catch/throw, and V6 main-routine and user-stack behavior.
 - [ ] **7. Implement arithmetic and VM operations.** Cover signed arithmetic, shifts, comparisons, random modes, memory/table operations, control flow, and remaining standard opcodes.
 - [ ] **8. Implement text and character encoding.** Add Z-characters, abbreviations, alphabets, ZSCII, Unicode tables, dictionary encoding, and safe invalid-character handling.
