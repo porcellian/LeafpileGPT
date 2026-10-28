@@ -93,3 +93,4 @@
 - 2026-10-28T04:42Z [USER] Supersedes prior PR #11 status: PR #11 merged. Task 8 is active on `feature/8-text-character-encoding`.
 - 2026-10-28T04:50Z [TOOL] Task 8 implementation and generated tests are locally complete; documentation review, commit, and PR #12 remain.
 - 2026-10-28T04:52Z [TOOL] Task 8 full diff review and local checks are complete; 231 generated xUnit tests pass. Awaiting conventional commit, push, and PR #12.
+- 2026-10-28T04:54Z [TOOL] Task 8 committed as `eefca70`, pushed to `feature/8-text-character-encoding`, and opened as PR #12 at https://github.com/porcellian/LeafpileGPT/pull/12. Await review and merge before Task 9.
