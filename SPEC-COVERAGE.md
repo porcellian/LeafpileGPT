@@ -7,7 +7,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 | Standard area | Implementation tasks | Coverage / acceptance evidence |
 |---|---:|---|
 | 1. Memory map and addresses | 3–4 | `StoryFile` validates dynamic/static/high boundaries, story size limits, and table bounds. `ZMachineMemory` classifies regions, bounds game-visible and VM-internal reads, and protects static/high memory from writes. `ZMachineAddressing` converts byte, word, and V1–V8 packed addresses, including separate V6/V7 routine and string offsets. Generated xUnit fixtures cover boundaries, overlap, overflow, and write protection. |
-| 2. Numbers and arithmetic | 7 | Signed arithmetic/comparisons; 16-bit wrapping; divide-by-zero; deterministic and random modes. |
+| 2. Numbers and arithmetic | 7 | ZMachineOpcodeExecutor applies signed 16-bit division, remainder, and comparisons; wraps arithmetic to 16 bits; rejects divide-by-zero and invalid shifts; and handles random, seeded, and random-mode reset behavior. Generated xUnit cases cover signed results, overflow, bounds, and repeatable sequences. |
 | 3. Text and character encoding | 8, 10 | Z-character decoding, shifts, abbreviations, custom alphabets, Unicode/ZSCII tables, incomplete sequences, dictionary truncation. |
 | 4. Instruction encoding | 5–7 | `ZMachineInstructionDecoder` parses long, short, variable, and extended forms; large/small/variable operands; the double type byte for `call_vs2`/`call_vn2`; store and branch data (including both on one instruction); signed branch offsets and return offsets; and inline string boundaries. `ZMachineOpcodeTable` describes all 119 standard opcodes with version-specific aliases, operand counts, store/branch flags, and inline-text metadata. Generated xUnit fixtures cover V1–V8, truncation, invalid operand ordering, and illegal opcode/version combinations. |
 | 5. Routine encoding | 3–6 | `ZMachineExecutionState` reads routine headers and V1–V4 local defaults, zero-initializes V5+ locals, copies arguments into locals, and starts V6 from its packed main routine. Generated fixtures cover packed calls, local-header bounds, and main-routine offsets. |
@@ -19,7 +19,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 | 11. Header | 3, 14–17, 23, 28 | `StoryHeader` parses V1–V8 base fields, version-scaled file length, checksum, V6 main-routine address, and memory bounds; xUnit fixtures cover all versions, legacy V3 omissions, truncation, and checksum mismatch. Later tasks add initialization, capabilities, extension-table behavior, and Rst fields. |
 | 12. Object table | 9 | V1–V3 and V4+ layouts, attributes, object tree, property defaults and variable-length properties. |
 | 13. Dictionary and lexical analysis | 10 | Separators, V1–V3/V4+ entry widths, sorted/unsorted dictionaries, token and parse buffers. |
-| 14. Complete opcode table | 5–7, 14–17 | Per-opcode dispatch, version/operand-form combinations, store/branch effects, negative/error cases. |
+| 14. Complete opcode table | 5–7, 14–17 | ZMachineOpcodeTable and decoder provide version/form metadata for all standard opcodes. Task 7 dispatches arithmetic, comparison, variable, array/table, call/return, stack, and control-flow operations; later tasks add output, text, input, screen, object, and resource opcode behavior. Unsupported operations fail with opcode and PC context. xUnit covers execution effects, stores, branches, and defined errors. |
 | 15. Opcode dictionary | 5–17 | Per-opcode semantics cross-checked against the standard descriptions. |
 | 16. Font 3 and character graphics | 16 | Fixed-pitch 8x8 glyph behavior and reported capability. |
 | Appendix A. Errors and debugging | 28 | Four configurable error policies, context-rich diagnostics, stack trace, invalid control-character filtering, responsive execution. |
@@ -64,6 +64,6 @@ The decoder and tests must account for every standard opcode, including version-
 ## Cross-cutting quality checks
 
 - Generated synthetic fixtures cover all eight story versions and do not rely on local licensed stories.
-- Every implemented opcode has tests for decoding, version availability, state effects, and branch/store behavior where applicable.
+- Implemented Task 7 operations have generated xUnit coverage for signed results, variable references, stack effects, bounds/write protection, overlap behavior, branches, stores, and unsupported-opcode errors. Decoder coverage includes the four-operand je form.
 - Malformed input tests cover truncated story, IFF, Blorb, and Quetzal data with bounded, actionable diagnostics.
 - CI builds/tests Windows, macOS, and Linux; local story runs are optional and documented separately.

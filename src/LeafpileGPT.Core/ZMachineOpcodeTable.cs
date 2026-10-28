@@ -41,11 +41,12 @@ public static class ZMachineOpcodeTable
             }
         }
 
-        Range(OpcodeClass.TwoOperand, 1,
-            ["je", "jl", "jg", "dec_chk", "inc_chk", "jin", "test", "or", "and", "test_attr", "set_attr", "clear_attr", "store", "insert_obj", "loadw", "loadb", "get_prop", "get_prop_addr", "get_next_prop", "add", "sub", "mul", "div", "mod"],
+        Add(OpcodeClass.TwoOperand, 1, "je", 1, 8, 2, 4, branch: true);
+        Range(OpcodeClass.TwoOperand, 2,
+            ["jl", "jg", "dec_chk", "inc_chk", "jin", "test", "or", "and", "test_attr", "set_attr", "clear_attr", "store", "insert_obj", "loadw", "loadb", "get_prop", "get_prop_addr", "get_next_prop", "add", "sub", "mul", "div", "mod"],
             minArgs: 2, maxArgs: 2,
-            stores: i => i is 7 or 8 or >= 14 and <= 23,
-            branches: i => i is <= 6 or 9);
+            stores: i => i + 1 is 7 or 8 or >= 14 and <= 23,
+            branches: i => i + 1 is <= 6 or 9);
         Add(OpcodeClass.TwoOperand, 25, "call_2s", 4, 8, 2, 2, store: true);
         Add(OpcodeClass.TwoOperand, 26, "call_2n", 5, 8, 2, 2);
         Add(OpcodeClass.TwoOperand, 27, "set_colour", 5, 5, 2, 2);
