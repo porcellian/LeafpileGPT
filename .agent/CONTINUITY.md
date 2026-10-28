@@ -22,6 +22,8 @@
 - 2026-10-28T14:17Z [USER] PR #13 is merged; Task 10 proceeds from updated `origin/main` on `feature/10-dictionaries-command-parsing`.
 - 2026-10-28T14:32Z [USER] PR #14 is merged; Task 11 proceeds from updated `origin/main` on `feature/11-output-streams`.
 - 2026-10-28T14:51Z [USER] Supersedes prior Task 11 status: PR #15 is merged; Task 12 is active on `feature/12-keyboard-input-timed-reads` from updated `origin/main`.
+- 2026-10-28T14:59Z [USER] PR #16 is merged. Task 13 is active on `feature/13-auxiliary-file-operations` from updated `origin/main`.
+- 2026-10-28T15:02Z [TOOL] Task 13 implementation and local verification are complete; final full-diff review, commit, and PR #17 remain.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -84,6 +86,8 @@
 - 2026-10-28T14:17Z [CODE] Dictionary parse positions include the text-buffer header offset (1 for V1–V4, 2 for V5+); word separators are independent tokens and spaces are discarded.
 - 2026-10-28T14:34Z [CODE] V6 stream-3 width is reported through header word `$30`; a host-provided character-width function supplies units, defaulting to one unit per non-newline scalar.
 - 2026-10-28T14:51Z [CODE] Input providers are host-neutral async interfaces; timed reads race input against periodic callbacks and cancel/observe pending input when a callback ends the read. V1–V4 text-buffer byte 0 limits typed characters, with an additional byte reserved for the zero terminator.
+- 2026-10-28T14:59Z [ASSUMPTION] Task 13 supplies configurable, directory-rooted auxiliary storage; Task 22 will connect it to save/restore, and Task 23 will choose the app-data directory.
+- 2026-10-28T15:02Z [CODE] Story filenames are length-prefixed ASCII arrays; normalized names contain at most eight uppercase ASCII alphanumerics plus an optional three-character extension, defaulting to AUX. The filesystem store returns null for missing reads and wraps reportable I/O failures with operation/name context.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -117,3 +121,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 is complete in PR #15; wait for review and merge.
 - 2026-10-28T14:51Z [TOOL] Task 12 implements `read`/`read_char`, input stream selection, text editing/filtering, terminating-key tables, timed callbacks, and generated V1–V8 tests. Formatting, Release build (zero warnings/errors), all 348 xUnit tests, and `git diff --check` pass; final review/commit/PR #16 remain.
 - 2026-10-28T14:52Z [TOOL] Task 12 is committed as `5a72219` and PR #16 is open at https://github.com/porcellian/LeafpileGPT/pull/16. macOS, Ubuntu, and Windows CI checks are pending; wait for user review/merge before Task 13.
+- 2026-10-28T14:59Z [TOOL] Supersedes prior Task 12 status: PR #16 is merged as `9b97d8b`; Task 13 implementation has started on its dedicated branch.
+- 2026-10-28T15:02Z [TOOL] Task 13 adds story-memory filename decoding, filename normalization, and host-rooted read/write storage with generated xUnit coverage. Formatting, Release build (zero warnings/errors), all 359 xUnit tests, and `git diff --check` pass.
+- 2026-10-28T15:03Z [TOOL] Supersedes the prior Task 13 verification count: filename normalization is now idempotent even for an empty extension; a regression case was added. Formatting, Release build (zero warnings/errors), all 360 xUnit tests, and `git diff --check` pass.
+- 2026-10-28T15:03Z [TOOL] Task 13 is committed as `aac6034`, pushed, and PR #17 is open at https://github.com/porcellian/LeafpileGPT/pull/17. GitHub had not reported CI checks at the time of inspection; wait for user review/merge before Task 14.
