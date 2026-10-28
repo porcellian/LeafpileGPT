@@ -209,6 +209,9 @@ public sealed class ZMachineScreenModel
         }
     }
 
+    /// <summary>Synchronously invokes a game routine when a V6 newline countdown reaches zero.</summary>
+    public Action<ushort>? NewlineInterruptHandler { get; set; }
+
     public Action<ZMachineStatusLine>? StatusLineWriter
     {
         get => _statusLineWriter;
@@ -1640,6 +1643,7 @@ public sealed class ZMachineScreenModel
                     ZMachineScreenOperationKind.NewlineInterrupt,
                     Window: windowNumber,
                     Value: window.NewlineInterruptRoutine));
+                NewlineInterruptHandler?.Invoke(window.NewlineInterruptRoutine);
             }
         }
     }

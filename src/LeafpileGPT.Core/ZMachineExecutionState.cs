@@ -17,16 +17,28 @@ public sealed class ZMachineExecutionState
     private int _nextPredictableNumber;
     private uint _largePredictableState;
 
-    private ZMachineExecutionState(ZMachineMemory memory, int maximumStackWords)
+    private ZMachineExecutionState(
+        ZMachineMemory memory,
+        int maximumStackWords,
+        IZMachineEventServices eventServices)
     {
         Memory = memory;
         _maximumStackWords = maximumStackWords;
+        EventServices = eventServices;
         OutputStreams = new ZMachineOutputStreams(memory);
+        OutputStreams.Screen.NewlineInterruptHandler = routine => RoutineCallRequested?.Invoke(routine);
+        InitializeEventCapabilities();
     }
 
     public ZMachineMemory Memory { get; }
 
     public ZMachineOutputStreams OutputStreams { get; }
+
+    /// <summary>Host services for optional mouse, V6 menu, and sound features.</summary>
+    public IZMachineEventServices EventServices { get; }
+
+    /// <summary>Host callback used to execute a game routine requested by a VM event.</summary>
+    public Action<ushort>? RoutineCallRequested { get; set; }
 
     public int MaximumStackWords => _maximumStackWords;
 
@@ -35,6 +47,8 @@ public sealed class ZMachineExecutionState
     public byte Version => Memory.Header.Version;
 
     public byte CurrentInputStream { get; private set; }
+
+    public short MouseWindow { get; private set; } = 1;
 
     public uint ProgramCounter { get; private set; }
 
@@ -88,6 +102,44 @@ public sealed class ZMachineExecutionState
 
     public void Halt() => IsHalted = true;
 
+    /// <summary>Records a host mouse click in header extension words 1 (y) and 2 (x), when present.</summary>
+    public void RecordMouseClick(short y, short x)
+    {
+        if (Version < 5 || Memory.Header.HeaderExtensionTableAddress is not { } extensionAddress || extensionAddress == 0)
+        {
+            return;
+        }
+
+        Memory.ValidateReadableRange(extensionAddress, sizeof(ushort));
+        var wordCount = Memory.ReadWord(extensionAddress);
+        if (wordCount < 2)
+        {
+            return;
+        }
+
+        var firstWord = (uint)extensionAddress + sizeof(ushort);
+        Memory.ValidateWritableRange(firstWord, 2 * sizeof(ushort));
+        Memory.WriteWord(checked((ushort)firstWord), unchecked((ushort)y));
+        Memory.WriteWord(checked((ushort)(firstWord + sizeof(ushort))), unchecked((ushort)x));
+    }
+
+    /// <summary>Constrains V6 mouse input to a window, or frees it when set to -1.</summary>
+    public void SetMouseWindow(short window)
+    {
+        if (Version != 6)
+        {
+            throw new ZMachineExecutionException("Mouse windows are available only in Version 6.");
+        }
+
+        if (window is < -1 or > 7)
+        {
+            throw new ZMachineExecutionException($"Mouse window {window} is outside the supported range -1 through 7.");
+        }
+
+        MouseWindow = window;
+        EventServices.SetMouseWindow(window);
+    }
+
     public void SelectInputStream(ushort inputStream)
     {
         if (Version < 3 || inputStream > 1)
@@ -112,7 +164,10 @@ public sealed class ZMachineExecutionState
         Memory.WriteByte(0x01, supported ? (byte)(flags1 | 0x80) : (byte)(flags1 & 0x7F));
     }
 
-    public static ZMachineExecutionState Start(StoryFile story, int maximumStackWords = DefaultMaximumStackWords)
+    public static ZMachineExecutionState Start(
+        StoryFile story,
+        int maximumStackWords = DefaultMaximumStackWords,
+        IZMachineEventServices? eventServices = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         if (maximumStackWords < 1_024)
@@ -121,7 +176,8 @@ public sealed class ZMachineExecutionState
                 "The Z-machine stack must support at least 1,024 words.");
         }
 
-        var state = new ZMachineExecutionState(new ZMachineMemory(story), maximumStackWords);
+        var state = new ZMachineExecutionState(
+            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance);
         if (story.Header.Version == 6)
         {
             var routineAddress = ZMachineAddressing.InitialProgramCounterByteAddress(story.Header);
@@ -137,6 +193,34 @@ public sealed class ZMachineExecutionState
         }
 
         return state;
+    }
+
+    private void InitializeEventCapabilities()
+    {
+        var flags2 = Memory.ReadWord(0x10);
+        if (!EventServices.SupportsMouse)
+        {
+            flags2 = (ushort)(flags2 & ~0x0020);
+        }
+
+        if (!EventServices.SupportsMenus)
+        {
+            flags2 = (ushort)(flags2 & ~0x0100);
+        }
+
+        if (!EventServices.SupportsSoundEffects)
+        {
+            flags2 = (ushort)(flags2 & ~0x0080);
+        }
+
+        Memory.WriteWord(0x10, flags2);
+        if (Version == 6)
+        {
+            var flags1 = Memory.ReadByte(0x01);
+            Memory.WriteByte(0x01, EventServices.SupportsSoundEffects
+                ? (byte)(flags1 | 0x20)
+                : (byte)(flags1 & ~0x20));
+        }
     }
 
     public void SetProgramCounter(uint byteAddress)

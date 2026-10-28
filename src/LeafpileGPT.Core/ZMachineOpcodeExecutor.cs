@@ -1,5 +1,6 @@
 namespace LeafpileGPT.Core;
 
+using System.Collections.Immutable;
 using System.Globalization;
 using System.Text;
 
@@ -399,6 +400,21 @@ public sealed class ZMachineOpcodeExecutor
             case "buffer_screen":
                 StoreResult(instruction, state, state.OutputStreams.Screen.BufferScreen(ReadValue(instruction.Operands[0], state)));
                 break;
+            case "read_mouse":
+                ReadMouse(state, ReadValue(instruction.Operands[0], state));
+                break;
+            case "mouse_window":
+                state.SetMouseWindow(unchecked((short)ReadValue(instruction.Operands[0], state)));
+                break;
+            case "make_menu":
+                Branch(instruction, state, MakeMenu(
+                    state,
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state)));
+                break;
+            case "sound_effect":
+                ExecuteSoundEffect(instruction, state);
+                break;
             case "show_status":
                 state.OutputStreams.Screen.ShowStatusLine(state);
                 break;
@@ -629,6 +645,126 @@ public sealed class ZMachineOpcodeExecutor
         var variableNumber = ResolveVariableNumber(instruction.Operands[0], state);
         var value = state.PopEvaluationStack();
         state.WriteVariableReference(variableNumber, value);
+    }
+
+    private static void ReadMouse(ZMachineExecutionState state, ushort arrayAddress)
+    {
+        var mouse = state.EventServices.SupportsMouse
+            ? state.EventServices.ReadMouse()
+            : ZMachineMouseState.Offscreen;
+        state.Memory.ValidateWritableRange(arrayAddress, 4 * sizeof(ushort));
+        state.Memory.WriteWord(arrayAddress, unchecked((ushort)mouse.Y));
+        state.Memory.WriteWord(checked((ushort)(arrayAddress + sizeof(ushort))), unchecked((ushort)mouse.X));
+        state.Memory.WriteWord(checked((ushort)(arrayAddress + 2 * sizeof(ushort))), mouse.ButtonBits);
+        state.Memory.WriteWord(checked((ushort)(arrayAddress + 3 * sizeof(ushort))), mouse.MenuSelection);
+    }
+
+    private static bool MakeMenu(ZMachineExecutionState state, ushort menuNumber, ushort tableAddress)
+    {
+        if (menuNumber < 3)
+        {
+            return false;
+        }
+
+        if (tableAddress == 0)
+        {
+            return state.EventServices.SupportsMenus
+                && state.EventServices.MakeMenu(menuNumber, ImmutableArray<string>.Empty);
+        }
+
+        if (!state.EventServices.SupportsMenus)
+        {
+            return false;
+        }
+
+        state.Memory.ValidateReadableRange(tableAddress, sizeof(ushort));
+        var itemCount = state.Memory.ReadWord(tableAddress);
+        state.Memory.ValidateReadableRange((uint)tableAddress + sizeof(ushort), checked(itemCount * sizeof(ushort)));
+        var codec = new ZsciiCodec(state.Memory);
+        var entries = ImmutableArray.CreateBuilder<string>(itemCount);
+        for (var index = 0; index < itemCount; index++)
+        {
+            var pointerAddress = checked((ushort)(tableAddress + sizeof(ushort) + index * sizeof(ushort)));
+            var stringAddress = state.Memory.ReadWord(pointerAddress);
+            entries.Add(ReadZsciiString(state.Memory, codec, stringAddress));
+        }
+
+        return state.EventServices.MakeMenu(menuNumber, entries.ToImmutable());
+    }
+
+    private static string ReadZsciiString(ZMachineMemory memory, ZsciiCodec codec, ushort address)
+    {
+        var characters = new StringBuilder();
+        var cursor = (uint)address;
+        for (var count = 0; count < 256; count++, cursor++)
+        {
+            memory.ValidateReadableRange(cursor, 1);
+            var character = memory.ReadByte(checked((ushort)cursor));
+            if (character == 0)
+            {
+                return characters.ToString();
+            }
+
+            var decoded = codec.Decode(character);
+            if (decoded == '\uFFFD' || decoded == '\0')
+            {
+                throw new ZMachineExecutionException($"Menu string at 0x{address:X4} contains undefined ZSCII character {character}.");
+            }
+
+            characters.Append(decoded);
+        }
+
+        throw new ZMachineExecutionException($"Menu string at 0x{address:X4} is not terminated within 256 bytes.");
+    }
+
+    private static void ExecuteSoundEffect(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        var values = instruction.Operands.Select(operand => ReadValue(operand, state)).ToArray();
+        var number = values[0];
+        if (values.Length == 1)
+        {
+            if (number is not (1 or 2))
+            {
+                throw new ZMachineExecutionException("A one-operand sound_effect must request bleep 1 or 2.");
+            }
+
+            state.EventServices.PerformSoundEffect(
+                new ZMachineSoundEffectRequest(number, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), null);
+            return;
+        }
+
+        var actionValue = values[1];
+        if (actionValue is < 1 or > 4)
+        {
+            throw new ZMachineExecutionException($"Sound effect action {actionValue} is not defined.");
+        }
+
+        if (number is 1 or 2 || (number == 0 && actionValue is not (3 or 4)))
+        {
+            throw new ZMachineExecutionException("Sound effects 1 and 2 are bleeps and do not accept effect operands.");
+        }
+
+        var volumeAndRepeats = values.Length > 2
+            ? values[2]
+            : state.Version == 3 ? (ushort)0x0008 : (ushort)0x0108;
+        var volume = (byte)volumeAndRepeats;
+        var repeats = (byte)(volumeAndRepeats >> 8);
+        if (state.Version == 3 && repeats != 0)
+        {
+            throw new ZMachineExecutionException("Version 3 sound effects do not support repeat counts.");
+        }
+
+        if (state.Version >= 5 && actionValue == (ushort)ZMachineSoundAction.Start && repeats == 0)
+        {
+            repeats = 1;
+        }
+
+        var routine = state.Version >= 5 && values.Length > 3 ? values[3] : (ushort)0;
+        Action? completed = routine == 0 || actionValue != (ushort)ZMachineSoundAction.Start
+            ? null
+            : () => state.RoutineCallRequested?.Invoke(routine);
+        state.EventServices.PerformSoundEffect(
+            new ZMachineSoundEffectRequest(number, (ZMachineSoundAction)actionValue, volume, repeats, routine), completed);
     }
 
     private static void ExecuteScanTable(DecodedInstruction instruction, ZMachineExecutionState state)
