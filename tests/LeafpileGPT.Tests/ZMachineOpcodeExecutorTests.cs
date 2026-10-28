@@ -239,8 +239,8 @@ public sealed class ZMachineOpcodeExecutorTests
     public void UnsupportedOpcodeFailsFastWithContext()
     {
         var (state, executor) = CreateMachine();
-        var exception = Assert.Throws<ZMachineOpcodeNotImplementedException>(() => executor.Execute(Instruction("print", []), state));
-        Assert.Equal("print", exception.Mnemonic);
+        var exception = Assert.Throws<ZMachineOpcodeNotImplementedException>(() => executor.Execute(Instruction("input_stream", [Constant(0)]), state));
+        Assert.Equal("input_stream", exception.Mnemonic);
         Assert.Equal(CodeAddress, exception.ProgramCounter);
         Assert.Equal(CodeAddress, state.ProgramCounter);
     }
