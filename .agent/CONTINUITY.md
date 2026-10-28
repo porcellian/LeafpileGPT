@@ -13,12 +13,15 @@
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
 - 2026-10-28T02:49Z [TOOL] Created the Visual Studio solution, Avalonia desktop shell, core and xUnit projects, central package versions, editor configuration, and three-OS CI workflow. Restore, Release build (zero warnings/errors), xUnit (1 passed), and formatting verification passed.
+- 2026-10-28T02:53Z [TOOL] PR #2 Windows CI reported ENDOFLINE errors because checkout produced CRLF for C# files while `.editorconfig` requires LF; added `.gitattributes` to enforce LF checkout for `*.cs`. Windows rerun pending.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
 - 2026-10-28T02:42Z [TOOL] Avalonia template package installation was blocked by write access to the user-wide template cache; equivalent minimal project files were authored in the repository. NuGet restore succeeded with elevated network access.
 - 2026-10-28T02:49Z [TOOL] .NET 10's `dotnet test` must select Microsoft.Testing.Platform for xUnit v3 4.x; `global.json` now selects MTP and the test project builds as an executable.
+- 2026-10-28T02:53Z [TOOL] Windows checkout line endings can differ from the contributor's local worktree; `.gitattributes` now enforces the formatting policy at checkout.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 PR status: Task 2 is committed as `610d0e6` with an additional continuity update, and PR #2 is open for review. Do not start Task 3 before the user merges PR #2.
+- 2026-10-28T02:53Z [TOOL] PR #2 received a follow-up LF checkout fix; rerun CI and keep the PR open for review. Do not start Task 3 before merge.
