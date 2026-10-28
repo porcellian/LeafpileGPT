@@ -56,6 +56,7 @@
 - 2026-10-28T04:50Z [TOOL] Task 8 adds V1–V8 packed text decoding, abbreviations, alphabet shifts/custom tables, ZSCII/Unicode maps, and fixed-width dictionary encoding. Formatting and Release build pass; all 220 xUnit tests pass locally.
 - 2026-10-28T04:52Z [TOOL] Supersedes prior Task 8 verification: added V6/V7 packed-string offsets, V8 scale, additional V4–V8 shift coverage, and invalid abbreviation-table checks. Formatting and Release build pass with zero warnings/errors; all 231 tests pass. Task 8 review and PR creation remain.
 - 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
+- 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -101,3 +102,4 @@
 - 2026-10-28T04:55Z [TOOL] PR #12 CI passed on macOS, Ubuntu, and Windows. GitHub annotations only report existing workflow notices for Node.js 20 action deprecation and ubuntu-latest image migration; no task build/test warnings or failures.
 
 - 2026-10-28T14:04Z [TOOL] Supersedes prior Task 8 PR status: PR #12 is merged to main. Task 9 checks and review are in progress; no Task 9 commit or PR exists yet.
+- 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
