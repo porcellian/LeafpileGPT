@@ -38,6 +38,7 @@
 - 2026-10-28T03:59Z [TOOL] Implemented `ZMachineMemory` and V1–V8 address translation with 31 new xUnit cases; all 80 tests pass, Release build has zero warnings/errors, format verification passes, and the local Zork I memory smoke check succeeds.
 - 2026-10-28T04:01Z [TOOL] Opened PR #8 for Task 4 at https://github.com/porcellian/LeafpileGPT/pull/8; cross-platform CI is queued.
 - 2026-10-28T04:12Z [TOOL] Task 5 adds a decoder and complete 119-opcode metadata table; formatting verification, Release build (0 warnings/errors), and all 106 xUnit tests pass locally.
+- 2026-10-28T04:14Z [TOOL] Opened PR #9 for Task 5 at https://github.com/porcellian/LeafpileGPT/pull/9; waiting for review and merge before Task 6.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -65,4 +66,4 @@
 - 2026-10-28T03:47Z [TOOL] PR #6 merged as `98911f0`. Terminal play is an unnumbered future item; it does not extend the 1–65 numbered roadmap.
 - 2026-10-28T03:59Z [TOOL] Task 4 implementation is complete locally and ready for PR; no completed story walkthroughs exist to replay.
 - 2026-10-28T04:01Z [TOOL] Supersedes prior Task 4 state: PR #8 is open for review; do not begin Task 5 until it is merged.
-- 2026-10-28T04:12Z [TOOL] Supersedes prior Task 4 PR status: PR #8 is merged. Task 5 implementation is complete locally and awaits full diff review, commit, and PR creation.
+- 2026-10-28T04:14Z [TOOL] Supersedes prior Task 4 PR status: PR #8 is merged. Task 5 is committed as `6efb985`, with PR #9 open for review. Do not begin Task 6 until the user confirms merge.
