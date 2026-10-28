@@ -62,7 +62,7 @@
 - 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
 - 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 10 review status: full diff review completed; commit `260f485` pushed and PR #14 opened at https://github.com/porcellian/LeafpileGPT/pull/14. Formatting and Release build pass with zero warnings/errors; all 308 xUnit tests pass. Wait for user review and merge before Task 11.
-- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. Wait for user review and merge before Task 12.
+- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
