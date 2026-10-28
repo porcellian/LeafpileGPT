@@ -53,11 +53,11 @@ The decoder and tests must account for every standard opcode, including version-
 | Standard area / chunk | Implementation tasks | Coverage / acceptance evidence |
 |---|---:|---|
 | IFF FORM IFRS, RIdx, resource usages | 18 | `BlorbFile` validates FORM/IFRS and exact file length, requires one first-position RIdx, checks big-endian entry counts and chunk-boundary offsets, resolves resource entries, retains unknown chunks, and selects the first indexed Exec. Generated fixtures cover FORM/chunk bounds, zero padding, missing/duplicate/misplaced indexes, malformed counts, invalid offsets, and executable selection. |
-| Pict: PNG, JPEG, Rect | 19 | Decode, dimensions, unsupported/placeholder behavior, picture-data queries. |
+| Pict: PNG, JPEG, Rect | 19 | `BlorbPictureCatalog` validates PNG chunk bounds and CRCs, IHDR/PLTE/tRNS structure, JPEG start/frame/end markers, and rectangle dimensions; exposes original encoded bytes and dimensions for host decoding. Generated fixtures cover resource lookup, malformed payloads, and V6 picture-data dimensions. |
 | Snd: AIFF, OGGV, MOD, SONG | 20 | Decode/playback capabilities, sample/music channel independence, repeat and stop. |
 | Data TEXT/BINA and Exec ZCOD | 18 | Index resource data and parse the selected ZCOD chunk as a validated `StoryFile`; preserve other executable types for later engines. External-resource forms may have no executable. |
-| IFhd, Plte, Fspc, RDes, IFmd, RelN | 18–19 | Preserve raw IFhd and UTF-8 IFmd, parse RelN and Fspc, enforce Fspc picture references, parse unique UTF-8 RDes entries; Task 19 adds palette and visual resource semantics. |
-| Reso, APal, Loop | 19–20 | Image scaling/palette rules and V3 sound looping. |
+| IFhd, Plte, Fspc, RDes, IFmd, RelN | 18–19 | Preserve raw IFhd and UTF-8 IFmd, parse RelN/Fspc, enforce frontispiece picture references, parse unique UTF-8 RDes entries, and expose direct-color/RGB palette hints. Task 19 applies frontispiece/release metadata to the picture catalog. |
+| Reso, APal, Loop | 19–20 | Task 19 validates window and ratio entries, scales picture query dimensions by the Elbow Room Factor and per-image bounds, and tracks current/adaptive palettes; Task 20 adds V3 sound looping. |
 | AUTH, (c), ANNO, deprecated SNam | 18 | Optional user-level metadata; unknown and deprecated chunks do not break loading. |
 | Compatibility and media channels | 17–20 | Z-machine feature flags and app behavior when optional resources are absent. |
 
@@ -73,5 +73,6 @@ The decoder and tests must account for every standard opcode, including version-
 - Task 13 auxiliary-file tests use generated names and temporary directories to cover uppercase 8.3 normalization, invalid-character filtering, length-prefixed story-memory bounds, directory-rooted reads/writes, missing-file results, and reportable storage failures.
 - Task 14–16 screen/font tests use generated V1–V6 fixtures for startup layout, header dimensions/capabilities, V3 status, V4/V5 split and erase behavior, font availability and selection, fixed pitch, all 95 font 3 glyphs, styles/colors, eight-window geometry, cursor and margin rules, properties, wrapping, scrolling, transcript behavior, MORE, screen buffering, and opcode dispatch.
 - Task 18 Blorb tests use generated IFF fixtures for FORM/IFRS structure, index ordering/offsets, chunk bounds and padding, unknown chunks, ZCOD story loading, metadata, resource descriptions, and malformed input.
+- Task 19 Blorb image tests use generated PNG/JPEG/Rect and hint chunks for image dimensions, PNG CRC/structure, Plte and APal rules, Reso scaling bounds, palette updates, metadata, V6 picture-data branches, draw/erase screen operations, and capability flags.
 - Malformed input tests cover truncated story, IFF, Blorb, and Quetzal data with bounded, actionable diagnostics.
 - CI builds/tests Windows, macOS, and Linux; local story runs are optional and documented separately.

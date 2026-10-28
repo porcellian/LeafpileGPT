@@ -193,7 +193,7 @@ public sealed class ZMachineScreenModelTests
         var state = CreateV6State();
         var screen = state.OutputStreams.Screen;
         screen.ResizeWindow(5, 400, 640);
-        Assert.Equal((ushort)0x0008, (ushort)(state.Memory.ReadWord(0x10) & 0x0008));
+        Assert.Equal((ushort)0, (ushort)(state.Memory.ReadWord(0x10) & 0x0008));
         var oldFont = screen.SetFont(ZMachineFontCatalog.CharacterGraphicsFont, 5);
 
         Assert.Equal((ushort)1, oldFont);

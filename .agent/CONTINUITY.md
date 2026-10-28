@@ -32,6 +32,7 @@
 - 2026-10-28T16:13Z [USER] Supersedes prior PR #19 status: PR #19 is merged. Task 16 is active on `feature/16-fonts-character-graphics` from updated `origin/main`.
 - 2026-10-28T16:39Z [USER] PR #20 is merged. Task 17 is active on `feature/17-mouse-menus-events` from updated `origin/main`.
 - 2026-10-28T16:55Z [USER] PR #21 is merged. Task 18 is active on `feature/18-blorb-container` from updated `origin/main`.
+- 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -47,6 +48,7 @@
 - 2026-10-28T16:13Z [CODE] `set_font` supports fonts 1, 3, and 4; font 2 and other unavailable IDs return zero, font 0 reports the current font, and font 4 requests Courier New with fixed pitch.
 - 2026-10-28T16:39Z [CODE] Task 17 uses optional `IZMachineEventServices` for mouse/menu/audio hosts. V6 screen callbacks request newline routines inline after newline output and before subsequent text; sound completion requests its routine only for a started effect. Mouse clicks update extension words 1–2 when present; `read_mouse` writes y, x, buttons, and menu data.
 - 2026-10-28T16:55Z [CODE] `BlorbFile` owns a parsed IFRS image, preserves chunks/resources in file/index order, resolves absolute RIdx offsets to chunk starts, validates RDes UTF-8 and optional RelN/IFhd/IFmd/Fspc data, and eagerly validates a selected ZCOD as `StoryFile`.
+- 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -108,6 +110,7 @@
 - 2026-10-28T16:16Z [TOOL] Independently compared the catalog data with ZSpec11.pdf section 16.1; all 95 extracted printable ASCII glyph bitmaps match.
 - 2026-10-28T16:39Z [CODE] V6 newline interrupt callbacks occur after the newline chunk is emitted and before following text; countdown property 9 reaches zero before callback. V6 screen initialization also sets the existing character-graphics capability at Flags 2 bit 3.
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
+- 2026-10-28T17:14Z [TOOL] Task 19 picture catalog and V6 operations pass format verification, Release build (zero warnings/errors), all 429 xUnit tests, and `git diff --check`; full diff review is complete, with commit and PR #23 remaining.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -155,3 +158,4 @@
 - 2026-10-28T16:39Z [TOOL] Task 17 adds host event abstractions and dispatch for mouse, V6 menus, and sound effects; it reuses Task 12 timed-input callbacks and connects V6 newline countdowns. Generated tests cover capabilities, coordinate extension bounds, read_mouse layout, menu parse/branch outcomes, sound actions/repeats/completion, and newline callback ordering. Formatting, Release build (0 warnings/errors), all 406 xUnit tests, and `git diff --check` pass; full staged review is complete and PR #21 remains.
 - 2026-10-28T16:41Z [TOOL] Task 17 is committed as `ed99a20` and PR #21 is open at https://github.com/porcellian/LeafpileGPT/pull/21. Windows, macOS, and Ubuntu CI jobs are queued; wait for user review and merge before Task 18.
 - 2026-10-28T16:57Z [TOOL] Task 18 passed format verification, Release build (zero warnings/errors), 419 xUnit tests, and full diff review; commit `b55caf7` is on `feature/18-blorb-container` and PR #22 is open at https://github.com/porcellian/LeafpileGPT/pull/22. Checks have not appeared yet; wait for user review and merge before Task 19.
+- 2026-10-28T17:10Z [TOOL] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated main; its core catalog, V6 opcode support, and generated tests are being implemented.

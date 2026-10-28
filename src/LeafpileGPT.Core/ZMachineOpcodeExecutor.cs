@@ -363,6 +363,18 @@ public sealed class ZMachineOpcodeExecutor
                     ReadValue(instruction.Operands[1], state),
                     unchecked((short)ReadValue(instruction.Operands[2], state)));
                 break;
+            case "draw_picture":
+                ExecutePicture(instruction, state, erase: false);
+                break;
+            case "erase_picture":
+                ExecutePicture(instruction, state, erase: true);
+                break;
+            case "picture_data":
+                ExecutePictureData(instruction, state);
+                break;
+            case "picture_table":
+                // Picture caching is optional; a host may load resources lazily when drawn.
+                break;
             case "move_window":
                 state.OutputStreams.Screen.MoveWindow(
                     unchecked((short)ReadValue(instruction.Operands[0], state)),
@@ -765,6 +777,82 @@ public sealed class ZMachineOpcodeExecutor
             : () => state.RoutineCallRequested?.Invoke(routine);
         state.EventServices.PerformSoundEffect(
             new ZMachineSoundEffectRequest(number, (ZMachineSoundAction)actionValue, volume, repeats, routine), completed);
+    }
+
+    private static void ExecutePicture(DecodedInstruction instruction, ZMachineExecutionState state, bool erase)
+    {
+        var number = ReadValue(instruction.Operands[0], state);
+        var catalog = state.PictureCatalog;
+        if (state.Version != 6 || catalog is null
+            || !catalog.TryGetPicture(number, state.OutputStreams.Screen.WidthInUnits, state.OutputStreams.Screen.HeightInUnits, out _))
+        {
+            throw new ZMachineExecutionException($"Picture {number} is unavailable for {instruction.Definition.Mnemonic}.");
+        }
+
+        if (!erase)
+        {
+            _ = catalog.RecordPicturePlotted(number);
+        }
+
+        if (!catalog.TryGetPicture(
+            number,
+            state.OutputStreams.Screen.WidthInUnits,
+            state.OutputStreams.Screen.HeightInUnits,
+            out var picture)
+            || picture is null)
+        {
+            throw new ZMachineExecutionException($"Picture {number} disappeared while it was being rendered.");
+        }
+
+        state.OutputStreams.Screen.DrawPicture(
+            picture,
+            ReadValue(instruction.Operands[1], state),
+            ReadValue(instruction.Operands[2], state),
+            erase);
+    }
+
+    private static void ExecutePictureData(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        var number = ReadValue(instruction.Operands[0], state);
+        var arrayAddress = ReadValue(instruction.Operands[1], state);
+        var catalog = state.PictureCatalog;
+        if (number == 0)
+        {
+            var count = catalog?.Count ?? 0;
+            var releaseNumber = catalog?.ReleaseNumber ?? (ushort)0;
+            WritePictureDataWords(
+                state,
+                arrayAddress,
+                checked((ushort)Math.Min(count, ushort.MaxValue)),
+                releaseNumber);
+            Branch(instruction, state, count > 0);
+            return;
+        }
+
+        if (catalog is null || !catalog.TryGetPicture(
+            number,
+            state.OutputStreams.Screen.WidthInUnits,
+            state.OutputStreams.Screen.HeightInUnits,
+            out var picture)
+            || picture is null)
+        {
+            Branch(instruction, state, condition: false);
+            return;
+        }
+
+        WritePictureDataWords(
+            state,
+            arrayAddress,
+            checked((ushort)Math.Min(picture.DisplayHeight, ushort.MaxValue)),
+            checked((ushort)Math.Min(picture.DisplayWidth, ushort.MaxValue)));
+        Branch(instruction, state, condition: true);
+    }
+
+    private static void WritePictureDataWords(ZMachineExecutionState state, ushort address, ushort first, ushort second)
+    {
+        state.Memory.ValidateWritableRange(address, 2 * sizeof(ushort));
+        state.Memory.WriteWord(address, first);
+        state.Memory.WriteWord(checked((ushort)(address + sizeof(ushort))), second);
     }
 
     private static void ExecuteScanTable(DecodedInstruction instruction, ZMachineExecutionState state)

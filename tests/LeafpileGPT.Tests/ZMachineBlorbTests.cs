@@ -14,14 +14,13 @@ public sealed class ZMachineBlorbTests
         var file = BlorbFixtureBuilder.Create(
             [
                 new("ZCOD", story, "Exec", 0),
-                new("PNG ", [0x89, 0x50, 0x4E, 0x47], "Pict", 7),
+                new("Rect", [0, 0, 0, 4, 0, 0, 0, 4], "Pict", 7),
                 new("CUST", [0xCA, 0xFE], "Data", 3)
             ],
             [
                 new("RelN", Word(123)),
                 new("IFhd", [1, 2, 3, 4]),
                 new("IFmd", Encoding.UTF8.GetBytes("<ifindex/>")),
-                new("Fspc", Dword(7)),
                 new("RDes", ResourceDescription("Pict", 7, "A café"))
             ]);
 
@@ -30,10 +29,9 @@ public sealed class ZMachineBlorbTests
         Assert.Equal((ushort)123, parsed.ReleaseNumber);
         Assert.Equal(new byte[] { 1, 2, 3, 4 }, parsed.GameIdentifier);
         Assert.Equal("<ifindex/>", Encoding.UTF8.GetString(parsed.Metadata.AsSpan()));
-        Assert.Equal((uint)7, parsed.FrontispieceNumber);
         Assert.Equal(3, parsed.Resources.Length);
         Assert.Equal("CUST", parsed.FindChunk("CUST")!.Type);
-        Assert.Equal(new byte[] { 0x89, 0x50, 0x4E, 0x47 }, parsed.FindResource("Pict", 7)!.Data.ToArray());
+        Assert.Equal(new byte[] { 0, 0, 0, 4, 0, 0, 0, 4 }, parsed.FindResource("Pict", 7)!.Data.ToArray());
         Assert.Equal("A café", Assert.Single(parsed.ResourceDescriptions).Text);
         Assert.Equal("ZCOD", parsed.SelectedExecutable!.Chunk.Type);
         Assert.Equal((byte)5, parsed.ZCodeStory!.Header.Version);
