@@ -43,6 +43,7 @@
 - 2026-10-28T04:12Z [TOOL] Task 5 adds a decoder and complete 119-opcode metadata table; formatting verification, Release build (0 warnings/errors), and all 106 xUnit tests pass locally.
 - 2026-10-28T04:14Z [TOOL] Opened PR #9 for Task 5 at https://github.com/porcellian/LeafpileGPT/pull/9; waiting for review and merge before Task 6.
 - 2026-10-28T04:26Z [TOOL] Task 6 adds execution state, routine frames, variables, catch/throw, and V6 stacks. Formatting verification, Release build (0 warnings/errors), and all 151 tests pass locally.
+- 2026-10-28T04:25Z [TOOL] Opened PR #10 for Task 6 at https://github.com/porcellian/LeafpileGPT/pull/10; waiting for review and merge before Task 7.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -73,3 +74,4 @@
 - 2026-10-28T04:01Z [TOOL] Supersedes prior Task 4 state: PR #8 is open for review; do not begin Task 5 until it is merged.
 - 2026-10-28T04:14Z [TOOL] Supersedes prior Task 4 PR status: PR #8 is merged. Task 5 is committed as `6efb985`, with PR #9 open for review. Do not begin Task 6 until the user confirms merge.
 - 2026-10-28T04:20Z [USER] Supersedes prior Task 5 PR status: PR #9 is merged as `0913bf7`. Task 6 is implemented on `feature/6-execution-state-calls`; final full review, commit, and PR creation remain.
+- 2026-10-28T04:25Z [TOOL] Supersedes prior Task 6 status: committed as `c0f1c36`; PR #10 is open for review. Do not begin Task 7 until the user confirms merge.
