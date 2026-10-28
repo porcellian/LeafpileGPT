@@ -1,0 +1,33 @@
+name: .NET CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Restore
+        run: dotnet restore LeafpileGPT.sln
+      - name: Verify formatting
+        run: dotnet format LeafpileGPT.sln --verify-no-changes --no-restore
+      - name: Build
+        run: dotnet build LeafpileGPT.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test LeafpileGPT.sln --configuration Release --no-build --no-restore
