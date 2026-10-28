@@ -83,3 +83,7 @@ For each game, use the story and same-basename manual/hint files supplied for th
 - Test instruction grouping, sequence/PC accuracy, live updates, navigation, clear semantics, and PDF/JSONL exports. Verify tracing does not alter VM behavior.
 - Build and test on Windows, macOS, and Linux; run applicable formatting, build, and xUnit checks for every code change.
 - For every task, update its checkbox in the PR, review the entire diff, open the PR, then wait for review and merge.
+
+## Future Tasks
+
+- [ ] **Support playable Glulx games.** After Tasks 1–65 are complete and the Glulx and Glk specifications are added to `reference/`, review them and define a spec-derived task breakdown. Implement Glulx as a separate VM engine in the shared app, with the Glk I/O needed to play games through Avalonia. Extend story detection and Blorb launch support as required by the specifications.
