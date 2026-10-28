@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T19:26Z [USER] PR #29 is merged; Task 26 is active on `feature/26-app-vm-resource-integration` from updated `origin/main`.
 - 2026-10-28T19:04Z [USER] PR #28 is merged; Task 25 is active on `feature/25-game-display` from updated `main`.
 - 2026-10-28T18:51Z [USER] PR #27 is merged; Task 24 is active on `feature/24-app-startup-file-menu` from updated `main`.
 - 2026-10-28T18:40Z [USER] PR #26 is merged at `c88b39f`; Task 23 is active on `feature/23-app-data-preferences` from updated `origin/main`.
@@ -41,6 +42,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-28T19:26Z [CODE] Task 26 wires VM sound requests to desktop status reporting, while `SupportsSoundEffects` remains false because the desktop has no playback backend; README and spec coverage state this limitation.
 - 2026-10-28T19:04Z [CODE] Task 25 implements the reference screen as a blue `#0066CC` play area with Courier-family text, a light status strip, a bottom-left prompt, bottom-anchored scrolling output, and separate app status. VM callback wiring remains Task 26.
 - 2026-10-28T18:51Z [CODE] Task 24 initializes story/VM state on desktop load and uses direct Quetzal file operations; the interactive VM display and event loop remain Task 26. Blorb launch selects its validated ZCOD executable.
 - 2026-10-28T18:40Z [CODE] App-data uses .NET `LocalApplicationData`; `UserPreferencesStore` keeps independent absolute last-used directories and atomically replaces a versioned JSON file. Missing Play Game starts unset; Save/Restore start at the app Save directory.
@@ -63,6 +65,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T19:26Z [TOOL] Task 26 integration is implemented and locally verified: formatter passes, Release build has 0 warnings/errors, 510 generated xUnit tests pass, `git diff --check` passes, and a local-only Zork I smoke run verifies startup plus `look`. Final full diff review, commit, and PR #30 remain.
 - 2026-10-28T19:04Z [TOOL] Task 25 is committed as `8655a8d`, pushed, and open as PR #29 at https://github.com/porcellian/LeafpileGPT/pull/29. Formatting, Release build (0 warnings/errors), 502 xUnit tests, and `git diff --check` pass; wait for review and merge before Task 26.
 - 2026-10-28T18:52Z [TOOL] Task 24 is committed as `6d3f4c6`, pushed, and open as PR #28 at https://github.com/porcellian/LeafpileGPT/pull/28. Formatting, Release build (0 warnings/errors), 496 xUnit tests, and `git diff --check` pass; wait for review and merge before Task 25.
 - 2026-10-28T18:41Z [TOOL] Supersedes prior Task 23 progress: commit `6a42852` is pushed on `feature/23-app-data-preferences`; PR #27 is open at https://github.com/porcellian/LeafpileGPT/pull/27. Wait for review and merge before Task 24.

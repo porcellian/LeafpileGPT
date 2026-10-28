@@ -23,22 +23,35 @@
                  TextAlignment="Right"
                  VerticalAlignment="Center" />
     </Grid>
-    <ScrollViewer x:Name="TranscriptScrollViewer"
-                  Grid.Row="1"
-                  Padding="8"
-                  Background="#0066CC"
-                  HorizontalScrollBarVisibility="Disabled"
-                  VerticalScrollBarVisibility="Auto">
-      <TextBlock Text="{Binding Transcript}"
-                 FontFamily="Courier New, Courier, monospace"
-                 FontSize="20"
-                 Foreground="White"
-                 TextWrapping="Wrap"
-                 VerticalAlignment="Bottom" />
-    </ScrollViewer>
+    <Grid Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC">
+      <Border Grid.Row="0" Padding="8"
+              IsVisible="{Binding IsUpperWindowVisible}"
+              Background="#0066CC">
+        <TextBlock Text="{Binding UpperWindowText}"
+                   FontFamily="Courier New, Courier, monospace"
+                   FontSize="20"
+                   Foreground="White"
+                   TextWrapping="Wrap" />
+      </Border>
+      <Grid Grid.Row="1" ClipToBounds="True">
+        <ScrollViewer x:Name="TranscriptScrollViewer"
+                      Padding="8"
+                      Background="#0066CC"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto">
+          <TextBlock x:Name="TranscriptTextBlock"
+                     FontFamily="Courier New, Courier, monospace"
+                     FontSize="20"
+                     Foreground="White"
+                     TextWrapping="Wrap"
+                     VerticalAlignment="Bottom" />
+        </ScrollViewer>
+        <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
+      </Grid>
+    </Grid>
     <Border Grid.Row="2" Padding="8,4,8,8" Background="#0066CC">
       <Grid ColumnDefinitions="Auto,*">
-        <TextBlock Text=">"
+        <TextBlock Text="{Binding PromptText}"
                    Margin="0,0,2,0"
                    FontFamily="Courier New, Courier, monospace"
                    FontSize="20"

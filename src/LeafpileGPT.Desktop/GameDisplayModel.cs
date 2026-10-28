@@ -1,7 +1,18 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using LeafpileGPT.Core;
 
 namespace LeafpileGPT.Desktop;
+
+public sealed record GameDisplayTextSegment(
+    string Text,
+    short Window,
+    ZMachineTextStyle Style,
+    ushort FontNumber,
+    ushort Foreground,
+    ushort Background,
+    bool HasExplicitColours,
+    bool HasTrueColours);
 
 /// <summary>Bindable presentation state for the scrolling story display and its prompt.</summary>
 public sealed class GameDisplayModel : INotifyPropertyChanged
@@ -10,10 +21,24 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private string _rightStatus = "Score: 0  Moves: 0";
     private string _transcript = string.Empty;
     private string _inputText = string.Empty;
+    private string _promptText = ">";
+    private string _upperWindowText = string.Empty;
+    private bool _isUpperWindowVisible;
+    private short _selectedWindow;
+    private ZMachineTextStyle _textStyle;
+    private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
+    private ushort _foreground = 9;
+    private ushort _background = 2;
+    private bool _hasExplicitColours;
+    private bool _hasTrueColours;
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public event Action<string>? CommandSubmitted;
+
+    public event Action<GameDisplayTextSegment>? OutputSegmentAdded;
+
+    public event Action? OutputCleared;
 
     public string Location
     {
@@ -39,6 +64,30 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         set => SetProperty(ref _inputText, value);
     }
 
+    public string PromptText
+    {
+        get => _promptText;
+        private set => SetProperty(ref _promptText, value);
+    }
+
+    public string UpperWindowText
+    {
+        get => _upperWindowText;
+        private set => SetProperty(ref _upperWindowText, value);
+    }
+
+    public bool IsUpperWindowVisible
+    {
+        get => _isUpperWindowVisible;
+        private set => SetProperty(ref _isUpperWindowVisible, value);
+    }
+
+    public short SelectedWindow
+    {
+        get => _selectedWindow;
+        private set => SetProperty(ref _selectedWindow, value);
+    }
+
     public void SetStatusLine(string location, string rightStatus)
     {
         ArgumentNullException.ThrowIfNull(location);
@@ -47,21 +96,92 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         RightStatus = rightStatus;
     }
 
-    public void AppendOutput(string text)
+    public void AppendOutput(string text, short window = 0)
     {
         ArgumentNullException.ThrowIfNull(text);
-        Transcript += text;
+        if (window == 1)
+        {
+            UpperWindowText += text;
+            IsUpperWindowVisible = true;
+        }
+        else
+        {
+            Transcript += text;
+            OutputSegmentAdded?.Invoke(new GameDisplayTextSegment(
+                text,
+                window,
+                _textStyle,
+                _fontNumber,
+                _foreground,
+                _background,
+                _hasExplicitColours,
+                _hasTrueColours));
+        }
     }
 
-    public void ClearOutput() => Transcript = string.Empty;
+    public void ClearOutput()
+    {
+        Transcript = string.Empty;
+        UpperWindowText = string.Empty;
+        OutputCleared?.Invoke();
+    }
+
+    public void ClearWindow(short window)
+    {
+        if (window == 1)
+        {
+            UpperWindowText = string.Empty;
+        }
+        else
+        {
+            Transcript = string.Empty;
+            OutputCleared?.Invoke();
+        }
+    }
+
+    public void SetSelectedWindow(short window) => SelectedWindow = window;
+
+    public void SplitWindow(int height) => IsUpperWindowVisible = height > 0;
+
+    public void SetTextStyle(ushort style) => _textStyle = (ZMachineTextStyle)style;
+
+    public void SetFont(ushort fontNumber) => _fontNumber = fontNumber;
+
+    public void SetColours(ushort packedColours)
+    {
+        _foreground = (ushort)(packedColours >> 8);
+        _background = (byte)packedColours;
+        _hasExplicitColours = true;
+        _hasTrueColours = false;
+    }
+
+    public void SetTrueColours(ushort foreground, ushort background)
+    {
+        _foreground = foreground;
+        _background = background;
+        _hasExplicitColours = true;
+        _hasTrueColours = true;
+    }
+
+    public void ShowMorePrompt(bool visible) => PromptText = visible ? "-- MORE --" : ">";
+
+    public void ResetPresentation()
+    {
+        ClearOutput();
+        SetStatusLine(string.Empty, "Score: 0  Moves: 0");
+        ShowMorePrompt(visible: false);
+        IsUpperWindowVisible = false;
+        SelectedWindow = 0;
+        _textStyle = ZMachineTextStyle.Roman;
+        _fontNumber = ZMachineFontCatalog.NormalFont;
+        _foreground = 9;
+        _background = 2;
+        _hasExplicitColours = false;
+        _hasTrueColours = false;
+    }
 
     public void SubmitCommand()
     {
-        if (string.IsNullOrWhiteSpace(InputText))
-        {
-            return;
-        }
-
         var command = InputText;
         InputText = string.Empty;
         CommandSubmitted?.Invoke(command);
