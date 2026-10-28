@@ -24,6 +24,8 @@
 - 2026-10-28T14:51Z [USER] Supersedes prior Task 11 status: PR #15 is merged; Task 12 is active on `feature/12-keyboard-input-timed-reads` from updated `origin/main`.
 - 2026-10-28T14:59Z [USER] PR #16 is merged. Task 13 is active on `feature/13-auxiliary-file-operations` from updated `origin/main`.
 - 2026-10-28T15:02Z [TOOL] Task 13 implementation and local verification are complete; final full-diff review, commit, and PR #17 remain.
+- 2026-10-28T15:13Z [USER] PR #17 is merged. Task 14 is active on `feature/14-v1-v5-screen-behavior` from updated `origin/main`.
+- 2026-10-28T15:18Z [TOOL] Task 14 implementation and local verification are complete; final diff review, commit, and PR #18 remain.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -88,6 +90,8 @@
 - 2026-10-28T14:51Z [CODE] Input providers are host-neutral async interfaces; timed reads race input against periodic callbacks and cancel/observe pending input when a callback ends the read. V1–V4 text-buffer byte 0 limits typed characters, with an additional byte reserved for the zero terminator.
 - 2026-10-28T14:59Z [ASSUMPTION] Task 13 supplies configurable, directory-rooted auxiliary storage; Task 22 will connect it to save/restore, and Task 23 will choose the app-data directory.
 - 2026-10-28T15:02Z [CODE] Story filenames are length-prefixed ASCII arrays; normalized names contain at most eight uppercase ASCII alphanumerics plus an optional three-character extension, defaulting to AUX. The filesystem store returns null for missing reads and wraps reportable I/O failures with operation/name context.
+- 2026-10-28T15:13Z [CODE] V1–V5 screen state is host-neutral: `ZMachineScreenModel` tracks cursors/windows and emits operations for the renderer. MORE pauses subsequent screen output, and keyboard input acknowledges prompts; command-file input bypasses them.
+- 2026-10-28T15:18Z [CODE] V4 lower-window line advances scroll while retaining the bottom-row cursor; V3 status refresh happens before keyboard reads and is skipped for command-file input.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -125,3 +129,5 @@
 - 2026-10-28T15:02Z [TOOL] Task 13 adds story-memory filename decoding, filename normalization, and host-rooted read/write storage with generated xUnit coverage. Formatting, Release build (zero warnings/errors), all 359 xUnit tests, and `git diff --check` pass.
 - 2026-10-28T15:03Z [TOOL] Supersedes the prior Task 13 verification count: filename normalization is now idempotent even for an empty extension; a regression case was added. Formatting, Release build (zero warnings/errors), all 360 xUnit tests, and `git diff --check` pass.
 - 2026-10-28T15:03Z [TOOL] Task 13 is committed as `aac6034`, pushed, and PR #17 is open at https://github.com/porcellian/LeafpileGPT/pull/17. GitHub had not reported CI checks at the time of inspection; wait for user review/merge before Task 14.
+- 2026-10-28T15:13Z [TOOL] Supersedes prior Task 13 status: PR #17 is merged; Task 14 screen-model implementation and generated tests are in progress on its dedicated branch.
+- 2026-10-28T15:18Z [TOOL] Task 14 implements V1–V5 screen state and opcode handling with generated tests; format verification, Release build (0 warnings/errors), all 375 xUnit tests, and `git diff --check` pass. Final review/commit/PR #18 remain.

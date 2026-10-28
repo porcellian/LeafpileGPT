@@ -97,6 +97,7 @@ public sealed class ZMachineExecutionState
         }
 
         CurrentInputStream = checked((byte)inputStream);
+        OutputStreams.Screen.SetMorePromptsEnabled(inputStream == 0);
     }
 
     /// <summary>Sets the interpreter capability bit for periodic timed input callbacks.</summary>

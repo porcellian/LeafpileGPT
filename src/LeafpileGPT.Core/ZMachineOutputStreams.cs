@@ -16,6 +16,7 @@ public sealed class ZMachineOutputStreams
     public ZMachineOutputStreams(ZMachineMemory memory)
     {
         _memory = memory ?? throw new ArgumentNullException(nameof(memory));
+        Screen = new ZMachineScreenModel(memory);
         _lastFlags2 = memory.ReadWord(Flags2Address);
         _transcriptSelected = (_lastFlags2 & TranscriptFlag) != 0;
         BufferingEnabled = true;
@@ -32,6 +33,8 @@ public sealed class ZMachineOutputStreams
 
     /// <summary>Gets or sets the sink for individual keypresses routed to stream 4.</summary>
     public Action<byte>? KeyPressWriter { get; set; }
+
+    public ZMachineScreenModel Screen { get; }
 
     /// <summary>Raised when stream 1 buffering changes.</summary>
     public event Action<bool>? BufferingChanged;
@@ -106,6 +109,7 @@ public sealed class ZMachineOutputStreams
         }
 
         BufferingEnabled = enabled;
+        Screen.SetBuffering(enabled);
         BufferingChanged?.Invoke(enabled);
     }
 
@@ -122,7 +126,7 @@ public sealed class ZMachineOutputStreams
 
         if (_screenSelected)
         {
-            ScreenWriter?.Invoke(text);
+            Screen.WriteText(text, ScreenWriter);
         }
 
         if (_transcriptSelected)
@@ -157,7 +161,7 @@ public sealed class ZMachineOutputStreams
         var text = character == 13 ? "\n" : decoded.ToString();
         if (_screenSelected)
         {
-            ScreenWriter?.Invoke(text);
+            Screen.WriteText(text, ScreenWriter);
         }
 
         if (_transcriptSelected)
@@ -197,7 +201,7 @@ public sealed class ZMachineOutputStreams
         SynchronizeTranscriptSelection();
         if (_screenSelected)
         {
-            ScreenWriter?.Invoke(input);
+            Screen.WriteText(input, ScreenWriter);
         }
 
         if (_memory.Header.Version <= 5 && _transcriptSelected)

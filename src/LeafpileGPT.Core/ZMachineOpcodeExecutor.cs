@@ -287,6 +287,37 @@ public sealed class ZMachineOpcodeExecutor
             case "buffer_mode":
                 state.OutputStreams.SetBuffering(ReadValue(instruction.Operands[0], state) == 1);
                 break;
+            case "split_window":
+                state.OutputStreams.Screen.SplitWindow(ReadValue(instruction.Operands[0], state));
+                break;
+            case "set_window":
+                state.OutputStreams.Screen.SetWindow(unchecked((short)ReadValue(instruction.Operands[0], state)));
+                break;
+            case "erase_window":
+                state.OutputStreams.Screen.EraseWindow(unchecked((short)ReadValue(instruction.Operands[0], state)));
+                break;
+            case "erase_line":
+                state.OutputStreams.Screen.EraseLine(ReadValue(instruction.Operands[0], state));
+                break;
+            case "set_cursor":
+                state.OutputStreams.Screen.SetCursor(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state));
+                break;
+            case "get_cursor":
+                state.OutputStreams.Screen.StoreCursorPosition(ReadValue(instruction.Operands[0], state));
+                break;
+            case "set_text_style":
+                state.OutputStreams.Screen.SetTextStyle(ReadValue(instruction.Operands[0], state));
+                break;
+            case "set_colour":
+                state.OutputStreams.Screen.SetColours(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state));
+                break;
+            case "show_status":
+                state.OutputStreams.Screen.ShowStatusLine(state);
+                break;
             case "input_stream":
                 state.SelectInputStream(ReadValue(instruction.Operands[0], state));
                 break;

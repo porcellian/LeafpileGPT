@@ -186,6 +186,56 @@ public sealed class ZMachineInputHandlerTests
     }
 
     [Fact]
+    public async Task CommandFileInputDoesNotStopForMorePrompts()
+    {
+        var state = CreateState(5);
+        state.OutputStreams.Screen.SetDimensions(4, 2, 4, 2);
+        state.OutputStreams.WriteText("a\nb\n");
+        Assert.True(state.OutputStreams.Screen.IsWaitingForMore);
+        state.SelectInputStream(1);
+        Assert.False(state.OutputStreams.Screen.IsWaitingForMore);
+        state.Memory.WriteByte(400, 8);
+        state.Memory.WriteByte(401, 0);
+        var provider = new FakeInputProvider
+        {
+            LineResult = new ZMachineLineInputResult("look", 13),
+            CharacterReader = _ =>
+            {
+                throw new InvalidOperationException("Command-file reads must not wait for keyboard input.");
+            }
+        };
+
+        var terminator = await new ZMachineInputHandler(state, provider)
+            .ReadLineAsync(400, 0, cancellationToken: TestContext.Current.CancellationToken);
+
+        Assert.Equal((byte)13, terminator);
+        Assert.Equal((byte)1, provider.LastLineRequest!.InputStream);
+    }
+
+    [Fact]
+    public async Task V3StatusLineUpdatesBeforeKeyboardReadButNotCommandFileRead()
+    {
+        var state = CreateState(3);
+        state.Memory.WriteByte(400, 8);
+        state.Memory.WriteByte(401, 0);
+        state.Memory.WriteByte(500, 0);
+        var updates = 0;
+        state.OutputStreams.Screen.StatusLineWriter = _ => updates++;
+        var provider = new FakeInputProvider
+        {
+            LineResult = new ZMachineLineInputResult("look", 13)
+        };
+        var input = new ZMachineInputHandler(state, provider);
+
+        await input.ReadLineAsync(400, 500, cancellationToken: TestContext.Current.CancellationToken);
+        Assert.Equal(1, updates);
+
+        state.SelectInputStream(1);
+        await input.ReadLineAsync(400, 500, cancellationToken: TestContext.Current.CancellationToken);
+        Assert.Equal(1, updates);
+    }
+
+    [Fact]
     public async Task ReadCharReturnsAndRecordsDefinedZsciiInputIncludingFunctionKeys()
     {
         var state = CreateState(5);
