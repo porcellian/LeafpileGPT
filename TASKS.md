@@ -16,7 +16,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **10. Implement dictionaries and command parsing.** Add separators, sorted and unsorted dictionaries, tokenization, parse buffers, `encode_text`, and V1–V8 input-buffer behavior.
 - [x] **11. Implement output streams.** Add screen, transcript, nested memory, and command-recording streams, buffering, stream/header synchronization, and standard text output opcodes.
 - [x] **12. Implement keyboard input and timed reads.** Support asynchronous `read`/`read_char`, terminating characters, keyboard and command-file input streams, line editing and filtering, timed routine callbacks, and defined ZSCII input.
-- [ ] **13. Implement auxiliary file operations.** Add filename sanitization, supported external file operations, and specified error behavior.
+- [x] **13. Implement auxiliary file operations.** Read length-prefixed story filenames, normalize to safe uppercase 8.3 names, provide directory-rooted auxiliary file reads and writes, and distinguish missing files from reportable I/O failures.
 - [ ] **14. Implement V1–V5 screen behavior.** Add scrolling, split windows, cursor and erase behavior, status lines, text styles, colors, dimensions, and MORE prompts.
 - [ ] **15. Implement V6 windows and screen properties.** Add eight windows, independent cursors, geometry, margins, styles, colors, wrapping, scrolling, buffering, and window properties.
 - [ ] **16. Implement fonts and character graphics.** Add fixed-pitch behavior, font capability reporting, Courier-style text, and character graphics.
