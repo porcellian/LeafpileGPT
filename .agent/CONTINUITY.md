@@ -29,6 +29,7 @@
 - 2026-10-28T15:19Z [TOOL] Task 14 is committed as `947f8c4`; PR #18 is open at https://github.com/porcellian/LeafpileGPT/pull/18. Stop for user review and merge before Task 15.
 - 2026-10-28T15:27Z [USER] PR #18 is merged; Task 15 is active on `feature/15-v6-windows` from updated `origin/main`.
 - 2026-10-28T15:43Z [TOOL] Task 15 V6 window implementation, generated coverage, and task/spec matrix updates are complete locally; final review, verification, commit, and PR #19 remain.
+- 2026-10-28T16:13Z [USER] Supersedes prior PR #19 status: PR #19 is merged. Task 16 is active on `feature/16-fonts-character-graphics` from updated `origin/main`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -41,6 +42,7 @@
 - 2026-10-28T14:17Z [CODE] Dictionary entry counts are signed: negative counts select linear lookup for unsorted user dictionaries. Parse positions include the character's byte offset within the versioned input text buffer.
 - 2026-10-28T14:32Z [CODE] Output stream 3 suppresses streams 1/2 and nests up to 16 tables; deselection finalizes the selected table and resumes its parent. Stream 2 state mirrors Flags 2 bit 0; stream 4 records input separately.
 - 2026-10-28T15:43Z [CODE] V6 screen state uses eight separate 18-property windows; `-3` resolves to the selected window, properties 16/17 are read-only true colors, and `buffer_screen -1` flushes without changing mode. Window operations are host callbacks; newline countdown events remain for Task 17 to invoke routines.
+- 2026-10-28T16:13Z [CODE] `set_font` supports fonts 1, 3, and 4; font 2 and other unavailable IDs return zero, font 0 reports the current font, and font 4 requests Courier New with fixed pitch.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -98,6 +100,8 @@
 - 2026-10-28T15:18Z [CODE] V4 lower-window line advances scroll while retaining the bottom-row cursor; V3 status refresh happens before keyboard reads and is skipped for command-file input.
 - 2026-10-28T15:43Z [CODE] V6 cursor positions allow the one-unit boundary after window width/height, while text remains clipped to printable margins. Screen resize refreshes default window-0 MORE count unless the game explicitly set that property.
 - 2026-10-28T15:50Z [CODE] V6 window 0 starts with attribute bits 1–3 enabled (`0x0E`), and cursor coordinates stay relative to each window's own origin after moves; generated tests cover the defaults, moved-window scrolling, transparent erase-all state changes, and screen resize.
+- 2026-10-28T16:13Z [TOOL] Task 16 adds `set_font` dispatch, fixed-pitch reporting, and an immutable bitmap catalog for 95 printable ASCII Font 3 glyphs; final verification and PR #20 remain.
+- 2026-10-28T16:16Z [TOOL] Independently compared the catalog data with ZSpec11.pdf section 16.1; all 95 extracted printable ASCII glyph bitmaps match.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -139,3 +143,5 @@
 - 2026-10-28T15:18Z [TOOL] Task 14 implements V1–V5 screen state and opcode handling with generated tests; format verification, Release build (0 warnings/errors), all 375 xUnit tests, and `git diff --check` pass. Final review/commit/PR #18 remain.
 - 2026-10-28T15:19Z [TOOL] Supersedes prior Task 14 status: commit `947f8c4` is pushed and PR #18 is open; wait for user review and merge.
 - 2026-10-28T15:51Z [TOOL] Task 15 final diff review is complete; commit `ad686db` is pushed and PR #19 is open at https://github.com/porcellian/LeafpileGPT/pull/19. Windows, macOS, and Ubuntu CI jobs are queued; wait for user review and merge before Task 16.
+- 2026-10-28T16:16Z [TOOL] Task 16 implementation and generated V1–V6 coverage pass format verification, Release build (0 warnings/errors), all 393 xUnit tests, and `git diff --check`; final staged review, commit, and PR #20 remain.
+- 2026-10-28T16:18Z [TOOL] Supersedes prior Task 16 verification: the final set_font dispatch coverage passes with the same 393 xUnit tests, and the embedded Font 3 table matches all 95 printable ASCII glyphs from ZSpec 1.1 section 16.1. Final staged review, commit, and PR #20 remain.

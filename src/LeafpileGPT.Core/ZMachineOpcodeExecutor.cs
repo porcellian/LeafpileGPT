@@ -323,6 +323,13 @@ public sealed class ZMachineOpcodeExecutor
             case "set_text_style":
                 state.OutputStreams.Screen.SetTextStyle(ReadValue(instruction.Operands[0], state));
                 break;
+            case "set_font":
+                StoreResult(instruction, state, state.OutputStreams.Screen.SetFont(
+                    ReadValue(instruction.Operands[0], state),
+                    instruction.Operands.Length > 1
+                        ? unchecked((short)ReadValue(instruction.Operands[1], state))
+                        : null));
+                break;
             case "set_colour":
                 if (state.Version == 6)
                 {
