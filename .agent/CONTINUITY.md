@@ -116,3 +116,4 @@
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 is complete in PR #14; wait for review and merge.
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 is complete in PR #15; wait for review and merge.
 - 2026-10-28T14:51Z [TOOL] Task 12 implements `read`/`read_char`, input stream selection, text editing/filtering, terminating-key tables, timed callbacks, and generated V1–V8 tests. Formatting, Release build (zero warnings/errors), all 348 xUnit tests, and `git diff --check` pass; final review/commit/PR #16 remain.
+- 2026-10-28T14:52Z [TOOL] Task 12 is committed as `5a72219` and PR #16 is open at https://github.com/porcellian/LeafpileGPT/pull/16. macOS, Ubuntu, and Windows CI checks are pending; wait for user review/merge before Task 13.
