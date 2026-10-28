@@ -35,6 +35,7 @@
 - 2026-10-28T03:41Z [TOOL] Updated Task 27 for headless route replay, added Task 66 for the separate text-and-keyboard console host, and updated the Glulx prerequisite on `docs/headless-replay-terminal-play`.
 - 2026-10-28T03:47Z [TOOL] Moved terminal play to Future Tasks ahead of Glulx; numbered roadmap remains Tasks 1–65 on `docs/move-terminal-play-to-future`.
 - 2026-10-28T03:59Z [TOOL] Implemented `ZMachineMemory` and V1–V8 address translation with 31 new xUnit cases; all 80 tests pass, Release build has zero warnings/errors, format verification passes, and the local Zork I memory smoke check succeeds.
+- 2026-10-28T04:01Z [TOOL] Opened PR #8 for Task 4 at https://github.com/porcellian/LeafpileGPT/pull/8; cross-platform CI is queued.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -59,3 +60,4 @@
 - 2026-10-28T03:41Z [TOOL] PR #5 merged as `8108953`; headless replay and terminal play are roadmap-only changes on a new docs branch.
 - 2026-10-28T03:47Z [TOOL] PR #6 merged as `98911f0`. Terminal play is an unnumbered future item; it does not extend the 1–65 numbered roadmap.
 - 2026-10-28T03:59Z [TOOL] Task 4 implementation is complete locally and ready for PR; no completed story walkthroughs exist to replay.
+- 2026-10-28T04:01Z [TOOL] Supersedes prior Task 4 state: PR #8 is open for review; do not begin Task 5 until it is merged.
