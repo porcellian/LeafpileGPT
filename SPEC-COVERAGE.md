@@ -69,6 +69,8 @@ The decoder and tests must account for every standard opcode, including version-
 
 Task 24 passes the optional desktop lifetime arguments into the story loader; no argument leaves the app without a loaded story. Launch arguments support quoted paths with spaces and join multiple path tokens for unquoted paths. Play Game, Save, Restore, Restart, and Exit appear in the requested order; Save/Restore/Restart are disabled until loading succeeds. Story selection and Quetzal file dialogs use independent persisted directories. Standalone Z-code and Blorb Z-code executables can load; invalid or missing files produce a detailed dialog while leaving any previously loaded story intact. Generated xUnit tests cover argument resolution and story-file paths with spaces, invalid files, and missing files.
 
+Task 25 adds a fixed-width blue-and-white story display with bottom-anchored, scrollable transcript output; the prompt remains at the bottom-left. The location is shown left-aligned and score/moves right-aligned in a status strip below the menus, with a distinct app-status bar below the game area. The bindable display model supports output append/clear, status updates, and command submission; generated xUnit tests cover those state changes. Task 26 connects the display callbacks to live VM sessions.
+
 ## Cross-cutting quality checks
 
 - Generated synthetic fixtures cover all eight story versions and do not rely on local licensed stories.

@@ -1,11 +1,12 @@
 <Window xmlns="https://github.com/avaloniaui"
+        xmlns:local="using:LeafpileGPT.Desktop"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="LeafpileGPT.Desktop.MainWindow"
         Title="LeafpileGPT"
         Width="960"
         Height="640">
-  <Grid RowDefinitions="Auto,*">
-    <Menu Grid.Row="0">
+  <Grid RowDefinitions="Auto,*,Auto">
+    <Menu Grid.Row="0" Background="White" Foreground="#111111">
       <MenuItem Header="_File">
         <MenuItem x:Name="PlayGameMenuItem" Header="Play Game..." Click="OnPlayGameClick" />
         <Separator />
@@ -18,16 +19,9 @@
       </MenuItem>
       <MenuItem Header="_Tools" />
     </Menu>
-    <Grid Grid.Row="1" RowDefinitions="*,Auto">
-      <Border Padding="24">
-        <TextBlock x:Name="GameStatusText"
-                   Text="LeafpileGPT is ready for a story."
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
-      </Border>
-      <Border Grid.Row="1" Padding="8" BorderThickness="0,1,0,0">
-        <TextBlock x:Name="AppStatusText" Text="No story loaded." />
-      </Border>
-    </Grid>
+    <local:GameDisplayView x:Name="GameDisplay" Grid.Row="1" />
+    <Border Grid.Row="2" Padding="8" BorderThickness="0,1,0,0" Background="#E5E5E5">
+      <TextBlock x:Name="AppStatusText" Text="No story loaded." Foreground="#202020" />
+    </Border>
   </Grid>
 </Window>

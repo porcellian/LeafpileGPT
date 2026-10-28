@@ -1,0 +1,60 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:desktop="using:LeafpileGPT.Desktop"
+             x:Class="LeafpileGPT.Desktop.GameDisplayView"
+             x:DataType="desktop:GameDisplayModel">
+  <Grid RowDefinitions="Auto,*,Auto" Background="#0066CC">
+    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5">
+      <TextBlock Grid.Column="0"
+                 Margin="12,4"
+                 Text="{Binding Location}"
+                 FontFamily="Courier New, Courier, monospace"
+                 FontSize="16"
+                 Foreground="#0066CC"
+                 TextWrapping="NoWrap"
+                 TextTrimming="CharacterEllipsis"
+                 VerticalAlignment="Center" />
+      <TextBlock Grid.Column="1"
+                 Margin="12,4"
+                 Text="{Binding RightStatus}"
+                 FontFamily="Courier New, Courier, monospace"
+                 FontSize="16"
+                 Foreground="#0066CC"
+                 TextAlignment="Right"
+                 VerticalAlignment="Center" />
+    </Grid>
+    <ScrollViewer x:Name="TranscriptScrollViewer"
+                  Grid.Row="1"
+                  Padding="8"
+                  Background="#0066CC"
+                  HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Auto">
+      <TextBlock Text="{Binding Transcript}"
+                 FontFamily="Courier New, Courier, monospace"
+                 FontSize="20"
+                 Foreground="White"
+                 TextWrapping="Wrap"
+                 VerticalAlignment="Bottom" />
+    </ScrollViewer>
+    <Border Grid.Row="2" Padding="8,4,8,8" Background="#0066CC">
+      <Grid ColumnDefinitions="Auto,*">
+        <TextBlock Text=">"
+                   Margin="0,0,2,0"
+                   FontFamily="Courier New, Courier, monospace"
+                   FontSize="20"
+                   Foreground="White"
+                   VerticalAlignment="Center" />
+        <TextBox x:Name="PromptTextBox"
+                 Grid.Column="1"
+                 Text="{Binding InputText, Mode=TwoWay}"
+                 FontFamily="Courier New, Courier, monospace"
+                 FontSize="20"
+                 Foreground="White"
+                 Background="Transparent"
+                 BorderThickness="0"
+                 Padding="0"
+                 KeyDown="OnPromptKeyDown" />
+      </Grid>
+    </Border>
+  </Grid>
+</UserControl>
