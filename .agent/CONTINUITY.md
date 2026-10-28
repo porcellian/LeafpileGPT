@@ -62,7 +62,7 @@
 - 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
 - 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 10 review status: full diff review completed; commit `260f485` pushed and PR #14 opened at https://github.com/porcellian/LeafpileGPT/pull/14. Formatting and Release build pass with zero warnings/errors; all 308 xUnit tests pass. Wait for user review and merge before Task 11.
-- 2026-10-28T14:35Z [TOOL] Supersedes prior Task 11 verification: formatting verification, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. Complete diff review, commit, and PR creation remain.
+- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. Wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -112,4 +112,4 @@
 - 2026-10-28T14:04Z [TOOL] Supersedes prior Task 8 PR status: PR #12 is merged to main. Task 9 checks and review are in progress; no Task 9 commit or PR exists yet.
 - 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 is complete in PR #14; wait for review and merge.
-- 2026-10-28T14:32Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 implementation and final verification are in progress; no Task 11 PR exists yet.
+- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 is complete in PR #15; wait for review and merge.
