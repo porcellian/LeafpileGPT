@@ -358,6 +358,48 @@ public class StoryFileTests
         }
     }
 
+    [Fact]
+    public void LoadsStoryFromPathContainingSpaces()
+    {
+        var directory = Path.Combine(Path.GetTempPath(), $"Leafpile story fixtures {Guid.NewGuid():N}");
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, "story with spaces.z3");
+        File.WriteAllBytes(path, StoryFixtureBuilder.Create(3));
+
+        try
+        {
+            Assert.Equal(3, StoryFile.Load(path).Header.Version);
+        }
+        finally
+        {
+            Directory.Delete(directory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public void MissingStoryFileReportsFileNotFound()
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"missing-story-{Guid.NewGuid():N}.z3");
+
+        Assert.Throws<FileNotFoundException>(() => StoryFile.Load(path));
+    }
+
+    [Fact]
+    public void InvalidStoryFileReportsFormatError()
+    {
+        var path = Path.Combine(Path.GetTempPath(), $"invalid-story-{Guid.NewGuid():N}.z3");
+        File.WriteAllBytes(path, new byte[32]);
+
+        try
+        {
+            Assert.Throws<StoryFileFormatException>(() => StoryFile.Load(path));
+        }
+        finally
+        {
+            File.Delete(path);
+        }
+    }
+
     private static ushort ReadWord(ReadOnlySpan<byte> data, int offset) =>
         System.Buffers.Binary.BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, sizeof(ushort)));
 }

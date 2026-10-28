@@ -6,13 +6,28 @@
         Height="640">
   <Grid RowDefinitions="Auto,*">
     <Menu Grid.Row="0">
-      <MenuItem Header="_File" />
+      <MenuItem Header="_File">
+        <MenuItem x:Name="PlayGameMenuItem" Header="Play Game..." Click="OnPlayGameClick" />
+        <Separator />
+        <MenuItem x:Name="SaveMenuItem" Header="Save..." Click="OnSaveClick" IsEnabled="False" />
+        <MenuItem x:Name="RestoreMenuItem" Header="Restore..." Click="OnRestoreClick" IsEnabled="False" />
+        <Separator />
+        <MenuItem x:Name="RestartMenuItem" Header="Restart" Click="OnRestartClick" IsEnabled="False" />
+        <Separator />
+        <MenuItem Header="Exit" Click="OnExitClick" />
+      </MenuItem>
       <MenuItem Header="_Tools" />
     </Menu>
-    <Border Grid.Row="1" Padding="24">
-      <TextBlock Text="LeafpileGPT is ready for a story."
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center" />
-    </Border>
+    <Grid Grid.Row="1" RowDefinitions="*,Auto">
+      <Border Padding="24">
+        <TextBlock x:Name="GameStatusText"
+                   Text="LeafpileGPT is ready for a story."
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center" />
+      </Border>
+      <Border Grid.Row="1" Padding="8" BorderThickness="0,1,0,0">
+        <TextBlock x:Name="AppStatusText" Text="No story loaded." />
+      </Border>
+    </Grid>
   </Grid>
 </Window>

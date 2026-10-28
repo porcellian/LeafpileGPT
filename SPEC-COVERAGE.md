@@ -65,6 +65,10 @@ The decoder and tests must account for every standard opcode, including version-
 
 `AppDataPaths` places per-user storage beneath `Environment.SpecialFolder.LocalApplicationData` in the `LeafpileGPT/` directory and creates `Save/` and `Preferences/`. `UserPreferencesStore` persists separate Play Game, Save, and Restore directories as versioned JSON; Save and Restore initially point to `Save/`. Generated xUnit fixtures cover layout, persistence, independent updates, and invalid preference files.
 
+## Desktop startup and file menu
+
+Task 24 passes the optional desktop lifetime arguments into the story loader; no argument leaves the app without a loaded story. Launch arguments support quoted paths with spaces and join multiple path tokens for unquoted paths. Play Game, Save, Restore, Restart, and Exit appear in the requested order; Save/Restore/Restart are disabled until loading succeeds. Story selection and Quetzal file dialogs use independent persisted directories. Standalone Z-code and Blorb Z-code executables can load; invalid or missing files produce a detailed dialog while leaving any previously loaded story intact. Generated xUnit tests cover argument resolution and story-file paths with spaces, invalid files, and missing files.
+
 ## Cross-cutting quality checks
 
 - Generated synthetic fixtures cover all eight story versions and do not rely on local licensed stories.
