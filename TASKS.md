@@ -14,7 +14,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [x] **8. Implement text and character encoding.** Decode packed Z-text for V1–V8 with version-specific shifts, abbreviations, custom alphabets, ZSCII/Unicode translation tables, and bounded malformed-text handling; encode fixed-width dictionary words with version-specific padding and safe fallback for unrepresentable input.
 - [x] **9. Implement objects and properties.** Support version-specific layouts, attributes, object trees, property tables, defaults, and related opcodes.
 - [x] **10. Implement dictionaries and command parsing.** Add separators, sorted and unsorted dictionaries, tokenization, parse buffers, `encode_text`, and V1–V8 input-buffer behavior.
-- [ ] **11. Implement output streams.** Add screen, transcript, nested memory, and command-recording streams, buffering, and stream/header synchronization.
+- [x] **11. Implement output streams.** Add screen, transcript, nested memory, and command-recording streams, buffering, stream/header synchronization, and standard text output opcodes.
 - [ ] **12. Implement keyboard input and timed reads.** Support `read`, `read_char`, terminating characters, input streams, editing, timed callbacks, and defined ZSCII input.
 - [ ] **13. Implement auxiliary file operations.** Add filename sanitization, supported external file operations, and specified error behavior.
 - [ ] **14. Implement V1–V5 screen behavior.** Add scrolling, split windows, cursor and erase behavior, status lines, text styles, colors, dimensions, and MORE prompts.

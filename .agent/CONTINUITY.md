@@ -20,6 +20,7 @@
 - 2026-10-28T04:30Z [USER] PR #10 is merged; proceed with Task 7 on `feature/7-arithmetic-vm-operations`.
 - 2026-10-28T14:04Z [USER] Supersedes prior Task 8 pull-request status: PR #12 is merged; Task 9 proceeds from updated `origin/main` on `feature/9-objects-and-properties`.
 - 2026-10-28T14:17Z [USER] PR #13 is merged; Task 10 proceeds from updated `origin/main` on `feature/10-dictionaries-command-parsing`.
+- 2026-10-28T14:32Z [USER] PR #14 is merged; Task 11 proceeds from updated `origin/main` on `feature/11-output-streams`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -30,6 +31,7 @@
 - 2026-10-28T04:34Z [CODE] Task 7 executes decoded opcodes; variable-reference operands use their encoded variable number, while value operands are read through execution state.
 - 2026-10-28T14:04Z [CODE] Task 9 object support handles version-specific entries and property encodings; attribute 48 accesses in V4+ are safely ignored to accommodate the documented Sherlock bug.
 - 2026-10-28T14:17Z [CODE] Dictionary entry counts are signed: negative counts select linear lookup for unsorted user dictionaries. Parse positions include the character's byte offset within the versioned input text buffer.
+- 2026-10-28T14:32Z [CODE] Output stream 3 suppresses streams 1/2 and nests up to 16 tables; deselection finalizes the selected table and resumes its parent. Stream 2 state mirrors Flags 2 bit 0; stream 4 records input separately.
 
 ## [PROGRESS]
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -60,6 +62,7 @@
 - 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
 - 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 10 review status: full diff review completed; commit `260f485` pushed and PR #14 opened at https://github.com/porcellian/LeafpileGPT/pull/14. Formatting and Release build pass with zero warnings/errors; all 308 xUnit tests pass. Wait for user review and merge before Task 11.
+- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -78,6 +81,7 @@
 - 2026-10-28T04:52Z [TOOL] Reviewed the supplied PDF page image for the V1 A2 alphabet row; the leading space is present, correcting an ambiguity in extracted text.
 - 2026-10-28T14:04Z [CODE] V4+ `get_prop_len` identifies extended properties from the byte immediately before data (bit 7 set), then reads the first size byte two positions back; extended length zero means 64 bytes.
 - 2026-10-28T14:17Z [CODE] Dictionary parse positions include the text-buffer header offset (1 for V1–V4, 2 for V5+); word separators are independent tokens and spaces are discarded.
+- 2026-10-28T14:34Z [CODE] V6 stream-3 width is reported through header word `$30`; a host-provided character-width function supplies units, defaulting to one unit per non-newline scalar.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -108,3 +112,4 @@
 - 2026-10-28T14:04Z [TOOL] Supersedes prior Task 8 PR status: PR #12 is merged to main. Task 9 checks and review are in progress; no Task 9 commit or PR exists yet.
 - 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
 - 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 is complete in PR #14; wait for review and merge.
+- 2026-10-28T14:36Z [TOOL] Supersedes prior Task 10 PR status: PR #14 is merged. Task 11 is complete in PR #15; wait for review and merge.

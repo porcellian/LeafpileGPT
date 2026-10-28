@@ -21,9 +21,12 @@ public sealed class ZMachineExecutionState
     {
         Memory = memory;
         _maximumStackWords = maximumStackWords;
+        OutputStreams = new ZMachineOutputStreams(memory);
     }
 
     public ZMachineMemory Memory { get; }
+
+    public ZMachineOutputStreams OutputStreams { get; }
 
     public int MaximumStackWords => _maximumStackWords;
 

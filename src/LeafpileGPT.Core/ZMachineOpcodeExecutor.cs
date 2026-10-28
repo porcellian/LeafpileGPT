@@ -1,5 +1,8 @@
 namespace LeafpileGPT.Core;
 
+using System.Globalization;
+using System.Text;
+
 /// <summary>Executes implemented arithmetic, object, data, stack, call, and control-flow opcodes.</summary>
 public sealed class ZMachineOpcodeExecutor
 {
@@ -25,9 +28,48 @@ public sealed class ZMachineOpcodeExecutor
             return;
         }
 
+        if (_writeText is not null)
+        {
+            state.OutputStreams.ScreenWriter ??= _writeText;
+        }
+
         state.SetProgramCounter(instruction.NextProgramCounter);
         switch (instruction.Definition.Mnemonic)
         {
+            case "print":
+                state.OutputStreams.WriteText(new ZMachineTextCodec(state.Memory).DecodePackedText(instruction.InlineText.AsSpan()));
+                break;
+            case "print_ret":
+                state.OutputStreams.WriteText(new ZMachineTextCodec(state.Memory).DecodePackedText(instruction.InlineText.AsSpan()));
+                state.OutputStreams.WriteText("\n");
+                state.ReturnFromRoutine(1);
+                break;
+            case "new_line":
+                state.OutputStreams.WriteZsciiCharacter(13, new ZMachineTextCodec(state.Memory).Zscii);
+                break;
+            case "print_addr":
+                state.OutputStreams.WriteText(new ZMachineTextCodec(state.Memory)
+                    .DecodeStringAtByteAddress(ReadValue(instruction.Operands[0], state)));
+                break;
+            case "print_paddr":
+                state.OutputStreams.WriteText(new ZMachineTextCodec(state.Memory)
+                    .DecodePackedString(ReadValue(instruction.Operands[0], state)));
+                break;
+            case "print_char":
+                {
+                    var character = ReadValue(instruction.Operands[0], state);
+                    if (character > byte.MaxValue)
+                    {
+                        throw new ZMachineExecutionException($"ZSCII character {character} is outside the supported output range.");
+                    }
+
+                    state.OutputStreams.WriteZsciiCharacter((byte)character, new ZMachineTextCodec(state.Memory).Zscii);
+                    break;
+                }
+            case "print_num":
+                state.OutputStreams.WriteText(ToSigned(ReadValue(instruction.Operands[0], state))
+                    .ToString(CultureInfo.InvariantCulture));
+                break;
             case "add":
                 StoreResult(instruction, state, unchecked((ushort)(ReadValue(instruction.Operands[0], state) + ReadValue(instruction.Operands[1], state))));
                 break;
@@ -147,13 +189,45 @@ public sealed class ZMachineOpcodeExecutor
                 new ZMachineObjectTable(state).RemoveObject(ReadValue(instruction.Operands[0], state));
                 break;
             case "print_obj":
-                if (_writeText is null)
+                if (state.OutputStreams.ScreenWriter is null
+                    && state.OutputStreams.TranscriptWriter is null
+                    && state.OutputStreams.CurrentMemoryTableAddress is null)
                 {
                     state.SetProgramCounter(instruction.ProgramCounter);
                     throw new ZMachineExecutionException("print_obj requires a configured text output callback.");
                 }
 
-                _writeText(new ZMachineObjectTable(state).GetShortName(ReadValue(instruction.Operands[0], state)));
+                state.OutputStreams.WriteText(new ZMachineObjectTable(state).GetShortName(ReadValue(instruction.Operands[0], state)));
+                break;
+            case "print_table":
+                PrintTable(instruction, state);
+                break;
+            case "print_unicode":
+                {
+                    var codePoint = ReadValue(instruction.Operands[0], state);
+                    if (!Rune.IsValid(codePoint)
+                        || codePoint is <= 0x001F or >= 0x007F and <= 0x009F)
+                    {
+                        throw new ZMachineExecutionException($"Unicode code point U+{codePoint:X4} is invalid.");
+                    }
+
+                    state.OutputStreams.WriteText(new Rune(codePoint).ToString());
+                    break;
+                }
+            case "output_stream":
+                {
+                    var selectedStream = unchecked((short)ReadValue(instruction.Operands[0], state));
+                    var tableAddress = instruction.Operands.Length > 1
+                        ? ReadValue(instruction.Operands[1], state)
+                        : (ushort?)null;
+                    var width = instruction.Operands.Length > 2
+                        ? unchecked((short)ReadValue(instruction.Operands[2], state))
+                        : (short?)null;
+                    state.OutputStreams.SelectStream(selectedStream, tableAddress, width);
+                    break;
+                }
+            case "buffer_mode":
+                state.OutputStreams.SetBuffering(ReadValue(instruction.Operands[0], state) == 1);
                 break;
             case "tokenise":
                 new ZMachineDictionary(state.Memory).Tokenise(
@@ -406,6 +480,38 @@ public sealed class ZMachineOpcodeExecutor
 
         StoreResult(instruction, state, foundAddress);
         Branch(instruction, state, foundAddress != 0);
+    }
+
+    private static void PrintTable(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        var textAddress = ReadValue(instruction.Operands[0], state);
+        var width = ReadValue(instruction.Operands[1], state);
+        var height = instruction.Operands.Length > 2 ? ReadValue(instruction.Operands[2], state) : (ushort)1;
+        var skip = instruction.Operands.Length > 3 ? ReadValue(instruction.Operands[3], state) : (ushort)0;
+        var totalLength = height == 0 || width == 0
+            ? 0L
+            : (long)height * width + ((long)height - 1) * skip;
+        if (totalLength > int.MaxValue)
+        {
+            throw new ZMachineExecutionException("print_table range exceeds the supported story address range.");
+        }
+
+        state.Memory.ValidateReadableRange(textAddress, (int)totalLength);
+        var zscii = new ZMachineTextCodec(state.Memory).Zscii;
+        for (var row = 0; row < height; row++)
+        {
+            var rowAddress = checked((ushort)(textAddress + (row * (uint)(width + skip))));
+            for (var column = 0; column < width; column++)
+            {
+                state.OutputStreams.WriteZsciiCharacter(
+                    state.Memory.ReadByte(checked((ushort)(rowAddress + column))), zscii);
+            }
+
+            if (row + 1 < height)
+            {
+                state.OutputStreams.WriteZsciiCharacter(13, zscii);
+            }
+        }
     }
 
     private static byte ReadArrayByte(ZMachineExecutionState state, ushort baseAddress, ushort byteIndex)

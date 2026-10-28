@@ -104,6 +104,9 @@ public sealed class ZsciiCodec
         return false;
     }
 
+    /// <summary>Maps a Unicode character to a ZSCII character defined for output.</summary>
+    public bool TryEncodeOutput(char value, out byte zscii) => _unicodeToZscii.TryGetValue(value, out zscii);
+
     private static char?[] ReadExtraCharacters(ZMachineMemory memory)
     {
         ushort address = 0;
