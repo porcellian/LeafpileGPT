@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T17:26Z [USER] PR #23 is merged. Task 20 is active on `feature/20-blorb-audio` from updated `origin/main`.
 - 2026-10-28T02:34Z [USER] Implement the approved V1–V8 C# interpreter/Avalonia plan in one task branch and PR at a time; stop for user review/merge after each PR.
 - 2026-10-28T02:49Z [TOOL] Task 1 PR #1 merged; Task 2 is complete locally on `feature/2-solution-build-pipeline` and awaiting PR creation/review.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 status: PR #2 is open at https://github.com/porcellian/LeafpileGPT/pull/2; CI is running.
@@ -35,6 +36,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-28T17:26Z [CODE] Blorb audio maps AIFF to the sample channel and OGGV/MOD/SONG to music; SONG sample-name references resolve only to AIFF resources. Loop hints are exposed for V3; V5+ loop state comes from `sound_effect` repeats.
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
 - 2026-10-28T02:34Z [USER] Keep story/manual/hint files, routes, and raw traces local; commit original walkthrough PDFs. Use four runtime error policies, default first-per-type; logs omit player commands/story output.
 - 2026-10-28T02:42Z [TOOL] Central package versions pin Avalonia 12.1.4 and xUnit v3 4.0.2; SDK selection starts at 10.0.100 and rolls forward within the .NET 10 feature band.
@@ -112,6 +114,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-28T17:28Z [TOOL] Task 20 is committed as `c4defa7` on `feature/20-blorb-audio`; PR #24 is open at https://github.com/porcellian/LeafpileGPT/pull/24. Local format verification, Release build (0 warnings/errors), and all 433 xUnit tests pass; Windows, macOS, and Ubuntu CI jobs are queued. Wait for review and merge before Task 21.
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 PR status: Task 2 is committed as `610d0e6` with an additional continuity update, and PR #2 is open for review. Do not start Task 3 before the user merges PR #2.
 - 2026-10-28T02:53Z [TOOL] PR #2 received a follow-up LF checkout fix; rerun CI and keep the PR open for review. Do not start Task 3 before merge.

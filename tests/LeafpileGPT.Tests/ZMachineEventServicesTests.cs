@@ -1,6 +1,8 @@
 namespace LeafpileGPT.Tests;
 
+using System.Buffers.Binary;
 using System.Collections.Immutable;
+using System.Text;
 using LeafpileGPT.Core;
 using Xunit;
 
@@ -146,6 +148,50 @@ public sealed class ZMachineEventServicesTests
         Assert.Equal(new ZMachineSoundEffectRequest(7, ZMachineSoundAction.Start, 5, 3, 123), services.LastSoundRequest);
         services.SoundCompletion!.Invoke();
         Assert.Equal(new ushort[] { 123 }, calls);
+    }
+
+    [Fact]
+    public void SoundEffectPassesBlorbChannelResourceVolumeLoopingAndCompletionToHost()
+    {
+        var payload = Encoding.ASCII.GetBytes("OggS\0\0\0\0");
+        var blorb = BlorbFile.Parse(ZMachineBlorbTests.BlorbFixtureBuilder.Create(
+            [new("OGGV", payload, "Snd ", 7)]));
+        var services = new FakeEventServices { SupportsSoundEffects = true };
+        var state = ZMachineExecutionState.Start(StoryFile.Parse(StoryFixtureBuilder.Create(5)),
+            eventServices: services, soundCatalog: blorb.Sounds);
+        var calls = new List<ushort>();
+        state.RoutineCallRequested = calls.Add;
+
+        Executor().Execute(Instruction("sound_effect", [Constant(7), Constant(2), Constant(0xFF08), Constant(123)]), state);
+
+        var request = services.LastSoundRequest!;
+        Assert.Equal(8, request.Volume);
+        Assert.Equal(byte.MaxValue, request.Repeats);
+        Assert.True(request.LoopIndefinitely);
+        Assert.Equal(BlorbSoundChannel.Music, request.Channel);
+        Assert.Equal(BlorbSoundFormat.OggVorbis, request.Resource!.Format);
+        Assert.Equal(payload, request.Resource.EncodedData.ToArray());
+        services.SoundCompletion!.Invoke();
+        Assert.Equal(new ushort[] { 123 }, calls);
+    }
+
+    [Fact]
+    public void VersionThreeSoundRequestUsesBlorbLoopHintAndDefaultPlayOnce()
+    {
+        var payload = Encoding.ASCII.GetBytes("OggS\0\0\0\0");
+        var loop = new byte[8];
+        BinaryPrimitives.WriteUInt32BigEndian(loop, 3);
+        BinaryPrimitives.WriteUInt32BigEndian(loop.AsSpan(4), 0);
+        var loopingBlorb = BlorbFile.Parse(ZMachineBlorbTests.BlorbFixtureBuilder.Create(
+            [new("OGGV", payload, "Snd ", 3)], [new("Loop", loop)]));
+        var services = new FakeEventServices { SupportsSoundEffects = true };
+        var state = ZMachineExecutionState.Start(StoryFile.Parse(StoryFixtureBuilder.Create(3)),
+            eventServices: services, soundCatalog: loopingBlorb.Sounds);
+
+        Executor().Execute(Instruction("sound_effect", [Constant(3), Constant(2)]), state);
+
+        Assert.True(services.LastSoundRequest!.LoopIndefinitely);
+        Assert.Equal((byte)0, services.LastSoundRequest.Repeats);
     }
 
     [Fact]

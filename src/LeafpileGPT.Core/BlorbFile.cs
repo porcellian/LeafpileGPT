@@ -18,6 +18,7 @@ public sealed class BlorbFile
         ushort releaseNumber,
         uint? frontispieceNumber,
         BlorbPictureCatalog pictureCatalog,
+        BlorbSoundCatalog soundCatalog,
         StoryFile? zCodeStory)
     {
         Chunks = chunks;
@@ -28,6 +29,7 @@ public sealed class BlorbFile
         ReleaseNumber = releaseNumber;
         FrontispieceNumber = frontispieceNumber;
         Pictures = pictureCatalog;
+        Sounds = soundCatalog;
         Executables = resources.Where(resource => resource.Usage == "Exec").ToImmutableArray();
         SelectedExecutable = Executables.IsDefaultOrEmpty ? null : Executables[0];
         ZCodeStory = zCodeStory;
@@ -56,6 +58,9 @@ public sealed class BlorbFile
 
     /// <summary>Gets validated picture resources and display hints.</summary>
     public BlorbPictureCatalog Pictures { get; }
+
+    /// <summary>Gets validated Blorb sound resources, channels, song samples, and V3 loop hints.</summary>
+    public BlorbSoundCatalog Sounds { get; }
 
     /// <summary>Gets indexed executable resources in resource-index order.</summary>
     public ImmutableArray<BlorbResource> Executables { get; }
@@ -156,6 +161,7 @@ public sealed class BlorbFile
         }
 
         var pictures = new BlorbPictureCatalog(resources, chunks, release, frontispiece);
+        var sounds = new BlorbSoundCatalog(resources, chunks);
 
         return new BlorbFile(
             chunks,
@@ -166,6 +172,7 @@ public sealed class BlorbFile
             release,
             frontispiece,
             pictures,
+            sounds,
             zCodeStory);
     }
 

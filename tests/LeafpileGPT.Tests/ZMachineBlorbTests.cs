@@ -41,11 +41,90 @@ public sealed class ZMachineBlorbTests
     public void ParsesAnExternalResourceFormWithoutAnExecutable()
     {
         var parsed = BlorbFile.Parse(BlorbFixtureBuilder.Create(
-            [new("OGGV", [1, 2, 3], "Snd ", 4)]));
+            [new("OGGV", Encoding.ASCII.GetBytes("OggS\0\0\0\0"), "Snd ", 4)]));
 
         Assert.Null(parsed.SelectedExecutable);
         Assert.Null(parsed.ZCodeStory);
         Assert.Equal((uint)4, parsed.FindResource("Snd ", 4)!.Number);
+        Assert.True(parsed.Sounds.PlaysOnceInVersionThree(4));
+    }
+
+    [Fact]
+    public void ParsesSoundFormatsChannelsSongSamplesAndVersionThreeLoopHints()
+    {
+        var aiff = Aiff([1, 2, 3, 4]);
+        var ogg = Encoding.ASCII.GetBytes("OggS\0\0\0\0");
+        var module = new byte[] { 1, 2, 3 };
+        var song = new byte[1084];
+        Encoding.ASCII.GetBytes("SND3").CopyTo(song, 20);
+        var loop = new byte[16];
+        BinaryPrimitives.WriteUInt32BigEndian(loop, 3);
+        BinaryPrimitives.WriteUInt32BigEndian(loop.AsSpan(4), 0);
+        BinaryPrimitives.WriteUInt32BigEndian(loop.AsSpan(8), 4);
+        BinaryPrimitives.WriteUInt32BigEndian(loop.AsSpan(12), 1);
+
+        var parsed = BlorbFile.Parse(BlorbFixtureBuilder.Create(
+            [
+                new("FORM", aiff, "Snd ", 3),
+                new("OGGV", ogg, "Snd ", 4),
+                new("MOD ", module, "Snd ", 5),
+                new("SONG", song, "Snd ", 6)
+            ],
+            [new("Loop", loop)]));
+
+        Assert.Equal(4, parsed.Sounds.Count);
+        Assert.True(parsed.Sounds.TryGetSound(3, out var sample));
+        Assert.Equal(BlorbSoundChannel.Sample, sample!.Channel);
+        Assert.True(parsed.Sounds.TryGetSound(4, out var oggSound));
+        Assert.Equal(BlorbSoundFormat.OggVorbis, oggSound!.Format);
+        Assert.Equal(BlorbSoundChannel.Music, oggSound!.Channel);
+        var moduleSound = parsed.Sounds.Resources.Single(item => item.Number == 5);
+        Assert.Equal(BlorbSoundFormat.Module, moduleSound.Format);
+        Assert.Equal(BlorbSoundChannel.Music, moduleSound.Channel);
+        var parsedSong = parsed.Sounds.Resources.Single(item => item.Number == 6);
+        var songSample = Assert.Single(parsedSong.Samples);
+        Assert.Equal((byte)1, songSample.Instrument);
+        Assert.Equal((uint)3, songSample.SoundNumber);
+        Assert.Same(sample, songSample.Resource);
+        Assert.False(parsed.Sounds.PlaysOnceInVersionThree(3));
+        Assert.True(parsed.Sounds.PlaysOnceInVersionThree(4));
+    }
+
+    [Fact]
+    public void RejectsMalformedSoundPayloadsSongReferencesAndLoopTables()
+    {
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("OGGV", [1, 2], "Snd ", 3)])));
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("FORM", [0, 0, 0, 0], "Snd ", 3)])));
+
+        var shortSong = new byte[20];
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("SONG", shortSong, "Snd ", 4)])));
+
+        var song = new byte[1084];
+        Encoding.ASCII.GetBytes("SND9").CopyTo(song, 20);
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("SONG", song, "Snd ", 4)])));
+
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("OGGV", Encoding.ASCII.GetBytes("OggS"), "Snd ", 3)],
+                [new("Loop", [0, 0, 0, 3])])));
+        var invalidLoopValue = new byte[8];
+        BinaryPrimitives.WriteUInt32BigEndian(invalidLoopValue, 3);
+        BinaryPrimitives.WriteUInt32BigEndian(invalidLoopValue.AsSpan(4), 2);
+        Assert.Throws<BlorbFormatException>(() => BlorbFile.Parse(
+            BlorbFixtureBuilder.Create([new("OGGV", Encoding.ASCII.GetBytes("OggS"), "Snd ", 3)],
+                [new("Loop", invalidLoopValue)])));
+    }
+
+    private static byte[] Aiff(byte[] bytes)
+    {
+        var data = new byte[12 + bytes.Length];
+        Encoding.ASCII.GetBytes("AIFF").CopyTo(data, 0);
+        BinaryPrimitives.WriteUInt32BigEndian(data.AsSpan(4), checked((uint)(data.Length - 8)));
+        bytes.CopyTo(data, 12);
+        return data;
     }
 
     [Fact]
@@ -235,9 +314,9 @@ public sealed class ZMachineBlorbTests
         return result;
     }
 
-    private sealed record FixtureChunk(string Type, byte[] Data, string? Usage = null, uint Number = 0);
+    internal sealed record FixtureChunk(string Type, byte[] Data, string? Usage = null, uint Number = 0);
 
-    private static class BlorbFixtureBuilder
+    internal static class BlorbFixtureBuilder
     {
         public static byte[] Create(
             FixtureChunk[] resources,

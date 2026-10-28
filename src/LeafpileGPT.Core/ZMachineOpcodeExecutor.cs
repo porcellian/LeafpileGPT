@@ -741,7 +741,7 @@ public sealed class ZMachineOpcodeExecutor
             }
 
             state.EventServices.PerformSoundEffect(
-                new ZMachineSoundEffectRequest(number, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), null);
+                CreateSoundRequest(state, number, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), null);
             return;
         }
 
@@ -776,7 +776,28 @@ public sealed class ZMachineOpcodeExecutor
             ? null
             : () => state.RoutineCallRequested?.Invoke(routine);
         state.EventServices.PerformSoundEffect(
-            new ZMachineSoundEffectRequest(number, (ZMachineSoundAction)actionValue, volume, repeats, routine), completed);
+            CreateSoundRequest(state, number, (ZMachineSoundAction)actionValue, volume, repeats, routine), completed);
+    }
+
+    private static ZMachineSoundEffectRequest CreateSoundRequest(
+        ZMachineExecutionState state,
+        ushort number,
+        ZMachineSoundAction action,
+        byte volume,
+        byte repeats,
+        ushort routine)
+    {
+        BlorbSoundResource? resource = null;
+        if (state.SoundCatalog is not null)
+        {
+            _ = state.SoundCatalog.TryGetSound(number, out resource);
+        }
+
+        var channel = resource?.Channel;
+        var loopsForever = state.Version == 3
+            ? resource is not null && !state.SoundCatalog!.PlaysOnceInVersionThree(number)
+            : state.Version >= 5 && repeats == byte.MaxValue;
+        return new ZMachineSoundEffectRequest(number, action, volume, repeats, routine, resource, channel, loopsForever);
     }
 
     private static void ExecutePicture(DecodedInstruction instruction, ZMachineExecutionState state, bool erase)
