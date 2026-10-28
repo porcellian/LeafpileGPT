@@ -49,7 +49,9 @@ public sealed record DecodedBranch(
     bool BranchOnTrue,
     short Offset,
     uint? TargetAddress,
-    bool? ReturnValue);
+    bool? ReturnValue,
+    uint? DescriptorAddress = null,
+    byte EncodedLength = 0);
 
 /// <summary>A decoded instruction with its encoded operands and following address.</summary>
 public sealed record DecodedInstruction(

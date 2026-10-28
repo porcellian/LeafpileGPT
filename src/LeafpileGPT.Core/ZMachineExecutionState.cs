@@ -1,6 +1,7 @@
 namespace LeafpileGPT.Core;
 
 using System.Collections.Immutable;
+using System.Numerics;
 using System.Security.Cryptography;
 
 /// <summary>The private interpreter state required to execute routines and variables.</summary>
@@ -12,6 +13,8 @@ public sealed class ZMachineExecutionState
     private readonly List<ushort> _evaluationStack = [];
     private readonly List<ExecutionFrame> _callStack = [];
     private readonly int _maximumStackWords;
+    private readonly StoryFile _story;
+    private QuetzalSaveData? _undoSave;
     private bool _isPredictableRandomMode;
     private int _predictableSeed;
     private int _nextPredictableNumber;
@@ -19,12 +22,14 @@ public sealed class ZMachineExecutionState
 
     private ZMachineExecutionState(
         ZMachineMemory memory,
+        StoryFile story,
         int maximumStackWords,
         IZMachineEventServices eventServices,
         BlorbPictureCatalog? pictureCatalog,
         BlorbSoundCatalog? soundCatalog)
     {
         Memory = memory;
+        _story = story;
         _maximumStackWords = maximumStackWords;
         EventServices = eventServices;
         PictureCatalog = pictureCatalog;
@@ -41,6 +46,9 @@ public sealed class ZMachineExecutionState
 
     /// <summary>Host services for optional mouse, V6 menu, and sound features.</summary>
     public IZMachineEventServices EventServices { get; }
+
+    /// <summary>Optional host storage for Save and Restore opcodes.</summary>
+    public IZMachineSaveStore? SaveStore { get; set; }
 
     /// <summary>Optional Blorb picture resources and display hints for this game session.</summary>
     public BlorbPictureCatalog? PictureCatalog { get; }
@@ -180,7 +188,8 @@ public sealed class ZMachineExecutionState
         int maximumStackWords = DefaultMaximumStackWords,
         IZMachineEventServices? eventServices = null,
         BlorbPictureCatalog? pictureCatalog = null,
-        BlorbSoundCatalog? soundCatalog = null)
+        BlorbSoundCatalog? soundCatalog = null,
+        IZMachineSaveStore? saveStore = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         if (maximumStackWords < 1_024)
@@ -190,23 +199,227 @@ public sealed class ZMachineExecutionState
         }
 
         var state = new ZMachineExecutionState(
-            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance,
+            new ZMachineMemory(story), story, maximumStackWords, eventServices ?? NullZMachineEventServices.Instance,
             pictureCatalog, soundCatalog);
-        if (story.Header.Version == 6)
+        state.SaveStore = saveStore;
+        state.InitializeExecutionPoint();
+        return state;
+    }
+
+    private void InitializeExecutionPoint()
+    {
+        _evaluationStack.Clear();
+        _callStack.Clear();
+        ProgramCounter = 0;
+        IsHalted = false;
+        CurrentInputStream = 0;
+        MouseWindow = 1;
+        if (Version == 6)
         {
-            var routineAddress = ZMachineAddressing.InitialProgramCounterByteAddress(story.Header);
-            var main = state.ReadRoutineFrame(routineAddress, [], null, null, isRoot: true);
-            state.EnsureStackSpace(RoutineStackFrameOverhead + main.Locals.Length);
-            state._callStack.Add(main);
-            state.ProgramCounter = main.FirstInstructionAddress;
+            var routineAddress = ZMachineAddressing.InitialProgramCounterByteAddress(Memory.Header);
+            var main = ReadRoutineFrame(routineAddress, [], null, null, isRoot: true);
+            EnsureStackSpace(RoutineStackFrameOverhead + main.Locals.Length);
+            _callStack.Add(main);
+            ProgramCounter = main.FirstInstructionAddress;
         }
         else
         {
-            state._callStack.Add(new ExecutionFrame(null, null, null, [], 0, 0, isRoot: true, story.Header.InitialProgramCounter));
-            state.ProgramCounter = story.Header.InitialProgramCounter;
+            _callStack.Add(new ExecutionFrame(null, null, null, [], 0, 0, isRoot: true, Memory.Header.InitialProgramCounter));
+            ProgramCounter = Memory.Header.InitialProgramCounter;
+        }
+    }
+
+    /// <summary>Captures the complete interpreter-owned state in the Quetzal data model.</summary>
+    public QuetzalSaveData CaptureSaveState(uint? programCounter = null)
+    {
+        var pc = programCounter ?? ProgramCounter;
+        var frames = ImmutableArray.CreateBuilder<QuetzalStackFrame>();
+        if (Version != 6)
+        {
+            var end = _callStack.Count > 1 ? _callStack[1].EvaluationStackBase : _evaluationStack.Count;
+            frames.Add(new QuetzalStackFrame(0, false, 0, 0, [],
+                _evaluationStack.Take(end).ToImmutableArray(), IsDummy: true));
         }
 
-        return state;
+        var firstCallFrame = Version == 6 ? 0 : 1;
+        for (var index = firstCallFrame; index < _callStack.Count; index++)
+        {
+            var frame = _callStack[index];
+            var stackEnd = index + 1 < _callStack.Count
+                ? _callStack[index + 1].EvaluationStackBase
+                : _evaluationStack.Count;
+            var argumentMask = frame.ArgumentCount == 0 ? (byte)0 : (byte)((1 << frame.ArgumentCount) - 1);
+            frames.Add(new QuetzalStackFrame(
+                frame.ReturnProgramCounter ?? 0,
+                frame.StoreVariable is null,
+                frame.StoreVariable ?? 0,
+                argumentMask,
+                frame.Locals.ToImmutableArray(),
+                _evaluationStack.Skip(frame.EvaluationStackBase).Take(stackEnd - frame.EvaluationStackBase).ToImmutableArray()));
+        }
+
+        return new QuetzalSaveData(Version, QuetzalStoryIdentity.FromStory(_story, pc),
+            Memory.CaptureDynamicMemory().ToImmutableArray(), frames.ToImmutable(), ImmutableArray<QuetzalChunk>.Empty);
+    }
+
+    /// <summary>Attempts to write the current state as a Quetzal IFZS image.</summary>
+    public bool SaveGame(ZMachineSaveOptions? options = null, uint? programCounter = null)
+    {
+        if (SaveStore is null)
+        {
+            return false;
+        }
+
+        var save = CaptureSaveState(programCounter);
+        return SaveStore.Save(QuetzalCodec.Encode(save, _story), options ?? new ZMachineSaveOptions());
+    }
+
+    /// <summary>Loads, validates, and atomically applies a Quetzal state for this story.</summary>
+    public bool RestoreGame(ZMachineSaveOptions? options = null)
+    {
+        var image = SaveStore?.Restore(options ?? new ZMachineSaveOptions());
+        if (image is null)
+        {
+            return false;
+        }
+
+        ApplySaveState(QuetzalCodec.Decode(image, _story));
+        _undoSave = null;
+        return true;
+    }
+
+    /// <summary>Stores a single in-memory undo point, excluding its predecessor.</summary>
+    public bool SaveUndo(uint? programCounter = null)
+    {
+        _undoSave = CaptureSaveState(programCounter);
+        return true;
+    }
+
+    /// <summary>Restores and consumes the most recent in-memory undo point.</summary>
+    public bool RestoreUndo()
+    {
+        if (_undoSave is null)
+        {
+            return false;
+        }
+
+        var save = _undoSave;
+        _undoSave = null;
+        ApplySaveState(save);
+        return true;
+    }
+
+    /// <summary>Applies a validated snapshot while preserving interpreter-owned header state.</summary>
+    public void ApplySaveState(QuetzalSaveData save)
+    {
+        ArgumentNullException.ThrowIfNull(save);
+        // Encoding validates every field before live state is touched.
+        _ = QuetzalCodec.Encode(save, _story);
+        var preservedFlags2 = Memory.ReadWord(0x10);
+        var resetHeader = CaptureResetHeader();
+        var frames = RebuildFrames(save.StackFrames, save.Identity.ProgramCounter);
+        var values = save.StackFrames.SelectMany(frame => frame.EvaluationStack).ToList();
+        var frameWords = frames.Sum(frame => RoutineStackFrameOverhead + frame.Locals.Length);
+        if (frameWords + values.Count > _maximumStackWords)
+        {
+            throw new QuetzalFormatException($"Restored VM stack exceeds the configured {_maximumStackWords}-word limit.");
+        }
+
+        Memory.RestoreDynamicMemory(save.DynamicMemory.AsSpan());
+        Memory.WriteWord(0x10, preservedFlags2);
+        ApplyResetHeader(resetHeader);
+        _evaluationStack.Clear();
+        _evaluationStack.AddRange(values);
+        _callStack.Clear();
+        _callStack.AddRange(frames);
+        ProgramCounter = save.Identity.ProgramCounter;
+        IsHalted = false;
+        CurrentInputStream = 0;
+        MouseWindow = 1;
+        OutputStreams.ResetAfterRestore();
+        if (Version == 6)
+        {
+            EventServices.SetMouseWindow(MouseWindow);
+        }
+    }
+
+    /// <summary>Restarts from the original story image while retaining Flags 2 and host header capabilities.</summary>
+    public void Restart()
+    {
+        var preservedFlags2 = Memory.ReadWord(0x10);
+        var resetHeader = CaptureResetHeader();
+        Memory.RestoreOriginalStory();
+        Memory.WriteWord(0x10, preservedFlags2);
+        ApplyResetHeader(resetHeader);
+        _undoSave = null;
+        _isPredictableRandomMode = false;
+        _predictableSeed = 0;
+        _nextPredictableNumber = 1;
+        _largePredictableState = 0;
+        InitializeExecutionPoint();
+        OutputStreams.ResetAfterRestore();
+        if (Version == 6)
+        {
+            EventServices.SetMouseWindow(MouseWindow);
+        }
+    }
+
+    private ImmutableArray<ExecutionFrame> RebuildFrames(ImmutableArray<QuetzalStackFrame> savedFrames, uint pc)
+    {
+        var frames = ImmutableArray.CreateBuilder<ExecutionFrame>(savedFrames.Length);
+        var stackBase = 0;
+        for (var index = 0; index < savedFrames.Length; index++)
+        {
+            var saved = savedFrames[index];
+            var isDummy = saved.IsDummy;
+            var argumentCount = checked((byte)BitOperations.PopCount(saved.ArgumentMask));
+            var isRoot = isDummy || (index == 0 && Version == 6);
+            frames.Add(new ExecutionFrame(null,
+                isDummy || isRoot ? null : saved.ReturnProgramCounter,
+                isDummy || isRoot || saved.DiscardsResult ? null : saved.StoreVariable,
+                saved.Locals.ToArray(), argumentCount, stackBase, isRoot, pc));
+            stackBase += saved.EvaluationStack.Length;
+        }
+
+        return frames.ToImmutable();
+    }
+
+    private byte[] CaptureResetHeader()
+    {
+        var values = new byte[13];
+        values[0] = Memory.ReadByte(0x01);
+        if (Version >= 4)
+        {
+            for (var address = 0x1E; address <= 0x27; address++)
+            {
+                values[address - 0x1D] = Memory.ReadByte((ushort)address);
+            }
+        }
+
+        if (Version >= 5)
+        {
+            values[11] = Memory.ReadByte(0x2C);
+            values[12] = Memory.ReadByte(0x2D);
+        }
+        return values;
+    }
+
+    private void ApplyResetHeader(ReadOnlySpan<byte> values)
+    {
+        Memory.WriteByte(0x01, values[0]);
+        if (Version >= 4)
+        {
+            for (var address = 0x1E; address <= 0x27; address++)
+            {
+                Memory.WriteByte((ushort)address, values[address - 0x1D]);
+            }
+        }
+
+        if (Version >= 5)
+        {
+            Memory.WriteByte(0x2C, values[11]);
+            Memory.WriteByte(0x2D, values[12]);
+        }
     }
 
     private void InitializeEventCapabilities()

@@ -546,6 +546,28 @@ public sealed class ZMachineOpcodeExecutor
                 break;
             case "nop":
                 break;
+            case "save":
+                ExecuteSave(instruction, state);
+                break;
+            case "restore":
+                ExecuteRestore(instruction, state);
+                break;
+            case "restart":
+                state.Restart();
+                break;
+            case "save_undo":
+                StoreResult(instruction, state, state.SaveUndo(instruction.NextProgramCounter - 1) ? (ushort)1 : ushort.MaxValue);
+                break;
+            case "restore_undo":
+                if (state.RestoreUndo())
+                {
+                    ExecuteSavedStore(state, 2);
+                }
+                else
+                {
+                    StoreResult(instruction, state, ushort.MaxValue);
+                }
+                break;
             default:
                 state.SetProgramCounter(instruction.ProgramCounter);
                 throw new ZMachineOpcodeNotImplementedException(
@@ -553,6 +575,130 @@ public sealed class ZMachineOpcodeExecutor
                     instruction.Definition.Mnemonic,
                     $"{instruction.Definition.Mnemonic} is outside the arithmetic and execution operations implemented in Task 7.");
         }
+    }
+
+    private static void ExecuteSave(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        var options = ReadSaveOptions(instruction, state);
+        var savePc = state.Version <= 3
+            ? instruction.Branch?.DescriptorAddress
+                ?? throw new ZMachineExecutionException("A legacy save instruction has no branch descriptor address.")
+            : instruction.NextProgramCounter - 1;
+        var succeeded = state.SaveGame(options, savePc);
+        if (state.Version <= 3)
+        {
+            Branch(instruction, state, succeeded);
+        }
+        else
+        {
+            StoreResult(instruction, state, succeeded ? (ushort)1 : (ushort)0);
+        }
+    }
+
+    private static void ExecuteRestore(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        var options = ReadSaveOptions(instruction, state);
+        var succeeded = state.RestoreGame(options);
+        if (state.Version <= 3)
+        {
+            if (succeeded)
+            {
+                ExecuteSavedBranch(state, true);
+            }
+            else
+            {
+                Branch(instruction, state, false);
+            }
+        }
+        else
+        {
+            if (succeeded)
+            {
+                ExecuteSavedStore(state, options.ByteCount ?? (ushort)2);
+            }
+            else
+            {
+                StoreResult(instruction, state, 0);
+            }
+        }
+    }
+
+    private static void ExecuteSavedStore(ZMachineExecutionState state, ushort value)
+    {
+        var storeAddress = state.ProgramCounter;
+        var variable = state.Memory.ReadStoryByte(storeAddress);
+        state.SetProgramCounter(storeAddress + 1);
+        state.WriteVariable(variable, value);
+    }
+
+    private static void ExecuteSavedBranch(ZMachineExecutionState state, bool condition)
+    {
+        var branchAddress = state.ProgramCounter;
+        var first = state.Memory.ReadStoryByte(branchAddress);
+        var branchOnTrue = (first & 0x80) != 0;
+        short offset;
+        uint afterDescriptor;
+        if ((first & 0x40) != 0)
+        {
+            offset = (short)(first & 0x3F);
+            afterDescriptor = branchAddress + 1;
+        }
+        else
+        {
+            var second = state.Memory.ReadStoryByte(branchAddress + 1);
+            var encoded = (ushort)(((first & 0x3F) << 8) | second);
+            offset = (short)((encoded & 0x2000) != 0 ? encoded | 0xC000 : encoded);
+            afterDescriptor = branchAddress + 2;
+        }
+
+        state.SetProgramCounter(afterDescriptor);
+        if (condition != branchOnTrue)
+        {
+            return;
+        }
+
+        if (offset is 0 or 1)
+        {
+            state.ReturnFromRoutine(offset == 1 ? (ushort)1 : (ushort)0);
+        }
+        else
+        {
+            state.SetProgramCounter(checked((uint)((long)afterDescriptor + offset - 2)));
+        }
+    }
+
+    private static ZMachineSaveOptions ReadSaveOptions(DecodedInstruction instruction, ZMachineExecutionState state)
+    {
+        if (instruction.Operands.IsEmpty)
+        {
+            return new ZMachineSaveOptions();
+        }
+
+        var values = instruction.Operands.Select(operand => ReadValue(operand, state)).ToArray();
+        string? suggestedName = null;
+        if (values.Length > 2 && values[2] != 0)
+        {
+            var length = state.Memory.ReadByte(values[2]);
+            if ((uint)values[2] + length + 1 > state.Memory.Length)
+            {
+                throw new ZMachineExecutionException("The suggested save filename lies outside the story image.");
+            }
+
+            var chars = new char[length];
+            for (var index = 0; index < length; index++)
+            {
+                var value = state.Memory.ReadByte(checked((ushort)(values[2] + index + 1)));
+                chars[index] = value is >= 0x20 and <= 0x7E ? (char)value : '?';
+            }
+
+            suggestedName = new string(chars);
+        }
+
+        return new ZMachineSaveOptions(
+            values.Length > 0 ? values[0] : null,
+            values.Length > 1 ? values[1] : null,
+            suggestedName,
+            values.Length > 3 ? values[3] != 0 : null);
     }
 
     private static ushort Divide(DecodedInstruction instruction, ZMachineExecutionState state)

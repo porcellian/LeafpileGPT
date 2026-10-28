@@ -59,6 +59,8 @@ public sealed class ZMachineInstructionDecoderTests
         Assert.Equal((short)1, instruction.Branch?.Offset);
         Assert.Equal(true, instruction.Branch?.ReturnValue);
         Assert.Null(instruction.Branch?.TargetAddress);
+        Assert.Equal(CodeAddress + 4, instruction.Branch?.DescriptorAddress);
+        Assert.Equal((byte)1, instruction.Branch?.EncodedLength);
     }
 
     [Fact]
