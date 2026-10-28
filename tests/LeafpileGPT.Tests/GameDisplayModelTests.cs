@@ -41,6 +41,28 @@ public sealed class GameDisplayModelTests
     }
 
     [Fact]
+    public void ResetPresentationClearsStorySpecificScreenState()
+    {
+        var model = new GameDisplayModel();
+        model.AppendOutput("stale");
+        model.AppendOutput("upper", window: 1);
+        model.SetStatusLine("Old Room", "Score: 9  Moves: 15");
+        model.ShowMorePrompt(visible: true);
+        model.SetSelectedWindow(1);
+        model.SetColours(0x0608);
+
+        model.ResetPresentation();
+
+        Assert.Equal(string.Empty, model.Transcript);
+        Assert.Equal(string.Empty, model.UpperWindowText);
+        Assert.False(model.IsUpperWindowVisible);
+        Assert.Equal(string.Empty, model.Location);
+        Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
+        Assert.Equal(">", model.PromptText);
+        Assert.Equal((short)0, model.SelectedWindow);
+    }
+
+    [Fact]
     public void SubmitsNonemptyCommandsAndClearsPrompt()
     {
         var model = new GameDisplayModel();
@@ -57,7 +79,7 @@ public sealed class GameDisplayModelTests
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    public void DoesNotSubmitBlankCommands(string input)
+    public void SubmitsBlankLinesForVmInput(string input)
     {
         var model = new GameDisplayModel();
         var submissions = 0;
@@ -66,7 +88,7 @@ public sealed class GameDisplayModelTests
 
         model.SubmitCommand();
 
-        Assert.Equal(0, submissions);
-        Assert.Equal(input, model.InputText);
+        Assert.Equal(1, submissions);
+        Assert.Equal(string.Empty, model.InputText);
     }
 }

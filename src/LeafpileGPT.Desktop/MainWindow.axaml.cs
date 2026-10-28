@@ -10,8 +10,7 @@ public partial class MainWindow : Window
     private readonly AppDataPaths _appDataPaths;
     private readonly UserPreferencesStore _preferences;
     private StoryFile? _story;
-    private BlorbFile? _blorb;
-    private ZMachineExecutionState? _state;
+    private DesktopGameSession? _session;
     private string? _storyPath;
     private TextBlock _appStatusText = null!;
     private GameDisplayView _gameDisplay = null!;
@@ -30,6 +29,7 @@ public partial class MainWindow : Window
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;
+        Closed += OnClosed;
     }
 
     public async Task LoadStoryFromPathAsync(string path)
@@ -47,19 +47,35 @@ public partial class MainWindow : Window
                 throw new InvalidDataException("The Blorb container does not include a supported Z-code executable.");
             }
 
-            var state = ZMachineExecutionState.Start(story);
+            var session = new DesktopGameSession(
+                story,
+                fullPath,
+                _gameDisplay.Model,
+                _gameDisplay.ApplyScreenOperation,
+                _appDataPaths.SaveDirectory,
+                Path.Combine(_appDataPaths.RootDirectory, "Transcripts"),
+                blorb);
+            if (_session is not null)
+            {
+                await _session.DisposeAsync();
+            }
+
             _story = story;
-            _blorb = blorb;
-            _state = state;
+            _session = session;
             _storyPath = fullPath;
+            session.EventServices.SoundEffectRequested += OnSoundEffectRequested;
+            session.TranscriptWriteFailed += exception => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                _appStatusText.Text = $"Transcript writing stopped: {exception.Message}");
             UpdateLoadedStoryDisplay();
-            _gameDisplay.Model.ClearOutput();
-            _gameDisplay.Model.SetStatusLine(string.Empty, "Score: 0  Moves: 0");
+            _gameDisplay.Model.ResetPresentation();
+            _gameDisplay.ClearPictures();
             _gameDisplay.FocusPrompt();
-            _appStatusText.Text = $"Loaded {Path.GetFileName(fullPath)} (Z-machine version {story.Header.Version}); waiting for game-session integration.";
+            _appStatusText.Text = $"Playing {Path.GetFileName(fullPath)} (Z-machine version {story.Header.Version}).";
             RememberSelectedDirectory(FileDialogPurpose.PlayGame, fullPath);
+            session.Start();
+            _ = ObserveSessionCompletionAsync(session);
         }
-        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or StoryFileFormatException or BlorbFormatException)
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException or ArgumentException or StoryFileFormatException or BlorbFormatException or ZMachineExecutionException)
         {
             _appStatusText.Text = "Could not load the selected story.";
             await ShowErrorAsync("Unable to open story", $"The story could not be loaded from:\n{path}\n\n{exception.Message}");
@@ -108,11 +124,13 @@ public partial class MainWindow : Window
 
     private async void OnSaveClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (_story is null || _state is null)
+        if (_story is null || _session is null)
         {
             return;
         }
 
+        var session = _session;
+        var story = _story;
         var provider = GetStorageProvider();
         if (provider is null)
         {
@@ -122,6 +140,7 @@ public partial class MainWindow : Window
 
         try
         {
+            var saveState = await session.CaptureSaveStateAsync();
             var fileType = new FilePickerFileType("Quetzal save files") { Patterns = ["*.ifzs", "*.sav"] };
             var options = new FilePickerSaveOptions
             {
@@ -146,7 +165,7 @@ public partial class MainWindow : Window
                 return;
             }
 
-            var bytes = QuetzalCodec.Encode(_state.CaptureSaveState(), _story);
+            var bytes = QuetzalCodec.Encode(saveState, story);
             await File.WriteAllBytesAsync(path, bytes);
 
             _appStatusText.Text = $"Saved game to {Path.GetFileName(path)}.";
@@ -160,10 +179,13 @@ public partial class MainWindow : Window
 
     private async void OnRestoreClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (_story is null || _state is null)
+        if (_story is null || _session is null)
         {
             return;
         }
+
+        var session = _session;
+        var story = _story;
 
         var provider = GetStorageProvider();
         if (provider is null)
@@ -197,8 +219,8 @@ public partial class MainWindow : Window
             await using var stream = await selected.OpenReadAsync();
             using var buffer = new MemoryStream();
             await stream.CopyToAsync(buffer);
-            var save = QuetzalCodec.Decode(buffer.ToArray(), _story);
-            _state.ApplySaveState(save);
+            var save = QuetzalCodec.Decode(buffer.ToArray(), story);
+            await session.ApplySaveStateAsync(save);
             _appStatusText.Text = $"Restored game from {Path.GetFileName(path)}.";
             RememberSelectedDirectory(FileDialogPurpose.Restore, path);
         }
@@ -208,21 +230,67 @@ public partial class MainWindow : Window
         }
     }
 
-    private void OnRestartClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    private async void OnRestartClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (_state is null)
+        if (_session is null)
         {
             return;
         }
 
-        _state.Restart();
-        _appStatusText.Text = "Game restarted.";
+        try
+        {
+            await _session.RestartAsync();
+            _appStatusText.Text = "Game restarted.";
+        }
+        catch (Exception exception) when (exception is OperationCanceledException or ObjectDisposedException)
+        {
+            _appStatusText.Text = "Game restart was cancelled.";
+        }
     }
 
     private void OnExitClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => Close();
 
-    private void OnCommandSubmitted(string command) =>
-        _appStatusText.Text = "Game input will be connected when story execution is integrated in Task 26.";
+    private void OnCommandSubmitted(string command)
+    {
+        if (_session is null || !_session.SubmitCommand(command))
+        {
+            _appStatusText.Text = "The game is not accepting input.";
+        }
+    }
+
+    private void OnSoundEffectRequested(ZMachineSoundEffectRequest request) =>
+        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            _appStatusText.Text = request.Resource is null
+                ? $"The story requested sound effect {request.Number}; no playback backend is available."
+                : $"The story requested {request.Resource.Format} sound {request.Number}; no playback backend is available.");
+
+    private async void OnClosed(object? sender, EventArgs e)
+    {
+        if (_session is not null)
+        {
+            await _session.DisposeAsync();
+            _session = null;
+        }
+    }
+
+    private async Task ObserveSessionCompletionAsync(DesktopGameSession session)
+    {
+        try
+        {
+            await session.Completion;
+            if (ReferenceEquals(_session, session) && session.State.IsHalted)
+            {
+                _appStatusText.Text = "The story has ended.";
+            }
+        }
+        catch (Exception exception) when (exception is not OperationCanceledException)
+        {
+            if (ReferenceEquals(_session, session))
+            {
+                await ShowErrorAsync("Game stopped", exception.Message);
+            }
+        }
+    }
 
     private IStorageProvider? GetStorageProvider() => TopLevel.GetTopLevel(this)?.StorageProvider;
 

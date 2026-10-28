@@ -25,7 +25,7 @@ Open a story directly in the desktop app by passing its path (quote paths contai
 dotnet run --project src/LeafpileGPT.Desktop -- "stories/Zork I.z3"
 ```
 
-The File menu also provides Play Game, Save, Restore, Restart, and Exit. The app remembers separate picker directories for story selection, saves, and restores. Standalone Z-code stories and Blorb containers with a Z-code executable can be loaded. The desktop display uses a blue story area, fixed-width Courier-style text, a location/score/moves strip, a bottom-left input prompt, upward scrolling output, and a separate app-status bar. Task 26 connects the VM execution loop to the display and input.
+The File menu also provides Play Game, Save, Restore, Restart, and Exit. The app remembers separate picker directories for story selection, saves, and restores. Standalone Z-code stories and Blorb containers with a Z-code executable can be loaded. The desktop display uses a blue story area, fixed-width Courier-style text, a location/score/moves strip, a bottom-left input prompt, upward scrolling output, and a separate app-status bar. Task 26 connects live VM sessions to keyboard input, screen output and operations, Quetzal save/restore, Blorb picture resources, and transcript stream files under app-data `LeafpileGPT/Transcripts/`. Sound requests reach the desktop host and are reported in the status bar; the desktop currently has no audio playback backend.
 
 The GitHub Actions workflow restores, formats, builds, and tests the solution on Windows, macOS, and Linux. Automated tests use generated or in-memory fixtures and do not require local story files.
 
