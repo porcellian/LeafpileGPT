@@ -62,6 +62,9 @@ public sealed class StoryHeader
 
     public ushort ObjectTableAddress { get; }
 
+    /// <summary>Gets the byte address of the table of packed abbreviation word addresses.</summary>
+    public ushort AbbreviationsTableAddress => ReadWord(0x18);
+
     public ushort GlobalsTableAddress { get; }
 
     public ushort StaticMemoryBase { get; }

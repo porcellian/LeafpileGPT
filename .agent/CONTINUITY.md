@@ -50,6 +50,9 @@
 - 2026-10-28T04:35Z [TOOL] Task 7 implements arithmetic, comparisons, shifts, random modes, variable/array/table access, control flow, routine and stack opcodes, and fail-fast dispatch for deferred opcodes. Formatting and Release build pass; 177 xUnit tests pass.
 - 2026-10-28T04:38Z [TOOL] Final Task 7 review confirmed division-by-zero halts execution, unsupported opcodes preserve the faulting PC, and generated tests cover these failure paths. Task checkbox and spec coverage matrix are updated; commit and PR #11 remain.
 - 2026-10-28T04:40Z [TOOL] Task 7 committed as `9c91d62`, pushed to `feature/7-arithmetic-vm-operations`, and opened as PR #11 at https://github.com/porcellian/LeafpileGPT/pull/11. Await review and merge before Task 8.
+- 2026-10-28T04:42Z [USER] Supersedes prior PR #11 status: PR #11 is merged. Task 8 is active on `feature/8-text-character-encoding` from updated main.
+- 2026-10-28T04:50Z [TOOL] Task 8 adds V1–V8 packed text decoding, abbreviations, alphabet shifts/custom tables, ZSCII/Unicode maps, and fixed-width dictionary encoding. Formatting and Release build pass; all 220 xUnit tests pass locally.
+- 2026-10-28T04:52Z [TOOL] Supersedes prior Task 8 verification: added V6/V7 packed-string offsets, V8 scale, additional V4–V8 shift coverage, and invalid abbreviation-table checks. Formatting and Release build pass with zero warnings/errors; all 231 tests pass. Task 8 review and PR creation remain.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -64,6 +67,8 @@
 - 2026-10-28T04:20Z [CODE] V6 user-stack word slots grow downward from the last slot: push writes at `table + 2 * spareSlots`, then decrements spare slots; pull increments first, then reads that slot. The standard deliberately does not require an underflow guard.
 - 2026-10-28T04:35Z [CODE] je is the one 2OP opcode that accepts two to four operands; metadata was corrected so decoder and executor accept all of its comparison operands.
 - 2026-10-28T04:38Z [CODE] Division by zero halts the execution state; unsupported-opcode dispatch restores the faulting PC before raising a contextual exception.
+- 2026-10-28T04:50Z [CODE] Abbreviation markers select one of three 32-entry groups; Unicode translation table address is extension word 3. The supplied PDF's V1 A2 row includes a leading space before digits.
+- 2026-10-28T04:52Z [TOOL] Reviewed the supplied PDF page image for the V1 A2 alphabet row; the leading space is present, correcting an ambiguity in extracted text.
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
@@ -85,3 +90,7 @@
 - 2026-10-28T04:25Z [TOOL] Supersedes prior Task 6 status: committed as `c0f1c36`; PR #10 is open for review. Do not begin Task 7 until the user confirms merge.
 - 2026-10-28T04:35Z [TOOL] Supersedes prior Task 6 PR status: PR #10 merged. Task 7 is implemented and checked locally; full diff review, commit, and PR #11 remain.
 - 2026-10-28T04:40Z [TOOL] Supersedes prior Task 7 status: PR #11 is open for review after commit `9c91d62`; do not begin Task 8 until the user confirms merge.
+- 2026-10-28T04:42Z [USER] Supersedes prior PR #11 status: PR #11 merged. Task 8 is active on `feature/8-text-character-encoding`.
+- 2026-10-28T04:50Z [TOOL] Task 8 implementation and generated tests are locally complete; documentation review, commit, and PR #12 remain.
+- 2026-10-28T04:52Z [TOOL] Task 8 full diff review and local checks are complete; 231 generated xUnit tests pass. Awaiting conventional commit, push, and PR #12.
+- 2026-10-28T04:54Z [TOOL] Task 8 committed as `eefca70`, pushed to `feature/8-text-character-encoding`, and opened as PR #12 at https://github.com/porcellian/LeafpileGPT/pull/12. Await review and merge before Task 9.
