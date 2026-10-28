@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T20:15Z [USER] Follow-up for PR #31: prevent newly written leaflet text from clipping at the bottom, keep the prompt/cursor visible without requiring another Return, and clear stale text above the play area.
 - 2026-10-28T20:06Z [USER] Follow-up for PR #31: prevent the first story line from clipping into the status strip, enlarge the default window slightly, and keep the active prompt/cursor visible across story screen clears such as reading the leaflet.
 - 2026-10-28T19:55Z [USER] Follow-up for PR #31: remove the white input surface and bottom duplicate prompt. Keep the story's prompt after game output and a blank line, with the blinking cursor and typed command directly after it.
 - 2026-10-28T19:45Z [USER] Track files supplied under `reference/` in PR #31; retain the global `.DS_Store` ignore rule.
@@ -70,6 +71,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T20:15Z [TOOL] `gui04`/`gui05` showed the view updated after another key caused layout. Inference: scroll-to-end ran before Avalonia recalculated the inline transcript extent. Scroll requests now wait for `LayoutUpdated` and coalesce, including prompt input and display flushes. Formatter/build pass, 510 tests pass; add `gui04.png`/`gui05.png`, review, commit, and push remain.
 - 2026-10-28T20:06Z [TOOL] Supersedes prior GUI follow-up status: commit `4804df7` is pushed to PR #31 with tracked `reference/gui03.png`. The top clipping and disappearing prompt/cursor issues are addressed; formatter, Release build (0 warnings/errors), 510 xUnit tests, and diff check pass. Wait for review and merge.
 - 2026-10-28T20:06Z [TOOL] PR #31 GUI follow-up implemented: transcript content now sits in a viewport-height bottom-aligned grid with clipping, default window height increased to 680, and screen clears restore active inline input while presentation resets end it. Added model reset coverage; formatter/build pass with 0 warnings/errors and all 510 tests pass. Track `reference/gui03.png`; commit/push remain.
 - 2026-10-28T19:56Z [TOOL] Supersedes prior follow-up status: commit `bf57a98` is pushed to PR #31 and adds `reference/gui02.png`. The displayed input is now appended to the story's trailing `>` line, with the duplicate host prompt row removed. Formatter, Release build, 510 xUnit tests, and diff check pass. Wait for review and merge.

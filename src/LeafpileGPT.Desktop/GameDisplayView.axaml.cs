@@ -18,6 +18,7 @@ public partial class GameDisplayView : UserControl
     private Run? _promptInputRun;
     private Run? _blockCursorRun;
     private bool _promptInputActive;
+    private bool _scrollToEndPending;
     private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
@@ -27,6 +28,7 @@ public partial class GameDisplayView : UserControl
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
+        _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
         _cursorBlinkTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
         _cursorBlinkTimer.Tick += (_, _) =>
@@ -68,11 +70,12 @@ public partial class GameDisplayView : UserControl
                 if (_promptInputRun is not null)
                 {
                     _promptInputRun.Text = Model.InputText;
+                    RequestScrollToEnd();
                 }
             }
             else if (args.PropertyName == nameof(GameDisplayModel.Transcript))
             {
-                Dispatcher.UIThread.Post(_transcriptScrollViewer.ScrollToEnd);
+                RequestScrollToEnd();
             }
         };
     }
@@ -86,7 +89,6 @@ public partial class GameDisplayView : UserControl
         EndPromptInput();
         _promptInputActive = true;
         AddPromptInputRuns();
-        _transcriptScrollViewer.ScrollToEnd();
     }
 
     private void AddPromptInputRuns()
@@ -96,6 +98,7 @@ public partial class GameDisplayView : UserControl
         _transcriptTextBlock.Inlines?.Add(_promptInputRun);
         _transcriptTextBlock.Inlines?.Add(_blockCursorRun);
         _cursorBlinkTimer.Start();
+        RequestScrollToEnd();
     }
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
@@ -149,7 +152,7 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.FlushDisplay:
             case ZMachineScreenOperationKind.FlushTextBuffer:
-                _transcriptScrollViewer.ScrollToEnd();
+                RequestScrollToEnd();
                 break;
         }
     }
@@ -185,6 +188,19 @@ public partial class GameDisplayView : UserControl
             _promptInputActive = true;
             AddPromptInputRuns();
         }
+    }
+
+    private void RequestScrollToEnd() => _scrollToEndPending = true;
+
+    private void OnTranscriptLayoutUpdated(object? sender, EventArgs e)
+    {
+        if (!_scrollToEndPending)
+        {
+            return;
+        }
+
+        _scrollToEndPending = false;
+        _transcriptScrollViewer.ScrollToEnd();
     }
 
     private void EndPromptInput()
