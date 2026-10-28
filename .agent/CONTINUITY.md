@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T18:11Z [USER] PR #24 is merged. Task 21 is active on `feature/21-quetzal-codec` from updated `origin/main`.
 - 2026-10-28T17:26Z [USER] PR #23 is merged. Task 20 is active on `feature/20-blorb-audio` from updated `origin/main`.
 - 2026-10-28T02:34Z [USER] Implement the approved V1–V8 C# interpreter/Avalonia plan in one task branch and PR at a time; stop for user review/merge after each PR.
 - 2026-10-28T02:49Z [TOOL] Task 1 PR #1 merged; Task 2 is complete locally on `feature/2-solution-build-pipeline` and awaiting PR creation/review.
@@ -36,6 +37,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-28T18:11Z [CODE] Task 21 uses immutable Quetzal save snapshots independent of live VM mutation; CMem is the default writer encoding, UMem remains available, and later Task 22 will map snapshots to runtime state.
 - 2026-10-28T17:26Z [CODE] Blorb audio maps AIFF to the sample channel and OGGV/MOD/SONG to music; SONG sample-name references resolve only to AIFF resources. Loop hints are exposed for V3; V5+ loop state comes from `sound_effect` repeats.
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
 - 2026-10-28T02:34Z [USER] Keep story/manual/hint files, routes, and raw traces local; commit original walkthrough PDFs. Use four runtime error policies, default first-per-type; logs omit player commands/story output.
@@ -53,6 +55,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T18:11Z [TOOL] Task 21's standalone IFZS codec and generated V1–V8 fixtures are implemented. Formatting, Release build (0 warnings/errors), and 463 xUnit tests pass; final diff review, commit, and PR #25 remain.
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
 - 2026-10-28T02:49Z [TOOL] Created the Visual Studio solution, Avalonia desktop shell, core and xUnit projects, central package versions, editor configuration, and three-OS CI workflow. Restore, Release build (zero warnings/errors), xUnit (1 passed), and formatting verification passed.
 - 2026-10-28T02:53Z [TOOL] PR #2 Windows CI reported ENDOFLINE errors because checkout produced CRLF for C# files while `.editorconfig` requires LF; added `.gitattributes` to enforce LF checkout for `*.cs`. Windows rerun pending.
