@@ -64,6 +64,13 @@ public partial class MainWindow : Window
             _session = session;
             _storyPath = fullPath;
             session.EventServices.SoundEffectRequested += OnSoundEffectRequested;
+            session.InputRequested += _ => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            {
+                if (ReferenceEquals(_session, session))
+                {
+                    _gameDisplay.BeginPromptInput();
+                }
+            });
             session.TranscriptWriteFailed += exception => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
                 _appStatusText.Text = $"Transcript writing stopped: {exception.Message}");
             UpdateLoadedStoryDisplay();

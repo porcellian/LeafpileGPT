@@ -3,7 +3,7 @@
              xmlns:desktop="using:LeafpileGPT.Desktop"
              x:Class="LeafpileGPT.Desktop.GameDisplayView"
              x:DataType="desktop:GameDisplayModel">
-  <Grid RowDefinitions="Auto,*,Auto" Background="#0066CC">
+  <Grid RowDefinitions="Auto,*" Background="#0066CC">
     <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5">
       <TextBlock Grid.Column="0"
                  Margin="12,4"
@@ -47,48 +47,26 @@
                      VerticalAlignment="Bottom" />
         </ScrollViewer>
         <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
+        <TextBox x:Name="PromptTextBox"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Bottom"
+                 Height="28"
+                 Margin="8"
+                 Text="{Binding InputText, Mode=TwoWay}"
+                 FontFamily="Courier New, Courier, monospace"
+                 FontSize="20"
+                 Foreground="Transparent"
+                 Opacity="0"
+                 CaretBrush="Transparent"
+                 SelectionBrush="Transparent"
+                 Background="Transparent"
+                 BorderBrush="Transparent"
+                 BorderThickness="0"
+                 FocusAdorner="{x:Null}"
+                 Padding="0"
+                 VerticalContentAlignment="Center"
+                 KeyDown="OnPromptKeyDown" />
       </Grid>
     </Grid>
-    <Border Grid.Row="2" Padding="8,4,8,8" Background="#0066CC">
-      <Grid ColumnDefinitions="Auto,*">
-        <TextBlock Text="{Binding PromptText}"
-                   Margin="0,0,2,0"
-                   FontFamily="Courier New, Courier, monospace"
-                   FontSize="20"
-                   Foreground="White"
-                   VerticalAlignment="Center" />
-        <Grid Grid.Column="1">
-          <TextBox x:Name="PromptTextBox"
-                   Text="{Binding InputText, Mode=TwoWay}"
-                   FontFamily="Courier New, Courier, monospace"
-                   FontSize="20"
-                   Foreground="Transparent"
-                   CaretBrush="Transparent"
-                   SelectionBrush="Transparent"
-                   Background="Transparent"
-                   BorderBrush="Transparent"
-                   BorderThickness="0"
-                   FocusAdorner="{x:Null}"
-                   Padding="0"
-                   VerticalContentAlignment="Center"
-                   KeyDown="OnPromptKeyDown" />
-          <StackPanel Orientation="Horizontal" IsHitTestVisible="False">
-            <TextBlock x:Name="PromptInputTextBlock"
-                       FontFamily="Courier New, Courier, monospace"
-                       FontSize="20"
-                       Foreground="White"
-                       TextWrapping="NoWrap"
-                       VerticalAlignment="Center" />
-            <TextBlock x:Name="BlockCursor"
-                       Text="█"
-                       FontFamily="Courier New, Courier, monospace"
-                       FontSize="20"
-                       Foreground="White"
-                       IsVisible="False"
-                       VerticalAlignment="Center" />
-          </StackPanel>
-        </Grid>
-      </Grid>
-    </Border>
   </Grid>
 </UserControl>

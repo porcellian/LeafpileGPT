@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T19:55Z [USER] Follow-up for PR #31: remove the white input surface and bottom duplicate prompt. Keep the story's prompt after game output and a blank line, with the blinking cursor and typed command directly after it.
 - 2026-10-28T19:45Z [USER] Track files supplied under `reference/` in PR #31; retain the global `.DS_Store` ignore rule.
 - 2026-10-28T19:41Z [USER] After PR #30 merged, fix the gameplay prompt to remove its visible TextBox surface, accept commands inline after `>`, and show a blinking block cursor. Preserve the user's README edits and include them in this fix; Task 27 remains paused.
 - 2026-10-28T19:33Z [USER] PR #30 is merged. User requested standby; Task 27 has not started.
@@ -68,6 +69,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T19:56Z [TOOL] Revised PR #31 per `gui02.png`: removed the separate bottom prompt, append input and the blinking block run after the story's prompt, and made the keyboard TextBox fully transparent. Formatter passes, Release build has 0 warnings/errors, all 510 tests pass, and `git diff --check` passes; add `gui02.png`, commit, and push remain.
 - 2026-10-28T19:45Z [TOOL] `reference/gui-design.png` was ignored by a path-specific rule and `reference/gui01.png` was untracked. Remove the reference-image ignore rules and add both user-supplied PNGs to PR #31; `.DS_Store` remains ignored.
 - 2026-10-28T19:45Z [TOOL] Commit `4baceb0` is pushed on `fix/inline-command-prompt`; PR #31 is open at https://github.com/porcellian/LeafpileGPT/pull/31. User README edits are included. Wait for review and merge; Task 27 remains paused.
 - 2026-10-28T19:43Z [TOOL] `fix/inline-command-prompt` is ready for review: the TextBox surface/focus visuals are suppressed, an inline text display and 500 ms blinking block cursor are added, and the user's README edits remain. Formatter passes, Release build has 0 warnings/errors, 510 xUnit tests pass, and `git diff --check` passes; commit and PR remain.

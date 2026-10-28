@@ -14,9 +14,9 @@ public partial class GameDisplayView : UserControl
     private readonly ScrollViewer _transcriptScrollViewer;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
-    private readonly TextBlock _promptInputTextBlock;
-    private readonly TextBlock _blockCursor;
     private readonly TextBox _promptTextBox;
+    private Run? _promptInputRun;
+    private Run? _blockCursorRun;
     private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
@@ -26,31 +26,47 @@ public partial class GameDisplayView : UserControl
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
-        _promptInputTextBlock = this.FindControl<TextBlock>("PromptInputTextBlock")!;
-        _blockCursor = this.FindControl<TextBlock>("BlockCursor")!;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
         _cursorBlinkTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
-        _cursorBlinkTimer.Tick += (_, _) => _blockCursor.IsVisible = !_blockCursor.IsVisible;
+        _cursorBlinkTimer.Tick += (_, _) =>
+        {
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = _blockCursorRun.Foreground == Brushes.White
+                    ? Brushes.Transparent
+                    : Brushes.White;
+            }
+        };
         _promptTextBox.GotFocus += (_, _) =>
         {
-            _blockCursor.IsVisible = true;
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = Brushes.White;
+            }
+
             _cursorBlinkTimer.Start();
         };
         _promptTextBox.LostFocus += (_, _) =>
         {
             _cursorBlinkTimer.Stop();
-            _blockCursor.IsVisible = false;
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = Brushes.Transparent;
+            }
         };
         Unloaded += (_, _) => _cursorBlinkTimer.Stop();
         Model = new GameDisplayModel();
         DataContext = Model;
         Model.OutputSegmentAdded += AppendOutputSegment;
-        Model.OutputCleared += () => _transcriptTextBlock.Inlines?.Clear();
+        Model.OutputCleared += OnOutputCleared;
         Model.PropertyChanged += (_, args) =>
         {
             if (args.PropertyName == nameof(GameDisplayModel.InputText))
             {
-                _promptInputTextBlock.Text = Model.InputText;
+                if (_promptInputRun is not null)
+                {
+                    _promptInputRun.Text = Model.InputText;
+                }
             }
             else if (args.PropertyName == nameof(GameDisplayModel.Transcript))
             {
@@ -62,6 +78,17 @@ public partial class GameDisplayView : UserControl
     public GameDisplayModel Model { get; }
 
     public void FocusPrompt() => _promptTextBox.Focus();
+
+    public void BeginPromptInput()
+    {
+        EndPromptInput();
+        _promptInputRun = new Run(Model.InputText) { Foreground = Brushes.White };
+        _blockCursorRun = new Run("█") { Foreground = Brushes.White };
+        _transcriptTextBlock.Inlines?.Add(_promptInputRun);
+        _transcriptTextBlock.Inlines?.Add(_blockCursorRun);
+        _cursorBlinkTimer.Start();
+        _transcriptScrollViewer.ScrollToEnd();
+    }
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
     {
@@ -135,7 +162,30 @@ public partial class GameDisplayView : UserControl
         if (e.Key == Key.Enter)
         {
             Model.SubmitCommand();
+            EndPromptInput();
             e.Handled = true;
+        }
+    }
+
+    private void OnOutputCleared()
+    {
+        EndPromptInput();
+        _transcriptTextBlock.Inlines?.Clear();
+    }
+
+    private void EndPromptInput()
+    {
+        _cursorBlinkTimer.Stop();
+        if (_promptInputRun is not null)
+        {
+            _transcriptTextBlock.Inlines?.Remove(_promptInputRun);
+            _promptInputRun = null;
+        }
+
+        if (_blockCursorRun is not null)
+        {
+            _transcriptTextBlock.Inlines?.Remove(_blockCursorRun);
+            _blockCursorRun = null;
         }
     }
 
