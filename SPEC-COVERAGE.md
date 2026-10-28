@@ -6,7 +6,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 
 | Standard area | Implementation tasks | Coverage / acceptance evidence |
 |---|---:|---|
-| 1. Memory map and addresses | 3–4 | Header validation; dynamic/static/high memory boundaries; V1–V8 packed addresses; bounds and write protection. |
+| 1. Memory map and addresses | 3–4 | `StoryFile` validates dynamic/static/high boundaries, story size limits, and table bounds; generated V1–V8 tests cover malformed ranges. Task 4 adds address translation and write protection. |
 | 2. Numbers and arithmetic | 7 | Signed arithmetic/comparisons; 16-bit wrapping; divide-by-zero; deterministic and random modes. |
 | 3. Text and character encoding | 8, 10 | Z-character decoding, shifts, abbreviations, custom alphabets, Unicode/ZSCII tables, incomplete sequences, dictionary truncation. |
 | 4. Instruction encoding | 5–7 | All forms and operand widths; evaluation order; store/branch decoding; inline text; legal version gates. |
@@ -16,7 +16,7 @@ This matrix maps the supplied standards to planned implementation areas and acce
 | 8. Screen model | 14–16, 25 | V1–V5 windows/status; V6 eight-window model, text styles, colors, geometry, MORE behavior. |
 | 9. Sound effects | 17, 20 | Capability flags, bleeps, samples/music channels, repeats, callbacks, prepare/stop/finish. |
 | 10. Input streams and devices | 12, 17 | Command and key input, stream 1 files, timed input, terminating characters, mouse and menu events. |
-| 11. Header | 3, 14–17, 23, 28 | Header initialization, interpreter capability flags, extension table, Rst fields, version and dimensions. |
+| 11. Header | 3, 14–17, 23, 28 | `StoryHeader` parses V1–V8 base fields, version-scaled file length, checksum, V6 main-routine address, and memory bounds; xUnit fixtures cover all versions, legacy V3 omissions, truncation, and checksum mismatch. Later tasks add initialization, capabilities, extension-table behavior, and Rst fields. |
 | 12. Object table | 9 | V1–V3 and V4+ layouts, attributes, object tree, property defaults and variable-length properties. |
 | 13. Dictionary and lexical analysis | 10 | Separators, V1–V3/V4+ entry widths, sorted/unsorted dictionaries, token and parse buffers. |
 | 14. Complete opcode table | 5–7, 14–17 | Per-opcode dispatch, version/operand-form combinations, store/branch effects, negative/error cases. |
