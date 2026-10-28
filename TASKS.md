@@ -74,7 +74,6 @@ For each game, use the story and same-basename manual/hint files supplied for th
 - [ ] **63. James Clavell's Shogun**
 - [ ] **64. Journey: The Quest Begins**
 - [ ] **65. Arthur: The Quest for Excalibur**
-- [ ] **66. Add terminal play mode.** Create a separate `LeafpileGPT.Cli` console host that shares the VM/session core, accepts a story path, reads player input from standard input, and writes game text to standard output without initializing Avalonia. Support text and keyboard play, paths with spaces, invalid-story errors, and clean end-of-input handling. Advertise text-only capabilities; graphics and audio remain available through the desktop app. Preserve the existing desktop command-line behavior that opens the GUI.
 
 ## Completion checks
 
@@ -87,4 +86,5 @@ For each game, use the story and same-basename manual/hint files supplied for th
 
 ## Future Tasks
 
-- [ ] **Support playable Glulx games.** After Tasks 1–66 are complete and the Glulx and Glk specifications are added to `reference/`, review them and define a spec-derived task breakdown. Implement Glulx as a separate VM engine in the shared app, with the Glk I/O needed to play games through Avalonia. Extend story detection and Blorb launch support as required by the specifications.
+- [ ] **Add terminal play mode.** Create a separate `LeafpileGPT.Cli` console host that shares the VM/session core, accepts a story path, reads player input from standard input, and writes game text to standard output without initializing Avalonia. Support text and keyboard play, paths with spaces, invalid-story errors, and clean end-of-input handling. Advertise text-only capabilities; graphics and audio remain available through the desktop app. Preserve the existing desktop command-line behavior that opens the GUI.
+- [ ] **Support playable Glulx games.** After Tasks 1–65 are complete and the Glulx and Glk specifications are added to `reference/`, review them and define a spec-derived task breakdown. Implement Glulx as a separate VM engine in the shared app, with the Glk I/O needed to play games through Avalonia. Extend story detection and Blorb launch support as required by the specifications.
