@@ -6,6 +6,8 @@
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 status: PR #2 is open at https://github.com/porcellian/LeafpileGPT/pull/2; CI is running.
 - 2026-10-28T03:03Z [TOOL] PR #2 merged; Task 3 is in progress on `feature/3-story-file-validation`.
 - 2026-10-28T03:12Z [TOOL] Task 3 is committed as `70fae26`; PR #3 is open at https://github.com/porcellian/LeafpileGPT/pull/3. Await user review/merge before Task 4.
+- 2026-10-28T03:14Z [TOOL] PR #3 merged to main as `bb84a63`.
+- 2026-10-28T03:19Z [USER] Add Story File Info as Task 30 in `TASKS.md`; defer implementation until that task is reached. Walkthrough tasks are renumbered to 31–65.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -21,6 +23,7 @@
 - 2026-10-28T03:10Z [TOOL] Supersedes prior test count: expanded `StoryHeader` to expose version-gated display/interpreter/address fields and boundary coverage; formatting, Release build (0 warnings/errors), and all 47 xUnit tests pass. Repeated local probe loaded all 37/37 story files.
 - 2026-10-28T03:11Z [TOOL] Supersedes prior Task 3 verification: after adding tests for maximum file lengths, empty high memory, and V6 packed address zero with a nonzero offset, formatting and Release build pass and all 49 xUnit tests pass. Final local probe loaded 37/37 story files.
 - 2026-10-28T03:12Z [TOOL] Opened PR #3 for Task 3 after local validation; cross-platform CI is pending.
+- 2026-10-28T03:19Z [TOOL] Started the docs-only Story File Info task-list update on `feature/30-story-file-info`; reverted all feature code after the user clarified implementation should wait.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -40,3 +43,4 @@
 - 2026-10-28T03:10Z [TOOL] Supersedes prior Task 3 test count; implementation now passes 47 xUnit tests and the local probe remains 37/37. Task 3 awaits PR review; do not begin Task 4 before merge.
 - 2026-10-28T03:11Z [TOOL] Supersedes prior Task 3 verification: 49 xUnit tests and formatting/build pass; the 37-file local probe passes. Task 3 awaits PR creation/review; do not begin Task 4 before merge.
 - 2026-10-28T03:12Z [TOOL] Supersedes prior PR state: PR #3 is open for review after commit `70fae26`; do not start Task 4 before merge.
+- 2026-10-28T03:19Z [TOOL] Supersedes prior PR #3 state: PR #3 merged as `bb84a63`. The Story File Info task is documented but remains unchecked and unimplemented.

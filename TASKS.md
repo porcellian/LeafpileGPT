@@ -33,46 +33,47 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 - [ ] **27. Complete conformance and replay tooling.** Close the spec matrix; build deterministic route replay and opcode tracing; add generated V1–V8 fixtures and xUnit coverage; configure cross-platform builds and local story checks that CI does not require.
 - [ ] **28. Add robust error handling and logging.** Implement four runtime error policies: suppress user-facing reports, report first instance per error type, report every occurrence, and stop on any error; default to first-per-type. Show detailed dialogs for blocking/fatal failures and recoverable warnings in the status bar and Tools > View Errors. Include copyable game identity, PC, opcode, exception, and stack details. Write structured JSONL logs to app-data `LeafpileGPT/Logs/`, rolling at 10 MB per file, retaining 30 days, and capping total storage at 100 MB. Omit player commands and story output from logs by default. Logging failure must not crash the game. A missing file for an in-game restore returns failure to the story as specified.
 - [ ] **29. Add the View Instructions debugging window.** Add Tools > View Instructions. Open a read-only, continuously updating, scrollable window beside the main window. Record from game start and group each user command with subsequent opcodes. Show sequence, PC, form, opcode, mnemonic, and useful decoded operands/results. Add Save Audit, Clear History, Previous, Current, and Next on one right-aligned toolbar row, with Previous/Current/Next in that order. Previous and Next navigate command groups; Current selects the active or latest group and resumes following live output. Clear History clears the active unsaved trace without changing game state or deleting saved audits. Save Audit opens a dialog defaulting to `LeafpileGPT/Audits/` and exports a readable PDF and structured JSONL with the selected base filename. Use compact session storage and a virtualized view.
+- [ ] **30. Add the Story File Info window.** Add Tools > Story File Info, disabled when no game is loaded. Open one read-only, resizable modeless window showing source identity and SHA-256, story version/release/serial, optional IFID and Blorb metadata, file size and checksum status, memory and execution layout, decoded version-specific header fields, original and current runtime header values, and the raw 64-byte header. Refresh the open window when the loaded story changes. Use an immutable snapshot interface and generated xUnit fixtures.
 
 ## Maximum-score story walkthroughs
 
 For each game, use the story and same-basename manual/hint files supplied for that run. Play from a fresh game to maximum score and ending without deaths. Create an original, concise, professionally formatted PDF in `walkthroughs/` and commit it with the updated checkbox. Include an opcode table with form, opcode, mnemonic, total count, first execution sequence, and first PC. Save a deterministic route and machine-readable opcode trace under `.agent/regression-routes/`; keep these local and ignored. Record first sequence as a 1-based instruction execution index and PCs as hexadecimal byte addresses. If source code changes during a run, replay every previously completed maximum-score route from a fresh game before closing the task; verify score, ending, and deaths, and fix defects with regression tests.
 
-- [ ] **30. Zork I: The Great Underground Empire**
-- [ ] **31. Zork II: The Wizard of Frobozz**
-- [ ] **32. Deadline**
-- [ ] **33. Zork III: The Dungeon Master**
-- [ ] **34. Starcross**
-- [ ] **35. Suspended**
-- [ ] **36. The Witness**
-- [ ] **37. Planetfall**
-- [ ] **38. Enchanter**
-- [ ] **39. Infidel**
-- [ ] **40. Sorcerer**
-- [ ] **41. Seastalker**
-- [ ] **42. Cutthroats**
-- [ ] **43. The Hitchhiker's Guide to the Galaxy**
-- [ ] **44. Suspect**
-- [ ] **45. Wishbringer**
-- [ ] **46. A Mind Forever Voyaging**
-- [ ] **47. Spellbreaker**
-- [ ] **48. Ballyhoo**
-- [ ] **49. Trinity**
-- [ ] **50. Leather Goddesses of Phobos**
-- [ ] **51. Moonmist**
-- [ ] **52. Hollywood Hijinx**
-- [ ] **53. Bureaucracy**
-- [ ] **54. Stationfall**
-- [ ] **55. The Lurking Horror**
-- [ ] **56. Nord and Bert Couldn't Make Head or Tail of It**
-- [ ] **57. Plundered Hearts**
-- [ ] **58. Beyond Zork**
-- [ ] **59. Border Zone**
-- [ ] **60. Sherlock: The Riddle of the Crown Jewels**
-- [ ] **61. Zork Zero: The Revenge of Megaboz**
-- [ ] **62. James Clavell's Shogun**
-- [ ] **63. Journey: The Quest Begins**
-- [ ] **64. Arthur: The Quest for Excalibur**
+- [ ] **31. Zork I: The Great Underground Empire**
+- [ ] **32. Zork II: The Wizard of Frobozz**
+- [ ] **33. Deadline**
+- [ ] **34. Zork III: The Dungeon Master**
+- [ ] **35. Starcross**
+- [ ] **36. Suspended**
+- [ ] **37. The Witness**
+- [ ] **38. Planetfall**
+- [ ] **39. Enchanter**
+- [ ] **40. Infidel**
+- [ ] **41. Sorcerer**
+- [ ] **42. Seastalker**
+- [ ] **43. Cutthroats**
+- [ ] **44. The Hitchhiker's Guide to the Galaxy**
+- [ ] **45. Suspect**
+- [ ] **46. Wishbringer**
+- [ ] **47. A Mind Forever Voyaging**
+- [ ] **48. Spellbreaker**
+- [ ] **49. Ballyhoo**
+- [ ] **50. Trinity**
+- [ ] **51. Leather Goddesses of Phobos**
+- [ ] **52. Moonmist**
+- [ ] **53. Hollywood Hijinx**
+- [ ] **54. Bureaucracy**
+- [ ] **55. Stationfall**
+- [ ] **56. The Lurking Horror**
+- [ ] **57. Nord and Bert Couldn't Make Head or Tail of It**
+- [ ] **58. Plundered Hearts**
+- [ ] **59. Beyond Zork**
+- [ ] **60. Border Zone**
+- [ ] **61. Sherlock: The Riddle of the Crown Jewels**
+- [ ] **62. Zork Zero: The Revenge of Megaboz**
+- [ ] **63. James Clavell's Shogun**
+- [ ] **64. Journey: The Quest Begins**
+- [ ] **65. Arthur: The Quest for Excalibur**
 
 ## Completion checks
 
