@@ -40,12 +40,12 @@ The decoder and tests must account for every standard opcode, including version-
 
 | Standard area | Implementation tasks | Coverage / acceptance evidence |
 |---|---:|---|
-| 1–2. Byte order, IFF, IFZS structure | 21 | Big-endian parsing, FORM/chunk lengths, even-byte padding, unknown/duplicate chunks. |
-| 3. Dynamic memory | 21–22 | CMem XOR/run-length codec, UMem exact size, short/long and malformed runs. |
-| 4. Stacks | 6, 21–22 | Oldest-first frames, locals/evaluation stack, dummy non-V6 frame, V6 frame behavior. |
-| 5. Story identity and saved PC | 3, 21–22 | IFhd release/serial/checksum validation and version-specific save PC. |
+| 1–2. Byte order, IFF, IFZS structure | 21 | `QuetzalCodec` reads/writes big-endian FORM IFZS files, validates chunk lengths, printable FourCC IDs and even-byte padding, preserves unknown/additional chunks, and follows first-occurrence semantics for duplicate core chunks. Generated tests cover malformed forms, ordering, padding, optional annotations, IntD, and unknown data. |
+| 3. Dynamic memory | 21–22 | CMem uses XOR against original dynamic memory and zero-run RLE, including runs of 1–256 bytes and omitted trailing equal bytes; UMem requires the exact dynamic-memory size. Generated cases cover round trips, short/long data, incomplete runs, overflow, and V1–V8 memory images. |
+| 4. Stacks | 6, 21–22 | `QuetzalCodec` serializes oldest-first frames, return PCs, discard/store flags, argument masks, locals, and per-frame evaluation words; it adds and recognizes the required non-V6 dummy frame and omits it for V6. Task 22 maps these snapshots to live VM state. Generated tests cover all versions, V6, flags, counts, and malformed/truncated frames. |
+| 5. Story identity and saved PC | 3, 21–22 | IFhd includes release, six serial bytes, calculated checksum (including legacy files with no stored checksum), a bounded 24-bit PC, and preserved extension bytes. Decode rejects story identity mismatch and out-of-story PCs. Task 22 applies version-specific save/restore return semantics. |
 | 6. Catch/throw and sound/picture notes | 6, 17, 21–22 | Frame-count cookie and resource identifiers. |
-| 7. AUTH/(c)/ANNO/IntD | 21 | Optional metadata parsing, flags/copy rules, and safe ignoring of foreign data. |
+| 7. AUTH/(c)/ANNO/IntD | 21 | Preserves printable-ASCII AUTH, copyright, and ANNO chunks. Parses and writes IntD OS/interpreter IDs, s/c flags, contents ID, reserved zero word, and opaque data; malformed reserved bits/IDs are rejected. Unknown chunks are preserved. |
 | 8. IFF rules | 18, 21 | Four-character IDs, chunk bounds, padding, unknown chunks, duplicate handling. |
 
 ## Blorb 2.0.4
@@ -75,5 +75,6 @@ The decoder and tests must account for every standard opcode, including version-
 - Task 18 Blorb tests use generated IFF fixtures for FORM/IFRS structure, index ordering/offsets, chunk bounds and padding, unknown chunks, ZCOD story loading, metadata, resource descriptions, and malformed input.
 - Task 19 Blorb image tests use generated PNG/JPEG/Rect and hint chunks for image dimensions, PNG CRC/structure, Plte and APal rules, Reso scaling bounds, palette updates, metadata, V6 picture-data branches, draw/erase screen operations, and capability flags.
 - Task 20 Blorb sound tests use generated AIFF/OGGV/MOD/SONG resources and Loop chunks for payload validation, sample/music classification, SONG AIFF references, V3 loop semantics, volume/repeat forwarding, and completion callbacks.
+- Task 21 Quetzal tests use generated V1–V8 stories and IFZS images for CMem/UMem, IFhd story identity and PC, V6/non-V6 frame layouts, IntD/annotations, padding, unknown/duplicate chunks, and malformed data.
 - Malformed input tests cover truncated story, IFF, Blorb, and Quetzal data with bounded, actionable diagnostics.
 - CI builds/tests Windows, macOS, and Linux; local story runs are optional and documented separately.
