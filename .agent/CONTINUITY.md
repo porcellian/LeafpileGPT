@@ -25,3 +25,4 @@
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
 - 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 PR status: Task 2 is committed as `610d0e6` with an additional continuity update, and PR #2 is open for review. Do not start Task 3 before the user merges PR #2.
 - 2026-10-28T02:53Z [TOOL] PR #2 received a follow-up LF checkout fix; rerun CI and keep the PR open for review. Do not start Task 3 before merge.
+- 2026-10-28T02:58Z [TOOL] Supersedes prior CI-pending status: after commit `4324671`, formatting, build, and tests passed on Windows, macOS, and Linux. PR #2 remains open for user review and merge.
