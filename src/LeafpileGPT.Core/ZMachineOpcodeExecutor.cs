@@ -155,6 +155,20 @@ public sealed class ZMachineOpcodeExecutor
 
                 _writeText(new ZMachineObjectTable(state).GetShortName(ReadValue(instruction.Operands[0], state)));
                 break;
+            case "tokenise":
+                new ZMachineDictionary(state.Memory).Tokenise(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state),
+                    instruction.Operands.Length > 2 ? ReadValue(instruction.Operands[2], state) : (ushort)0,
+                    instruction.Operands.Length > 3 && ReadValue(instruction.Operands[3], state) != 0);
+                break;
+            case "encode_text":
+                new ZMachineDictionary(state.Memory).EncodeText(
+                    ReadValue(instruction.Operands[0], state),
+                    ReadValue(instruction.Operands[1], state),
+                    ReadValue(instruction.Operands[2], state),
+                    ReadValue(instruction.Operands[3], state));
+                break;
             case "inc":
                 MutateVariableReference(instruction, state, increment: true);
                 break;
