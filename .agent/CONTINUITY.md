@@ -49,6 +49,7 @@
 - 2026-10-28T04:35Z [USER] Supersedes prior PR #10 status: PR #10 merged; Task 7 is active on `feature/7-arithmetic-vm-operations`.
 - 2026-10-28T04:35Z [TOOL] Task 7 implements arithmetic, comparisons, shifts, random modes, variable/array/table access, control flow, routine and stack opcodes, and fail-fast dispatch for deferred opcodes. Formatting and Release build pass; 177 xUnit tests pass.
 - 2026-10-28T04:38Z [TOOL] Final Task 7 review confirmed division-by-zero halts execution, unsupported opcodes preserve the faulting PC, and generated tests cover these failure paths. Task checkbox and spec coverage matrix are updated; commit and PR #11 remain.
+- 2026-10-28T04:40Z [TOOL] Task 7 committed as `9c91d62`, pushed to `feature/7-arithmetic-vm-operations`, and opened as PR #11 at https://github.com/porcellian/LeafpileGPT/pull/11. Await review and merge before Task 8.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -83,3 +84,4 @@
 - 2026-10-28T04:20Z [USER] Supersedes prior Task 5 PR status: PR #9 is merged as `0913bf7`. Task 6 is implemented on `feature/6-execution-state-calls`; final full review, commit, and PR creation remain.
 - 2026-10-28T04:25Z [TOOL] Supersedes prior Task 6 status: committed as `c0f1c36`; PR #10 is open for review. Do not begin Task 7 until the user confirms merge.
 - 2026-10-28T04:35Z [TOOL] Supersedes prior Task 6 PR status: PR #10 merged. Task 7 is implemented and checked locally; full diff review, commit, and PR #11 remain.
+- 2026-10-28T04:40Z [TOOL] Supersedes prior Task 7 status: PR #11 is open for review after commit `9c91d62`; do not begin Task 8 until the user confirms merge.
