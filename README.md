@@ -1,2 +1,22 @@
 # LeafpileGPT
-An experimental C# desktop Z-machine implemented entirely by ChatGPT Codex. Based on the Z-machine Standards Document v1.1. The project targets Z-machine versions 1–8 and the Quetzal save-file and Blorb resource formats. Authored by GPT-6 Luna, cleaned up by a human.
+
+LeafpileGPT is a cross-platform C# Z-machine interpreter and desktop application. The project targets Z-machine versions 1–8 and the Quetzal save-file and Blorb resource formats.
+
+## Development
+
+Requirements: .NET 10 SDK. Open `LeafpileGPT.sln` in Visual Studio or build from the repository root:
+
+```sh
+dotnet restore LeafpileGPT.sln
+dotnet build LeafpileGPT.sln
+dotnet test LeafpileGPT.sln
+dotnet format LeafpileGPT.sln --verify-no-changes
+```
+
+Run the desktop shell with:
+
+```sh
+dotnet run --project src/LeafpileGPT.Desktop
+```
+
+The GitHub Actions workflow restores, formats, builds, and tests the solution on Windows, macOS, and Linux. Automated tests use generated or in-memory fixtures and do not require local story files.

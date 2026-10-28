@@ -5,7 +5,7 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 ## Interpreter, desktop app, and diagnostics
 
 - [x] **1. Establish project baseline and requirements checklist.** Track project guidance and supplied standards; create this task list, the spec-to-code-to-test matrix, and `.agent/CONTINUITY.md`.
-- [ ] **2. Create the Visual Studio solution and build pipeline.** Add a `.sln`, core, Avalonia desktop, and xUnit projects; configure formatting, builds, and tests on Windows, macOS, and Linux.
+- [x] **2. Create the Visual Studio solution and build pipeline.** Add a `.sln`, core, Avalonia desktop, and xUnit projects; configure formatting, builds, and tests on Windows, macOS, and Linux.
 - [ ] **3. Load and validate story files.** Parse and validate V1–V8 headers, lengths, checksums, memory limits, and malformed-file errors.
 - [ ] **4. Implement memory and address translation.** Support dynamic/static/high memory, protected writes, byte/word/packed addresses, and V1–V8 packed-address rules.
 - [ ] **5. Decode instructions.** Implement instruction forms, operands, branches, stores, inline text, and version-gated metadata for all standard opcodes.
