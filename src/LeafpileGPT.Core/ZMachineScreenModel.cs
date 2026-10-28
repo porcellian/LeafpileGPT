@@ -12,6 +12,7 @@ public enum ZMachineScreenOperationKind
     EraseLine,
     ScrollWindow,
     SetTextStyle,
+    SetFont,
     SetColours,
     MoveWindow,
     ResizeWindow,
@@ -50,7 +51,8 @@ public sealed record ZMachineScreenOperation(
     int Row = 0,
     int Column = 0,
     string? Text = null,
-    int SecondaryValue = 0);
+    int SecondaryValue = 0,
+    bool FixedPitch = false);
 
 public sealed record ZMachineV6WindowSnapshot(
     short Window,
@@ -78,9 +80,12 @@ public sealed record ZMachineV6WindowSnapshot(
 public sealed class ZMachineScreenModel
 {
     private const byte Flags1Address = 0x01;
+    private const byte Flags2Address = 0x10;
     private const byte StatusUnavailableFlag = 0x10;
     private const byte UpperWindowAvailableFlag = 0x20;
     private const byte ColoursAvailableFlag = 0x01;
+    private const ushort FixedPitchFlag = 0x0002;
+    private const ushort CharacterGraphicsAvailableFlag = 0x0008;
     private readonly ZMachineMemory _memory;
     private readonly Queue<(string Text, Action<string>? Writer)> _queuedText = new();
     private readonly V6WindowState[] _v6Windows = Enumerable.Range(0, 8).Select(_ => new V6WindowState()).ToArray();
@@ -97,6 +102,9 @@ public sealed class ZMachineScreenModel
     private bool _v6SplitActive;
     private bool _screenUpdatesBuffered;
     private ZMachineTextStyle _textStyle;
+    private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
+    private readonly byte _defaultFontWidth;
+    private readonly byte _defaultFontHeight;
     private byte _foregroundColour;
     private byte _backgroundColour;
 
@@ -108,6 +116,8 @@ public sealed class ZMachineScreenModel
         HeightInLines = header.ScreenHeightInLines is > 0 ? header.ScreenHeightInLines.Value : 25;
         WidthInUnits = header.ScreenWidthInUnits is > 0 ? header.ScreenWidthInUnits.Value : (ushort)WidthInCharacters;
         HeightInUnits = header.ScreenHeightInUnits is > 0 ? header.ScreenHeightInUnits.Value : (ushort)HeightInLines;
+        _defaultFontWidth = header.FontWidthInUnits is > 0 ? header.FontWidthInUnits.Value : (byte)1;
+        _defaultFontHeight = header.FontHeightInUnits is > 0 ? header.FontHeightInUnits.Value : (byte)1;
         WriteDimensionsToHeader();
 
         if (Version == 3)
@@ -118,6 +128,7 @@ public sealed class ZMachineScreenModel
 
         if (Version >= 5)
         {
+            SetFlags2(CharacterGraphicsAvailableFlag, enabled: true);
             SetFlag(ColoursAvailableFlag, enabled: true);
             DefaultForegroundColour = 9;
             DefaultBackgroundColour = 2;
@@ -149,6 +160,10 @@ public sealed class ZMachineScreenModel
     public int UpperWindowHeight { get; private set; }
 
     public short SelectedWindow { get; private set; }
+
+    public ushort CurrentFont => Version == 6 ? _v6Windows[SelectedWindow].FontNumber : _fontNumber;
+
+    public bool RequiresFixedPitch => RequiresFixedPitchFor(SelectedWindow);
 
     public ZMachineTextStyle TextStyle
     {
@@ -544,7 +559,64 @@ public sealed class ZMachineScreenModel
         OperationWriter?.Invoke(new ZMachineScreenOperation(
             ZMachineScreenOperationKind.SetTextStyle,
             Window: SelectedWindow,
-            Value: (int)TextStyle));
+            Value: (int)TextStyle,
+            FixedPitch: RequiresFixedPitch));
+    }
+
+    /// <summary>Selects an available font and returns the previous font, or zero when unavailable.</summary>
+    public ushort SetFont(ushort requestedFont, short? window = null)
+    {
+        if (Version < 5)
+        {
+            throw new ZMachineExecutionException("set_font is not available before version 5.");
+        }
+
+        if (Version != 6 && window is not null)
+        {
+            throw new ZMachineExecutionException("An explicit font window is only supported in version 6.");
+        }
+
+        var targetWindow = Version == 6 ? ResolveWindowNumber(window ?? -3) : SelectedWindow;
+        var previousFont = Version == 6 ? _v6Windows[targetWindow].FontNumber : _fontNumber;
+        if (requestedFont == 0)
+        {
+            return previousFont;
+        }
+
+        if (!ZMachineFontCatalog.IsAvailable(requestedFont))
+        {
+            return 0;
+        }
+
+        FlushV6TextBuffer(targetWindow);
+        if (Version == 6)
+        {
+            var target = _v6Windows[targetWindow];
+            target.SetProperty(12, requestedFont);
+            var width = requestedFont == ZMachineFontCatalog.CharacterGraphicsFont ? (byte)8 : _defaultFontWidth;
+            var height = requestedFont == ZMachineFontCatalog.CharacterGraphicsFont ? (byte)8 : _defaultFontHeight;
+            target.SetProperty(13, (ushort)((height << 8) | width));
+            if (!target.LineCountIsCustomized)
+            {
+                target.SetProperty(15, checked((ushort)Math.Max(0, target.Height / Math.Max(1, (int)height))));
+            }
+        }
+        else
+        {
+            _fontNumber = requestedFont;
+            var width = requestedFont == ZMachineFontCatalog.CharacterGraphicsFont ? (byte)1 : _defaultFontWidth;
+            var height = requestedFont == ZMachineFontCatalog.CharacterGraphicsFont ? (byte)1 : _defaultFontHeight;
+            _memory.WriteByte(0x26, width);
+            _memory.WriteByte(0x27, height);
+        }
+
+        OperationWriter?.Invoke(new ZMachineScreenOperation(
+            ZMachineScreenOperationKind.SetFont,
+            Window: targetWindow,
+            Value: requestedFont,
+            SecondaryValue: previousFont,
+            FixedPitch: RequiresFixedPitchFor(targetWindow)));
+        return previousFont;
     }
 
     public void SetColours(ushort foreground, ushort background)
@@ -1736,6 +1808,21 @@ public sealed class ZMachineScreenModel
     {
         var flags = _memory.ReadByte(Flags1Address);
         _memory.WriteByte(Flags1Address, enabled ? (byte)(flags | mask) : (byte)(flags & ~mask));
+    }
+
+    private void SetFlags2(ushort mask, bool enabled)
+    {
+        var flags = _memory.ReadWord(Flags2Address);
+        _memory.WriteWord(Flags2Address, enabled ? (ushort)(flags | mask) : (ushort)(flags & ~mask));
+    }
+
+    private bool RequiresFixedPitchFor(short window)
+    {
+        var font = Version == 6 ? _v6Windows[window].FontNumber : _fontNumber;
+        var style = Version == 6 ? _v6Windows[window].TextStyle : _textStyle;
+        return (_memory.ReadWord(Flags2Address) & FixedPitchFlag) != 0
+            || (style & ZMachineTextStyle.FixedPitch) != 0
+            || font is ZMachineFontCatalog.CharacterGraphicsFont or ZMachineFontCatalog.CourierFont;
     }
 
     private sealed class CursorState(int row, int column)

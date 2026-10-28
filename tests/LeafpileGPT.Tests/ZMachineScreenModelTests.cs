@@ -152,6 +152,88 @@ public sealed class ZMachineScreenModelTests
     }
 
     [Fact]
+    public void V5FontSelectionReportsAvailabilityAndFixedPitchBehavior()
+    {
+        var state = CreateFontState(5);
+        var screen = state.OutputStreams.Screen;
+        Assert.Equal((ushort)0x0008, (ushort)(state.Memory.ReadWord(0x10) & 0x0008));
+        Assert.False(screen.RequiresFixedPitch);
+
+        var operations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = operations.Add;
+        operations.Clear();
+        Assert.Equal((ushort)1, screen.SetFont(ZMachineFontCatalog.CourierFont));
+        Assert.Equal(ZMachineFontCatalog.CourierFont, screen.CurrentFont);
+        Assert.True(screen.RequiresFixedPitch);
+        Assert.Equal(ZMachineScreenOperationKind.SetFont, operations[^1].Kind);
+        Assert.True(operations[^1].FixedPitch);
+
+        Assert.Equal(ZMachineFontCatalog.CourierFont, screen.SetFont(0));
+        Assert.Equal((ushort)0, screen.SetFont(ZMachineFontCatalog.PictureFont));
+        Assert.Equal(ZMachineFontCatalog.CourierFont, screen.CurrentFont);
+        Assert.Equal(ZMachineFontCatalog.CourierFont, screen.SetFont(ZMachineFontCatalog.CharacterGraphicsFont));
+        Assert.Equal(ZMachineFontCatalog.CharacterGraphicsFont, screen.CurrentFont);
+        Assert.Equal((byte)1, state.Memory.ReadByte(0x26));
+        Assert.Equal((byte)1, state.Memory.ReadByte(0x27));
+
+        screen.SetFont(ZMachineFontCatalog.NormalFont);
+        screen.SetTextStyle((ushort)ZMachineTextStyle.FixedPitch);
+        Assert.True(screen.RequiresFixedPitch);
+        screen.SetTextStyle((ushort)ZMachineTextStyle.Roman);
+        Assert.False(screen.RequiresFixedPitch);
+        state.Memory.WriteWord(0x10, 0x000A);
+        Assert.True(screen.RequiresFixedPitch);
+        state.Memory.WriteWord(0x10, 0x0008);
+        Assert.False(screen.RequiresFixedPitch);
+    }
+
+    [Fact]
+    public void V6FontsCanBeMeasuredAndSelectedOnAnUnselectedWindow()
+    {
+        var state = CreateV6State();
+        var screen = state.OutputStreams.Screen;
+        screen.ResizeWindow(5, 400, 640);
+        Assert.Equal((ushort)0x0008, (ushort)(state.Memory.ReadWord(0x10) & 0x0008));
+        var oldFont = screen.SetFont(ZMachineFontCatalog.CharacterGraphicsFont, 5);
+
+        Assert.Equal((ushort)1, oldFont);
+        Assert.Equal(ZMachineFontCatalog.NormalFont, screen.CurrentFont);
+        Assert.Equal(ZMachineFontCatalog.CharacterGraphicsFont, screen.GetV6Window(5).FontNumber);
+        Assert.Equal((ushort)0x0808, screen.GetV6Window(5).FontSize);
+        Assert.Equal((short)50, screen.GetV6Window(5).LineCount);
+        Assert.Equal((ushort)ZMachineFontCatalog.CharacterGraphicsFont,
+            screen.SetFont(ZMachineFontCatalog.CourierFont, 5));
+        Assert.Equal((ushort)0x1008, screen.GetV6Window(5).FontSize);
+        Assert.Equal((short)25, screen.GetV6Window(5).LineCount);
+        Assert.Equal((ushort)0, screen.SetFont(ZMachineFontCatalog.PictureFont, 5));
+        Assert.Equal(ZMachineFontCatalog.CourierFont, screen.GetV6Window(5).FontNumber);
+        Assert.True(screen.GetV6Window(5).CursorVisible);
+        Assert.Throws<ZMachineExecutionException>(() => screen.SetFont(ZMachineFontCatalog.NormalFont, 8));
+    }
+
+    [Fact]
+    public void SetFontOpcodeStoresPreviousFontAndUsesOptionalV6WindowOperand()
+    {
+        var v5 = CreateFontState(5);
+        new ZMachineOpcodeExecutor().Execute(
+            ExtendedInstruction("set_font", 4, [Constant(ZMachineFontCatalog.CourierFont)], store: 16), v5);
+        Assert.Equal((ushort)ZMachineFontCatalog.NormalFont, v5.ReadVariable(16));
+        Assert.Equal(ZMachineFontCatalog.CourierFont, v5.OutputStreams.Screen.CurrentFont);
+
+        var v6 = CreateV6State();
+        new ZMachineOpcodeExecutor().Execute(
+            ExtendedInstruction("set_font", 4,
+                [Constant(ZMachineFontCatalog.CharacterGraphicsFont), Constant(5)], store: 16), v6);
+        Assert.Equal((ushort)ZMachineFontCatalog.NormalFont, v6.ReadVariable(16));
+        Assert.Equal(ZMachineFontCatalog.CharacterGraphicsFont, v6.OutputStreams.Screen.GetV6Window(5).FontNumber);
+
+        new ZMachineOpcodeExecutor().Execute(
+            ExtendedInstruction("set_font", 4, [Constant(ZMachineFontCatalog.CourierFont)], store: 17), v6);
+        Assert.Equal((ushort)ZMachineFontCatalog.NormalFont, v6.ReadVariable(17));
+        Assert.Equal(ZMachineFontCatalog.CourierFont, v6.OutputStreams.Screen.CurrentFont);
+    }
+
+    [Fact]
     public void StatusLineUsesGlobalLocationScoreAndTimeBeforeReadOnlyWhenRequested()
     {
         var state = CreateState(3);
@@ -527,6 +609,16 @@ public sealed class ZMachineScreenModelTests
         bytes[801] = 0xAA;
         bytes[0x26] = 16;
         bytes[0x27] = 8;
+        StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
+        return ZMachineExecutionState.Start(StoryFile.Parse(bytes));
+    }
+
+    private static ZMachineExecutionState CreateFontState(byte version)
+    {
+        var bytes = CreateStory(version);
+        StoryFixtureBuilder.WriteWord(bytes, 0x10, 0);
+        bytes[0x26] = 1;
+        bytes[0x27] = 1;
         StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
         return ZMachineExecutionState.Start(StoryFile.Parse(bytes));
     }

@@ -25,7 +25,7 @@ public sealed class ZMachineOutputStreamsTests
 
         Assert.Equal(new[] { "both", "screen" }, screen);
         Assert.Equal(new[] { "both", "transcript" }, transcript);
-        Assert.Equal((ushort)0, state.Memory.ReadWord(0x10));
+        Assert.Equal((ushort)0x0008, state.Memory.ReadWord(0x10));
         Assert.False(state.OutputStreams.TranscriptSelected);
     }
 
