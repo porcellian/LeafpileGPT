@@ -57,6 +57,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T18:35Z [TOOL] Supersedes the prior Task 22 progress entry: commit `085c943` plus continuity follow-up are pushed on `feature/22-save-restore-undo`; PR #26 is open at https://github.com/porcellian/LeafpileGPT/pull/26. Wait for review and merge before Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implementation, full diff review, formatter, Release build (0 warnings/errors), and all 481 xUnit tests pass. Task checkbox and Quetzal spec matrix are updated; commit, push, and PR creation remain.
 - 2026-10-28T18:13Z [TOOL] Task 21 is committed as `f283785` on `feature/21-quetzal-codec`; PR #25 is open at https://github.com/porcellian/LeafpileGPT/pull/25. Local formatting, Release build (0 warnings/errors), and all 463 xUnit tests pass; Windows, macOS, and Ubuntu CI jobs are queued. Wait for review and merge before Task 22.
 - 2026-10-28T02:34Z [TOOL] Repository has no solution, `TASKS.md`, or prior continuity file; existing `.gitignore`, `AGENTS.md`, and `specs/` are untracked and are included in Task 1.
@@ -121,6 +122,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-28T18:35Z [TOOL] Task 22 is implemented, validated, committed, and submitted as PR #26. Await user review and merge before starting Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implements Quetzal-backed save/restore, restart, single-step undo, host storage options for extended save opcodes, and generated all-version state restoration tests. Await conventional commit and PR creation.
 - 2026-10-28T18:13Z [TOOL] Task 21 delivers a standalone Quetzal IFZS codec for IFhd, CMem, UMem, Stks, IntD, annotations, padding, unknown chunks, and V1–V8 frame rules. PR #25 is open; local formatting/build/463-test checks pass and cross-platform CI is pending.
 - 2026-10-28T17:28Z [TOOL] Task 20 is committed as `c4defa7` on `feature/20-blorb-audio`; PR #24 is open at https://github.com/porcellian/LeafpileGPT/pull/24. Local format verification, Release build (0 warnings/errors), and all 433 xUnit tests pass; Windows, macOS, and Ubuntu CI jobs are queued. Wait for review and merge before Task 21.
