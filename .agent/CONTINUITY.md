@@ -14,6 +14,7 @@
 - 2026-10-28T03:41Z [USER] Include both headless route replay and terminal play in the roadmap; place replay in Task 27 and terminal play in a separate console host task, text-and-keyboard only.
 - 2026-10-28T03:44Z [TOOL] PR #6 merged to main as `98911f0`.
 - 2026-10-28T03:47Z [USER] Move terminal play from numbered Task 66 to an unnumbered entry in Future Tasks before Glulx; preserve Task 27 headless replay.
+- 2026-10-28T03:49Z [TOOL] PR #7 merged to main as `04d9903`; Task 4 started on `feature/4-memory-address-translation`.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -33,6 +34,7 @@
 - 2026-10-28T03:33Z [TOOL] Added the Glulx placeholder under Future Tasks on `docs/future-glulx-support`; Tasks 1–65 remain numbered as before.
 - 2026-10-28T03:41Z [TOOL] Updated Task 27 for headless route replay, added Task 66 for the separate text-and-keyboard console host, and updated the Glulx prerequisite on `docs/headless-replay-terminal-play`.
 - 2026-10-28T03:47Z [TOOL] Moved terminal play to Future Tasks ahead of Glulx; numbered roadmap remains Tasks 1–65 on `docs/move-terminal-play-to-future`.
+- 2026-10-28T03:59Z [TOOL] Implemented `ZMachineMemory` and V1–V8 address translation with 31 new xUnit cases; all 80 tests pass, Release build has zero warnings/errors, format verification passes, and the local Zork I memory smoke check succeeds.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -56,3 +58,4 @@
 - 2026-10-28T03:33Z [TOOL] PR #4 merged as `a1410f5`; the Glulx future task is now documented but remains unchecked pending the supplied specs and a later spec-derived breakdown.
 - 2026-10-28T03:41Z [TOOL] PR #5 merged as `8108953`; headless replay and terminal play are roadmap-only changes on a new docs branch.
 - 2026-10-28T03:47Z [TOOL] PR #6 merged as `98911f0`. Terminal play is an unnumbered future item; it does not extend the 1–65 numbered roadmap.
+- 2026-10-28T03:59Z [TOOL] Task 4 implementation is complete locally and ready for PR; no completed story walkthroughs exist to replay.

@@ -175,7 +175,11 @@ public sealed class StoryFile
 
         if (version == 6)
         {
-            var mainRoutineAddress = (long)initialProgramCounter * 4 + (long)routinesOffset * 8;
+            var mainRoutineAddress = ZMachineAddressing.PackedToByteAddress(
+                initialProgramCounter,
+                version,
+                PackedAddressKind.Routine,
+                routinesOffset);
             if (mainRoutineAddress < HeaderLength || mainRoutineAddress >= fileLength)
             {
                 throw new StoryFileFormatException(
