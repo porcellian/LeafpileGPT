@@ -74,6 +74,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T21:12Z [TOOL] Commit `47510aa` is pushed to PR #31; worktree is clean. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass. `gh pr checks 31` could not connect to GitHub API.
 - 2026-10-28T21:12Z [TOOL] MORE now resets on accepted line input and uses a page limit measured from the transcript viewport; V3 includes its status row and one viewport row is reserved for MORE. Added `gui09.png`/`gui10.png` and five generated tests. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass; commit and PR #31 push remain.
 - 2026-10-28T20:53Z [TOOL] Supersedes the 20:52Z push failure: commit `f1f1b41` is now pushed to PR #31 after increasing Git's HTTP buffer. Worktree is clean. Formatter, Release build, and all 513 tests pass; GitHub API checks remain unreachable for now.
 - 2026-10-28T20:52Z [TOOL] Supersedes the 20:51Z local-completion note: commit `0d0acef` contains the MORE paging correction, tests, and `gui07.png`/`gui08.png`; push to PR #31 failed with HTTP 400, and `git ls-remote` then failed DNS resolution for `github.com`. Retry push when reachable.
