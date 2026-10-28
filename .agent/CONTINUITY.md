@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T20:51Z [USER] Follow-up for PR #31 based on `gui07.png`/`gui08.png`: page output only when more text would overflow the visible page; show MORE and continue on any key. Track both screenshots.
 - 2026-10-28T20:25Z [USER] Follow-up for PR #31: remove unnecessary desktop MORE waits so the game's normal prompt and cursor appear immediately after each command; track `reference/gui06.png`.
 - 2026-10-28T20:15Z [USER] Follow-up for PR #31: prevent newly written leaflet text from clipping at the bottom, keep the prompt/cursor visible without requiring another Return, and clear stale text above the play area.
 - 2026-10-28T20:06Z [USER] Follow-up for PR #31: prevent the first story line from clipping into the status strip, enlarge the default window slightly, and keep the active prompt/cursor visible across story screen clears such as reading the leaflet.
@@ -72,6 +73,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T20:52Z [TOOL] Supersedes the 20:51Z local-completion note: commit `0d0acef` contains the MORE paging correction, tests, and `gui07.png`/`gui08.png`; push to PR #31 failed with HTTP 400, and `git ls-remote` then failed DNS resolution for `github.com`. Retry push when reachable.
+- 2026-10-28T20:51Z [TOOL] Supersedes the 20:25Z global-disable approach: desktop MORE is enabled; the screen model defers a pause until additional text arrives after a full page, the desktop displays `[MORE] Press any key to continue`, and a dedicated key channel resumes queued output immediately. Tracked `gui07.png`/`gui08.png`; formatter, Release build (0 warnings/errors), all 513 tests, and diff check pass. Review, commit, push remain.
 - 2026-10-28T20:25Z [TOOL] Supersedes prior GUI follow-up status: commit `501b5a5` disables desktop MORE pauses, adds generated coverage for overflow and restart, and tracks `reference/gui06.png`; pushed to PR #31. Formatter, Release build (0 warnings/errors), 511 tests, and diff check pass. GitHub API check was temporarily unreachable; await PR checks and user review/merge.
 - 2026-10-28T20:25Z [TOOL] `gui06.png` showed the desktop waiting in `ZMachineScreenModel.WaitForMoreAsync` before its line read; `read_char` for MORE did not raise the line-input UI event, explaining the missing prompt until Return. `DesktopGameSession` now disables MORE pauses at startup and after VM resets. Generated tests cover screen-height overflow and restart. Formatter, Release build (0 warnings/errors), 511 tests, and diff check pass; review, commit, push remain.
 - 2026-10-28T20:16Z [TOOL] Supersedes prior GUI follow-up status: commit `c35f5bf` is pushed to PR #31 and tracks `reference/gui04.png`/`gui05.png`. Transcript scrolling now waits for the content layout pass before setting the end offset, keeping the final text and prompt in view and scrolling old text fully offscreen. Formatter, Release build (0 warnings/errors), 510 tests, and diff check pass. Wait for review and merge.
@@ -124,6 +127,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-28T20:51Z [TOOL] Local Avalonia build telemetry can fail when sandboxed from the user application-support directory; `-p:UsedAvaloniaProducts=` skips that telemetry target while still compiling Core, Desktop, and Tests.
 - 2026-10-28T18:40Z [CODE] Preferences write to a same-directory temporary file and move over the active JSON only after serialization and disk flush succeed; failed writes leave the in-memory preference snapshot unchanged.
 - 2026-10-28T18:33Z [CODE] Quetzal IFhd PC points to the legacy branch descriptor (V1–V3) or result-variable byte (V4+); successful restore must read and apply that saved continuation before executing the next opcode.
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.

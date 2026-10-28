@@ -70,7 +70,7 @@ public sealed class ZMachineInputHandler
             ShowStatusLineBeforeInput: version <= 3);
         if (_state.CurrentInputStream == 0)
         {
-            await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadCharacterAsync, cancellationToken);
+            await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadMoreKeyAsync, cancellationToken);
         }
 
         _state.OutputStreams.Screen.FlushBeforeInput();
@@ -154,7 +154,7 @@ public sealed class ZMachineInputHandler
             throw new ZMachineExecutionException($"read_char input device {inputDevice} is not the keyboard device 1.");
         }
 
-        await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadCharacterAsync, cancellationToken);
+        await _state.OutputStreams.Screen.WaitForMoreAsync(_provider.ReadMoreKeyAsync, cancellationToken);
         _state.OutputStreams.Screen.FlushBeforeInput();
         var timeoutEnabled = _state.Version >= 4
             && _provider.SupportsTimedInput

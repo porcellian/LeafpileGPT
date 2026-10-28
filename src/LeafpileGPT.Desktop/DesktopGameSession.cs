@@ -50,7 +50,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
             pictureCatalog: blorb?.Pictures,
             soundCatalog: blorb?.Sounds,
             saveStore: SaveStore);
-        DisableMorePrompts();
         _input = new DesktopInputProvider(State.Memory)
         {
             BeforeInputWaitAsync = ReleaseStateForInputAsync,
@@ -95,6 +94,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
     public bool SubmitCommand(string command) => _input.SubmitLine(command);
 
+    public bool SubmitMoreKey() => _input.SubmitMoreKey();
+
     public async Task<QuetzalSaveData> CaptureSaveStateAsync(CancellationToken cancellationToken = default)
     {
         await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -121,7 +122,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
             if (Volatile.Read(ref _activeInstruction) is null)
             {
                 State.ApplySaveState(save);
-                DisableMorePrompts();
                 Dispatch(ResetDisplay);
             }
             else
@@ -157,7 +157,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
             try
             {
                 State.Restart();
-                DisableMorePrompts();
                 Dispatch(ResetDisplay);
             }
             finally
@@ -233,7 +232,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     if (Interlocked.Exchange(ref _restartRequested, 0) != 0)
                     {
                         State.Restart();
-                        DisableMorePrompts();
                         Dispatch(ResetDisplay);
                         Volatile.Read(ref _pendingRestart)?.TrySetResult();
                         Volatile.Write(ref _pendingRestart, null);
@@ -244,8 +242,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
                         return;
                     }
 
-                    DisableMorePrompts();
-
                     using var instructionCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     Volatile.Write(ref _activeInstruction, instructionCancellation);
                     try
@@ -255,6 +251,9 @@ public sealed class DesktopGameSession : IAsyncDisposable
                         var instruction = decoder.Decode(instructionPc);
                         await executor.ExecuteAsync(instruction, State, _input, cancellationToken: instructionCancellation.Token)
                             .ConfigureAwait(false);
+                        await State.OutputStreams.Screen.WaitForMoreAsync(
+                            _input.ReadMoreKeyAsync,
+                            instructionCancellation.Token).ConfigureAwait(false);
                     }
                     catch (OperationCanceledException) when (Volatile.Read(ref _restartRequested) != 0 || Volatile.Read(ref _pendingRestore) is not null)
                     {
@@ -296,8 +295,6 @@ public sealed class DesktopGameSession : IAsyncDisposable
         _display.ResetPresentation();
         _screenOperationWriter(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
     }
-
-    private void DisableMorePrompts() => State.OutputStreams.Screen.SetMorePromptsEnabled(enabled: false);
 
     private void Dispatch(Action action) => _dispatch(action);
 

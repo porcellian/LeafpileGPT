@@ -26,6 +26,7 @@ public partial class MainWindow : Window
         _appStatusText = this.FindControl<TextBlock>("AppStatusText")!;
         _gameDisplay = this.FindControl<GameDisplayView>("GameDisplay")!;
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
+        _gameDisplay.MoreKeySubmitted += () => _session?.SubmitMoreKey();
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;

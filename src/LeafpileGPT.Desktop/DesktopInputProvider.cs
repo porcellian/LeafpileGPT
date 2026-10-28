@@ -11,6 +11,7 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
         SingleReader = true,
         SingleWriter = false
     });
+    private readonly Channel<ushort> _moreKeys = Channel.CreateUnbounded<ushort>();
     private readonly ZsciiCodec _zscii;
 
     public DesktopInputProvider(ZMachineMemory memory) =>
@@ -30,6 +31,9 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
         ArgumentNullException.ThrowIfNull(line);
         return _input.Writer.TryWrite(line);
     }
+
+    /// <summary>Queues a key to continue output paused at a MORE prompt.</summary>
+    public bool SubmitMoreKey(ushort key = 32) => _moreKeys.Writer.TryWrite(key);
 
     public async ValueTask<ZMachineLineInputResult> ReadLineAsync(
         ZMachineLineInputRequest request,
@@ -58,7 +62,31 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
         return character;
     }
 
-    public void Complete() => _input.Writer.TryComplete();
+    public async ValueTask<ushort> ReadMoreKeyAsync(CancellationToken cancellationToken = default)
+    {
+        if (BeforeInputWaitAsync is not null)
+        {
+            await BeforeInputWaitAsync().ConfigureAwait(false);
+        }
+
+        try
+        {
+            return await _moreKeys.Reader.ReadAsync(cancellationToken).ConfigureAwait(false);
+        }
+        finally
+        {
+            if (AfterInputWaitAsync is not null)
+            {
+                await AfterInputWaitAsync().ConfigureAwait(false);
+            }
+        }
+    }
+
+    public void Complete()
+    {
+        _input.Writer.TryComplete();
+        _moreKeys.Writer.TryComplete();
+    }
 
     private async ValueTask<string> ReadSubmittedLineAsync(
         CancellationToken cancellationToken,

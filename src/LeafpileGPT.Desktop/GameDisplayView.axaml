@@ -68,6 +68,17 @@
                  Padding="0"
                  VerticalContentAlignment="Center"
                  KeyDown="OnPromptKeyDown" />
+        <TextBlock Text="[MORE]  Press any key to continue"
+                   IsVisible="{Binding IsMorePromptVisible}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="8"
+                   Padding="2,0"
+                   Background="#0066CC"
+                   Foreground="White"
+                   FontFamily="Courier New, Courier, monospace"
+                   FontSize="20"
+                   IsHitTestVisible="False" />
       </Grid>
     </Grid>
   </Grid>

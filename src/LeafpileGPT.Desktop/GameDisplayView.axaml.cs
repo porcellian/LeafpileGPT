@@ -82,6 +82,8 @@ public partial class GameDisplayView : UserControl
 
     public GameDisplayModel Model { get; }
 
+    public event Action? MoreKeySubmitted;
+
     public void FocusPrompt() => _promptTextBox.Focus();
 
     public void BeginPromptInput()
@@ -140,6 +142,7 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.MorePrompt:
                 Model.ShowMorePrompt(visible: true);
+                FocusPrompt();
                 break;
             case ZMachineScreenOperationKind.MorePromptCleared:
                 Model.ShowMorePrompt(visible: false);
@@ -170,6 +173,13 @@ public partial class GameDisplayView : UserControl
 
     private void OnPromptKeyDown(object? sender, KeyEventArgs e)
     {
+        if (Model.IsMorePromptVisible)
+        {
+            MoreKeySubmitted?.Invoke();
+            e.Handled = true;
+            return;
+        }
+
         if (e.Key == Key.Enter)
         {
             Model.SubmitCommand();

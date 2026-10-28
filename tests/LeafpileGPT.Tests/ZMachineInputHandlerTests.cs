@@ -191,6 +191,8 @@ public sealed class ZMachineInputHandlerTests
         var state = CreateState(5);
         state.OutputStreams.Screen.SetDimensions(4, 2, 4, 2);
         state.OutputStreams.WriteText("a\nb\n");
+        Assert.False(state.OutputStreams.Screen.IsWaitingForMore);
+        state.OutputStreams.WriteText("next page");
         Assert.True(state.OutputStreams.Screen.IsWaitingForMore);
         state.SelectInputStream(1);
         Assert.False(state.OutputStreams.Screen.IsWaitingForMore);

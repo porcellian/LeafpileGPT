@@ -288,6 +288,33 @@ public sealed class ZMachineScreenModelTests
     }
 
     [Fact]
+    public async Task MorePromptWaitsForOutputBeyondAFullPage()
+    {
+        var screen = CreateState(5).OutputStreams.Screen;
+        screen.SetDimensions(80, 2, 80, 2);
+        var output = new List<string>();
+        var operations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = operations.Add;
+
+        screen.WriteText("a\nb\n", output.Add);
+
+        Assert.False(screen.IsWaitingForMore);
+        Assert.DoesNotContain(operations, operation => operation.Kind == ZMachineScreenOperationKind.MorePrompt);
+        Assert.Equal(new[] { "a\nb\n" }, output);
+
+        screen.WriteText("next page", output.Add);
+
+        Assert.True(screen.IsWaitingForMore);
+        Assert.Contains(operations, operation => operation.Kind == ZMachineScreenOperationKind.MorePrompt);
+        Assert.Equal(new[] { "a\nb\n" }, output);
+
+        await screen.WaitForMoreAsync(_ => ValueTask.FromResult((ushort)32), TestContext.Current.CancellationToken);
+
+        Assert.False(screen.IsWaitingForMore);
+        Assert.Equal(new[] { "a\nb\n", "next page" }, output);
+    }
+
+    [Fact]
     public void ScreenOpcodesDispatchThroughTheExecutor()
     {
         var state = CreateState(5);

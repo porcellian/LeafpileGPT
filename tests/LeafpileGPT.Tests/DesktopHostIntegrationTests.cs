@@ -32,6 +32,16 @@ public sealed class DesktopHostIntegrationTests
     }
 
     [Fact]
+    public async Task DesktopInputProviderAcceptsAnyKeyForMorePrompt()
+    {
+        var provider = CreateInputProvider();
+        var read = provider.ReadMoreKeyAsync(TestContext.Current.CancellationToken).AsTask();
+        Assert.True(provider.SubmitMoreKey());
+
+        Assert.Equal((ushort)32, await read);
+    }
+
+    [Fact]
     public void DesktopEventServicesForwardSoundRequestsAndReportPlaybackUnavailable()
     {
         var services = new DesktopZMachineEventServices();
@@ -146,10 +156,7 @@ public sealed class DesktopHostIntegrationTests
             await using (session)
             {
                 var screen = session.State.OutputStreams.Screen;
-                Assert.False(screen.MorePromptsEnabled);
-                screen.SetDimensions(80, 5);
-                screen.WriteText(new string('\n', 10), _ => { });
-                Assert.False(screen.IsWaitingForMore);
+                Assert.True(screen.MorePromptsEnabled);
                 session.Start();
                 await inputRequested.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
                 var save = await session.CaptureSaveStateAsync(TestContext.Current.CancellationToken);
@@ -170,7 +177,7 @@ public sealed class DesktopHostIntegrationTests
     }
 
     [Fact]
-    public async Task DesktopSessionKeepsMorePromptsDisabledAfterRestart()
+    public async Task DesktopSessionKeepsMorePromptsEnabledAfterRestart()
     {
         var saveDirectory = CreateTemporaryDirectory();
         var transcriptDirectory = CreateTemporaryDirectory();
@@ -187,11 +194,11 @@ public sealed class DesktopHostIntegrationTests
         {
             await using (session)
             {
-                Assert.False(session.State.OutputStreams.Screen.MorePromptsEnabled);
+                Assert.True(session.State.OutputStreams.Screen.MorePromptsEnabled);
 
                 await session.RestartAsync(TestContext.Current.CancellationToken);
 
-                Assert.False(session.State.OutputStreams.Screen.MorePromptsEnabled);
+                Assert.True(session.State.OutputStreams.Screen.MorePromptsEnabled);
             }
         }
         finally
