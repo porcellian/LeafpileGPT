@@ -59,7 +59,7 @@
 - 2026-10-28T04:52Z [TOOL] Supersedes prior Task 8 verification: added V6/V7 packed-string offsets, V8 scale, additional V4–V8 shift coverage, and invalid abbreviation-table checks. Formatting and Release build pass with zero warnings/errors; all 231 tests pass. Task 8 review and PR creation remain.
 - 2026-10-28T14:04Z [TOOL] Task 9 implements the object/property model and associated opcodes; formatting and Release build pass with zero warnings/errors, and all 284 generated xUnit tests pass. Full diff review and PR #13 remain.
 - 2026-10-28T14:07Z [TOOL] Supersedes prior Task 9 review status: full staged diff reviewed; commit `09cd324` pushed and PR #13 opened. Windows, macOS, and Ubuntu CI jobs are queued. Wait for review/merge before Task 10.
-- 2026-10-28T14:17Z [TOOL] Supersedes prior Task 10 verification: formatting and Release build pass with zero warnings/errors; all 308 xUnit tests pass. Full diff review is complete; commit and PR #14 remain.
+- 2026-10-28T14:17Z [TOOL] Supersedes prior Task 10 review status: full diff review completed; commit `260f485` pushed and PR #14 opened at https://github.com/porcellian/LeafpileGPT/pull/14. Formatting and Release build pass with zero warnings/errors; all 308 xUnit tests pass. Wait for user review and merge before Task 11.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -107,4 +107,4 @@
 
 - 2026-10-28T14:04Z [TOOL] Supersedes prior Task 8 PR status: PR #12 is merged to main. Task 9 checks and review are in progress; no Task 9 commit or PR exists yet.
 - 2026-10-28T14:07Z [TOOL] Task 9 is committed as `09cd324` on `feature/9-objects-and-properties`; PR #13 is open at https://github.com/porcellian/LeafpileGPT/pull/13. CI is queued; stop for user review and merge before Task 10.
-- 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 checks and final review are in progress; no Task 10 commit or PR exists yet.
+- 2026-10-28T14:17Z [TOOL] Supersedes prior Task 9 PR status: PR #13 is merged. Task 10 is complete in PR #14; wait for review and merge.
