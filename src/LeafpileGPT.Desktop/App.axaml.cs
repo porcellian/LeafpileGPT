@@ -12,7 +12,13 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow();
+            var mainWindow = new MainWindow();
+            desktop.MainWindow = mainWindow;
+            var storyPath = DesktopLaunchArguments.ResolveStoryPath(desktop.Args ?? []);
+            if (storyPath is not null)
+            {
+                mainWindow.Opened += async (_, _) => await mainWindow.LoadStoryFromPathAsync(storyPath);
+            }
         }
 
         base.OnFrameworkInitializationCompleted();
