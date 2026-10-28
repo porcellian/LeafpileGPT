@@ -23,7 +23,7 @@
                  TextAlignment="Right"
                  VerticalAlignment="Center" />
     </Grid>
-    <Grid Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC">
+    <Grid Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC" ClipToBounds="True">
       <Border Grid.Row="0" Padding="8"
               IsVisible="{Binding IsUpperWindowVisible}"
               Background="#0066CC">
@@ -39,12 +39,14 @@
                       Background="#0066CC"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
-          <TextBlock x:Name="TranscriptTextBlock"
-                     FontFamily="Courier New, Courier, monospace"
-                     FontSize="20"
-                     Foreground="White"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Bottom" />
+          <Grid MinHeight="{Binding Bounds.Height, ElementName=TranscriptScrollViewer}">
+            <TextBlock x:Name="TranscriptTextBlock"
+                       FontFamily="Courier New, Courier, monospace"
+                       FontSize="20"
+                       Foreground="White"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Bottom" />
+          </Grid>
         </ScrollViewer>
         <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
         <TextBox x:Name="PromptTextBox"

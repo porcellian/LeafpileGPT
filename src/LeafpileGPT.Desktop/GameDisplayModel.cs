@@ -40,6 +40,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
 
     public event Action? OutputCleared;
 
+    public event Action? PresentationReset;
+
     public string Location
     {
         get => _location;
@@ -167,7 +169,9 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
 
     public void ResetPresentation()
     {
+        PresentationReset?.Invoke();
         ClearOutput();
+        InputText = string.Empty;
         SetStatusLine(string.Empty, "Score: 0  Moves: 0");
         ShowMorePrompt(visible: false);
         IsUpperWindowVisible = false;

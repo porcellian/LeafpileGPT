@@ -17,6 +17,7 @@ public partial class GameDisplayView : UserControl
     private readonly TextBox _promptTextBox;
     private Run? _promptInputRun;
     private Run? _blockCursorRun;
+    private bool _promptInputActive;
     private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
@@ -59,6 +60,7 @@ public partial class GameDisplayView : UserControl
         DataContext = Model;
         Model.OutputSegmentAdded += AppendOutputSegment;
         Model.OutputCleared += OnOutputCleared;
+        Model.PresentationReset += EndPromptInput;
         Model.PropertyChanged += (_, args) =>
         {
             if (args.PropertyName == nameof(GameDisplayModel.InputText))
@@ -82,12 +84,18 @@ public partial class GameDisplayView : UserControl
     public void BeginPromptInput()
     {
         EndPromptInput();
+        _promptInputActive = true;
+        AddPromptInputRuns();
+        _transcriptScrollViewer.ScrollToEnd();
+    }
+
+    private void AddPromptInputRuns()
+    {
         _promptInputRun = new Run(Model.InputText) { Foreground = Brushes.White };
         _blockCursorRun = new Run("█") { Foreground = Brushes.White };
         _transcriptTextBlock.Inlines?.Add(_promptInputRun);
         _transcriptTextBlock.Inlines?.Add(_blockCursorRun);
         _cursorBlinkTimer.Start();
-        _transcriptScrollViewer.ScrollToEnd();
     }
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
@@ -169,12 +177,19 @@ public partial class GameDisplayView : UserControl
 
     private void OnOutputCleared()
     {
+        var restorePrompt = _promptInputActive;
         EndPromptInput();
         _transcriptTextBlock.Inlines?.Clear();
+        if (restorePrompt)
+        {
+            _promptInputActive = true;
+            AddPromptInputRuns();
+        }
     }
 
     private void EndPromptInput()
     {
+        _promptInputActive = false;
         _cursorBlinkTimer.Stop();
         if (_promptInputRun is not null)
         {

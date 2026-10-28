@@ -50,6 +50,9 @@ public sealed class GameDisplayModelTests
         model.ShowMorePrompt(visible: true);
         model.SetSelectedWindow(1);
         model.SetColours(0x0608);
+        model.InputText = "stale command";
+        var presentationResetRaised = false;
+        model.PresentationReset += () => presentationResetRaised = true;
 
         model.ResetPresentation();
 
@@ -60,6 +63,8 @@ public sealed class GameDisplayModelTests
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
         Assert.Equal(">", model.PromptText);
         Assert.Equal((short)0, model.SelectedWindow);
+        Assert.Equal(string.Empty, model.InputText);
+        Assert.True(presentationResetRaised);
     }
 
     [Fact]
