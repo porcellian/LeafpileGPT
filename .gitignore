@@ -38,6 +38,4 @@ TestResults/
 # Expanded command routes for local maximum-score regression replays.
 /.agent/regression-routes/
 
-# Reference images are local design inputs, not application assets.
-/reference/gui-design.png
-/reference/map-ex.png
+# Project reference material is tracked; generated OS metadata remains ignored above.
