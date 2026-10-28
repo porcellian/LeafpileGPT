@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T21:29Z [USER] PR #31 follow-up: hide score/moves before a story is loaded and show a bold `[MORE]` marker without helper text; track `gui11.png`/`gui12.png`.
 - 2026-10-28T21:20Z [USER] PR #31 follow-up: `gui10.png` still loses exactly one line above the viewport; correct the remaining MORE threshold boundary.
 - 2026-10-28T21:12Z [USER] PR #31 follow-up: diagnose and correct early MORE in `gui09.png` and late MORE in `gui10.png`; track both references.
 - 2026-10-28T20:51Z [USER] Follow-up for PR #31 based on `gui07.png`/`gui08.png`: page output only when more text would overflow the visible page; show MORE and continue on any key. Track both screenshots.
@@ -75,6 +76,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T21:29Z [TOOL] Score/moves visibility now follows loaded-story state; MORE display is bold `[MORE]` only. Added generated model assertions and tracked `gui11.png`/`gui12.png`. Formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass; commit/push remain.
 - 2026-10-28T21:20Z [TOOL] Supersedes the pending-push note: commit `49fc8d7` is pushed to PR #31. Worktree is clean; CI status has not been rechecked.
 - 2026-10-28T21:20Z [TOOL] Reduced the rendered-page line limit by one additional row after the user confirmed a single line still scrolls off before MORE. Updated generated version 3/5 expectations; formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass. Commit and push to PR #31 remain.
 - 2026-10-28T21:12Z [TOOL] Commit `47510aa` is pushed to PR #31; worktree is clean. Formatting, Release build (0 warnings/errors), all 518 tests, and diff checks pass. `gh pr checks 31` could not connect to GitHub API.

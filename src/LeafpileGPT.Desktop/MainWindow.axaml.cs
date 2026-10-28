@@ -77,6 +77,7 @@ public partial class MainWindow : Window
                 _appStatusText.Text = $"Transcript writing stopped: {exception.Message}");
             UpdateLoadedStoryDisplay();
             _gameDisplay.Model.ResetPresentation();
+            _gameDisplay.Model.SetStoryLoaded(loaded: true);
             _gameDisplay.ClearPictures();
             if (story.Header.Version < 6 && _gameDisplay.TryGetScreenMetrics(out var screenMetrics))
             {

@@ -25,6 +25,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private string _upperWindowText = string.Empty;
     private bool _isUpperWindowVisible;
     private bool _isMorePromptVisible;
+    private bool _hasStoryLoaded;
     private short _selectedWindow;
     private ZMachineTextStyle _textStyle;
     private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
@@ -89,6 +90,12 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     {
         get => _isMorePromptVisible;
         private set => SetProperty(ref _isMorePromptVisible, value);
+    }
+
+    public bool HasStoryLoaded
+    {
+        get => _hasStoryLoaded;
+        private set => SetProperty(ref _hasStoryLoaded, value);
     }
 
     public short SelectedWindow
@@ -175,8 +182,10 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     public void ShowMorePrompt(bool visible)
     {
         IsMorePromptVisible = visible;
-        PromptText = visible ? "-- MORE --" : ">";
+        PromptText = visible ? "[MORE]" : ">";
     }
+
+    public void SetStoryLoaded(bool loaded) => HasStoryLoaded = loaded;
 
     public void ResetPresentation()
     {
@@ -184,6 +193,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         ClearOutput();
         InputText = string.Empty;
         SetStatusLine(string.Empty, "Score: 0  Moves: 0");
+        SetStoryLoaded(loaded: false);
         ShowMorePrompt(visible: false);
         IsUpperWindowVisible = false;
         SelectedWindow = 0;
