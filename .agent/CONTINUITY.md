@@ -10,6 +10,8 @@
 - 2026-10-28T03:19Z [USER] Add Story File Info as Task 30 in `TASKS.md`; defer implementation until that task is reached. Walkthrough tasks are renumbered to 31–65.
 - 2026-10-28T03:25Z [TOOL] PR #4 merged to main as `a1410f5`.
 - 2026-10-28T03:33Z [USER] Add an unnumbered Glulx future-task placeholder after the current task roadmap; keep detailed breakdown deferred until specs are supplied in `reference/`.
+- 2026-10-28T03:35Z [TOOL] PR #5 merged to main as `8108953`.
+- 2026-10-28T03:41Z [USER] Include both headless route replay and terminal play in the roadmap; place replay in Task 27 and terminal play in a separate console host task, text-and-keyboard only.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -27,6 +29,7 @@
 - 2026-10-28T03:12Z [TOOL] Opened PR #3 for Task 3 after local validation; cross-platform CI is pending.
 - 2026-10-28T03:19Z [TOOL] Started the docs-only Story File Info task-list update on `feature/30-story-file-info`; reverted all feature code after the user clarified implementation should wait.
 - 2026-10-28T03:33Z [TOOL] Added the Glulx placeholder under Future Tasks on `docs/future-glulx-support`; Tasks 1–65 remain numbered as before.
+- 2026-10-28T03:41Z [TOOL] Updated Task 27 for headless route replay, added Task 66 for the separate text-and-keyboard console host, and updated the Glulx prerequisite on `docs/headless-replay-terminal-play`.
 
 ## [DISCOVERIES]
 - 2026-10-28T02:34Z [CODE] `.gitignore` excludes `/stories/*`, `/reference/gui-design.png`, and `.agent/regression-routes/`; keep those local.
@@ -48,3 +51,4 @@
 - 2026-10-28T03:12Z [TOOL] Supersedes prior PR state: PR #3 is open for review after commit `70fae26`; do not start Task 4 before merge.
 - 2026-10-28T03:19Z [TOOL] Supersedes prior PR #3 state: PR #3 merged as `bb84a63`. The Story File Info task is documented but remains unchecked and unimplemented.
 - 2026-10-28T03:33Z [TOOL] PR #4 merged as `a1410f5`; the Glulx future task is now documented but remains unchecked pending the supplied specs and a later spec-derived breakdown.
+- 2026-10-28T03:41Z [TOOL] PR #5 merged as `8108953`; headless replay and terminal play are roadmap-only changes on a new docs branch.
