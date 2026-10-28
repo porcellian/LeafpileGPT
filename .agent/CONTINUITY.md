@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-28T20:25Z [USER] Follow-up for PR #31: remove unnecessary desktop MORE waits so the game's normal prompt and cursor appear immediately after each command; track `reference/gui06.png`.
 - 2026-10-28T20:15Z [USER] Follow-up for PR #31: prevent newly written leaflet text from clipping at the bottom, keep the prompt/cursor visible without requiring another Return, and clear stale text above the play area.
 - 2026-10-28T20:06Z [USER] Follow-up for PR #31: prevent the first story line from clipping into the status strip, enlarge the default window slightly, and keep the active prompt/cursor visible across story screen clears such as reading the leaflet.
 - 2026-10-28T19:55Z [USER] Follow-up for PR #31: remove the white input surface and bottom duplicate prompt. Keep the story's prompt after game output and a blank line, with the blinking cursor and typed command directly after it.
@@ -71,6 +72,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T20:25Z [TOOL] `gui06.png` showed the desktop waiting in `ZMachineScreenModel.WaitForMoreAsync` before its line read; `read_char` for MORE did not raise the line-input UI event, explaining the missing prompt until Return. `DesktopGameSession` now disables MORE pauses at startup and after VM resets. Generated tests cover screen-height overflow and restart. Formatter, Release build (0 warnings/errors), 511 tests, and diff check pass; review, commit, push remain.
 - 2026-10-28T20:16Z [TOOL] Supersedes prior GUI follow-up status: commit `c35f5bf` is pushed to PR #31 and tracks `reference/gui04.png`/`gui05.png`. Transcript scrolling now waits for the content layout pass before setting the end offset, keeping the final text and prompt in view and scrolling old text fully offscreen. Formatter, Release build (0 warnings/errors), 510 tests, and diff check pass. Wait for review and merge.
 - 2026-10-28T20:15Z [TOOL] `gui04`/`gui05` showed the view updated after another key caused layout. Inference: scroll-to-end ran before Avalonia recalculated the inline transcript extent. Scroll requests now wait for `LayoutUpdated` and coalesce, including prompt input and display flushes. Formatter/build pass, 510 tests pass; add `gui04.png`/`gui05.png`, review, commit, and push remain.
 - 2026-10-28T20:06Z [TOOL] Supersedes prior GUI follow-up status: commit `4804df7` is pushed to PR #31 with tracked `reference/gui03.png`. The top clipping and disappearing prompt/cursor issues are addressed; formatter, Release build (0 warnings/errors), 510 xUnit tests, and diff check pass. Wait for review and merge.

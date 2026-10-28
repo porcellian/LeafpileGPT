@@ -50,6 +50,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             pictureCatalog: blorb?.Pictures,
             soundCatalog: blorb?.Sounds,
             saveStore: SaveStore);
+        DisableMorePrompts();
         _input = new DesktopInputProvider(State.Memory)
         {
             BeforeInputWaitAsync = ReleaseStateForInputAsync,
@@ -120,6 +121,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             if (Volatile.Read(ref _activeInstruction) is null)
             {
                 State.ApplySaveState(save);
+                DisableMorePrompts();
                 Dispatch(ResetDisplay);
             }
             else
@@ -155,6 +157,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             try
             {
                 State.Restart();
+                DisableMorePrompts();
                 Dispatch(ResetDisplay);
             }
             finally
@@ -230,6 +233,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     if (Interlocked.Exchange(ref _restartRequested, 0) != 0)
                     {
                         State.Restart();
+                        DisableMorePrompts();
                         Dispatch(ResetDisplay);
                         Volatile.Read(ref _pendingRestart)?.TrySetResult();
                         Volatile.Write(ref _pendingRestart, null);
@@ -239,6 +243,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     {
                         return;
                     }
+
+                    DisableMorePrompts();
 
                     using var instructionCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     Volatile.Write(ref _activeInstruction, instructionCancellation);
@@ -290,6 +296,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
         _display.ResetPresentation();
         _screenOperationWriter(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
     }
+
+    private void DisableMorePrompts() => State.OutputStreams.Screen.SetMorePromptsEnabled(enabled: false);
 
     private void Dispatch(Action action) => _dispatch(action);
 
