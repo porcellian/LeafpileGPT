@@ -101,6 +101,8 @@ public sealed class ZMachineScreenModel
     private bool _supportsUpperWindow = true;
     private bool _lowerBufferingEnabled = true;
     private int _linesSinceMorePrompt;
+    private bool _morePending;
+    private int? _morePageLineLimit;
     private Action<ZMachineScreenOperation>? _operationWriter;
     private bool _v6SplitActive;
     private bool _screenUpdatesBuffered;
@@ -475,6 +477,7 @@ public sealed class ZMachineScreenModel
             _cursors[0].Set(Version == 4 ? LowerWindowBottom : 1, 1);
             _cursors[1].Set(1, 1);
             _linesSinceMorePrompt = 0;
+            _morePending = false;
             IsWaitingForMore = false;
             _queuedText.Clear();
             OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
@@ -491,6 +494,7 @@ public sealed class ZMachineScreenModel
             _cursors[0].Set(1, 1);
             _cursors[1].Set(1, 1);
             _linesSinceMorePrompt = 0;
+            _morePending = false;
             IsWaitingForMore = false;
             _queuedText.Clear();
             OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
@@ -1399,6 +1403,7 @@ public sealed class ZMachineScreenModel
 
         IsWaitingForMore = false;
         _linesSinceMorePrompt = 0;
+        _morePending = false;
         if (Version == 6)
         {
             var window = _v6Windows[SelectedWindow];
@@ -1411,6 +1416,13 @@ public sealed class ZMachineScreenModel
         }
     }
 
+    private void BeginMorePrompt()
+    {
+        _morePending = false;
+        IsWaitingForMore = true;
+        OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
+    }
+
     public void SetMorePromptsEnabled(bool enabled)
     {
         MorePromptsEnabled = enabled;
@@ -1418,6 +1430,36 @@ public sealed class ZMachineScreenModel
         {
             ContinueAfterMorePrompt();
         }
+
+        if (!enabled)
+        {
+            _morePending = false;
+        }
+    }
+
+    /// <summary>Sets a host-measured page limit; null restores the standard screen-height limit.</summary>
+    public void SetMorePageLineLimit(int? lineCount)
+    {
+        if (lineCount is < 1 or > byte.MaxValue)
+        {
+            throw new ArgumentOutOfRangeException(nameof(lineCount), "The MORE page limit must be from 1 through 255.");
+        }
+
+        _morePageLineLimit = lineCount;
+        _linesSinceMorePrompt = 0;
+        _morePending = false;
+    }
+
+    /// <summary>Starts a fresh MORE page for output produced by the next player command.</summary>
+    public void ResetMorePageForCommand()
+    {
+        if (Version == 6 || IsWaitingForMore)
+        {
+            return;
+        }
+
+        _linesSinceMorePrompt = 0;
+        _morePending = false;
     }
 
     public async ValueTask WaitForMoreAsync(
@@ -1438,6 +1480,13 @@ public sealed class ZMachineScreenModel
         ArgumentNullException.ThrowIfNull(text);
         if (IsWaitingForMore)
         {
+            _queuedText.Enqueue((text, screenWriter));
+            return;
+        }
+
+        if (_morePending && text.Length > 0)
+        {
+            BeginMorePrompt();
             _queuedText.Enqueue((text, screenWriter));
             return;
         }
@@ -1476,10 +1525,10 @@ public sealed class ZMachineScreenModel
                 }
             }
 
-            if (IsWaitingForMore)
+            if (_morePending && charactersConsumed < text.Length)
             {
                 screenWriter?.Invoke(outputChunk.ToString());
-                OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
+                BeginMorePrompt();
                 cursor.Set(cursorRow, cursorColumn);
                 OperationWriter?.Invoke(new ZMachineScreenOperation(
                     ZMachineScreenOperationKind.MoveCursor,
@@ -1496,11 +1545,6 @@ public sealed class ZMachineScreenModel
         }
 
         screenWriter?.Invoke(outputChunk.ToString());
-        if (IsWaitingForMore)
-        {
-            OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
-        }
-
         cursor.Set(cursorRow, cursorColumn);
         OperationWriter?.Invoke(new ZMachineScreenOperation(
             ZMachineScreenOperationKind.MoveCursor,
@@ -1525,6 +1569,13 @@ public sealed class ZMachineScreenModel
         var wrap = (window.Attributes & 0x01) != 0;
         var outputChunk = new StringBuilder();
         var charactersConsumed = 0;
+        if (_morePending && text.Length > 0)
+        {
+            BeginMorePrompt();
+            _queuedText.Enqueue((text, screenWriter));
+            return;
+        }
+
         foreach (var rune in text.EnumerateRunes())
         {
             var runeLength = rune.Utf16SequenceLength;
@@ -1535,9 +1586,9 @@ public sealed class ZMachineScreenModel
                 EmitV6TextChunk(outputChunk, screenWriter);
                 AdvanceV6Line(windowNumber, window, ref cursorY, ref cursorX);
                 StoreV6Cursor(windowNumber, window, cursorY, cursorX);
-                if (IsWaitingForMore)
+                if (_morePending && charactersConsumed < text.Length)
                 {
-                    OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
+                    BeginMorePrompt();
                     QueueV6Remainder(text, charactersConsumed, screenWriter);
                     return;
                 }
@@ -1555,9 +1606,9 @@ public sealed class ZMachineScreenModel
                         AdvanceV6Line(windowNumber, window, ref cursorY, ref cursorX);
                         charactersConsumed += runeLength;
                         StoreV6Cursor(windowNumber, window, cursorY, cursorX);
-                        if (IsWaitingForMore)
+                        if (_morePending && charactersConsumed < text.Length)
                         {
-                            OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
+                            BeginMorePrompt();
                             QueueV6Remainder(text, charactersConsumed, screenWriter);
                             return;
                         }
@@ -1573,9 +1624,9 @@ public sealed class ZMachineScreenModel
                         EmitV6TextChunk(outputChunk, screenWriter);
                         AdvanceV6Line(windowNumber, window, ref cursorY, ref cursorX);
                         StoreV6Cursor(windowNumber, window, cursorY, cursorX);
-                        if (IsWaitingForMore)
+                        if (_morePending && charactersConsumed < text.Length)
                         {
-                            OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.MorePrompt));
+                            BeginMorePrompt();
                             QueueV6Remainder(text, charactersConsumed, screenWriter);
                             return;
                         }
@@ -1658,7 +1709,7 @@ public sealed class ZMachineScreenModel
             window.SetProperty(15, unchecked((ushort)(short)nextLineCount));
             if (MorePromptsEnabled && nextLineCount == 0)
             {
-                IsWaitingForMore = true;
+                _morePending = true;
             }
         }
 
@@ -1726,11 +1777,11 @@ public sealed class ZMachineScreenModel
         }
 
         _linesSinceMorePrompt++;
-        var visibleLines = Version == 3 ? HeightInLines - 1 : HeightInLines;
+        var visibleLines = _morePageLineLimit ?? (Version == 3 ? HeightInLines - 1 : HeightInLines);
         if (MorePromptsEnabled && visibleLines > 1 && HeightInLines != byte.MaxValue
             && _linesSinceMorePrompt >= visibleLines && !IsWaitingForMore)
         {
-            IsWaitingForMore = true;
+            _morePending = true;
         }
     }
 

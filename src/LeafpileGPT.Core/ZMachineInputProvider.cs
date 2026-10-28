@@ -26,6 +26,10 @@ public interface IZMachineInputProvider
         CancellationToken cancellationToken = default);
 
     ValueTask<ushort> ReadCharacterAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>Reads one key that acknowledges a screen paging prompt.</summary>
+    ValueTask<ushort> ReadMoreKeyAsync(CancellationToken cancellationToken = default) =>
+        ReadCharacterAsync(cancellationToken);
 }
 
 /// <summary>Applies defined ZSCII keyboard characters to an editable input line.</summary>

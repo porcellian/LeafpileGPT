@@ -4,7 +4,7 @@
         x:Class="LeafpileGPT.Desktop.MainWindow"
         Title="LeafpileGPT"
         Width="960"
-        Height="640">
+        Height="680">
   <Grid RowDefinitions="Auto,*,Auto">
     <Menu Grid.Row="0" Background="White" Foreground="#111111">
       <MenuItem Header="_File">

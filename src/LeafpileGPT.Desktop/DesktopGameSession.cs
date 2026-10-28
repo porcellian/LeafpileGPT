@@ -94,6 +94,26 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
     public bool SubmitCommand(string command) => _input.SubmitLine(command);
 
+    public async Task SetScreenDimensionsAsync(
+        int widthInCharacters,
+        int heightInLines,
+        int morePageLineLimit,
+        CancellationToken cancellationToken = default)
+    {
+        await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            State.OutputStreams.Screen.SetDimensions(widthInCharacters, heightInLines);
+            State.OutputStreams.Screen.SetMorePageLineLimit(morePageLineLimit);
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+    }
+
+    public bool SubmitMoreKey() => _input.SubmitMoreKey();
+
     public async Task<QuetzalSaveData> CaptureSaveStateAsync(CancellationToken cancellationToken = default)
     {
         await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -249,6 +269,9 @@ public sealed class DesktopGameSession : IAsyncDisposable
                         var instruction = decoder.Decode(instructionPc);
                         await executor.ExecuteAsync(instruction, State, _input, cancellationToken: instructionCancellation.Token)
                             .ConfigureAwait(false);
+                        await State.OutputStreams.Screen.WaitForMoreAsync(
+                            _input.ReadMoreKeyAsync,
+                            instructionCancellation.Token).ConfigureAwait(false);
                     }
                     catch (OperationCanceledException) when (Volatile.Read(ref _restartRequested) != 0 || Volatile.Read(ref _pendingRestore) is not null)
                     {

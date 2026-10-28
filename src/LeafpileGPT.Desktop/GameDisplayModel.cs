@@ -24,6 +24,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private string _promptText = ">";
     private string _upperWindowText = string.Empty;
     private bool _isUpperWindowVisible;
+    private bool _isMorePromptVisible;
+    private bool _hasStoryLoaded;
     private short _selectedWindow;
     private ZMachineTextStyle _textStyle;
     private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
@@ -39,6 +41,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     public event Action<GameDisplayTextSegment>? OutputSegmentAdded;
 
     public event Action? OutputCleared;
+
+    public event Action? PresentationReset;
 
     public string Location
     {
@@ -80,6 +84,18 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     {
         get => _isUpperWindowVisible;
         private set => SetProperty(ref _isUpperWindowVisible, value);
+    }
+
+    public bool IsMorePromptVisible
+    {
+        get => _isMorePromptVisible;
+        private set => SetProperty(ref _isMorePromptVisible, value);
+    }
+
+    public bool HasStoryLoaded
+    {
+        get => _hasStoryLoaded;
+        private set => SetProperty(ref _hasStoryLoaded, value);
     }
 
     public short SelectedWindow
@@ -163,12 +179,21 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         _hasTrueColours = true;
     }
 
-    public void ShowMorePrompt(bool visible) => PromptText = visible ? "-- MORE --" : ">";
+    public void ShowMorePrompt(bool visible)
+    {
+        IsMorePromptVisible = visible;
+        PromptText = visible ? "[MORE]" : ">";
+    }
+
+    public void SetStoryLoaded(bool loaded) => HasStoryLoaded = loaded;
 
     public void ResetPresentation()
     {
+        PresentationReset?.Invoke();
         ClearOutput();
+        InputText = string.Empty;
         SetStatusLine(string.Empty, "Score: 0  Moves: 0");
+        SetStoryLoaded(loaded: false);
         ShowMorePrompt(visible: false);
         IsUpperWindowVisible = false;
         SelectedWindow = 0;

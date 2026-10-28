@@ -3,7 +3,7 @@
              xmlns:desktop="using:LeafpileGPT.Desktop"
              x:Class="LeafpileGPT.Desktop.GameDisplayView"
              x:DataType="desktop:GameDisplayModel">
-  <Grid RowDefinitions="Auto,*,Auto" Background="#0066CC">
+  <Grid RowDefinitions="Auto,*" Background="#0066CC">
     <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5">
       <TextBlock Grid.Column="0"
                  Margin="12,4"
@@ -17,13 +17,14 @@
       <TextBlock Grid.Column="1"
                  Margin="12,4"
                  Text="{Binding RightStatus}"
+                 IsVisible="{Binding HasStoryLoaded}"
                  FontFamily="Courier New, Courier, monospace"
                  FontSize="16"
                  Foreground="#0066CC"
                  TextAlignment="Right"
                  VerticalAlignment="Center" />
     </Grid>
-    <Grid Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC">
+    <Grid x:Name="PlayArea" Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC" ClipToBounds="True">
       <Border Grid.Row="0" Padding="8"
               IsVisible="{Binding IsUpperWindowVisible}"
               Background="#0066CC">
@@ -39,35 +40,48 @@
                       Background="#0066CC"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
-          <TextBlock x:Name="TranscriptTextBlock"
-                     FontFamily="Courier New, Courier, monospace"
-                     FontSize="20"
-                     Foreground="White"
-                     TextWrapping="Wrap"
-                     VerticalAlignment="Bottom" />
+          <Grid MinHeight="{Binding Viewport.Height, ElementName=TranscriptScrollViewer}">
+            <TextBlock x:Name="TranscriptTextBlock"
+                       FontFamily="Courier New, Courier, monospace"
+                       FontSize="20"
+                       Foreground="White"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Bottom" />
+          </Grid>
         </ScrollViewer>
         <Canvas x:Name="PictureCanvas" IsHitTestVisible="False" />
-      </Grid>
-    </Grid>
-    <Border Grid.Row="2" Padding="8,4,8,8" Background="#0066CC">
-      <Grid ColumnDefinitions="Auto,*">
-        <TextBlock Text="{Binding PromptText}"
-                   Margin="0,0,2,0"
-                   FontFamily="Courier New, Courier, monospace"
-                   FontSize="20"
-                   Foreground="White"
-                   VerticalAlignment="Center" />
         <TextBox x:Name="PromptTextBox"
-                 Grid.Column="1"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="Bottom"
+                 Height="28"
+                 Margin="8"
                  Text="{Binding InputText, Mode=TwoWay}"
                  FontFamily="Courier New, Courier, monospace"
                  FontSize="20"
-                 Foreground="White"
+                 Foreground="Transparent"
+                 Opacity="0"
+                 CaretBrush="Transparent"
+                 SelectionBrush="Transparent"
                  Background="Transparent"
+                 BorderBrush="Transparent"
                  BorderThickness="0"
+                 FocusAdorner="{x:Null}"
                  Padding="0"
+                 VerticalContentAlignment="Center"
                  KeyDown="OnPromptKeyDown" />
+        <TextBlock Text="[MORE]"
+                   IsVisible="{Binding IsMorePromptVisible}"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Bottom"
+                   Margin="8"
+                   Padding="2,0"
+                   Background="#0066CC"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   FontFamily="Courier New, Courier, monospace"
+                   FontSize="20"
+                   IsHitTestVisible="False" />
       </Grid>
-    </Border>
+    </Grid>
   </Grid>
 </UserControl>

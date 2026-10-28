@@ -288,6 +288,54 @@ public sealed class ZMachineScreenModelTests
     }
 
     [Fact]
+    public async Task MorePromptWaitsForOutputBeyondAFullPage()
+    {
+        var screen = CreateState(5).OutputStreams.Screen;
+        screen.SetDimensions(80, 2, 80, 2);
+        var output = new List<string>();
+        var operations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = operations.Add;
+
+        screen.WriteText("a\nb\n", output.Add);
+
+        Assert.False(screen.IsWaitingForMore);
+        Assert.DoesNotContain(operations, operation => operation.Kind == ZMachineScreenOperationKind.MorePrompt);
+        Assert.Equal(new[] { "a\nb\n" }, output);
+
+        screen.WriteText("next page", output.Add);
+
+        Assert.True(screen.IsWaitingForMore);
+        Assert.Contains(operations, operation => operation.Kind == ZMachineScreenOperationKind.MorePrompt);
+        Assert.Equal(new[] { "a\nb\n" }, output);
+
+        await screen.WaitForMoreAsync(_ => ValueTask.FromResult((ushort)32), TestContext.Current.CancellationToken);
+
+        Assert.False(screen.IsWaitingForMore);
+        Assert.Equal(new[] { "a\nb\n", "next page" }, output);
+    }
+
+    [Fact]
+    public void MorePageStartsFreshWhenThePlayerSubmitsANewCommand()
+    {
+        var screen = CreateState(5).OutputStreams.Screen;
+        screen.SetDimensions(80, 4);
+        screen.SetMorePageLineLimit(3);
+
+        screen.WriteText("previous command\nmore previous output\n", null);
+        screen.ResetMorePageForCommand();
+        screen.WriteText("first response line\nsecond response line\n", null);
+
+        Assert.False(screen.IsWaitingForMore);
+
+        screen.WriteText("third response line\n", null);
+        Assert.False(screen.IsWaitingForMore);
+
+        screen.WriteText("fourth response line", null);
+
+        Assert.True(screen.IsWaitingForMore);
+    }
+
+    [Fact]
     public void ScreenOpcodesDispatchThroughTheExecutor()
     {
         var state = CreateState(5);

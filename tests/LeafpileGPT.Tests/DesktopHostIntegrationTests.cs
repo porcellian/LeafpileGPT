@@ -32,6 +32,16 @@ public sealed class DesktopHostIntegrationTests
     }
 
     [Fact]
+    public async Task DesktopInputProviderAcceptsAnyKeyForMorePrompt()
+    {
+        var provider = CreateInputProvider();
+        var read = provider.ReadMoreKeyAsync(TestContext.Current.CancellationToken).AsTask();
+        Assert.True(provider.SubmitMoreKey());
+
+        Assert.Equal((ushort)32, await read);
+    }
+
+    [Fact]
     public void DesktopEventServicesForwardSoundRequestsAndReportPlaybackUnavailable()
     {
         var services = new DesktopZMachineEventServices();
@@ -145,6 +155,8 @@ public sealed class DesktopHostIntegrationTests
         {
             await using (session)
             {
+                var screen = session.State.OutputStreams.Screen;
+                Assert.True(screen.MorePromptsEnabled);
                 session.Start();
                 await inputRequested.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
                 var save = await session.CaptureSaveStateAsync(TestContext.Current.CancellationToken);
@@ -155,6 +167,38 @@ public sealed class DesktopHostIntegrationTests
 
                 Assert.True(session.State.IsHalted);
                 Assert.Equal("look\n", display.Transcript);
+            }
+        }
+        finally
+        {
+            Directory.Delete(saveDirectory, recursive: true);
+            Directory.Delete(transcriptDirectory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task DesktopSessionKeepsMorePromptsEnabledAfterRestart()
+    {
+        var saveDirectory = CreateTemporaryDirectory();
+        var transcriptDirectory = CreateTemporaryDirectory();
+        var session = new DesktopGameSession(
+            StoryFile.Parse(StoryFixtureBuilder.Create(3)),
+            "fixture.z3",
+            new GameDisplayModel(),
+            _ => { },
+            saveDirectory,
+            transcriptDirectory,
+            dispatch: action => action());
+
+        try
+        {
+            await using (session)
+            {
+                Assert.True(session.State.OutputStreams.Screen.MorePromptsEnabled);
+
+                await session.RestartAsync(TestContext.Current.CancellationToken);
+
+                Assert.True(session.State.OutputStreams.Screen.MorePromptsEnabled);
             }
         }
         finally

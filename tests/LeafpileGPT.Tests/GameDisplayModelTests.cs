@@ -13,6 +13,7 @@ public sealed class GameDisplayModelTests
         Assert.Equal(string.Empty, model.Transcript);
         Assert.Equal(string.Empty, model.Location);
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
+        Assert.False(model.HasStoryLoaded);
     }
 
     [Fact]
@@ -35,9 +36,11 @@ public sealed class GameDisplayModelTests
         var model = new GameDisplayModel();
 
         model.SetStatusLine("West of House", "Score: 3  Moves: 12");
+        model.SetStoryLoaded(loaded: true);
 
         Assert.Equal("West of House", model.Location);
         Assert.Equal("Score: 3  Moves: 12", model.RightStatus);
+        Assert.True(model.HasStoryLoaded);
     }
 
     [Fact]
@@ -48,8 +51,13 @@ public sealed class GameDisplayModelTests
         model.AppendOutput("upper", window: 1);
         model.SetStatusLine("Old Room", "Score: 9  Moves: 15");
         model.ShowMorePrompt(visible: true);
+        Assert.True(model.IsMorePromptVisible);
+        Assert.Equal("[MORE]", model.PromptText);
         model.SetSelectedWindow(1);
         model.SetColours(0x0608);
+        model.InputText = "stale command";
+        var presentationResetRaised = false;
+        model.PresentationReset += () => presentationResetRaised = true;
 
         model.ResetPresentation();
 
@@ -58,8 +66,12 @@ public sealed class GameDisplayModelTests
         Assert.False(model.IsUpperWindowVisible);
         Assert.Equal(string.Empty, model.Location);
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
+        Assert.False(model.HasStoryLoaded);
         Assert.Equal(">", model.PromptText);
+        Assert.False(model.IsMorePromptVisible);
         Assert.Equal((short)0, model.SelectedWindow);
+        Assert.Equal(string.Empty, model.InputText);
+        Assert.True(presentationResetRaised);
     }
 
     [Fact]

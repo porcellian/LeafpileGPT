@@ -1,3 +1,4 @@
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Controls.Documents;
 using Avalonia.Input;
@@ -12,32 +13,146 @@ namespace LeafpileGPT.Desktop;
 public partial class GameDisplayView : UserControl
 {
     private readonly ScrollViewer _transcriptScrollViewer;
+    private readonly Grid _playArea;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
+    private readonly TextBox _promptTextBox;
+    private Run? _promptInputRun;
+    private Run? _blockCursorRun;
+    private bool _promptInputActive;
+    private bool _scrollToEndPending;
+    private DesktopScreenMetrics? _lastScreenMetrics;
+    private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
 
     public GameDisplayView()
     {
         AvaloniaXamlLoader.Load(this);
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
+        _playArea = this.FindControl<Grid>("PlayArea")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
+        _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
+        _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
+        _playArea.SizeChanged += (_, _) => PublishScreenMetrics();
+        _transcriptScrollViewer.SizeChanged += (_, _) => PublishScreenMetrics();
+        Loaded += (_, _) => PublishScreenMetrics();
+        _cursorBlinkTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(500) };
+        _cursorBlinkTimer.Tick += (_, _) =>
+        {
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = _blockCursorRun.Foreground == Brushes.White
+                    ? Brushes.Transparent
+                    : Brushes.White;
+            }
+        };
+        _promptTextBox.GotFocus += (_, _) =>
+        {
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = Brushes.White;
+            }
+
+            _cursorBlinkTimer.Start();
+        };
+        _promptTextBox.LostFocus += (_, _) =>
+        {
+            _cursorBlinkTimer.Stop();
+            if (_blockCursorRun is not null)
+            {
+                _blockCursorRun.Foreground = Brushes.Transparent;
+            }
+        };
+        Unloaded += (_, _) => _cursorBlinkTimer.Stop();
         Model = new GameDisplayModel();
         DataContext = Model;
         Model.OutputSegmentAdded += AppendOutputSegment;
-        Model.OutputCleared += () => _transcriptTextBlock.Inlines?.Clear();
+        Model.OutputCleared += OnOutputCleared;
+        Model.PresentationReset += EndPromptInput;
         Model.PropertyChanged += (_, args) =>
         {
-            if (args.PropertyName == nameof(GameDisplayModel.Transcript))
+            if (args.PropertyName == nameof(GameDisplayModel.InputText))
             {
-                Dispatcher.UIThread.Post(_transcriptScrollViewer.ScrollToEnd);
+                if (_promptInputRun is not null)
+                {
+                    _promptInputRun.Text = Model.InputText;
+                    RequestScrollToEnd();
+                }
+            }
+            else if (args.PropertyName == nameof(GameDisplayModel.Transcript))
+            {
+                RequestScrollToEnd();
             }
         };
     }
 
     public GameDisplayModel Model { get; }
 
-    public void FocusPrompt() => this.FindControl<TextBox>("PromptTextBox")?.Focus();
+    public event Action? MoreKeySubmitted;
+
+    public event Action<DesktopScreenMetrics>? ScreenMetricsChanged;
+
+    public void FocusPrompt() => _promptTextBox.Focus();
+
+    public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
+    {
+        var typeface = new Typeface(
+            _transcriptTextBlock.FontFamily,
+            _transcriptTextBlock.FontStyle,
+            _transcriptTextBlock.FontWeight,
+            FontStretch.Normal);
+        var sample = new FormattedText(
+            "M",
+            CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            typeface,
+            _transcriptTextBlock.FontSize,
+            Brushes.White);
+        var padding = _transcriptScrollViewer.Padding;
+        var contentWidth = _transcriptScrollViewer.Viewport.Width;
+        var contentHeight = _transcriptScrollViewer.Bounds.Height - padding.Top - padding.Bottom;
+        if (contentWidth <= 0 || contentHeight <= 0 || sample.WidthIncludingTrailingWhitespace <= 0 || sample.Height <= 0)
+        {
+            metrics = default;
+            return false;
+        }
+
+        metrics = DesktopScreenMetrics.FromViewport(
+            contentWidth,
+            contentHeight,
+            sample.WidthIncludingTrailingWhitespace,
+            sample.Height);
+        return true;
+    }
+
+    private void PublishScreenMetrics()
+    {
+        if (!TryGetScreenMetrics(out var metrics) || _lastScreenMetrics == metrics)
+        {
+            return;
+        }
+
+        _lastScreenMetrics = metrics;
+        ScreenMetricsChanged?.Invoke(metrics);
+    }
+
+    public void BeginPromptInput()
+    {
+        EndPromptInput();
+        _promptInputActive = true;
+        AddPromptInputRuns();
+    }
+
+    private void AddPromptInputRuns()
+    {
+        _promptInputRun = new Run(Model.InputText) { Foreground = Brushes.White };
+        _blockCursorRun = new Run("█") { Foreground = Brushes.White };
+        _transcriptTextBlock.Inlines?.Add(_promptInputRun);
+        _transcriptTextBlock.Inlines?.Add(_blockCursorRun);
+        _cursorBlinkTimer.Start();
+        RequestScrollToEnd();
+    }
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
     {
@@ -78,6 +193,7 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.MorePrompt:
                 Model.ShowMorePrompt(visible: true);
+                FocusPrompt();
                 break;
             case ZMachineScreenOperationKind.MorePromptCleared:
                 Model.ShowMorePrompt(visible: false);
@@ -90,7 +206,7 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.FlushDisplay:
             case ZMachineScreenOperationKind.FlushTextBuffer:
-                _transcriptScrollViewer.ScrollToEnd();
+                RequestScrollToEnd();
                 break;
         }
     }
@@ -108,10 +224,60 @@ public partial class GameDisplayView : UserControl
 
     private void OnPromptKeyDown(object? sender, KeyEventArgs e)
     {
+        if (Model.IsMorePromptVisible)
+        {
+            MoreKeySubmitted?.Invoke();
+            e.Handled = true;
+            return;
+        }
+
         if (e.Key == Key.Enter)
         {
             Model.SubmitCommand();
+            EndPromptInput();
             e.Handled = true;
+        }
+    }
+
+    private void OnOutputCleared()
+    {
+        var restorePrompt = _promptInputActive;
+        EndPromptInput();
+        _transcriptTextBlock.Inlines?.Clear();
+        if (restorePrompt)
+        {
+            _promptInputActive = true;
+            AddPromptInputRuns();
+        }
+    }
+
+    private void RequestScrollToEnd() => _scrollToEndPending = true;
+
+    private void OnTranscriptLayoutUpdated(object? sender, EventArgs e)
+    {
+        if (!_scrollToEndPending)
+        {
+            return;
+        }
+
+        _scrollToEndPending = false;
+        _transcriptScrollViewer.ScrollToEnd();
+    }
+
+    private void EndPromptInput()
+    {
+        _promptInputActive = false;
+        _cursorBlinkTimer.Stop();
+        if (_promptInputRun is not null)
+        {
+            _transcriptTextBlock.Inlines?.Remove(_promptInputRun);
+            _promptInputRun = null;
+        }
+
+        if (_blockCursorRun is not null)
+        {
+            _transcriptTextBlock.Inlines?.Remove(_blockCursorRun);
+            _blockCursorRun = null;
         }
     }
 
