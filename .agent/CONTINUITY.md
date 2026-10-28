@@ -3,6 +3,7 @@
 ## [PLANS]
 - 2026-10-28T02:34Z [USER] Implement the approved V1–V8 C# interpreter/Avalonia plan in one task branch and PR at a time; stop for user review/merge after each PR.
 - 2026-10-28T02:49Z [TOOL] Task 1 PR #1 merged; Task 2 is complete locally on `feature/2-solution-build-pipeline` and awaiting PR creation/review.
+- 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 status: PR #2 is open at https://github.com/porcellian/LeafpileGPT/pull/2; CI is running.
 
 ## [DECISIONS]
 - 2026-10-28T02:34Z [USER] Target .NET 10 LTS and Avalonia 12; xUnit; Windows/macOS/Linux.
@@ -20,3 +21,4 @@
 
 ## [OUTCOMES]
 - 2026-10-28T02:49Z [TOOL] Task 1 baseline was merged in PR #1. Task 2 scaffold and local checks are complete; PR #2 has not yet been created.
+- 2026-10-28T02:51Z [TOOL] Supersedes prior Task 2 PR status: Task 2 is committed as `610d0e6` with an additional continuity update, and PR #2 is open for review. Do not start Task 3 before the user merges PR #2.
