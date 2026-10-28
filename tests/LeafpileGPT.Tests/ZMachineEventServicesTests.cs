@@ -20,7 +20,7 @@ public sealed class ZMachineEventServicesTests
 
         var state = Start(story, services);
 
-        Assert.Equal((ushort)0x00A8, state.Memory.ReadWord(0x10));
+        Assert.Equal((ushort)0x00A0, state.Memory.ReadWord(0x10));
         Assert.Equal((byte)0x20, (byte)(state.Memory.ReadByte(1) & 0x20));
     }
 

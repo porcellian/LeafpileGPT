@@ -17,6 +17,7 @@ public sealed class BlorbFile
         ImmutableArray<byte> metadata,
         ushort releaseNumber,
         uint? frontispieceNumber,
+        BlorbPictureCatalog pictureCatalog,
         StoryFile? zCodeStory)
     {
         Chunks = chunks;
@@ -26,6 +27,7 @@ public sealed class BlorbFile
         Metadata = metadata;
         ReleaseNumber = releaseNumber;
         FrontispieceNumber = frontispieceNumber;
+        Pictures = pictureCatalog;
         Executables = resources.Where(resource => resource.Usage == "Exec").ToImmutableArray();
         SelectedExecutable = Executables.IsDefaultOrEmpty ? null : Executables[0];
         ZCodeStory = zCodeStory;
@@ -51,6 +53,9 @@ public sealed class BlorbFile
 
     /// <summary>Gets the optional frontispiece picture resource number.</summary>
     public uint? FrontispieceNumber { get; }
+
+    /// <summary>Gets validated picture resources and display hints.</summary>
+    public BlorbPictureCatalog Pictures { get; }
 
     /// <summary>Gets indexed executable resources in resource-index order.</summary>
     public ImmutableArray<BlorbResource> Executables { get; }
@@ -150,6 +155,8 @@ public sealed class BlorbFile
             }
         }
 
+        var pictures = new BlorbPictureCatalog(resources, chunks, release, frontispiece);
+
         return new BlorbFile(
             chunks,
             resources,
@@ -158,6 +165,7 @@ public sealed class BlorbFile
             metadata,
             release,
             frontispiece,
+            pictures,
             zCodeStory);
     }
 

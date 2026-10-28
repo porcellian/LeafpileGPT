@@ -24,6 +24,8 @@ public enum ZMachineScreenOperationKind
     SetWindowProperty,
     NewlineInterrupt,
     BufferScreen,
+    DrawPicture,
+    ErasePicture,
     FlushTextBuffer,
     FlushDisplay,
     MorePrompt,
@@ -52,7 +54,8 @@ public sealed record ZMachineScreenOperation(
     int Column = 0,
     string? Text = null,
     int SecondaryValue = 0,
-    bool FixedPitch = false);
+    bool FixedPitch = false,
+    BlorbPictureInfo? Picture = null);
 
 public sealed record ZMachineV6WindowSnapshot(
     short Window,
@@ -128,7 +131,11 @@ public sealed class ZMachineScreenModel
 
         if (Version >= 5)
         {
-            SetFlags2(CharacterGraphicsAvailableFlag, enabled: true);
+            if (Version == 5)
+            {
+                SetFlags2(CharacterGraphicsAvailableFlag, enabled: true);
+            }
+
             SetFlag(ColoursAvailableFlag, enabled: true);
             DefaultForegroundColour = 9;
             DefaultBackgroundColour = 2;
@@ -788,6 +795,28 @@ public sealed class ZMachineScreenModel
             ZMachineScreenOperationKind.ScrollWindow,
             Window: ResolveWindowNumber(window),
             Value: pixels));
+    }
+
+    /// <summary>Emits a host-renderable V6 picture operation at pixel coordinates.</summary>
+    public void DrawPicture(BlorbPictureInfo picture, ushort y, ushort x, bool erase)
+    {
+        ArgumentNullException.ThrowIfNull(picture);
+        if (Version != 6)
+        {
+            throw new ZMachineExecutionException("Picture opcodes are only available in version 6.");
+        }
+
+        var window = _v6Windows[SelectedWindow];
+        var cursorRow = window.Y + window.CursorY - 1;
+        var cursorColumn = window.X + window.CursorX - 1;
+        var row = y == 0 ? cursorRow : y;
+        var column = x == 0 ? cursorColumn : x;
+        OperationWriter?.Invoke(new ZMachineScreenOperation(
+            erase ? ZMachineScreenOperationKind.ErasePicture : ZMachineScreenOperationKind.DrawPicture,
+            Window: SelectedWindow,
+            Row: row,
+            Column: column,
+            Picture: picture));
     }
 
     public void ChangeWindowStyle(short window, ushort flags, ushort operation)

@@ -20,13 +20,16 @@ public sealed class ZMachineExecutionState
     private ZMachineExecutionState(
         ZMachineMemory memory,
         int maximumStackWords,
-        IZMachineEventServices eventServices)
+        IZMachineEventServices eventServices,
+        BlorbPictureCatalog? pictureCatalog)
     {
         Memory = memory;
         _maximumStackWords = maximumStackWords;
         EventServices = eventServices;
+        PictureCatalog = pictureCatalog;
         OutputStreams = new ZMachineOutputStreams(memory);
         OutputStreams.Screen.NewlineInterruptHandler = routine => RoutineCallRequested?.Invoke(routine);
+        InitializePictureCapabilities();
         InitializeEventCapabilities();
     }
 
@@ -36,6 +39,9 @@ public sealed class ZMachineExecutionState
 
     /// <summary>Host services for optional mouse, V6 menu, and sound features.</summary>
     public IZMachineEventServices EventServices { get; }
+
+    /// <summary>Optional Blorb picture resources and display hints for this game session.</summary>
+    public BlorbPictureCatalog? PictureCatalog { get; }
 
     /// <summary>Host callback used to execute a game routine requested by a VM event.</summary>
     public Action<ushort>? RoutineCallRequested { get; set; }
@@ -167,7 +173,8 @@ public sealed class ZMachineExecutionState
     public static ZMachineExecutionState Start(
         StoryFile story,
         int maximumStackWords = DefaultMaximumStackWords,
-        IZMachineEventServices? eventServices = null)
+        IZMachineEventServices? eventServices = null,
+        BlorbPictureCatalog? pictureCatalog = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         if (maximumStackWords < 1_024)
@@ -177,7 +184,7 @@ public sealed class ZMachineExecutionState
         }
 
         var state = new ZMachineExecutionState(
-            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance);
+            new ZMachineMemory(story), maximumStackWords, eventServices ?? NullZMachineEventServices.Instance, pictureCatalog);
         if (story.Header.Version == 6)
         {
             var routineAddress = ZMachineAddressing.InitialProgramCounterByteAddress(story.Header);
@@ -221,6 +228,21 @@ public sealed class ZMachineExecutionState
                 ? (byte)(flags1 | 0x20)
                 : (byte)(flags1 & ~0x20));
         }
+    }
+
+    private void InitializePictureCapabilities()
+    {
+        if (Version != 6)
+        {
+            return;
+        }
+
+        const byte pictureDisplayAvailable = 0x02;
+        var flags1 = Memory.ReadByte(0x01);
+        flags1 = PictureCatalog is { Count: > 0 }
+            ? (byte)(flags1 | pictureDisplayAvailable)
+            : (byte)(flags1 & ~pictureDisplayAvailable);
+        Memory.WriteByte(0x01, flags1);
     }
 
     public void SetProgramCounter(uint byteAddress)
