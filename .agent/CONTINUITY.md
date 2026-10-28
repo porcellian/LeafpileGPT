@@ -67,6 +67,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-28T19:45Z [TOOL] Commit `4baceb0` is pushed on `fix/inline-command-prompt`; PR #31 is open at https://github.com/porcellian/LeafpileGPT/pull/31. User README edits are included. Wait for review and merge; Task 27 remains paused.
 - 2026-10-28T19:43Z [TOOL] `fix/inline-command-prompt` is ready for review: the TextBox surface/focus visuals are suppressed, an inline text display and 500 ms blinking block cursor are added, and the user's README edits remain. Formatter passes, Release build has 0 warnings/errors, 510 xUnit tests pass, and `git diff --check` passes; commit and PR remain.
 - 2026-10-28T19:33Z [USER] Supersedes the prior Task 26 PR status: PR #30 is merged; wait for the user to resume before starting Task 27.
 - 2026-10-28T19:27Z [TOOL] Supersedes the prior Task 26 status: commit `bd4fb00` is pushed and PR #30 is open at https://github.com/porcellian/LeafpileGPT/pull/30. Wait for user review and merge before Task 27.
