@@ -14,11 +14,13 @@ public enum ZMachineMemoryRegion
 public sealed class ZMachineMemory
 {
     private readonly byte[] _bytes;
+    private readonly byte[] _originalBytes;
 
     public ZMachineMemory(StoryFile story)
     {
         ArgumentNullException.ThrowIfNull(story);
         _bytes = story.Bytes.ToArray();
+        _originalBytes = _bytes.ToArray();
         Header = story.Header;
     }
 
@@ -81,6 +83,24 @@ public sealed class ZMachineMemory
         ValidateDynamicRange(byteAddress, sizeof(ushort));
         BinaryPrimitives.WriteUInt16BigEndian(_bytes.AsSpan(byteAddress, sizeof(ushort)), value);
     }
+
+    /// <summary>Returns a copy of dynamic memory for a Quetzal save.</summary>
+    public byte[] CaptureDynamicMemory() => _bytes.AsSpan(0, StaticMemoryBase).ToArray();
+
+    /// <summary>Restores exactly the dynamic-memory region, leaving static and high memory untouched.</summary>
+    public void RestoreDynamicMemory(ReadOnlySpan<byte> dynamicMemory)
+    {
+        if (dynamicMemory.Length != StaticMemoryBase)
+        {
+            throw new ArgumentException(
+                $"Dynamic memory must contain exactly {StaticMemoryBase} bytes.", nameof(dynamicMemory));
+        }
+
+        dynamicMemory.CopyTo(_bytes);
+    }
+
+    /// <summary>Restores the complete original story image for a restart.</summary>
+    public void RestoreOriginalStory() => _originalBytes.CopyTo(_bytes, 0);
 
     /// <summary>
     /// Reads a byte by the VM's full internal byte address, including high memory. Game memory

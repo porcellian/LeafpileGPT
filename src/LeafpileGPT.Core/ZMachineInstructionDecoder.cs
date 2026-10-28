@@ -131,6 +131,7 @@ public sealed class ZMachineInstructionDecoder
 
     private DecodedBranch ReadBranch(ref uint cursor, uint start)
     {
+        var descriptorAddress = cursor;
         var first = ReadByte(ref cursor, start);
         var branchOnTrue = (first & 0x80) != 0;
         short offset;
@@ -147,7 +148,8 @@ public sealed class ZMachineInstructionDecoder
 
         if (offset is 0 or 1)
         {
-            return new DecodedBranch(branchOnTrue, offset, null, offset == 1);
+            return new DecodedBranch(branchOnTrue, offset, null, offset == 1,
+                descriptorAddress, checked((byte)(cursor - descriptorAddress)));
         }
 
         var target = (long)cursor + offset - 2;
@@ -156,7 +158,8 @@ public sealed class ZMachineInstructionDecoder
             throw new ZMachineInstructionException(start, $"Branch target 0x{target:X} lies outside the story image.");
         }
 
-        return new DecodedBranch(branchOnTrue, offset, (uint)target, null);
+        return new DecodedBranch(branchOnTrue, offset, (uint)target, null,
+            descriptorAddress, checked((byte)(cursor - descriptorAddress)));
     }
 
     private ImmutableArray<byte> ReadInlineText(ref uint cursor, uint start)
