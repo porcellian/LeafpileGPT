@@ -124,3 +124,4 @@
 - 2026-10-28T14:59Z [TOOL] Supersedes prior Task 12 status: PR #16 is merged as `9b97d8b`; Task 13 implementation has started on its dedicated branch.
 - 2026-10-28T15:02Z [TOOL] Task 13 adds story-memory filename decoding, filename normalization, and host-rooted read/write storage with generated xUnit coverage. Formatting, Release build (zero warnings/errors), all 359 xUnit tests, and `git diff --check` pass.
 - 2026-10-28T15:03Z [TOOL] Supersedes the prior Task 13 verification count: filename normalization is now idempotent even for an empty extension; a regression case was added. Formatting, Release build (zero warnings/errors), all 360 xUnit tests, and `git diff --check` pass.
+- 2026-10-28T15:03Z [TOOL] Task 13 is committed as `aac6034`, pushed, and PR #17 is open at https://github.com/porcellian/LeafpileGPT/pull/17. GitHub had not reported CI checks at the time of inspection; wait for user review/merge before Task 14.
