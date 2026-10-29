@@ -23,7 +23,9 @@ public partial class MainWindow : Window
     private MenuItem _firstErrorMenuItem = null!;
     private MenuItem _everyErrorMenuItem = null!;
     private MenuItem _stopOnErrorMenuItem = null!;
+    private MenuItem _viewInstructionsMenuItem = null!;
     private RuntimeErrorsWindow? _errorsWindow;
+    private InstructionAuditWindow? _instructionsWindow;
 
     public MainWindow()
     {
@@ -39,6 +41,7 @@ public partial class MainWindow : Window
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
         _gameDisplay.MoreKeySubmitted += () => _session?.SubmitMoreKey();
         _gameDisplay.ScreenMetricsChanged += OnScreenMetricsChanged;
+        _viewInstructionsMenuItem = this.FindControl<MenuItem>("ViewInstructionsMenuItem")!;
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;
@@ -82,6 +85,8 @@ public partial class MainWindow : Window
             _story = story;
             _session = session;
             _storyPath = fullPath;
+            _viewInstructionsMenuItem.IsEnabled = true;
+            _instructionsWindow?.SetSession(session, fullPath);
             session.EventServices.SoundEffectRequested += OnSoundEffectRequested;
             session.InputRequested += _ => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
@@ -326,6 +331,28 @@ public partial class MainWindow : Window
         _errorsWindow.Show(this);
     }
 
+    private void OnViewInstructionsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (_session is null || _storyPath is null)
+        {
+            return;
+        }
+
+        if (_instructionsWindow is { IsVisible: true })
+        {
+            _instructionsWindow.SetSession(_session, _storyPath);
+            _instructionsWindow.Activate();
+            return;
+        }
+
+        _instructionsWindow = new InstructionAuditWindow(_appDataPaths.AuditsDirectory);
+        _instructionsWindow.SetSession(_session, _storyPath);
+        var scale = Screens.ScreenFromWindow(this)?.Scaling ?? 1;
+        _instructionsWindow.Position = new Avalonia.PixelPoint(Position.X + (int)Math.Ceiling(Width * scale), Position.Y);
+        _instructionsWindow.Closed += (_, _) => _instructionsWindow = null;
+        _instructionsWindow.Show(this);
+    }
+
     private void OnSuppressErrorsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
         SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.SuppressReports);
 
@@ -359,6 +386,9 @@ public partial class MainWindow : Window
             await _session.DisposeAsync();
             _session = null;
         }
+
+        _viewInstructionsMenuItem.IsEnabled = false;
+        _instructionsWindow?.SetSession(null, null);
     }
 
     private async Task ObserveSessionCompletionAsync(DesktopGameSession session)

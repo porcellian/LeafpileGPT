@@ -25,6 +25,9 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
 
     public event Action<ZMachineLineInputRequest>? LineInputRequested;
 
+    /// <summary>Raised when a submitted line has been consumed by a line-input instruction.</summary>
+    public event Action<string>? InputConsumed;
+
     /// <summary>Queues a submitted line, including an empty line, for the next VM input request.</summary>
     public bool SubmitLine(string line)
     {
@@ -43,6 +46,7 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
         var line = await ReadSubmittedLineAsync(
             cancellationToken,
             () => LineInputRequested?.Invoke(request)).ConfigureAwait(false);
+        InputConsumed?.Invoke(line);
         return new ZMachineLineInputResult(line, 13);
     }
 
@@ -51,6 +55,7 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
         var line = await ReadSubmittedLineAsync(cancellationToken).ConfigureAwait(false);
         if (line.Length == 0)
         {
+            InputConsumed?.Invoke("[Return]");
             return 13;
         }
 
@@ -59,6 +64,7 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
             throw new InvalidOperationException($"Character U+{(int)line[0]:X4} cannot be entered by the Z-machine keyboard.");
         }
 
+        InputConsumed?.Invoke(line[0].ToString());
         return character;
     }
 

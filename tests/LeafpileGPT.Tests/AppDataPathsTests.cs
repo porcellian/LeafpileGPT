@@ -16,6 +16,7 @@ public sealed class AppDataPathsTests
         Assert.Equal(Path.Combine(paths.RootDirectory, "Save"), paths.SaveDirectory);
         Assert.Equal(Path.Combine(paths.RootDirectory, "Preferences"), paths.PreferencesDirectory);
         Assert.Equal(Path.Combine(paths.RootDirectory, "Logs"), paths.LogsDirectory);
+        Assert.Equal(Path.Combine(paths.RootDirectory, "Audits"), paths.AuditsDirectory);
         Assert.True(Directory.Exists(paths.SaveDirectory));
         Assert.True(Directory.Exists(paths.PreferencesDirectory));
         Assert.Equal(Path.Combine(paths.PreferencesDirectory, "preferences.json"), paths.PreferencesFilePath);
