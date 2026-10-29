@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T04:13Z [TOOL] PR #38 remains open; revised the Zork II PDF to match the Zork I guide and added that visual/editorial style as the standard for all remaining walkthroughs. Diff review, commit, and push of the update remain.
+- 2026-10-29T04:13Z [TOOL] The Zork II style revision is pushed as `c23cda6` to existing PR #38. `TASKS.md` now requires the Zork I visual/editorial style for all remaining walkthroughs; await user review and merge.
 - 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` is pushed and PR #38 is open at `https://github.com/porcellian/LeafpileGPT/pull/38`; await user review and merge before Task 33.
 - 2026-10-29T03:32Z [USER] Supersedes the PR #37 open-review state: PR #37 is merged; Task 32 is active on `feature/32-zork-ii-walkthrough` from updated `origin/main`.
 - 2026-10-29T03:25Z [TOOL] Supersedes the local Task 31 state: commit `f8dbf12` is pushed and PR #37 is open at `https://github.com/porcellian/LeafpileGPT/pull/37`; Windows, macOS, and Ubuntu checks are running. Wait for user review and merge.
