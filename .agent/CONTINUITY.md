@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T16:46Z [TOOL] A temporary untracked probe loaded the local `mind.z4` and `mind.ifzs` through the updated core; restore resumes at `0x00D7F9` with writable buffers `0x742B` and `0x715B` (1/1 passed). The probe was removed; story and save remain local. The 604-test generated suite also passes.
 - 2026-10-29T16:45Z [TOOL] Supersedes the awaiting-push status below: commits `d32be11` and `fa36dbd` are pushed to PR #41 at `https://github.com/porcellian/LeafpileGPT/pull/41`; PR remains OPEN. `gh pr checks` reports no checks yet.
 - 2026-10-29T16:45Z [TOOL] Supersedes the uncommitted status below: the restore checkpoint fix is committed as `d32be11` on PR #41's branch. The branch is one commit ahead of origin and awaits push; PR #41 remains open.
 - 2026-10-29T16:44Z [TOOL] PR #41 follow-up fixes V4 Mind in-game restore from a desktop checkpoint: desktop Quetzal saves carry an `LPUI` marker, and unmarked legacy snapshots at input opcodes resume there without applying VM save-result semantics. The local `mind.ifzs` snapshot saved PC `0x00D7F9` at `sread`; its decoded globals point to dynamic buffers `0x742B` and `0x715B`. Release build, formatting, and all 604 xUnit tests pass. Changes are not yet committed or pushed.
