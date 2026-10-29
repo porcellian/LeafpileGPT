@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T04:03Z [TOOL] Task 32 is complete locally on `feature/32-zork-ii-walkthrough`; PDF, replay route, compressed trace, and checkbox are ready for final review, commit, and PR. Pause after PR for user review/merge.
+- 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` is pushed and PR #38 is open at `https://github.com/porcellian/LeafpileGPT/pull/38`; await user review and merge before Task 33.
 - 2026-10-29T03:32Z [USER] Supersedes the PR #37 open-review state: PR #37 is merged; Task 32 is active on `feature/32-zork-ii-walkthrough` from updated `origin/main`.
 - 2026-10-29T03:25Z [TOOL] Supersedes the local Task 31 state: commit `f8dbf12` is pushed and PR #37 is open at `https://github.com/porcellian/LeafpileGPT/pull/37`; Windows, macOS, and Ubuntu checks are running. Wait for user review and merge.
 - 2026-10-29T03:22Z [TOOL] Task 31 is complete locally: Zork I Release 88 reaches 350/350, Stone Barrow, and zero deaths; walkthrough PDF is authored, ignored route/trace are verified, and PR preparation remains.
@@ -214,7 +214,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
-- 2026-10-29T04:03Z [TOOL] Task 32 authored the 400/400 Zork II guide with 57 opcode rows. Fresh deterministic replay: Halted, 405 commands, 396,470 VM instructions, no deaths; ignored route and 396,470-row compressed trace are saved locally.
+- 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` and PR #38 include the Zork II guide, completed checkbox, and replay findings. PR is open; stop for user review and merge.
 - 2026-10-29T03:25Z [TOOL] Task 31 commit `f8dbf12` is pushed to `feature/31-zork-i-walkthrough`; PR #37 is open for review, with cross-platform CI in progress.
 - 2026-10-29T03:22Z [TOOL] Task 31 authored `walkthroughs/zork-i-the-great-underground-empire.pdf` with the original route steps and all 59 executed opcode rows (form, opcode, mnemonic, count, first sequence, first PC). Replay result: Halted, 405 commands, 417,780 instructions, score 350/350, ending reached, zero deaths.
 - 2026-10-29T03:05Z [USER] PR #36 is merged. The Story Hex Viewer is recorded as an unchecked, unnumbered Future Task; implementation remains deferred.
