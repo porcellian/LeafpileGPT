@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T04:13Z [TOOL] PR #38 remains open; revised the Zork II PDF to match the Zork I guide and added that visual/editorial style as the standard for all remaining walkthroughs. Diff review, commit, and push of the update remain.
 - 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` is pushed and PR #38 is open at `https://github.com/porcellian/LeafpileGPT/pull/38`; await user review and merge before Task 33.
 - 2026-10-29T03:32Z [USER] Supersedes the PR #37 open-review state: PR #37 is merged; Task 32 is active on `feature/32-zork-ii-walkthrough` from updated `origin/main`.
 - 2026-10-29T03:25Z [TOOL] Supersedes the local Task 31 state: commit `f8dbf12` is pushed and PR #37 is open at `https://github.com/porcellian/LeafpileGPT/pull/37`; Windows, macOS, and Ubuntu checks are running. Wait for user review and merge.
@@ -71,6 +72,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T04:13Z [USER] All remaining game walkthrough PDFs must follow the visual and editorial style of the Zork I walkthrough; Zork II is being revised to match.
 - 2026-10-29T02:36Z [CODE] Task 30 builds immutable story-info snapshots from parsed source/container bytes and a 64-byte runtime-header copy captured under the desktop session gate; the UI never accesses VM memory. Source SHA-256 values identify the exact supplied bytes, while loaded-image hashes identify trimmed executable bytes.
 - 2026-10-29T02:22Z [CODE] Task 29 stores numeric PCs and typed immutable opcode metadata per session; command lines are added when consumed by the VM. Viewer callbacks are isolated from execution, and the UI appends only newly recorded rows.
 - 2026-10-29T02:09Z [CODE] Default recoverable VM execution/memory errors continue at the decoded next PC; stop-on-any escalates them to blocking. Fatal decoder/host failures and errors explicitly marked fatal stop and notify under every policy. Runtime error policy persists in Preferences; JSONL logging is lazy and failure-isolated.
