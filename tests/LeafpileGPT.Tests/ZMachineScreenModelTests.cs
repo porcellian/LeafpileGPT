@@ -82,6 +82,34 @@ public sealed class ZMachineScreenModelTests
     }
 
     [Fact]
+    public void V4CursorRequestImplicitlyExpandsUpperWindowWhenPositionFitsScreen()
+    {
+        var screen = CreateState(4).OutputStreams.Screen;
+        screen.SetDimensions(80, 25);
+        var operations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = operations.Add;
+        screen.SetWindow(1);
+
+        screen.SetCursor(1, 67);
+
+        Assert.Equal(1, screen.UpperWindowHeight);
+        Assert.Equal(new ZMachineCursorPosition(1, 67), screen.CurrentCursor);
+        Assert.Contains(operations, operation =>
+            operation.Kind == ZMachineScreenOperationKind.SplitWindow && operation.Value == 1);
+    }
+
+    [Fact]
+    public void V4CursorRequestOutsideAvailableScreenStillFails()
+    {
+        var screen = CreateState(4).OutputStreams.Screen;
+        screen.SetDimensions(80, 5);
+        screen.SetWindow(1);
+
+        Assert.Throws<ZMachineExecutionException>(() => screen.SetCursor(6, 67));
+        Assert.Equal(0, screen.UpperWindowHeight);
+    }
+
+    [Fact]
     public void V4LowerWindowScrollsAndKeepsItsCursorOnTheBottomLine()
     {
         var screen = CreateState(4).OutputStreams.Screen;

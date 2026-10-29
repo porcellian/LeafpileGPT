@@ -91,8 +91,37 @@ public sealed record QuetzalSaveData(
 /// <summary>Reads and writes Quetzal IFZS save images.</summary>
 public static class QuetzalCodec
 {
+    /// <summary>FourCC used to mark a save created by the desktop host outside a VM save opcode.</summary>
+    public const string HostCheckpointChunkType = "LPUI";
+    private const byte HostCheckpointChunkVersion = 1;
+
     private static readonly ImmutableHashSet<string> CoreChunkTypes =
         ImmutableHashSet.Create(StringComparer.Ordinal, "IFhd", "CMem", "UMem", "Stks");
+
+    /// <summary>Marks a desktop-created checkpoint so an in-game restore resumes it as a checkpoint.</summary>
+    public static QuetzalSaveData MarkAsHostCheckpoint(QuetzalSaveData save)
+    {
+        ArgumentNullException.ThrowIfNull(save);
+        if (IsHostCheckpoint(save))
+        {
+            return save;
+        }
+
+        return save with
+        {
+            AdditionalChunks = save.AdditionalChunks.Add(new QuetzalChunk(
+                HostCheckpointChunkType, ImmutableArray.Create(HostCheckpointChunkVersion)))
+        };
+    }
+
+    /// <summary>Checks for the optional marker on checkpoints produced by the desktop host.</summary>
+    public static bool IsHostCheckpoint(QuetzalSaveData save)
+    {
+        ArgumentNullException.ThrowIfNull(save);
+        return save.AdditionalChunks.Any(chunk => chunk.Type == HostCheckpointChunkType
+            && chunk.Data.Length == 1
+            && chunk.Data[0] == HostCheckpointChunkVersion);
+    }
 
     public static byte[] Encode(
         QuetzalSaveData save,

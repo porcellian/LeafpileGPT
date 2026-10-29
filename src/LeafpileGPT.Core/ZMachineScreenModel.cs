@@ -420,10 +420,21 @@ public sealed class ZMachineScreenModel
             return;
         }
 
-        if (row == 0 || row > UpperWindowHeight || column == 0 || column > WidthInCharacters)
+        if (row == 0 || column == 0 || column > WidthInCharacters)
         {
             throw new ZMachineExecutionException(
                 $"Cursor position ({row},{column}) lies outside upper window dimensions {UpperWindowHeight}x{WidthInCharacters}.");
+        }
+
+        if (row > UpperWindowHeight)
+        {
+            if (row > MaximumUpperWindowHeight)
+            {
+                throw new ZMachineExecutionException(
+                    $"Cursor position ({row},{column}) lies outside upper window dimensions {UpperWindowHeight}x{WidthInCharacters}.");
+            }
+
+            SplitWindow(row);
         }
 
         _cursors[window].Set(row, column);
@@ -432,6 +443,36 @@ public sealed class ZMachineScreenModel
             Window: window,
             Row: row,
             Column: column));
+    }
+
+    /// <summary>Resets transient paging state while retaining screen state that Quetzal does not save.</summary>
+    public void ResetAfterRestore()
+    {
+        _linesSinceMorePrompt = 0;
+        _morePending = false;
+        IsWaitingForMore = false;
+        _queuedText.Clear();
+        MorePromptsEnabled = true;
+        _lowerBufferingEnabled = true;
+        _screenUpdatesBuffered = false;
+
+        if (Version == 3)
+        {
+            SplitWindow(0);
+            SetWindow(0);
+            _cursors[0].Set(LowerWindowBottom, 1);
+        }
+
+        if (Version is >= 3 and <= 5)
+        {
+            OperationWriter?.Invoke(new ZMachineScreenOperation(
+                ZMachineScreenOperationKind.ClearWindow,
+                Window: 0));
+        }
+        else
+        {
+            OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
+        }
     }
 
     public void SetV6Cursor(ushort row, ushort column, short window = -3)

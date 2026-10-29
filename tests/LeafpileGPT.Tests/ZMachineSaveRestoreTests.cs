@@ -114,6 +114,88 @@ public sealed class ZMachineSaveRestoreTests
         Assert.Equal((ushort)2, state.ReadVariable(16));
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void RestoreOpcodeResumesAtInputForHostCheckpoints(bool markedCheckpoint)
+    {
+        const uint inputPc = 850;
+        var storyBytes = StoryFixtureBuilder.Create(4);
+        storyBytes[inputPc] = 0xE4;
+        storyBytes[inputPc + 1] = 0xAF;
+        storyBytes[inputPc + 2] = 149;
+        storyBytes[inputPc + 3] = 92;
+        storyBytes[400] = 1;
+        storyBytes[500] = 4;
+        StoryFixtureBuilder.WriteWord(storyBytes, 64 + (149 - 16) * 2, 400);
+        StoryFixtureBuilder.WriteWord(storyBytes, 64 + (92 - 16) * 2, 500);
+        StoryFixtureBuilder.WriteWord(storyBytes, 64 + (228 - 16) * 2, 0xBEEF);
+        StoryFixtureBuilder.WriteWord(storyBytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(storyBytes));
+        var story = StoryFile.Parse(storyBytes);
+        var store = new MemorySaveStore();
+        var state = ZMachineExecutionState.Start(story, saveStore: store);
+        var savedState = state.CaptureSaveState(inputPc);
+        if (markedCheckpoint)
+        {
+            savedState = QuetzalCodec.MarkAsHostCheckpoint(savedState);
+        }
+
+        store.SetImage(QuetzalCodec.Encode(savedState, story));
+        state.WriteVariable(92, 0x8BD4);
+        state.WriteVariable(228, 0x1234);
+
+        new ZMachineOpcodeExecutor().Execute(Instruction("restore", store: 17, nextPc: 862), state);
+
+        Assert.True(state.LastRestoreWasHostCheckpoint);
+        Assert.Equal(inputPc, state.ProgramCounter);
+        Assert.Equal((ushort)500, state.ReadVariable(92));
+        Assert.Equal((ushort)0xBEEF, state.ReadVariable(228));
+        state.Memory.ValidateWritableRange(state.ReadVariable(149), 3);
+        state.Memory.ValidateWritableRange(state.ReadVariable(92), 18);
+    }
+
+    [Fact]
+    public void RestorePreservesV4ScreenLayoutAndCursorState()
+    {
+        var state = ZMachineExecutionState.Start(CreateStory(4));
+        var screen = state.OutputStreams.Screen;
+        var screenOperations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = screenOperations.Add;
+        screen.SetDimensions(80, 25);
+        screen.SplitWindow(2);
+        screen.SetWindow(1);
+        screen.SetCursor(2, 67);
+        var save = state.CaptureSaveState(850);
+        screenOperations.Clear();
+
+        state.ApplySaveState(save);
+
+        Assert.Same(screen, state.OutputStreams.Screen);
+        Assert.Equal(2, screen.UpperWindowHeight);
+        Assert.Equal((short)1, screen.SelectedWindow);
+        Assert.Equal(new ZMachineCursorPosition(2, 67), screen.CurrentCursor);
+        Assert.Contains(screenOperations, operation =>
+            operation.Kind == ZMachineScreenOperationKind.ClearWindow && operation.Window == 0);
+        Assert.DoesNotContain(screenOperations, operation => operation.Kind == ZMachineScreenOperationKind.ClearScreen);
+    }
+
+    [Fact]
+    public void RestoreCollapsesV3UpperWindowAsRequiredByTheStandard()
+    {
+        var state = ZMachineExecutionState.Start(CreateStory(3));
+        var screen = state.OutputStreams.Screen;
+        screen.SetDimensions(80, 25);
+        screen.SplitWindow(2);
+        screen.SetWindow(1);
+        var save = state.CaptureSaveState(850);
+
+        state.ApplySaveState(save);
+
+        Assert.Equal(0, screen.UpperWindowHeight);
+        Assert.Equal((short)0, screen.SelectedWindow);
+        Assert.Equal(new ZMachineCursorPosition(25, 1), screen.GetCursor(0));
+    }
+
     [Fact]
     public void ExtendedSavePassesSaveAreaFilenameAndPromptToHostStore()
     {

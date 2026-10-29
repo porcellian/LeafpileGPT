@@ -66,6 +66,13 @@ public sealed class DesktopGameSession : IAsyncDisposable
             pictureCatalog: blorb?.Pictures,
             soundCatalog: blorb?.Sounds,
             saveStore: SaveStore);
+        EventServices.SoundPlaybackUnavailable += message =>
+        {
+            _runtimeErrors.ReportHostWarning(
+                new ZMachineExecutionException(message),
+                _gameIdentity,
+                State.ProgramCounter);
+        };
         _input = new DesktopInputProvider(State.Memory)
         {
             BeforeInputWaitAsync = ReleaseStateForInputAsync,
@@ -178,7 +185,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             {
                 InstructionAudit.BeginCommand("Restore");
                 State.ApplySaveState(save);
-                Dispatch(ResetDisplay);
+                Dispatch(_display.ResetAfterRestore);
             }
             else
             {
@@ -261,6 +268,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
         }
 
         _transcript.Dispose();
+        EventServices.Dispose();
         _shutdown.Dispose();
         _stateGate.Dispose();
     }
@@ -282,7 +290,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     {
                         InstructionAudit.BeginCommand("Restore");
                         State.ApplySaveState(restore.Save);
-                        Dispatch(ResetDisplay);
+                        Dispatch(_display.ResetAfterRestore);
                         restore.Completion.TrySetResult();
                         continue;
                     }
