@@ -428,13 +428,17 @@ public sealed class ZMachineScreenModel
 
         if (row > UpperWindowHeight)
         {
-            if (row > MaximumUpperWindowHeight)
+            // Some legacy stories request a cursor row based on a taller screen than
+            // the current display provides. Grow the upper window when possible; if
+            // it cannot reach that row, use the last available screen row so the
+            // story can continue without losing the entire cursor operation.
+            var availableRow = Math.Min(row, MaximumUpperWindowHeight);
+            if (availableRow > UpperWindowHeight)
             {
-                throw new ZMachineExecutionException(
-                    $"Cursor position ({row},{column}) lies outside upper window dimensions {UpperWindowHeight}x{WidthInCharacters}.");
+                SplitWindow(checked((ushort)availableRow));
             }
 
-            SplitWindow(row);
+            row = checked((ushort)availableRow);
         }
 
         _cursors[window].Set(row, column);
