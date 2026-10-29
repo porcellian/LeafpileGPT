@@ -30,6 +30,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private int _storyVersion = 5;
     private readonly List<List<string>> _upperWindowRows = [];
     private bool _isUpperWindowVisible;
+    private bool _isStatusStripVisible;
     private bool _isMorePromptVisible;
     private bool _hasStoryLoaded;
     private short _selectedWindow;
@@ -90,6 +91,12 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     {
         get => _isUpperWindowVisible;
         private set => SetProperty(ref _isUpperWindowVisible, value);
+    }
+
+    public bool IsStatusStripVisible
+    {
+        get => _isStatusStripVisible;
+        private set => SetProperty(ref _isStatusStripVisible, value);
     }
 
     public int UpperWindowHeight
@@ -209,7 +216,11 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         IsUpperWindowVisible = height > 0;
     }
 
-    public void SetStoryVersion(int version) => _storyVersion = version;
+    public void SetStoryVersion(int version)
+    {
+        _storyVersion = version;
+        UpdateStatusStripVisibility();
+    }
 
     public void SetUpperWindowWidth(int width) => _upperWindowWidth = Math.Max(1, width);
 
@@ -359,7 +370,13 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         PromptText = visible ? "[MORE]" : ">";
     }
 
-    public void SetStoryLoaded(bool loaded) => HasStoryLoaded = loaded;
+    public void SetStoryLoaded(bool loaded)
+    {
+        HasStoryLoaded = loaded;
+        UpdateStatusStripVisibility();
+    }
+
+    private void UpdateStatusStripVisibility() => IsStatusStripVisible = HasStoryLoaded && _storyVersion is >= 1 and <= 3;
 
     public void ResetPresentation()
     {

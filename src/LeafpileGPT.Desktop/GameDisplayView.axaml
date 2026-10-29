@@ -4,7 +4,8 @@
              x:Class="LeafpileGPT.Desktop.GameDisplayView"
              x:DataType="desktop:GameDisplayModel">
   <Grid RowDefinitions="Auto,*" Background="#0066CC">
-    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5">
+    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5"
+          IsVisible="{Binding IsStatusStripVisible}">
       <TextBlock Grid.Column="0"
                  Margin="12,4"
                  Text="{Binding Location}"

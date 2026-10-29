@@ -14,6 +14,7 @@ public sealed class GameDisplayModelTests
         Assert.Equal(string.Empty, model.Location);
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
         Assert.False(model.HasStoryLoaded);
+        Assert.False(model.IsStatusStripVisible);
     }
 
     [Fact]
@@ -40,12 +41,51 @@ public sealed class GameDisplayModelTests
     {
         var model = new GameDisplayModel();
 
+        model.SetStoryVersion(3);
         model.SetStatusLine("West of House", "Score: 3  Moves: 12");
         model.SetStoryLoaded(loaded: true);
 
         Assert.Equal("West of House", model.Location);
         Assert.Equal("Score: 3  Moves: 12", model.RightStatus);
         Assert.True(model.HasStoryLoaded);
+        Assert.True(model.IsStatusStripVisible);
+    }
+
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(2, true)]
+    [InlineData(3, true)]
+    [InlineData(4, false)]
+    [InlineData(5, false)]
+    [InlineData(6, false)]
+    [InlineData(7, false)]
+    [InlineData(8, false)]
+    public void StatusStripVisibilityMatchesStandardStatusLineVersions(int version, bool expected)
+    {
+        var model = new GameDisplayModel();
+
+        model.SetStoryVersion(version);
+        model.SetStoryLoaded(loaded: true);
+
+        Assert.Equal(expected, model.IsStatusStripVisible);
+    }
+
+    [Fact]
+    public void StatusStripVisibilityUpdatesWhenStoryVersionChanges()
+    {
+        var model = new GameDisplayModel();
+        model.SetStoryLoaded(loaded: true);
+        model.SetStoryVersion(3);
+        Assert.True(model.IsStatusStripVisible);
+
+        model.SetStoryVersion(4);
+        Assert.False(model.IsStatusStripVisible);
+
+        model.SetStoryVersion(1);
+        Assert.True(model.IsStatusStripVisible);
+
+        model.SetStoryLoaded(loaded: false);
+        Assert.False(model.IsStatusStripVisible);
     }
 
     [Fact]
@@ -74,6 +114,7 @@ public sealed class GameDisplayModelTests
         Assert.Equal(string.Empty, model.Location);
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
         Assert.False(model.HasStoryLoaded);
+        Assert.False(model.IsStatusStripVisible);
         Assert.Equal(">", model.PromptText);
         Assert.False(model.IsMorePromptVisible);
         Assert.Equal((short)0, model.SelectedWindow);
