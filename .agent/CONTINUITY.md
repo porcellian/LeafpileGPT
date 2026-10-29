@@ -1,6 +1,9 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T14:27Z [TOOL] Bug fix is implemented on `fix/30-zmachine-v4-output-stream-operands`: V3–V5 `output_stream` accept the memory-stream table operand described by the opcode entry. Formatter, Release build, 585 xUnit tests, and diff checks pass; final review, commit, and PR remain.
+- 2026-10-29T14:22Z [USER] Fix the blocking V4 `output_stream` decoder error reproduced while playing local `stories/mind.z4` at PC `0x019B5C`; keep the story local.
+- 2026-10-29T04:43Z [USER] PR #39 is merged. Story File Info date and title-case heading updates are complete; remain on standby before Task 33 until asked to proceed.
 - 2026-10-29T04:41Z [TOOL] PR #39 is updated through commit `95fce23`: all Story File Info section captions use title case, and `reference/gui13.png` is tracked. Formatter, Release build, all 581 tests, and diff checks pass; CI has not reported checks yet. Await review and merge.
 - 2026-10-29T04:39Z [USER] Capitalize every word in Story File Info section headings as shown in `reference/gui13.png`; attach new reference-directory files to the review.
 - 2026-10-29T04:36Z [TOOL] Supersedes the local-complete state: commit `23683b3` is pushed and PR #39 is open at `https://github.com/porcellian/LeafpileGPT/pull/39` for the Story File Info source-date follow-up. Formatting, Release solution build, 581 xUnit tests, and diff checks pass; await review and merge.
@@ -78,6 +81,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T14:27Z [CODE] Permit one or two operands for V3–V5 `output_stream`, following the specification's opcode definition that includes the memory-stream table operand; retain the V6–V8 three-operand maximum.
 - 2026-10-29T04:40Z [CODE] Story File Info applies invariant title casing centrally to section captions, which preserves mixed-case metadata labels while capitalizing ordinary words.
 - 2026-10-29T04:35Z [CODE] Story File Info reports source `Last modified (UTC)` captured in its immutable snapshot; if source metadata is unavailable, the UI says `Not available`.
 - 2026-10-29T04:13Z [USER] All remaining game walkthrough PDFs must follow the visual and editorial style of the Zork I walkthrough; Zork II is being revised to match.
@@ -187,6 +191,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T14:27Z [TOOL] `mind.z4` encodes the failing instruction at `0x019B5C` as `F3 6F 03 9A`: select memory stream 3 with the table address held in variable `0x9A`. The executor already handled both operands; V3–V4 metadata's one-operand maximum caused the blocking decoder exception.
 - 2026-10-29T04:17Z [TOOL] The Zork II cover's explicit table row heights were smaller than ReportLab's paragraph leading plus cell padding, clipping text without changing PDF text extraction. Letting rows size to content resolves the visual crop.
 - 2026-10-29T04:03Z [TOOL] In this Zork II run, delaying the demon payment lets the Wizard cast Floresce after the lamp burns out; later, SE/NE/NW/SW solves the diamond and east returns to its center stairway.
 - 2026-10-29T03:22Z [TOOL] Zork I Release 88 / Serial 840726 reaches the river buoy after four waits in this replay, and the thief combat outcome varies with prior turn timing; retain the verified full route and seed rather than treating attack count as universal.

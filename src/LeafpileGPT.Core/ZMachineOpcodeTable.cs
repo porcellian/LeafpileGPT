@@ -105,8 +105,8 @@ public static class ZMachineOpcodeTable
         Add(OpcodeClass.Variable, 16, "get_cursor", 4, 8, 1, 1);
         Add(OpcodeClass.Variable, 17, "set_text_style", 4, 8, 1, 1);
         Add(OpcodeClass.Variable, 18, "buffer_mode", 4, 8, 1, 1);
-        Add(OpcodeClass.Variable, 19, "output_stream", 3, 4, 1, 1);
-        Add(OpcodeClass.Variable, 19, "output_stream", 5, 5, 1, 2);
+        // The opcode definition permits the memory-stream table operand from V3; V5 also lists it explicitly.
+        Add(OpcodeClass.Variable, 19, "output_stream", 3, 5, 1, 2);
         Add(OpcodeClass.Variable, 19, "output_stream", 6, 8, 1, 3);
         Add(OpcodeClass.Variable, 20, "input_stream", 3, 8, 1, 1);
         Add(OpcodeClass.Variable, 21, "sound_effect", 3, 3, 1, 4);
