@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T17:00Z [TOOL] Supersedes the awaiting-push status below: commit `254e0b3` and continuity commit `3c7f183` are pushed to PR #41. PR title/description now cover Mind V4 opcode and restore fixes; macOS/Ubuntu/Windows checks are pending.
 - 2026-10-29T16:59Z [TOOL] Supersedes the uncommitted status below: the screen restore fix and tracked `reference/gui18.png` are committed as `254e0b3`; the branch is one commit ahead and awaits push to PR #41.
 - 2026-10-29T16:59Z [TOOL] PR #41 follow-up addresses restore screen state in `reference/gui18.png`: retain screen layout/cursors across restore, collapse V3 upper windows per spec, and implicitly split V4/V5 upper windows when a valid cursor request needs more height. Release build (0 warnings/errors), formatting, diff check, and all 608 xUnit tests pass. `gui18.png` is staged for tracking; changes are not committed yet.
 - 2026-10-29T16:46Z [TOOL] A temporary untracked probe loaded the local `mind.z4` and `mind.ifzs` through the updated core; restore resumes at `0x00D7F9` with writable buffers `0x742B` and `0x715B` (1/1 passed). The probe was removed; story and save remain local. The 604-test generated suite also passes.
