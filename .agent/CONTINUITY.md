@@ -79,6 +79,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T01:35Z [TOOL] Supersedes prior Task 27 status: implementation is committed as `ce434fd`, pushed, and submitted as PR #32 at https://github.com/porcellian/LeafpileGPT/pull/32. Windows, macOS, and Ubuntu CI checks are pending; wait for user review and merge.
 - 2026-10-29T01:35Z [TOOL] Task 27 implementation passes format verification, Release build (0 warnings/errors), all 538 xUnit tests, and `git diff --check`; generated V1–V8 replay tests pass and a local-only Zork I route stops at the expected input prompt after 386 instructions. Full diff review and PR submission remain.
 - 2026-10-28T21:29Z [TOOL] Supersedes pending commit/push state: commit `0577c85` is pushed to PR #31; the working tree is clean. CI status was not checked.
 - 2026-10-28T21:29Z [TOOL] Score/moves visibility now follows loaded-story state; MORE display is bold `[MORE]` only. Added generated model assertions and tracked `gui11.png`/`gui12.png`. Formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass; commit/push remain.
@@ -175,6 +176,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T01:35Z [TOOL] Task 27 delivers deterministic headless route replay, machine-readable results, opcode traces/inventory, generated V1–V8/CLI coverage, and usage/spec-matrix docs. PR #32 is open; CI is pending. Await user review and merge.
 - 2026-10-28T18:41Z [TOOL] Task 23 is implemented, verified, committed, and submitted as PR #27. Await user review and merge before starting Task 24.
 - 2026-10-28T18:35Z [TOOL] Task 22 is implemented, validated, committed, and submitted as PR #26. Await user review and merge before starting Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implements Quetzal-backed save/restore, restart, single-step undo, host storage options for extended save opcodes, and generated all-version state restoration tests. Await conventional commit and PR creation.
