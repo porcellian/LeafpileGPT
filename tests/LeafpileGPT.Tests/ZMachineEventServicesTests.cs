@@ -211,6 +211,20 @@ public sealed class ZMachineEventServicesTests
     }
 
     [Fact]
+    public void VersionFourSoundEffectCompatibilityBleepReachesTheHost()
+    {
+        var story = StoryFixtureBuilder.Create(4);
+        new byte[] { 0xF5, 0x7F, 0x01 }.CopyTo(story, checked((int)CodeAddress));
+        var services = new FakeEventServices { SupportsSoundEffects = true };
+        var state = Start(story, services);
+        var instruction = new ZMachineInstructionDecoder(state.Memory).Decode(CodeAddress);
+
+        Executor().Execute(instruction, state);
+
+        Assert.Equal(new ZMachineSoundEffectRequest(1, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), services.LastSoundRequest);
+    }
+
+    [Fact]
     public void VersionThreeRejectsRepeatCountsAndStoppedSoundsDoNotRequestCompletion()
     {
         var v3Services = new FakeEventServices { SupportsSoundEffects = true };
@@ -245,10 +259,13 @@ public sealed class ZMachineEventServicesTests
     }
 
     [Fact]
-    public void SoundOpcodeMetadataAllowsBleepFormInV3AndV5Plus()
+    public void SoundOpcodeMetadataAllowsBleepFormInV3V4CompatibilityAndV5Plus()
     {
         Assert.True(ZMachineOpcodeTable.TryGet(OpcodeClass.Variable, 21, 3, out var v3));
         Assert.Equal((byte)1, v3.MinimumOperands);
+        Assert.True(ZMachineOpcodeTable.TryGet(OpcodeClass.Variable, 21, 4, out var v4));
+        Assert.Equal((byte)1, v4.MinimumOperands);
+        Assert.Equal((byte)1, v4.MaximumOperands);
         Assert.True(ZMachineOpcodeTable.TryGet(OpcodeClass.Variable, 21, 5, out var v5));
         Assert.Equal((byte)1, v5.MinimumOperands);
     }

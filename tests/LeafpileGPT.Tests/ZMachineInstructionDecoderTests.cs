@@ -81,6 +81,29 @@ public sealed class ZMachineInstructionDecoderTests
     }
 
     [Fact]
+    public void DecodesVersionFourOneOperandSoundEffectCompatibilityBleep()
+    {
+        var decoder = CreateDecoder(4, 0xF5, 0x7F, 0x01);
+
+        var instruction = decoder.Decode(CodeAddress);
+
+        Assert.Equal("sound_effect", instruction.Definition.Mnemonic);
+        Assert.Single(instruction.Operands);
+        Assert.Equal((ushort)1, instruction.Operands[0].Value);
+        Assert.Equal(CodeAddress + 3, instruction.NextProgramCounter);
+    }
+
+    [Fact]
+    public void VersionFourSoundEffectCompatibilityDoesNotAllowOtherOperandForms()
+    {
+        var decoder = CreateDecoder(4, 0xF5, 0x5F, 0x03, 0x02);
+
+        var exception = Assert.Throws<ZMachineInstructionException>(() => decoder.Decode(CodeAddress));
+
+        Assert.Contains("sound_effect requires 1 to 1 operands", exception.Message);
+    }
+
+    [Fact]
     public void DecodesLargeAndVariableOperandsFromTypeByte()
     {
         var decoder = CreateDecoder(5, 0xC1, 0x2F, 0x12, 0x34, 0x07, 0xC1);

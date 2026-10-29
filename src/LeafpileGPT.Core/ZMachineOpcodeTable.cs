@@ -110,6 +110,8 @@ public static class ZMachineOpcodeTable
         Add(OpcodeClass.Variable, 19, "output_stream", 6, 8, 1, 3);
         Add(OpcodeClass.Variable, 20, "input_stream", 3, 8, 1, 1);
         Add(OpcodeClass.Variable, 21, "sound_effect", 3, 3, 1, 4);
+        // Mind (V4, release 77) uses the one-operand bleep form despite the V1.1 V5/3 gate.
+        Add(OpcodeClass.Variable, 21, "sound_effect", 4, 4, 1, 1);
         Add(OpcodeClass.Variable, 21, "sound_effect", 5, 8, 1, 4);
         Add(OpcodeClass.Variable, 22, "read_char", 4, 8, 1, 3, store: true);
         Add(OpcodeClass.Variable, 23, "scan_table", 4, 8, 3, 4, store: true, branch: true);
