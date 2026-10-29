@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T14:29Z [TOOL] The Mind Forever Voyaging decoder fix is committed as `db65b52`, pushed, and open as PR #40 at `https://github.com/porcellian/LeafpileGPT/pull/40`. Formatter, Release solution build, 585 xUnit tests, and diff checks pass; await review and merge.
+- 2026-10-29T15:17Z [TOOL] PR #40 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/40`, latest commit `45e2a1a`. It now includes the V4 output_stream decoder fix and GUI upper-window cleanup for `gui14.png`/`gui15.png`. Formatting, Release solution build, all 590 xUnit tests, and diff checks pass; GitHub CI check status is UNCONFIRMED because `gh pr checks` could not reach the API. Await review and merge.
 - 2026-10-29T14:22Z [USER] Fix the blocking V4 `output_stream` decoder error reproduced while playing local `stories/mind.z4` at PC `0x019B5C`; keep the story local.
 - 2026-10-29T04:43Z [USER] PR #39 is merged. Story File Info date and title-case heading updates are complete; remain on standby before Task 33 until asked to proceed.
 - 2026-10-29T04:41Z [TOOL] PR #39 is updated through commit `95fce23`: all Story File Info section captions use title case, and `reference/gui13.png` is tracked. Formatter, Release build, all 581 tests, and diff checks pass; CI has not reported checks yet. Await review and merge.
@@ -112,6 +112,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T15:17Z [TOOL] `reference/gui15.png` showed stale characters in the V1–V5 upper story window. It was append-only and ignored screen cursor/erase operations; the display model now renders rows with cursor-positioned writes, `move_cursor`, and `erase_line`, and clears the upper window when the screen clears. V6 retains its prior path. Added generated regression coverage; all 590 tests and formatting pass. Screenshot is tracked and fix is pushed to PR #40, which remains open.
 - 2026-10-29T14:50Z [TOOL] Follow-up to PR #40 is pushed in commit `2fa45a5`; PR #40 is confirmed OPEN. The change uses `reference/gui14.png`: V1–V5 upper-window presentation now honors the declared split height and removes the 8 px padding that left a blank band and reduced the transcript viewport. Added model coverage; Release desktop build, formatting, all 586 xUnit tests, and diff checks pass. `gh pr checks` could not reach GitHub, so CI status is UNCONFIRMED.
 - 2026-10-29T04:17Z [TOOL] Replaced fixed cover-banner row heights with content-sized rows and tighter padding after `reference/pdf01.png` showed cropped title glyphs. The new cover fits fully with all title lines visible.
 - 2026-10-29T04:03Z [TOOL] Task 32 route replay is complete; no source code changed, so Task 31 was not replayed. Final saved run halted at 400/400 with zero deaths.
