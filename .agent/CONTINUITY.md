@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T03:25Z [TOOL] Supersedes the local Task 31 state: commit `f8dbf12` is pushed and PR #37 is open at `https://github.com/porcellian/LeafpileGPT/pull/37`; Windows, macOS, and Ubuntu checks are running. Wait for user review and merge.
 - 2026-10-29T03:22Z [TOOL] Task 31 is complete locally: Zork I Release 88 reaches 350/350, Stone Barrow, and zero deaths; walkthrough PDF is authored, ignored route/trace are verified, and PR preparation remains.
 - 2026-10-29T03:05Z [USER] Supersedes the PR #36 standby state: begin Task 31 using `stories/zork1.z3`; complete the maximum-score walkthrough and submit a PR, then wait for review and merge.
 - 2026-10-29T03:05Z [USER] PR #36 is merged; user requested standby. Do not begin Task 31 until requested.
@@ -208,6 +209,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T03:25Z [TOOL] Task 31 commit `f8dbf12` is pushed to `feature/31-zork-i-walkthrough`; PR #37 is open for review, with cross-platform CI in progress.
 - 2026-10-29T03:22Z [TOOL] Task 31 authored `walkthroughs/zork-i-the-great-underground-empire.pdf` with the original route steps and all 59 executed opcode rows (form, opcode, mnemonic, count, first sequence, first PC). Replay result: Halted, 405 commands, 417,780 instructions, score 350/350, ending reached, zero deaths.
 - 2026-10-29T03:05Z [USER] PR #36 is merged. The Story Hex Viewer is recorded as an unchecked, unnumbered Future Task; implementation remains deferred.
 - 2026-10-29T02:48Z [USER] Supersedes Task 30's PR-open outcome: PR #35 is merged; Task 30 is complete and Task 31 remains on standby until requested.
