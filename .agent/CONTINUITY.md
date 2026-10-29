@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T04:40Z [TOOL] On `feature/30-story-file-info-date`, Story File Info section captions now use title case; the supplied `reference/gui13.png` is being tracked with the same follow-up. Final checks and PR update remain.
+- 2026-10-29T04:41Z [TOOL] PR #39 is updated through commit `95fce23`: all Story File Info section captions use title case, and `reference/gui13.png` is tracked. Formatter, Release build, all 581 tests, and diff checks pass; CI has not reported checks yet. Await review and merge.
 - 2026-10-29T04:39Z [USER] Capitalize every word in Story File Info section headings as shown in `reference/gui13.png`; attach new reference-directory files to the review.
 - 2026-10-29T04:36Z [TOOL] Supersedes the local-complete state: commit `23683b3` is pushed and PR #39 is open at `https://github.com/porcellian/LeafpileGPT/pull/39` for the Story File Info source-date follow-up. Formatting, Release solution build, 581 xUnit tests, and diff checks pass; await review and merge.
 - 2026-10-29T04:29Z [USER] After PR #38 merged, add the source story file's date beneath the Source file row in Story File Info; treat this as a separate follow-up branch/PR.
