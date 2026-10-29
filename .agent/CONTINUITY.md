@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T23:49Z [TOOL] PR #43 is merged into `origin/main` at `6d7ad08`. Instruction-audit autosave queue overflow is being fixed on `fix/instruction-audit-queue-overflow`: raise bounded capacity from 8,192 to 65,536, buffer JSONL writes and flush in 64-event batches (and at command boundaries), and start the writer before queuing the initial snapshot. A 20,000-instruction persistence stress test passes. Release build (0 warnings/errors), format verification, diff check, and all 625 xUnit tests pass; commit and PR remain.
 - 2026-10-29T23:39Z [TOOL] Supersedes the local-complete state below: commits `4253b29` and `d77953d` are pushed to `fix/v4-out-of-range-cursor`, and PR #43 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/43`. Release build (0 warnings/errors), formatting verification, `git diff --check`, and all 624 xUnit tests pass. `gh pr checks 43` currently reports no checks. Wait for user review and merge.
 - 2026-10-29T20:07Z [TOOL] Supersedes the awaiting-commit state below: commit `d303306` is pushed to `feature/instruction-audit-autosave-load`, and PR #42 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/42`. Release build (0 warnings/errors), formatting, diff check, and all 623 xUnit tests pass. `gh pr checks 42` cannot reach `api.github.com`; check status is UNCONFIRMED. Wait for user review and merge.
 - 2026-10-29T20:07Z [TOOL] The Task 29 follow-up is implemented on `feature/instruction-audit-autosave-load` from `origin/main` at `bfe31f4`. Per-session JSONL is streamed off the VM path, final PDF is generated on session disposal, JSONL can be loaded read-only while live capture continues, and task/README documentation is updated. Release build has 0 warnings/errors, formatting and `git diff --check` pass, and all 623 xUnit tests pass. Full review is complete; commit, push, and PR creation remain.
@@ -97,6 +98,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T23:49Z [CODE] Keep audit persistence off the VM path while reducing queue pressure: a 64 KiB writer buffer, 65,536-event bounded channel, and 64-event flush batches with immediate command-boundary flushes. Preserve final flush/PDF behavior on session close.
 - 2026-10-29T14:27Z [CODE] Permit one or two operands for V3–V5 `output_stream`, following the specification's opcode definition that includes the memory-stream table operand; retain the V6–V8 three-operand maximum.
 - 2026-10-29T04:40Z [CODE] Story File Info applies invariant title casing centrally to section captions, which preserves mixed-case metadata labels while capitalizing ordinary words.
 - 2026-10-29T04:35Z [CODE] Story File Info reports source `Last modified (UTC)` captured in its immutable snapshot; if source metadata is unavailable, the UI says `Not available`.
@@ -252,6 +254,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T23:49Z [TOOL] PR #43 is confirmed merged at `6d7ad08`. The follow-up audit queue change passes a 20,000-instruction burst test and the 625-test suite; PR submission remains.
 - 2026-10-29T23:39Z [TOOL] PR #42 is confirmed merged into `main` at `08542cc`. Cursor overflow compatibility fix is submitted for review as PR #43; the invalid V4/V5 row request is now bounded to the last available line and tested on both versions.
 - 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` and PR #38 include the Zork II guide, completed checkbox, and replay findings. PR is open; stop for user review and merge.
 - 2026-10-29T03:25Z [TOOL] Task 31 commit `f8dbf12` is pushed to `feature/31-zork-i-walkthrough`; PR #37 is open for review, with cross-platform CI in progress.
