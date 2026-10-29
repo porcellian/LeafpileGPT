@@ -73,7 +73,7 @@ The existing CI matrix already runs formatting, build, and xUnit on Windows, mac
 
 ## App-data and preferences
 
-`AppDataPaths` places per-user storage beneath `Environment.SpecialFolder.LocalApplicationData` in the `LeafpileGPT/` directory and creates `Save/` and `Preferences/`. `UserPreferencesStore` persists separate Play Game, Save, and Restore directories as versioned JSON; Save and Restore initially point to `Save/`. Generated xUnit fixtures cover layout, persistence, independent updates, and invalid preference files.
+`AppDataPaths` places per-user storage beneath `Environment.SpecialFolder.LocalApplicationData` in the `LeafpileGPT/` directory and creates `Save/` and `Preferences/`; structured runtime logs are stored under `Logs/` when first written. `UserPreferencesStore` persists separate Play Game, Save, and Restore directories and the runtime error-reporting policy as versioned JSON; Save and Restore initially point to `Save/`, and error reporting defaults to first-per-type. Generated xUnit fixtures cover layout, persistence, independent updates, error-policy defaults, and invalid preference files.
 
 ## Desktop startup and file menu
 
@@ -82,6 +82,8 @@ Task 24 passes the optional desktop lifetime arguments into the story loader; no
 Task 25 adds a fixed-width blue-and-white story display with bottom-anchored, scrollable transcript output; the prompt remains at the bottom-left. The location is shown left-aligned and score/moves right-aligned in a status strip below the menus, with a distinct app-status bar below the game area. Task 26 connects the display to a live VM session: submitted lines feed asynchronous VM reads; VM output, status, and screen operations update the display; Quetzal saves can be captured during input and restores/restarts cancel pending reads at safe points; Blorb PNG/JPEG images are placed in the screen; stream-2 output is written lazily to per-session text files under app-data `Transcripts/`. Generated tests cover input, save storage, transcript failure, live execution, save capture during a pending read, and restore while a read is pending. A local-only Zork I smoke run verified startup output and the `look` response. The desktop routes Blorb sound requests to a status message but has no audio playback backend; its capability flag therefore remains disabled.
 
 ## Cross-cutting quality checks
+
+- Task 28 runtime diagnostics classify recoverable execution/memory errors and blocking failures, apply all four report policies, retain a bounded View Errors history, and capture game identity, PC/opcode, exception, and VM stack details. JSONL logs rotate at 10 MB, remove entries older than 30 days, cap storage at 100 MB, and contain no command or story-output fields. Tests cover policy decisions, copyable details, disk/logging/observer failures, retention, rotation, storage caps, and session continuation/stop behavior. Existing Quetzal tests verify that missing saves return failure to the story.
 
 - Generated synthetic fixtures cover all eight story versions and do not rely on local licensed stories.
 - Implemented Task 7 operations have generated xUnit coverage for signed results, variable references, stack effects, bounds/write protection, overlap behavior, branches, stores, and unsupported-opcode errors. Decoder coverage includes the four-operand je form.

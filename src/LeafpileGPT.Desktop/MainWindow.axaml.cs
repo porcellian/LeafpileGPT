@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Avalonia.Input.Platform;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using LeafpileGPT.Core;
@@ -9,6 +10,7 @@ public partial class MainWindow : Window
 {
     private readonly AppDataPaths _appDataPaths;
     private readonly UserPreferencesStore _preferences;
+    private readonly ZMachineRuntimeErrorManager _runtimeErrors;
     private StoryFile? _story;
     private DesktopGameSession? _session;
     private string? _storyPath;
@@ -17,12 +19,21 @@ public partial class MainWindow : Window
     private MenuItem _saveMenuItem = null!;
     private MenuItem _restoreMenuItem = null!;
     private MenuItem _restartMenuItem = null!;
+    private MenuItem _suppressErrorsMenuItem = null!;
+    private MenuItem _firstErrorMenuItem = null!;
+    private MenuItem _everyErrorMenuItem = null!;
+    private MenuItem _stopOnErrorMenuItem = null!;
+    private RuntimeErrorsWindow? _errorsWindow;
 
     public MainWindow()
     {
         AvaloniaXamlLoader.Load(this);
         _appDataPaths = new AppDataPaths();
         _preferences = new UserPreferencesStore(_appDataPaths);
+        _runtimeErrors = new ZMachineRuntimeErrorManager(
+            new JsonLineZMachineRuntimeLog(_appDataPaths.LogsDirectory),
+            _preferences.Current.RuntimeErrorPolicy);
+        _runtimeErrors.DiagnosticAdded += OnRuntimeDiagnosticAdded;
         _appStatusText = this.FindControl<TextBlock>("AppStatusText")!;
         _gameDisplay = this.FindControl<GameDisplayView>("GameDisplay")!;
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
@@ -31,6 +42,11 @@ public partial class MainWindow : Window
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
         _restartMenuItem = this.FindControl<MenuItem>("RestartMenuItem")!;
+        _suppressErrorsMenuItem = this.FindControl<MenuItem>("SuppressErrorsMenuItem")!;
+        _firstErrorMenuItem = this.FindControl<MenuItem>("FirstErrorMenuItem")!;
+        _everyErrorMenuItem = this.FindControl<MenuItem>("EveryErrorMenuItem")!;
+        _stopOnErrorMenuItem = this.FindControl<MenuItem>("StopOnErrorMenuItem")!;
+        UpdateErrorPolicyMenu();
         Closed += OnClosed;
     }
 
@@ -56,7 +72,8 @@ public partial class MainWindow : Window
                 _gameDisplay.ApplyScreenOperation,
                 _appDataPaths.SaveDirectory,
                 Path.Combine(_appDataPaths.RootDirectory, "Transcripts"),
-                blorb);
+                blorb,
+                runtimeErrors: _runtimeErrors);
             if (_session is not null)
             {
                 await _session.DisposeAsync();
@@ -296,6 +313,31 @@ public partial class MainWindow : Window
 
     private void OnExitClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) => Close();
 
+    private void OnViewErrorsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        if (_errorsWindow is { IsVisible: true })
+        {
+            _errorsWindow.Activate();
+            return;
+        }
+
+        _errorsWindow = new RuntimeErrorsWindow(_runtimeErrors);
+        _errorsWindow.Closed += (_, _) => _errorsWindow = null;
+        _errorsWindow.Show(this);
+    }
+
+    private void OnSuppressErrorsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
+        SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.SuppressReports);
+
+    private void OnFirstErrorClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
+        SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType);
+
+    private void OnEveryErrorClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
+        SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.ReportEveryOccurrence);
+
+    private void OnStopOnErrorClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
+        SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.StopOnAnyError);
+
     private void OnCommandSubmitted(string command)
     {
         if (_session is null || !_session.SubmitCommand(command))
@@ -324,7 +366,7 @@ public partial class MainWindow : Window
         try
         {
             await session.Completion;
-            if (ReferenceEquals(_session, session) && session.State.IsHalted)
+            if (ReferenceEquals(_session, session) && session.State.IsHalted && session.TerminalError is null)
             {
                 _appStatusText.Text = "The story has ended.";
             }
@@ -337,6 +379,58 @@ public partial class MainWindow : Window
             }
         }
     }
+
+    private void SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy policy)
+    {
+        _runtimeErrors.SetPolicy(policy);
+        try
+        {
+            _preferences.SetRuntimeErrorPolicy(policy);
+            _appStatusText.Text = $"Runtime error policy: {PolicyLabel(policy)}.";
+        }
+        catch (Exception exception) when (IsFileOperationException(exception))
+        {
+            _appStatusText.Text = $"Runtime error policy changed for this session; preference could not be saved: {exception.Message}";
+        }
+
+        UpdateErrorPolicyMenu();
+    }
+
+    private void UpdateErrorPolicyMenu()
+    {
+        _suppressErrorsMenuItem.Header = PolicyMenuHeader("Suppress reports", ZMachineRuntimeErrorPolicy.SuppressReports);
+        _firstErrorMenuItem.Header = PolicyMenuHeader("Report first of each type", ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType);
+        _everyErrorMenuItem.Header = PolicyMenuHeader("Report every occurrence", ZMachineRuntimeErrorPolicy.ReportEveryOccurrence);
+        _stopOnErrorMenuItem.Header = PolicyMenuHeader("Stop on any error", ZMachineRuntimeErrorPolicy.StopOnAnyError);
+    }
+
+    private string PolicyMenuHeader(string label, ZMachineRuntimeErrorPolicy policy) =>
+        _runtimeErrors.Policy == policy ? $"{label} ✓" : label;
+
+    private static string PolicyLabel(ZMachineRuntimeErrorPolicy policy) => policy switch
+    {
+        ZMachineRuntimeErrorPolicy.SuppressReports => "Suppress reports",
+        ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType => "Report first of each type",
+        ZMachineRuntimeErrorPolicy.ReportEveryOccurrence => "Report every occurrence",
+        ZMachineRuntimeErrorPolicy.StopOnAnyError => "Stop on any error",
+        _ => policy.ToString()
+    };
+
+    private void OnRuntimeDiagnosticAdded(ZMachineRuntimeErrorRecord record) => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+    {
+        switch (RuntimeDiagnosticPresentation.Resolve(record))
+        {
+            case RuntimeDiagnosticPresentationKind.Hidden:
+                return;
+            case RuntimeDiagnosticPresentationKind.WarningStatus:
+                _appStatusText.Text = $"Runtime warning at 0x{record.ProgramCounter:X6}: {record.Message}";
+                return;
+            case RuntimeDiagnosticPresentationKind.BlockingDialog:
+                _appStatusText.Text = "The game stopped after a runtime error.";
+                _ = ShowErrorAsync("Game stopped", record.CopyableDetails);
+                return;
+        }
+    });
 
     private IStorageProvider? GetStorageProvider() => TopLevel.GetTopLevel(this)?.StorageProvider;
 
@@ -387,12 +481,41 @@ public partial class MainWindow : Window
                 Spacing = 16,
                 Children =
                 {
-                    new TextBlock { Text = details, TextWrapping = Avalonia.Media.TextWrapping.Wrap },
-                    new Button { Content = "Close", HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right }
+                    new TextBox
+                    {
+                        Text = details,
+                        IsReadOnly = true,
+                        AcceptsReturn = true,
+                        TextWrapping = Avalonia.Media.TextWrapping.Wrap,
+                        MinHeight = 150,
+                        MaxHeight = 600
+                    },
+                    new StackPanel
+                    {
+                        Orientation = Avalonia.Layout.Orientation.Horizontal,
+                        HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Right,
+                        Spacing = 8,
+                        Children =
+                        {
+                            new Button { Content = "Copy Details", Name = "CopyErrorDetailsButton" },
+                            new Button { Content = "Close", Name = "CloseErrorDialogButton" }
+                        }
+                    }
                 }
             }
         };
-        ((Button)((StackPanel)dialog.Content).Children[1]).Click += (_, _) => dialog.Close();
+        var panel = (StackPanel)dialog.Content;
+        var detailBox = (TextBox)panel.Children[0];
+        var buttons = (StackPanel)panel.Children[1];
+        ((Button)buttons.Children[0]).Click += async (_, _) =>
+        {
+            var clipboard = TopLevel.GetTopLevel(dialog)?.Clipboard;
+            if (clipboard is not null)
+            {
+                await clipboard.SetTextAsync(detailBox.Text ?? string.Empty);
+            }
+        };
+        ((Button)buttons.Children[1]).Click += (_, _) => dialog.Close();
         await dialog.ShowDialog(this);
     }
 

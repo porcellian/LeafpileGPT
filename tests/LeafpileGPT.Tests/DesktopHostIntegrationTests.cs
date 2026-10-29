@@ -55,6 +55,36 @@ public sealed class DesktopHostIntegrationTests
         Assert.Equal(request, forwarded);
     }
 
+    [Theory]
+    [InlineData(ZMachineRuntimeErrorSeverity.Warning, false, RuntimeDiagnosticPresentationKind.Hidden)]
+    [InlineData(ZMachineRuntimeErrorSeverity.Warning, true, RuntimeDiagnosticPresentationKind.WarningStatus)]
+    [InlineData(ZMachineRuntimeErrorSeverity.Blocking, true, RuntimeDiagnosticPresentationKind.BlockingDialog)]
+    public void RuntimeDiagnosticsMapToSuppressedWarningStatusOrBlockingDialog(
+        ZMachineRuntimeErrorSeverity severity,
+        bool shouldNotify,
+        RuntimeDiagnosticPresentationKind expected)
+    {
+        var record = new ZMachineRuntimeErrorRecord(
+            DateTimeOffset.UnixEpoch,
+            nameof(ZMachineExecutionException),
+            "runtime failure",
+            severity,
+            "fixture.z5",
+            5,
+            42,
+            "260101",
+            0x352,
+            "Long",
+            23,
+            "div",
+            "stack trace",
+            "machine stack",
+            shouldNotify,
+            severity == ZMachineRuntimeErrorSeverity.Blocking);
+
+        Assert.Equal(expected, RuntimeDiagnosticPresentation.Resolve(record));
+    }
+
     [Fact]
     public void DesktopSaveStoreWritesStoryScopedSafeFilesAndReturnsNullWhenMissing()
     {
@@ -176,6 +206,136 @@ public sealed class DesktopHostIntegrationTests
         }
     }
 
+    [Theory]
+    [InlineData(ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType, ZMachineRuntimeErrorSeverity.Warning, false)]
+    [InlineData(ZMachineRuntimeErrorPolicy.ReportEveryOccurrence, ZMachineRuntimeErrorSeverity.Warning, false)]
+    [InlineData(ZMachineRuntimeErrorPolicy.SuppressReports, ZMachineRuntimeErrorSeverity.Warning, false)]
+    [InlineData(ZMachineRuntimeErrorPolicy.StopOnAnyError, ZMachineRuntimeErrorSeverity.Blocking, true)]
+    public async Task SessionAppliesRuntimeErrorPolicyToRecoverableOpcodeFailures(
+        ZMachineRuntimeErrorPolicy policy,
+        ZMachineRuntimeErrorSeverity severity,
+        bool shouldStop)
+    {
+        var story = CreateStaticWriteFailureThenQuitStory();
+        var display = new GameDisplayModel();
+        var saveDirectory = CreateTemporaryDirectory();
+        var transcriptDirectory = CreateTemporaryDirectory();
+        var manager = new ZMachineRuntimeErrorManager(NullZMachineRuntimeLog.Instance, policy);
+        var session = new DesktopGameSession(
+            story,
+            "fixture.z5",
+            display,
+            _ => { },
+            saveDirectory,
+            transcriptDirectory,
+            dispatch: action => action(),
+            runtimeErrors: manager);
+
+        try
+        {
+            await using (session)
+            {
+                session.Start();
+                await session.Completion.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+
+                var diagnostic = Assert.Single(manager.GetHistory());
+                Assert.Equal("storew", diagnostic.Mnemonic);
+                Assert.Equal((byte)1, diagnostic.Opcode);
+                Assert.Equal(0x352u, diagnostic.ProgramCounter);
+                Assert.Equal(severity, diagnostic.Severity);
+                Assert.Equal(shouldStop, diagnostic.ShouldStop);
+                Assert.Equal(shouldStop, session.TerminalError is not null);
+                Assert.True(session.State.IsHalted);
+            }
+        }
+        finally
+        {
+            Directory.Delete(saveDirectory, recursive: true);
+            Directory.Delete(transcriptDirectory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task DivisionByZeroRemainsBlockingWhenReportsAreSuppressed()
+    {
+        var saveDirectory = CreateTemporaryDirectory();
+        var transcriptDirectory = CreateTemporaryDirectory();
+        var manager = new ZMachineRuntimeErrorManager(
+            NullZMachineRuntimeLog.Instance,
+            ZMachineRuntimeErrorPolicy.SuppressReports);
+        var session = new DesktopGameSession(
+            CreateDivideByZeroStory(),
+            "fixture.z5",
+            new GameDisplayModel(),
+            _ => { },
+            saveDirectory,
+            transcriptDirectory,
+            dispatch: action => action(),
+            runtimeErrors: manager);
+
+        try
+        {
+            await using (session)
+            {
+                session.Start();
+                await session.Completion.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+
+                var diagnostic = Assert.Single(manager.GetHistory());
+                Assert.Equal("div", diagnostic.Mnemonic);
+                Assert.True(diagnostic.ShouldStop, diagnostic.CopyableDetails);
+                Assert.Equal(ZMachineRuntimeErrorSeverity.Blocking, diagnostic.Severity);
+                Assert.True(diagnostic.ShouldNotify);
+                Assert.NotNull(session.TerminalError);
+            }
+        }
+        finally
+        {
+            Directory.Delete(saveDirectory, recursive: true);
+            Directory.Delete(transcriptDirectory, recursive: true);
+        }
+    }
+
+    [Fact]
+    public async Task SessionTreatsInstructionDecodeFailuresAsFatalWithExecutionContext()
+    {
+        var bytes = StoryFixtureBuilder.Create(5);
+        bytes[850] = 0x1F;
+        StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
+        var saveDirectory = CreateTemporaryDirectory();
+        var transcriptDirectory = CreateTemporaryDirectory();
+        var manager = new ZMachineRuntimeErrorManager(NullZMachineRuntimeLog.Instance, ZMachineRuntimeErrorPolicy.SuppressReports);
+        var session = new DesktopGameSession(
+            StoryFile.Parse(bytes),
+            "bad opcode.z5",
+            new GameDisplayModel(),
+            _ => { },
+            saveDirectory,
+            transcriptDirectory,
+            dispatch: action => action(),
+            runtimeErrors: manager);
+
+        try
+        {
+            await using (session)
+            {
+                session.Start();
+                await session.Completion.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+
+                var diagnostic = Assert.Single(manager.GetHistory());
+                Assert.Equal(ZMachineRuntimeErrorSeverity.Blocking, diagnostic.Severity);
+                Assert.True(diagnostic.ShouldNotify);
+                Assert.Equal(0x352u, diagnostic.ProgramCounter);
+                Assert.Equal("bad opcode.z5", Path.GetFileName(diagnostic.StoryPath));
+                Assert.NotNull(session.TerminalError);
+            }
+        }
+        finally
+        {
+            Directory.Delete(saveDirectory, recursive: true);
+            Directory.Delete(transcriptDirectory, recursive: true);
+        }
+    }
+
     [Fact]
     public async Task DesktopSessionKeepsMorePromptsEnabledAfterRestart()
     {
@@ -210,6 +370,31 @@ public sealed class DesktopHostIntegrationTests
 
     private static DesktopInputProvider CreateInputProvider() =>
         new(new ZMachineMemory(StoryFile.Parse(StoryFixtureBuilder.Create(3))));
+
+    private static StoryFile CreateStaticWriteFailureThenQuitStory()
+    {
+        var bytes = StoryFixtureBuilder.Create(5);
+        bytes[850] = 0xE1; // storew
+        bytes[851] = 0x1B; // large, small, small operands
+        StoryFixtureBuilder.WriteWord(bytes, 852, 700); // first byte in static memory
+        bytes[854] = 0; // word index
+        bytes[855] = 42;
+        bytes[856] = 0xBA; // quit
+        StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
+        return StoryFile.Parse(bytes);
+    }
+
+    private static StoryFile CreateDivideByZeroStory()
+    {
+        var bytes = StoryFixtureBuilder.Create(5);
+        bytes[850] = 0x17; // div, small constant operands
+        bytes[851] = 7;
+        bytes[852] = 0;
+        bytes[853] = 16; // store result in global 0
+        bytes[854] = 0xBA; // quit
+        StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
+        return StoryFile.Parse(bytes);
+    }
 
     private static string CreateTemporaryDirectory()
     {

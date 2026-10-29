@@ -742,7 +742,9 @@ public sealed class ZMachineOpcodeExecutor
         if (denominator == 0)
         {
             state.Halt();
-            throw new ZMachineExecutionException($"Opcode {instruction.Definition.Mnemonic} cannot divide by zero.");
+            throw new ZMachineExecutionException(
+                $"Opcode {instruction.Definition.Mnemonic} cannot divide by zero.",
+                isFatal: true);
         }
     }
 

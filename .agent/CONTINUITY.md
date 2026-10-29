@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T02:10Z [TOOL] Task 28 is committed as `b54152c`, pushed, and open as PR #33 at https://github.com/porcellian/LeafpileGPT/pull/33. Windows, macOS, and Ubuntu CI checks are pending; wait for user review and merge before Task 29.
+- 2026-10-29T02:09Z [USER] PR #32 is merged. Task 28 is active on `feature/28-error-handling-logging`; implement, verify, submit PR, then wait for review and merge.
 - 2026-10-29T01:35Z [USER] Supersedes the PR #31 standby state: begin Task 27 on `feature/27-conformance-replay-tooling`; complete the feature, open a PR, then wait for review and merge.
 - 2026-10-28T21:30Z [USER] PR #31 is merged; user requested standby. Wait for the next instruction before starting work.
 - 2026-10-28T21:29Z [USER] PR #31 follow-up: hide score/moves before a story is loaded and show a bold `[MORE]` marker without helper text; track `gui11.png`/`gui12.png`.
@@ -55,6 +57,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T02:09Z [CODE] Default recoverable VM execution/memory errors continue at the decoded next PC; stop-on-any escalates them to blocking. Fatal decoder/host failures and errors explicitly marked fatal stop and notify under every policy. Runtime error policy persists in Preferences; JSONL logging is lazy and failure-isolated.
 - 2026-10-29T01:35Z [CODE] Replay routes set a deterministic host-random seed and restart that generator on VM restart; ordinary desktop sessions retain cryptographic random selection.
 - 2026-10-28T19:26Z [CODE] Task 26 wires VM sound requests to desktop status reporting, while `SupportsSoundEffects` remains false because the desktop has no playback backend; README and spec coverage state this limitation.
 - 2026-10-28T19:04Z [CODE] Task 25 implements the reference screen as a blue `#0066CC` play area with Courier-family text, a light status strip, a bottom-left prompt, bottom-anchored scrolling output, and separate app status. VM callback wiring remains Task 26.
@@ -79,6 +82,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T02:10Z [TOOL] Supersedes prior Task 28 state: implementation commit `b54152c` is on the remote feature branch and PR #33 is open. Cross-platform CI is pending; await user review and merge.
+- 2026-10-29T02:09Z [TOOL] Task 28 implementation and review pass formatting, Release build (0 warnings/errors), all 561 xUnit tests, and `git diff --check`. Tests cover four policies, fatal division-by-zero behavior, session warnings/stops, details/presentation, preferences, bounded history, log rotation/retention/cap, omitted command/output fields, and logging failures. Commit and PR remain.
 - 2026-10-29T01:35Z [TOOL] Supersedes prior Task 27 status: implementation is committed as `ce434fd`, pushed, and submitted as PR #32 at https://github.com/porcellian/LeafpileGPT/pull/32. Windows, macOS, and Ubuntu CI checks are pending; wait for user review and merge.
 - 2026-10-29T01:35Z [TOOL] Task 27 implementation passes format verification, Release build (0 warnings/errors), all 538 xUnit tests, and `git diff --check`; generated V1–V8 replay tests pass and a local-only Zork I route stops at the expected input prompt after 386 instructions. Full diff review and PR submission remain.
 - 2026-10-28T21:29Z [TOOL] Supersedes pending commit/push state: commit `0577c85` is pushed to PR #31; the working tree is clean. CI status was not checked.
@@ -142,6 +147,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T02:09Z [TOOL] ZSpec 1.1 Appendix A describes the four selectable reporting levels; its `div` and `mod` entries specifically require division by zero to halt. The desktop preserves that fatal behavior while applying policies to other recoverable runtime errors.
 - 2026-10-28T21:12Z [TOOL] `gui09`'s early MORE came from carrying the page line counter across prior commands. `gui10` used a fixed VM page height despite a larger/different rendered transcript viewport; screen rows now come from the Courier cell size and live transcript area.
 - 2026-10-28T20:51Z [TOOL] Local Avalonia build telemetry can fail when sandboxed from the user application-support directory; `-p:UsedAvaloniaProducts=` skips that telemetry target while still compiling Core, Desktop, and Tests.
 - 2026-10-28T18:40Z [CODE] Preferences write to a same-directory temporary file and move over the active JSON only after serialization and disk flush succeed; failed writes leave the in-memory preference snapshot unchanged.
@@ -176,6 +182,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T02:10Z [TOOL] Task 28 implements runtime error policies, copyable fatal dialogs/warnings, View Errors history, and failure-isolated bounded JSONL logs; format, Release build, 561 tests, and diff checks pass. PR #33 is open with CI pending; await user review and merge.
 - 2026-10-29T01:35Z [TOOL] Task 27 delivers deterministic headless route replay, machine-readable results, opcode traces/inventory, generated V1–V8/CLI coverage, and usage/spec-matrix docs. PR #32 is open; CI is pending. Await user review and merge.
 - 2026-10-28T18:41Z [TOOL] Task 23 is implemented, verified, committed, and submitted as PR #27. Await user review and merge before starting Task 24.
 - 2026-10-28T18:35Z [TOOL] Task 22 is implemented, validated, committed, and submitted as PR #26. Await user review and merge before starting Task 23.

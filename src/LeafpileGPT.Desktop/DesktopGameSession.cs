@@ -10,6 +10,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
     private readonly Action<ZMachineScreenOperation> _screenOperationWriter;
     private readonly DesktopInputProvider _input;
     private readonly DesktopTranscriptWriter _transcript;
+    private readonly ZMachineRuntimeErrorManager _runtimeErrors;
+    private readonly ZMachineGameIdentity _gameIdentity;
     private readonly Action<Action> _dispatch;
     private readonly SemaphoreSlim _stateGate = new(1, 1);
     private readonly CancellationTokenSource _shutdown = new();
@@ -20,6 +22,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
     private uint _activeInstructionProgramCounter;
     private int _restartRequested;
     private int _disposed;
+    private ZMachineRuntimeErrorRecord? _terminalError;
 
     public DesktopGameSession(
         StoryFile story,
@@ -29,7 +32,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
         string saveDirectory,
         string transcriptDirectory,
         BlorbFile? blorb = null,
-        Action<Action>? dispatch = null)
+        Action<Action>? dispatch = null,
+        ZMachineRuntimeErrorManager? runtimeErrors = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         ArgumentException.ThrowIfNullOrWhiteSpace(storyPath);
@@ -38,6 +42,12 @@ public sealed class DesktopGameSession : IAsyncDisposable
         ArgumentException.ThrowIfNullOrWhiteSpace(saveDirectory);
         ArgumentException.ThrowIfNullOrWhiteSpace(transcriptDirectory);
         _dispatch = dispatch ?? DispatchToUi;
+        _runtimeErrors = runtimeErrors ?? new ZMachineRuntimeErrorManager(NullZMachineRuntimeLog.Instance);
+        _gameIdentity = new ZMachineGameIdentity(
+            Path.GetFullPath(storyPath),
+            story.Header.Version,
+            story.Header.ReleaseNumber,
+            story.Header.SerialNumber);
 
         var storyName = Path.GetFileNameWithoutExtension(storyPath);
         SaveStore = new DesktopZMachineSaveStore(saveDirectory, storyName);
@@ -80,6 +90,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
     public Task Completion => _runTask ?? Task.CompletedTask;
 
     public string? TranscriptPath => _transcript.FilePath;
+
+    public ZMachineRuntimeErrorRecord? TerminalError => _terminalError;
 
     public void Start()
     {
@@ -262,11 +274,12 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
                     using var instructionCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     Volatile.Write(ref _activeInstruction, instructionCancellation);
+                    DecodedInstruction? instruction = null;
+                    var instructionPc = State.ProgramCounter;
                     try
                     {
-                        var instructionPc = State.ProgramCounter;
                         Volatile.Write(ref _activeInstructionProgramCounter, instructionPc);
-                        var instruction = decoder.Decode(instructionPc);
+                        instruction = decoder.Decode(instructionPc);
                         await executor.ExecuteAsync(instruction, State, _input, cancellationToken: instructionCancellation.Token)
                             .ConfigureAwait(false);
                         await State.OutputStreams.Screen.WaitForMoreAsync(
@@ -276,6 +289,36 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     catch (OperationCanceledException) when (Volatile.Read(ref _restartRequested) != 0 || Volatile.Read(ref _pendingRestore) is not null)
                     {
                         // The next loop pass restarts at the story's initial execution point.
+                    }
+                    catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+                    {
+                        throw;
+                    }
+                    catch (Exception exception)
+                    {
+                        var fatal = State.IsHalted
+                            || instruction is null
+                            || exception is ZMachineExecutionException { IsFatal: true }
+                            || exception is not (ZMachineExecutionException or ZMachineMemoryAccessException);
+                        var diagnostic = _runtimeErrors.Report(
+                            exception,
+                            _gameIdentity,
+                            instructionPc,
+                            instruction,
+                            State.CallStack,
+                            State.EvaluationStack,
+                            fatal);
+                        if (diagnostic.ShouldStop)
+                        {
+                            _terminalError = diagnostic;
+                            State.Halt();
+                            return;
+                        }
+
+                        State.SetProgramCounter(instruction!.NextProgramCounter);
+                        await State.OutputStreams.Screen.WaitForMoreAsync(
+                            _input.ReadMoreKeyAsync,
+                            instructionCancellation.Token).ConfigureAwait(false);
                     }
                     finally
                     {
@@ -296,6 +339,19 @@ public sealed class DesktopGameSession : IAsyncDisposable
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
+        }
+        catch (Exception exception)
+        {
+            var diagnostic = _runtimeErrors.Report(
+                exception,
+                _gameIdentity,
+                State.ProgramCounter,
+                null,
+                State.CallStack,
+                State.EvaluationStack,
+                fatal: true);
+            _terminalError = diagnostic;
+            State.Halt();
         }
     }
 

@@ -65,6 +65,12 @@ This emits one JSON result per route and returns a nonzero exit code if any rout
 
 The command writes a JSON completion result to standard output, including captured story text, its SHA-256, final VM state hash, and an opcode inventory with occurrence counts, first execution sequence, and first PC. A route can require an expected completion status and/or output hash; a mismatch, VM fault, or instruction-limit stop returns a nonzero exit code. Routes and traces remain local and ignored; CI uses generated story fixtures instead.
 
+## Runtime errors and logs
+
+The Tools menu provides **View Errors** and a **Runtime Error Policy** selector. Policies are **Suppress reports**, **Report first of each type** (the default), **Report every occurrence**, and **Stop on any error**; the selected policy is stored in app-data `LeafpileGPT/Preferences/`. Recoverable Z-machine execution and memory-access errors are added to the error history and, unless suppressed by policy, shown in the bottom status bar; the interpreter skips to the next decoded instruction. Decode failures, unexpected exceptions, and spec-defined fatal errors such as division by zero stop the game and open a detailed, copyable dialog. The error window retains the latest 1,000 diagnostics.
+
+Structured JSONL diagnostics are written to app-data `LeafpileGPT/Logs/`. Files rotate at 10 MB, entries older than 30 days are removed, and total log storage is capped at 100 MB. Records include game identity, PC/opcode when known, exception details, and Z-machine stacks. Player commands and story output are not written to these logs. A log or error-window failure does not interrupt game execution. A missing in-game Quetzal save continues to return failure to the story.
+
 ## Per-user data
 
 The core resolves user storage through .NET's `LocalApplicationData` special folder. It creates `LeafpileGPT/Save/` for Quetzal files and `LeafpileGPT/Preferences/` for versioned JSON preferences. Play Game, Save, and Restore remember separate last-used directories; Save and Restore start in the app's `Save/` folder.
