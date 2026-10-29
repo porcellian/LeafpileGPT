@@ -2,6 +2,7 @@ namespace LeafpileGPT.Core;
 
 using System.Buffers.Binary;
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using System.Text;
 
 /// <summary>A parsed IFF Blorb resource file containing an IFRS form.</summary>
@@ -15,6 +16,8 @@ public sealed class BlorbFile
         ImmutableArray<BlorbResourceDescription> resourceDescriptions,
         ImmutableArray<byte> gameIdentifier,
         ImmutableArray<byte> metadata,
+        long sourceFileSizeBytes,
+        string sourceFileSha256,
         ushort releaseNumber,
         uint? frontispieceNumber,
         BlorbPictureCatalog pictureCatalog,
@@ -26,6 +29,8 @@ public sealed class BlorbFile
         ResourceDescriptions = resourceDescriptions;
         GameIdentifier = gameIdentifier;
         Metadata = metadata;
+        SourceFileSizeBytes = sourceFileSizeBytes;
+        SourceFileSha256 = sourceFileSha256;
         ReleaseNumber = releaseNumber;
         FrontispieceNumber = frontispieceNumber;
         Pictures = pictureCatalog;
@@ -49,6 +54,12 @@ public sealed class BlorbFile
 
     /// <summary>Gets the raw optional UTF-8 IFmd document, or an empty array when absent.</summary>
     public ImmutableArray<byte> Metadata { get; }
+
+    /// <summary>Gets the exact physical length of the parsed Blorb container.</summary>
+    public long SourceFileSizeBytes { get; }
+
+    /// <summary>Gets the SHA-256 fingerprint of the exact parsed Blorb container bytes.</summary>
+    public string SourceFileSha256 { get; }
 
     /// <summary>Gets the optional Z-code release number; absent RelN chunks mean zero.</summary>
     public ushort ReleaseNumber { get; }
@@ -169,6 +180,8 @@ public sealed class BlorbFile
             descriptions,
             gameIdentifier,
             metadata,
+            ownedBytes.Length,
+            Convert.ToHexString(SHA256.HashData(ownedBytes)),
             release,
             frontispiece,
             pictures,

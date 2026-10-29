@@ -1,6 +1,7 @@
 namespace LeafpileGPT.Core;
 
 using System.Buffers.Binary;
+using System.Collections.Immutable;
 
 public enum ZMachineMemoryRegion
 {
@@ -33,6 +34,10 @@ public sealed class ZMachineMemory
     public ushort StaticMemoryBase => Header.StaticMemoryBase;
 
     public ushort HighMemoryBase => Header.HighMemoryBase;
+
+    /// <summary>Copies the current 64-byte runtime header into immutable storage.</summary>
+    public ImmutableArray<byte> CaptureHeaderSnapshot() =>
+        _bytes.AsSpan(0, StoryFile.HeaderLength).ToArray().ToImmutableArray();
 
     public ZMachineMemoryRegion GetRegion(uint byteAddress)
     {

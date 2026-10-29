@@ -24,8 +24,10 @@ public partial class MainWindow : Window
     private MenuItem _everyErrorMenuItem = null!;
     private MenuItem _stopOnErrorMenuItem = null!;
     private MenuItem _viewInstructionsMenuItem = null!;
+    private MenuItem _storyFileInfoMenuItem = null!;
     private RuntimeErrorsWindow? _errorsWindow;
     private InstructionAuditWindow? _instructionsWindow;
+    private StoryFileInfoWindow? _storyFileInfoWindow;
 
     public MainWindow()
     {
@@ -41,6 +43,7 @@ public partial class MainWindow : Window
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
         _gameDisplay.MoreKeySubmitted += () => _session?.SubmitMoreKey();
         _gameDisplay.ScreenMetricsChanged += OnScreenMetricsChanged;
+        _storyFileInfoMenuItem = this.FindControl<MenuItem>("StoryFileInfoMenuItem")!;
         _viewInstructionsMenuItem = this.FindControl<MenuItem>("ViewInstructionsMenuItem")!;
         _saveMenuItem = this.FindControl<MenuItem>("SaveMenuItem")!;
         _restoreMenuItem = this.FindControl<MenuItem>("RestoreMenuItem")!;
@@ -85,8 +88,13 @@ public partial class MainWindow : Window
             _story = story;
             _session = session;
             _storyPath = fullPath;
+            _storyFileInfoMenuItem.IsEnabled = true;
             _viewInstructionsMenuItem.IsEnabled = true;
             _instructionsWindow?.SetSession(session, fullPath);
+            if (_storyFileInfoWindow is { IsVisible: true })
+            {
+                await RefreshStoryFileInfoAsync(session);
+            }
             session.EventServices.SoundEffectRequested += OnSoundEffectRequested;
             session.InputRequested += _ => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
@@ -353,6 +361,67 @@ public partial class MainWindow : Window
         _instructionsWindow.Show(this);
     }
 
+    private async void OnStoryFileInfoClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+    {
+        var session = _session;
+        if (session is null)
+        {
+            return;
+        }
+
+        await RefreshStoryFileInfoAsync(session);
+        if (!ReferenceEquals(_session, session) || _storyFileInfoWindow is not { HasStory: true })
+        {
+            return;
+        }
+
+        if (_storyFileInfoWindow.IsVisible)
+        {
+            _storyFileInfoWindow.Activate();
+            return;
+        }
+
+        var scale = Screens.ScreenFromWindow(this)?.Scaling ?? 1;
+        _storyFileInfoWindow.Position = new Avalonia.PixelPoint(Position.X + (int)Math.Ceiling(Width * scale), Position.Y);
+        var window = _storyFileInfoWindow;
+        window.Closed += (_, _) =>
+        {
+            if (ReferenceEquals(_storyFileInfoWindow, window))
+            {
+                _storyFileInfoWindow = null;
+            }
+        };
+        window.Show(this);
+    }
+
+    private async Task RefreshStoryFileInfoAsync(DesktopGameSession session)
+    {
+        try
+        {
+            var snapshot = await session.CaptureStoryFileInfoSnapshotAsync();
+            if (!ReferenceEquals(_session, session))
+            {
+                return;
+            }
+
+            if (_storyFileInfoWindow is null)
+            {
+                _storyFileInfoWindow = new StoryFileInfoWindow();
+            }
+
+            _storyFileInfoWindow.SetSnapshot(snapshot);
+        }
+        catch (Exception exception) when (exception is ObjectDisposedException or InvalidOperationException or ArgumentException)
+        {
+            if (_storyFileInfoWindow is not null)
+            {
+                _storyFileInfoWindow.SetSnapshot(null);
+            }
+
+            _appStatusText.Text = $"Could not refresh story information: {exception.Message}";
+        }
+    }
+
     private void OnSuppressErrorsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e) =>
         SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.SuppressReports);
 
@@ -388,7 +457,9 @@ public partial class MainWindow : Window
         }
 
         _viewInstructionsMenuItem.IsEnabled = false;
+        _storyFileInfoMenuItem.IsEnabled = false;
         _instructionsWindow?.SetSession(null, null);
+        _storyFileInfoWindow?.SetSnapshot(null);
     }
 
     private async Task ObserveSessionCompletionAsync(DesktopGameSession session)

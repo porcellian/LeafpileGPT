@@ -11,7 +11,7 @@ Requirements: .NET 10 SDK. Open `LeafpileGPT.sln` in Visual Studio or build from
 ```sh
 dotnet restore LeafpileGPT.sln
 dotnet build LeafpileGPT.sln
-dotnet test LeafpileGPT.sln
+dotnet run --project tests/LeafpileGPT.Tests/LeafpileGPT.Tests.csproj --configuration Release
 dotnet format LeafpileGPT.sln --verify-no-changes
 ```
 
