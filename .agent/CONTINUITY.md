@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T04:40Z [TOOL] On `feature/30-story-file-info-date`, Story File Info section captions now use title case; the supplied `reference/gui13.png` is being tracked with the same follow-up. Final checks and PR update remain.
+- 2026-10-29T04:39Z [USER] Capitalize every word in Story File Info section headings as shown in `reference/gui13.png`; attach new reference-directory files to the review.
 - 2026-10-29T04:36Z [TOOL] Supersedes the local-complete state: commit `23683b3` is pushed and PR #39 is open at `https://github.com/porcellian/LeafpileGPT/pull/39` for the Story File Info source-date follow-up. Formatting, Release solution build, 581 xUnit tests, and diff checks pass; await review and merge.
 - 2026-10-29T04:29Z [USER] After PR #38 merged, add the source story file's date beneath the Source file row in Story File Info; treat this as a separate follow-up branch/PR.
 - 2026-10-29T04:21Z [USER] PR #38 is merged. Task 32 is complete; standby before Task 33 until the user asks to proceed.
@@ -76,6 +78,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T04:40Z [CODE] Story File Info applies invariant title casing centrally to section captions, which preserves mixed-case metadata labels while capitalizing ordinary words.
 - 2026-10-29T04:35Z [CODE] Story File Info reports source `Last modified (UTC)` captured in its immutable snapshot; if source metadata is unavailable, the UI says `Not available`.
 - 2026-10-29T04:13Z [USER] All remaining game walkthrough PDFs must follow the visual and editorial style of the Zork I walkthrough; Zork II is being revised to match.
 - 2026-10-29T02:36Z [CODE] Task 30 builds immutable story-info snapshots from parsed source/container bytes and a 64-byte runtime-header copy captured under the desktop session gate; the UI never accesses VM memory. Source SHA-256 values identify the exact supplied bytes, while loaded-image hashes identify trimmed executable bytes.

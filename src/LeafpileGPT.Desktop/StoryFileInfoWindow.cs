@@ -218,7 +218,12 @@ public sealed class StoryFileInfoWindow : Window
             BorderBrush = new SolidColorBrush(Color.Parse("#B8C6D8")),
             BorderThickness = new Avalonia.Thickness(0, 0, 0, 1),
             Padding = new Avalonia.Thickness(0, 5, 0, 5),
-            Child = new TextBlock { Text = title, FontSize = 16, FontWeight = FontWeight.Bold }
+            Child = new TextBlock
+            {
+                Text = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title),
+                FontSize = 16,
+                FontWeight = FontWeight.Bold
+            }
         });
     }
 
