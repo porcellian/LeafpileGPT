@@ -79,7 +79,8 @@ public partial class MainWindow : Window
                 _appDataPaths.SaveDirectory,
                 Path.Combine(_appDataPaths.RootDirectory, "Transcripts"),
                 blorb,
-                runtimeErrors: _runtimeErrors);
+                runtimeErrors: _runtimeErrors,
+                auditsDirectory: _appDataPaths.AuditsDirectory);
             if (_session is not null)
             {
                 await _session.DisposeAsync();
@@ -343,11 +344,6 @@ public partial class MainWindow : Window
 
     private void OnViewInstructionsClick(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (_session is null || _storyPath is null)
-        {
-            return;
-        }
-
         if (_instructionsWindow is { IsVisible: true })
         {
             _instructionsWindow.SetSession(_session, _storyPath);

@@ -29,17 +29,37 @@ public sealed record ZMachineInstructionAuditGroupInfo(
     DateTimeOffset StartedAt,
     int InstructionCount);
 
+public enum ZMachineInstructionAuditEventKind
+{
+    CommandStarted,
+    InstructionRecorded,
+    HistoryCleared
+}
+
+public sealed record ZMachineInstructionAuditEvent(
+    ZMachineInstructionAuditEventKind Kind,
+    long GroupNumber,
+    string? Command,
+    DateTimeOffset? StartedAt,
+    ZMachineInstructionAuditEntry? Instruction,
+    long? RelatedGroupNumber = null);
+
 /// <summary>Compact, thread-safe instruction history for one live game session.</summary>
 public sealed class ZMachineInstructionAudit
 {
     private readonly object _gate = new();
     private readonly List<MutableGroup> _groups = [];
+    private readonly Queue<ZMachineInstructionAuditEvent> _pendingEvents = new();
     private long _nextGroupNumber;
     private long _nextInstructionSequence;
+    private bool _publishingEvents;
 
     public ZMachineInstructionAudit() => BeginCommand("Game started");
 
     public event Action? Changed;
+
+    /// <summary>Ordered command and instruction notifications for external audit sinks.</summary>
+    public event Action<ZMachineInstructionAuditEvent>? EventRecorded;
 
     public long InstructionsExecuted
     {
@@ -68,9 +88,17 @@ public sealed class ZMachineInstructionAudit
         ArgumentNullException.ThrowIfNull(command);
         lock (_gate)
         {
-            _groups.Add(new MutableGroup(++_nextGroupNumber, command, DateTimeOffset.UtcNow));
+            var group = new MutableGroup(++_nextGroupNumber, command, DateTimeOffset.UtcNow);
+            _groups.Add(group);
+            _pendingEvents.Enqueue(new ZMachineInstructionAuditEvent(
+                ZMachineInstructionAuditEventKind.CommandStarted,
+                group.Number,
+                group.Command,
+                group.StartedAt,
+                null));
         }
 
+        PublishQueuedAuditEvents();
         NotifyChanged();
     }
 
@@ -79,6 +107,7 @@ public sealed class ZMachineInstructionAudit
         ArgumentNullException.ThrowIfNull(instruction);
         ArgumentNullException.ThrowIfNull(state);
         ZMachineInstructionAuditEntry entry;
+        long groupNumber;
         lock (_gate)
         {
             if (_groups.Count == 0)
@@ -101,8 +130,16 @@ public sealed class ZMachineInstructionAudit
                 state.ProgramCounter,
                 state.IsHalted);
             _groups[^1].Instructions.Add(entry);
+            groupNumber = _groups[^1].Number;
+            _pendingEvents.Enqueue(new ZMachineInstructionAuditEvent(
+                ZMachineInstructionAuditEventKind.InstructionRecorded,
+                groupNumber,
+                null,
+                null,
+                entry));
         }
 
+        PublishQueuedAuditEvents();
         NotifyChanged();
         return entry;
     }
@@ -174,12 +211,21 @@ public sealed class ZMachineInstructionAudit
         {
             var current = _groups.Count == 0 ? null : _groups[^1];
             _groups.Clear();
-            _groups.Add(new MutableGroup(
+            var continuation = new MutableGroup(
                 ++_nextGroupNumber,
                 current?.Command ?? "Recording continued",
-                DateTimeOffset.UtcNow));
+                DateTimeOffset.UtcNow);
+            _groups.Add(continuation);
+            _pendingEvents.Enqueue(new ZMachineInstructionAuditEvent(
+                ZMachineInstructionAuditEventKind.HistoryCleared,
+                continuation.Number,
+                null,
+                null,
+                null,
+                current?.Number));
         }
 
+        PublishQueuedAuditEvents();
         NotifyChanged();
     }
 
@@ -200,6 +246,52 @@ public sealed class ZMachineInstructionAudit
             catch (Exception)
             {
                 // Diagnostic viewers must never change game execution behavior.
+            }
+        }
+    }
+
+    private void PublishQueuedAuditEvents()
+    {
+        lock (_gate)
+        {
+            if (_publishingEvents || _pendingEvents.Count == 0)
+            {
+                return;
+            }
+
+            _publishingEvents = true;
+        }
+
+        while (true)
+        {
+            ZMachineInstructionAuditEvent auditEvent;
+            lock (_gate)
+            {
+                if (_pendingEvents.Count == 0)
+                {
+                    _publishingEvents = false;
+                    return;
+                }
+
+                auditEvent = _pendingEvents.Dequeue();
+            }
+
+            var observers = EventRecorded?.GetInvocationList();
+            if (observers is null)
+            {
+                continue;
+            }
+
+            foreach (var observer in observers)
+            {
+                try
+                {
+                    ((Action<ZMachineInstructionAuditEvent>)observer)(auditEvent);
+                }
+                catch (Exception)
+                {
+                    // Audit sinks must never change game execution behavior.
+                }
             }
         }
     }
