@@ -20,7 +20,7 @@
       <MenuItem Header="_Tools">
         <MenuItem x:Name="StoryFileInfoMenuItem" Header="Story File Info..." Click="OnStoryFileInfoClick" IsEnabled="False" />
         <Separator />
-        <MenuItem x:Name="ViewInstructionsMenuItem" Header="View Instructions..." Click="OnViewInstructionsClick" IsEnabled="False" />
+        <MenuItem x:Name="ViewInstructionsMenuItem" Header="View Instructions..." Click="OnViewInstructionsClick" />
         <Separator />
         <MenuItem x:Name="ViewErrorsMenuItem" Header="View Errors..." Click="OnViewErrorsClick" />
         <Separator />

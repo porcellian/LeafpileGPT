@@ -16,6 +16,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
     private readonly string _storyPath;
     private readonly BlorbFile? _blorb;
     private readonly Action<Action> _dispatch;
+    private readonly InstructionAuditAutoSaver? _instructionAuditAutoSaver;
     private readonly SemaphoreSlim _stateGate = new(1, 1);
     private readonly CancellationTokenSource _shutdown = new();
     private Task? _runTask;
@@ -36,7 +37,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
         string transcriptDirectory,
         BlorbFile? blorb = null,
         Action<Action>? dispatch = null,
-        ZMachineRuntimeErrorManager? runtimeErrors = null)
+        ZMachineRuntimeErrorManager? runtimeErrors = null,
+        string? auditsDirectory = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         ArgumentException.ThrowIfNullOrWhiteSpace(storyPath);
@@ -73,6 +75,18 @@ public sealed class DesktopGameSession : IAsyncDisposable
                 _gameIdentity,
                 State.ProgramCounter);
         };
+        if (auditsDirectory is not null)
+        {
+            _instructionAuditAutoSaver = new InstructionAuditAutoSaver(
+                auditsDirectory,
+                storyName,
+                InstructionAudit,
+                exception => _runtimeErrors.ReportHostWarning(
+                    new IOException($"Automatic instruction audit could not be saved: {exception.Message}", exception),
+                    _gameIdentity,
+                    0));
+        }
+
         _input = new DesktopInputProvider(State.Memory)
         {
             BeforeInputWaitAsync = ReleaseStateForInputAsync,
@@ -133,6 +147,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             throw new InvalidOperationException("This story session has already been started.");
         }
 
+        _instructionAuditAutoSaver?.Start();
         _runTask = Task.Run(() => RunLoopAsync(_shutdown.Token));
     }
 
@@ -269,6 +284,11 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
         _transcript.Dispose();
         EventServices.Dispose();
+        if (_instructionAuditAutoSaver is not null)
+        {
+            await _instructionAuditAutoSaver.DisposeAsync().ConfigureAwait(false);
+        }
+
         _shutdown.Dispose();
         _stateGate.Dispose();
     }

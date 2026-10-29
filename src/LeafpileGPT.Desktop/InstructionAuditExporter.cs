@@ -20,6 +20,18 @@ public static class InstructionAuditExporter
         ArgumentException.ThrowIfNullOrWhiteSpace(basePath);
         ArgumentException.ThrowIfNullOrWhiteSpace(storyName);
         ArgumentNullException.ThrowIfNull(audit);
+        return await ExportAsync(basePath, storyName, audit.GetSnapshot(), cancellationToken).ConfigureAwait(false);
+    }
+
+    public static async Task<(string PdfPath, string JsonLinesPath)> ExportAsync(
+        string basePath,
+        string storyName,
+        IReadOnlyList<ZMachineInstructionAuditGroup> groups,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(basePath);
+        ArgumentException.ThrowIfNullOrWhiteSpace(storyName);
+        ArgumentNullException.ThrowIfNull(groups);
 
         var fullBasePath = Path.GetFullPath(basePath);
         var directory = Path.GetDirectoryName(fullBasePath)
@@ -28,47 +40,65 @@ public static class InstructionAuditExporter
         var stem = Path.Combine(directory, Path.GetFileNameWithoutExtension(fullBasePath));
         var pdfPath = stem + ".pdf";
         var jsonLinesPath = stem + ".jsonl";
-        var groups = audit.GetSnapshot();
-
-        await File.WriteAllBytesAsync(pdfPath, CreatePdf(storyName, groups), cancellationToken).ConfigureAwait(false);
+        await WritePdfAsync(pdfPath, storyName, groups, cancellationToken).ConfigureAwait(false);
         await using (var stream = new FileStream(jsonLinesPath, FileMode.Create, FileAccess.Write, FileShare.Read))
         await using (var writer = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)))
         {
             foreach (var group in groups)
             {
                 cancellationToken.ThrowIfCancellationRequested();
-                await writer.WriteLineAsync(JsonSerializer.Serialize(new
-                {
-                    type = "command",
-                    group = group.Number,
-                    command = group.Command,
-                    startedAt = group.StartedAt
-                })).ConfigureAwait(false);
+                await writer.WriteLineAsync(SerializeCommand(group)).ConfigureAwait(false);
                 foreach (var instruction in group.Instructions)
                 {
-                    await writer.WriteLineAsync(JsonSerializer.Serialize(new
-                    {
-                        type = "instruction",
-                        group = group.Number,
-                        sequence = instruction.Sequence,
-                        programCounter = FormatProgramCounter(instruction.ProgramCounter),
-                        form = instruction.Form.ToString(),
-                        opcodeClass = instruction.OpcodeClass.ToString(),
-                        instruction.Opcode,
-                        instruction.Mnemonic,
-                        instruction.Operands,
-                        instruction.StoreVariable,
-                        instruction.Branch,
-                        nextProgramCounter = FormatProgramCounter(instruction.NextProgramCounter),
-                        programCounterAfter = FormatProgramCounter(instruction.ProgramCounterAfter),
-                        isHalted = instruction.IsHalted
-                    })).ConfigureAwait(false);
+                    await writer.WriteLineAsync(SerializeInstruction(group.Number, instruction)).ConfigureAwait(false);
                 }
             }
         }
 
         return (pdfPath, jsonLinesPath);
     }
+
+    public static async Task WritePdfAsync(
+        string pdfPath,
+        string storyName,
+        IReadOnlyList<ZMachineInstructionAuditGroup> groups,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(pdfPath);
+        ArgumentException.ThrowIfNullOrWhiteSpace(storyName);
+        ArgumentNullException.ThrowIfNull(groups);
+        var fullPath = Path.GetFullPath(pdfPath);
+        var directory = Path.GetDirectoryName(fullPath)
+            ?? throw new ArgumentException("The PDF filename must include a parent directory.", nameof(pdfPath));
+        Directory.CreateDirectory(directory);
+        await File.WriteAllBytesAsync(fullPath, CreatePdf(storyName, groups), cancellationToken).ConfigureAwait(false);
+    }
+
+    internal static string SerializeCommand(ZMachineInstructionAuditGroup group) => JsonSerializer.Serialize(new
+    {
+        type = "command",
+        group = group.Number,
+        command = group.Command,
+        startedAt = group.StartedAt
+    });
+
+    internal static string SerializeInstruction(long groupNumber, ZMachineInstructionAuditEntry instruction) => JsonSerializer.Serialize(new
+    {
+        type = "instruction",
+        group = groupNumber,
+        sequence = instruction.Sequence,
+        programCounter = FormatProgramCounter(instruction.ProgramCounter),
+        form = instruction.Form.ToString(),
+        opcodeClass = instruction.OpcodeClass.ToString(),
+        instruction.Opcode,
+        instruction.Mnemonic,
+        instruction.Operands,
+        instruction.StoreVariable,
+        instruction.Branch,
+        nextProgramCounter = FormatProgramCounter(instruction.NextProgramCounter),
+        programCounterAfter = FormatProgramCounter(instruction.ProgramCounterAfter),
+        isHalted = instruction.IsHalted
+    });
 
     private static byte[] CreatePdf(string storyName, IReadOnlyList<ZMachineInstructionAuditGroup> groups)
     {
