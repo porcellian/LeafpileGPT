@@ -14,13 +14,16 @@ public partial class GameDisplayView : UserControl
 {
     private readonly ScrollViewer _transcriptScrollViewer;
     private readonly Grid _playArea;
+    private readonly Border _upperWindowBorder;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
+    private readonly TextBlock _upperWindowTextBlock;
     private readonly TextBox _promptTextBox;
     private Run? _promptInputRun;
     private Run? _blockCursorRun;
     private bool _promptInputActive;
     private bool _scrollToEndPending;
+    private int _storyVersion;
     private DesktopScreenMetrics? _lastScreenMetrics;
     private readonly DispatcherTimer _cursorBlinkTimer;
     private readonly Dictionary<(short Window, int Row, int Column), Image> _pictures = [];
@@ -30,8 +33,10 @@ public partial class GameDisplayView : UserControl
         AvaloniaXamlLoader.Load(this);
         _transcriptScrollViewer = this.FindControl<ScrollViewer>("TranscriptScrollViewer")!;
         _playArea = this.FindControl<Grid>("PlayArea")!;
+        _upperWindowBorder = this.FindControl<Border>("UpperWindowBorder")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
+        _upperWindowTextBlock = this.FindControl<TextBlock>("UpperWindowTextBlock")!;
         _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
         _playArea.SizeChanged += (_, _) => PublishScreenMetrics();
@@ -95,6 +100,18 @@ public partial class GameDisplayView : UserControl
 
     public void FocusPrompt() => _promptTextBox.Focus();
 
+    public void SetStoryVersion(int version)
+    {
+        _storyVersion = version;
+        Model.SetStoryVersion(version);
+
+        var upperWindowIsStatusDisplay = version is 4 or 5;
+        _upperWindowBorder.Background = upperWindowIsStatusDisplay
+            ? new SolidColorBrush(Color.FromRgb(170, 170, 170))
+            : new SolidColorBrush(Color.FromRgb(0, 102, 204));
+        _upperWindowTextBlock.Foreground = upperWindowIsStatusDisplay ? Brushes.Black : Brushes.White;
+    }
+
     public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
     {
         var typeface = new Typeface(
@@ -123,6 +140,7 @@ public partial class GameDisplayView : UserControl
             contentHeight,
             sample.WidthIncludingTrailingWhitespace,
             sample.Height);
+        Model.SetUpperWindowWidth(metrics.WidthInCharacters);
         return true;
     }
 
@@ -135,6 +153,29 @@ public partial class GameDisplayView : UserControl
 
         _lastScreenMetrics = metrics;
         ScreenMetricsChanged?.Invoke(metrics);
+    }
+
+    private void UpdateUpperWindowLayout()
+    {
+        if (Model.UpperWindowHeight == 0 || _storyVersion >= 6)
+        {
+            _upperWindowBorder.Height = double.NaN;
+            return;
+        }
+
+        var typeface = new Typeface(
+            _upperWindowTextBlock.FontFamily,
+            _upperWindowTextBlock.FontStyle,
+            _upperWindowTextBlock.FontWeight,
+            FontStretch.Normal);
+        var sample = new FormattedText(
+            "M",
+            CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            typeface,
+            _upperWindowTextBlock.FontSize,
+            Brushes.White);
+        _upperWindowBorder.Height = sample.Height * Model.UpperWindowHeight;
     }
 
     public void BeginPromptInput()
@@ -175,9 +216,16 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.SplitWindow:
                 Model.SplitWindow(operation.Value);
+                UpdateUpperWindowLayout();
                 break;
             case ZMachineScreenOperationKind.SelectWindow:
                 Model.SetSelectedWindow(operation.Window);
+                break;
+            case ZMachineScreenOperationKind.MoveCursor:
+                Model.MoveCursor(operation.Window, operation.Row, operation.Column);
+                break;
+            case ZMachineScreenOperationKind.EraseLine:
+                Model.EraseLine(operation.Window, operation.Row, operation.Column);
                 break;
             case ZMachineScreenOperationKind.SetTextStyle:
                 Model.SetTextStyle(checked((ushort)operation.Value));

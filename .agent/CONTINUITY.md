@@ -1,6 +1,9 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T15:47Z [TOOL] PR #40 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/40`, latest code commit `bb33314`. It includes V4 output_stream decoding, upper-window redraw cleanup and gray/black V4/V5 status styling, plus hiding the external status strip for V4–V8; `gui14.png` through `gui17.png` are tracked. Formatting, Release solution build, all 599 xUnit tests, and diff checks pass. `gh pr checks` could not reach the API; CI status is UNCONFIRMED. Await review and merge.
+- 2026-10-29T14:22Z [USER] Fix the blocking V4 `output_stream` decoder error reproduced while playing local `stories/mind.z4` at PC `0x019B5C`; keep the story local.
+- 2026-10-29T04:43Z [USER] PR #39 is merged. Story File Info date and title-case heading updates are complete; remain on standby before Task 33 until asked to proceed.
 - 2026-10-29T04:41Z [TOOL] PR #39 is updated through commit `95fce23`: all Story File Info section captions use title case, and `reference/gui13.png` is tracked. Formatter, Release build, all 581 tests, and diff checks pass; CI has not reported checks yet. Await review and merge.
 - 2026-10-29T04:39Z [USER] Capitalize every word in Story File Info section headings as shown in `reference/gui13.png`; attach new reference-directory files to the review.
 - 2026-10-29T04:36Z [TOOL] Supersedes the local-complete state: commit `23683b3` is pushed and PR #39 is open at `https://github.com/porcellian/LeafpileGPT/pull/39` for the Story File Info source-date follow-up. Formatting, Release solution build, 581 xUnit tests, and diff checks pass; await review and merge.
@@ -78,6 +81,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T14:27Z [CODE] Permit one or two operands for V3–V5 `output_stream`, following the specification's opcode definition that includes the memory-stream table operand; retain the V6–V8 three-operand maximum.
 - 2026-10-29T04:40Z [CODE] Story File Info applies invariant title casing centrally to section captions, which preserves mixed-case metadata labels while capitalizing ordinary words.
 - 2026-10-29T04:35Z [CODE] Story File Info reports source `Last modified (UTC)` captured in its immutable snapshot; if source metadata is unavailable, the UI says `Not available`.
 - 2026-10-29T04:13Z [USER] All remaining game walkthrough PDFs must follow the visual and editorial style of the Zork I walkthrough; Zork II is being revised to match.
@@ -108,6 +112,10 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T15:47Z [TOOL] The story-provided V4/V5 upper status window uses gray `#AAAAAA` with black text to match `reference/gui17.png`; the separate app status strip retains its prior styling and version-based visibility. Formatting, Release build, all 599 tests, and diff checks pass. Screenshot and change are pushed to PR #40 at `bb33314`, confirmed OPEN; CI status is UNCONFIRMED.
+- 2026-10-29T15:35Z [TOOL] Status-strip visibility now requires a loaded V1–V3 story; V3 time games retain their clock status, while V4–V8 hide the full gray row. Story version is set before marking the new story loaded. Added version/load/reset tests and tracked `reference/gui16.png`. Release build, formatting, all 599 tests, and diff checks pass; pushed to open PR #40 at `fbc0b23`.
+- 2026-10-29T15:17Z [TOOL] `reference/gui15.png` showed stale characters in the V1–V5 upper story window. It was append-only and ignored screen cursor/erase operations; the display model now renders rows with cursor-positioned writes, `move_cursor`, and `erase_line`, and clears the upper window when the screen clears. V6 retains its prior path. Added generated regression coverage; all 590 tests and formatting pass. Screenshot is tracked and fix is pushed to PR #40, which remains open.
+- 2026-10-29T14:50Z [TOOL] Follow-up to PR #40 is pushed in commit `2fa45a5`; PR #40 is confirmed OPEN. The change uses `reference/gui14.png`: V1–V5 upper-window presentation now honors the declared split height and removes the 8 px padding that left a blank band and reduced the transcript viewport. Added model coverage; Release desktop build, formatting, all 586 xUnit tests, and diff checks pass. `gh pr checks` could not reach GitHub, so CI status is UNCONFIRMED.
 - 2026-10-29T04:17Z [TOOL] Replaced fixed cover-banner row heights with content-sized rows and tighter padding after `reference/pdf01.png` showed cropped title glyphs. The new cover fits fully with all title lines visible.
 - 2026-10-29T04:03Z [TOOL] Task 32 route replay is complete; no source code changed, so Task 31 was not replayed. Final saved run halted at 400/400 with zero deaths.
 - 2026-10-29T03:32Z [TOOL] Task 32 started from origin/main commit `743fdfe`; local `stories/zork2.z3`, `.pdf` manual, and `.txt` hints are present.
@@ -187,6 +195,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T14:27Z [TOOL] `mind.z4` encodes the failing instruction at `0x019B5C` as `F3 6F 03 9A`: select memory stream 3 with the table address held in variable `0x9A`. The executor already handled both operands; V3–V4 metadata's one-operand maximum caused the blocking decoder exception.
 - 2026-10-29T04:17Z [TOOL] The Zork II cover's explicit table row heights were smaller than ReportLab's paragraph leading plus cell padding, clipping text without changing PDF text extraction. Letting rows size to content resolves the visual crop.
 - 2026-10-29T04:03Z [TOOL] In this Zork II run, delaying the demon payment lets the Wizard cast Floresce after the lamp burns out; later, SE/NE/NW/SW solves the diamond and east returns to its center stairway.
 - 2026-10-29T03:22Z [TOOL] Zork I Release 88 / Serial 840726 reaches the river buoy after four waits in this replay, and the thief combat outcome varies with prior turn timing; retain the verified full route and seed rather than treating attack count as universal.

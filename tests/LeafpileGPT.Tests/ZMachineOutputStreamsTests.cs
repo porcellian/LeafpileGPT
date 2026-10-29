@@ -219,6 +219,34 @@ public sealed class ZMachineOutputStreamsTests
     }
 
     [Fact]
+    public void VersionFourOutputStreamDecodesAndUsesItsMemoryTableOperand()
+    {
+        var bytes = StoryFixtureBuilder.Create(4);
+        new byte[] { 0xF3, 0x6F, 0x03, 0x9A }.CopyTo(bytes, 850);
+        StoryFixtureBuilder.WriteWord(bytes, 0x1C, StoryFixtureBuilder.CalculateChecksum(bytes));
+        var state = ZMachineExecutionState.Start(StoryFile.Parse(bytes));
+        var tablePointerVariableAddress = (ushort)(state.Memory.Header.GlobalsTableAddress + ((0x9A - 16) * 2));
+        state.Memory.WriteWord(tablePointerVariableAddress, 500);
+        var screen = new List<string>();
+        state.OutputStreams.ScreenWriter = screen.Add;
+        var instruction = new ZMachineInstructionDecoder(state.Memory).Decode(850);
+
+        new ZMachineOpcodeExecutor().Execute(instruction, state);
+        Assert.Equal((ushort)500, state.OutputStreams.CurrentMemoryTableAddress);
+        state.OutputStreams.WriteText("X");
+        state.OutputStreams.SelectStream(-3);
+
+        Assert.Equal("output_stream", instruction.Definition.Mnemonic);
+        Assert.Equal(2, instruction.Operands.Length);
+        Assert.Equal((ushort)3, instruction.Operands[0].Value);
+        Assert.Equal(OperandEncoding.Variable, instruction.Operands[1].Encoding);
+        Assert.Equal((ushort)0x9A, instruction.Operands[1].Value);
+        Assert.Equal((ushort)1, state.Memory.ReadWord(500));
+        Assert.Equal((byte)'X', state.Memory.ReadByte(502));
+        Assert.Empty(screen);
+    }
+
+    [Fact]
     public void PrintAddressAndPackedAddressDecodeTerminatedStrings()
     {
         var state = CreateState(5);

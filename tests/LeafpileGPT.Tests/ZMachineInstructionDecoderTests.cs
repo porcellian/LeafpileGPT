@@ -63,6 +63,23 @@ public sealed class ZMachineInstructionDecoderTests
         Assert.Equal((byte)1, instruction.Branch?.EncodedLength);
     }
 
+    [Theory]
+    [InlineData(3)]
+    [InlineData(4)]
+    [InlineData(5)]
+    public void DecodesMemoryStreamTableOperandInVersionsThreeThroughFive(byte version)
+    {
+        var decoder = CreateDecoder(version, 0xF3, 0x6F, 0x03, 0x9A);
+
+        var instruction = decoder.Decode(CodeAddress);
+
+        Assert.Equal("output_stream", instruction.Definition.Mnemonic);
+        Assert.Equal(2, instruction.Operands.Length);
+        Assert.Equal((ushort)3, instruction.Operands[0].Value);
+        Assert.Equal(OperandEncoding.Variable, instruction.Operands[1].Encoding);
+        Assert.Equal((ushort)0x9A, instruction.Operands[1].Value);
+    }
+
     [Fact]
     public void DecodesLargeAndVariableOperandsFromTypeByte()
     {
