@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T14:27Z [TOOL] Bug fix is implemented on `fix/30-zmachine-v4-output-stream-operands`: V3–V5 `output_stream` accept the memory-stream table operand described by the opcode entry. Formatter, Release build, 585 xUnit tests, and diff checks pass; final review, commit, and PR remain.
+- 2026-10-29T14:29Z [TOOL] The Mind Forever Voyaging decoder fix is committed as `db65b52`, pushed, and open as PR #40 at `https://github.com/porcellian/LeafpileGPT/pull/40`. Formatter, Release solution build, 585 xUnit tests, and diff checks pass; await review and merge.
 - 2026-10-29T14:22Z [USER] Fix the blocking V4 `output_stream` decoder error reproduced while playing local `stories/mind.z4` at PC `0x019B5C`; keep the story local.
 - 2026-10-29T04:43Z [USER] PR #39 is merged. Story File Info date and title-case heading updates are complete; remain on standby before Task 33 until asked to proceed.
 - 2026-10-29T04:41Z [TOOL] PR #39 is updated through commit `95fce23`: all Story File Info section captions use title case, and `reference/gui13.png` is tracked. Formatter, Release build, all 581 tests, and diff checks pass; CI has not reported checks yet. Await review and merge.
