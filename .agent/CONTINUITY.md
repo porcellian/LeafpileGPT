@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T16:59Z [TOOL] PR #41 follow-up addresses restore screen state in `reference/gui18.png`: retain screen layout/cursors across restore, collapse V3 upper windows per spec, and implicitly split V4/V5 upper windows when a valid cursor request needs more height. Release build (0 warnings/errors), formatting, diff check, and all 608 xUnit tests pass. `gui18.png` is staged for tracking; changes are not committed yet.
 - 2026-10-29T16:46Z [TOOL] A temporary untracked probe loaded the local `mind.z4` and `mind.ifzs` through the updated core; restore resumes at `0x00D7F9` with writable buffers `0x742B` and `0x715B` (1/1 passed). The probe was removed; story and save remain local. The 604-test generated suite also passes.
 - 2026-10-29T16:45Z [TOOL] Supersedes the awaiting-push status below: commits `d32be11` and `fa36dbd` are pushed to PR #41 at `https://github.com/porcellian/LeafpileGPT/pull/41`; PR remains OPEN. `gh pr checks` reports no checks yet.
 - 2026-10-29T16:45Z [TOOL] Supersedes the uncommitted status below: the restore checkpoint fix is committed as `d32be11` on PR #41's branch. The branch is one commit ahead of origin and awaits push; PR #41 remains open.

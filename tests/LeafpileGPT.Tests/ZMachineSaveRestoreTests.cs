@@ -155,6 +155,42 @@ public sealed class ZMachineSaveRestoreTests
     }
 
     [Fact]
+    public void RestorePreservesV4ScreenLayoutAndCursorState()
+    {
+        var state = ZMachineExecutionState.Start(CreateStory(4));
+        var screen = state.OutputStreams.Screen;
+        screen.SetDimensions(80, 25);
+        screen.SplitWindow(2);
+        screen.SetWindow(1);
+        screen.SetCursor(2, 67);
+        var save = state.CaptureSaveState(850);
+
+        state.ApplySaveState(save);
+
+        Assert.Same(screen, state.OutputStreams.Screen);
+        Assert.Equal(2, screen.UpperWindowHeight);
+        Assert.Equal((short)1, screen.SelectedWindow);
+        Assert.Equal(new ZMachineCursorPosition(2, 67), screen.CurrentCursor);
+    }
+
+    [Fact]
+    public void RestoreCollapsesV3UpperWindowAsRequiredByTheStandard()
+    {
+        var state = ZMachineExecutionState.Start(CreateStory(3));
+        var screen = state.OutputStreams.Screen;
+        screen.SetDimensions(80, 25);
+        screen.SplitWindow(2);
+        screen.SetWindow(1);
+        var save = state.CaptureSaveState(850);
+
+        state.ApplySaveState(save);
+
+        Assert.Equal(0, screen.UpperWindowHeight);
+        Assert.Equal((short)0, screen.SelectedWindow);
+        Assert.Equal(new ZMachineCursorPosition(25, 1), screen.GetCursor(0));
+    }
+
+    [Fact]
     public void ExtendedSavePassesSaveAreaFilenameAndPromptToHostStore()
     {
         var store = new MemorySaveStore();

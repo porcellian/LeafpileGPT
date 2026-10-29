@@ -55,42 +55,11 @@ public sealed class ZMachineOutputStreams
     /// <summary>Resets stream selections after a VM restore while retaining host writers.</summary>
     public void ResetAfterRestore()
     {
-        var runtimeHeader = new byte[13];
-        runtimeHeader[0] = _memory.ReadByte(0x01);
-        runtimeHeader[1] = _memory.ReadByte(0x10);
-        runtimeHeader[2] = _memory.ReadByte(0x11);
-        for (var address = 0x20; address <= 0x27; address++)
-        {
-            runtimeHeader[address - 0x1D] = _memory.ReadByte((ushort)address);
-        }
-
-        runtimeHeader[11] = _memory.ReadByte(0x2C);
-        runtimeHeader[12] = _memory.ReadByte(0x2D);
         _memoryScopes.Clear();
         _screenSelected = true;
         _commandStreamSelected = false;
         BufferingEnabled = true;
-
-        var previousScreen = Screen;
-        Screen = new ZMachineScreenModel(_memory)
-        {
-            NewlineInterruptHandler = previousScreen.NewlineInterruptHandler,
-            SupportsUpperWindow = previousScreen.SupportsUpperWindow,
-            StatusLineWriter = previousScreen.StatusLineWriter,
-            OperationWriter = previousScreen.OperationWriter
-        };
-        Screen.SetDimensions(previousScreen.WidthInCharacters, previousScreen.HeightInLines,
-            previousScreen.WidthInUnits, previousScreen.HeightInUnits);
-
-        _memory.WriteByte(0x01, runtimeHeader[0]);
-        _memory.WriteWord(Flags2Address, (ushort)((runtimeHeader[1] << 8) | runtimeHeader[2]));
-        for (var address = 0x20; address <= 0x27; address++)
-        {
-            _memory.WriteByte((ushort)address, runtimeHeader[address - 0x1D]);
-        }
-
-        _memory.WriteByte(0x2C, runtimeHeader[11]);
-        _memory.WriteByte(0x2D, runtimeHeader[12]);
+        Screen.ResetAfterRestore();
         _lastFlags2 = _memory.ReadWord(Flags2Address);
         _transcriptSelected = (_lastFlags2 & TranscriptFlag) != 0;
     }
