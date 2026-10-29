@@ -1,3 +1,4 @@
+using System.Globalization;
 using Avalonia.Controls;
 using Avalonia.Media;
 using LeafpileGPT.Core;
@@ -98,6 +99,9 @@ public sealed class StoryFileInfoWindow : Window
     {
         AddSection("File identity");
         AddValue("Source file", snapshot.SourceFileName);
+        AddValue("Last modified (UTC)", snapshot.SourceFileLastModifiedUtc is { } lastModified
+            ? lastModified.ToString("yyyy-MM-dd HH:mm:ss 'UTC'", CultureInfo.InvariantCulture)
+            : "Not available");
         AddValue("Path", snapshot.SourcePath);
         AddValue("Format", snapshot.SourceFormat);
         AddValue("Source file size", $"{snapshot.SourceFileSizeBytes:N0} bytes");
@@ -214,7 +218,12 @@ public sealed class StoryFileInfoWindow : Window
             BorderBrush = new SolidColorBrush(Color.Parse("#B8C6D8")),
             BorderThickness = new Avalonia.Thickness(0, 0, 0, 1),
             Padding = new Avalonia.Thickness(0, 5, 0, 5),
-            Child = new TextBlock { Text = title, FontSize = 16, FontWeight = FontWeight.Bold }
+            Child = new TextBlock
+            {
+                Text = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(title),
+                FontSize = 16,
+                FontWeight = FontWeight.Bold
+            }
         });
     }
 

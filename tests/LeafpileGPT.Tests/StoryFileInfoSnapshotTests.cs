@@ -24,6 +24,7 @@ public sealed class StoryFileInfoSnapshotTests
 
         Assert.Equal(path, snapshot.SourcePath);
         Assert.Equal("fixture story.z5", snapshot.SourceFileName);
+        Assert.Equal(File.GetLastWriteTimeUtc(path), snapshot.SourceFileLastModifiedUtc);
         Assert.Equal("Standalone Z-machine story", snapshot.SourceFormat);
         Assert.Equal(paddedSource.Length, snapshot.SourceFileSizeBytes);
         Assert.Equal(Convert.ToHexString(SHA256.HashData(paddedSource)), snapshot.SourceFileSha256);
@@ -48,6 +49,16 @@ public sealed class StoryFileInfoSnapshotTests
         Assert.Equal("Not present", snapshot.SelectedExecutable);
         Assert.Empty(snapshot.ResourceCounts);
         Assert.Equal(4, snapshot.OriginalRawHeaderLines.Length);
+    }
+
+    [Fact]
+    public void SnapshotReportsMissingSourceFileDateAsUnavailable()
+    {
+        using var directory = new TemporaryDirectory();
+        var missingPath = Path.Combine(directory.Path, "missing-story.z5");
+        var snapshot = CreateSnapshot(StoryFile.Parse(StoryFixtureBuilder.Create(5)), sourcePath: missingPath);
+
+        Assert.Null(snapshot.SourceFileLastModifiedUtc);
     }
 
     [Theory]

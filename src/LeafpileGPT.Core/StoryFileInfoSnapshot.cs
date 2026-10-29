@@ -19,6 +19,7 @@ public sealed record StoryFileInfoResourceCount(string ChunkType, int Count);
 public sealed record StoryFileInfoSnapshot(
     string SourcePath,
     string SourceFileName,
+    DateTime? SourceFileLastModifiedUtc,
     string SourceFormat,
     long SourceFileSizeBytes,
     string SourceFileSha256,
@@ -73,6 +74,10 @@ public sealed record StoryFileInfoSnapshot(
             throw new ArgumentException($"The runtime header snapshot must contain exactly {StoryFile.HeaderLength} bytes.", nameof(runtimeHeader));
         }
 
+        var fullSourcePath = Path.GetFullPath(sourcePath);
+        DateTime? sourceFileLastModifiedUtc = File.Exists(fullSourcePath)
+            ? File.GetLastWriteTimeUtc(fullSourcePath)
+            : null;
         var original = story.Header.RawHeader.ToArray();
         var runtime = runtimeHeader.ToArray();
         var header = story.Header;
@@ -85,8 +90,9 @@ public sealed record StoryFileInfoSnapshot(
             : (int?)null;
 
         return new StoryFileInfoSnapshot(
-            Path.GetFullPath(sourcePath),
+            fullSourcePath,
             Path.GetFileName(sourcePath),
+            sourceFileLastModifiedUtc,
             blorb is null ? "Standalone Z-machine story" : "Blorb container (IFF FORM IFRS)",
             sourceLength,
             sourceHash,
