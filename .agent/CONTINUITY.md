@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T17:14Z [TOOL] Supersedes the uncommitted status below: status-label preservation and tracked `reference/gui19.png` are committed as `081979a`; the branch is one commit ahead and awaits push to PR #41.
 - 2026-10-29T17:14Z [TOOL] PR #41 follow-up preserves the V4/V5 upper status display across restore (`gui19.png`): restore clears lower-window content and pictures while retaining existing mode/location/time/date labels so the story can update their values. V3 collapse remains. Release build, formatting, diff check, and all 609 tests pass. Changes are not committed yet; `reference/gui19.png` is local and will be tracked.
 - 2026-10-29T17:00Z [TOOL] Supersedes the awaiting-push status below: commit `254e0b3` and continuity commit `3c7f183` are pushed to PR #41. PR title/description now cover Mind V4 opcode and restore fixes; macOS/Ubuntu/Windows checks are pending.
 - 2026-10-29T16:59Z [TOOL] Supersedes the uncommitted status below: the screen restore fix and tracked `reference/gui18.png` are committed as `254e0b3`; the branch is one commit ahead and awaits push to PR #41.
