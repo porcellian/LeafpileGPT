@@ -112,6 +112,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T14:49Z [TOOL] Follow-up to PR #40 uses `reference/gui14.png`: V1–V5 upper-window presentation now honors the declared split height and removes the 8 px padding that left a blank band and reduced the transcript viewport. Added model coverage; Release desktop build, formatting, all 586 xUnit tests, and diff checks pass. PR #40 remains open; push/update status is UNCONFIRMED because GitHub API access failed.
 - 2026-10-29T04:17Z [TOOL] Replaced fixed cover-banner row heights with content-sized rows and tighter padding after `reference/pdf01.png` showed cropped title glyphs. The new cover fits fully with all title lines visible.
 - 2026-10-29T04:03Z [TOOL] Task 32 route replay is complete; no source code changed, so Task 31 was not replayed. Final saved run halted at 400/400 with zero deaths.
 - 2026-10-29T03:32Z [TOOL] Task 32 started from origin/main commit `743fdfe`; local `stories/zork2.z3`, `.pdf` manual, and `.txt` hints are present.

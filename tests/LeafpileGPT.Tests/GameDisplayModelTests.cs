@@ -54,6 +54,7 @@ public sealed class GameDisplayModelTests
         Assert.True(model.IsMorePromptVisible);
         Assert.Equal("[MORE]", model.PromptText);
         model.SetSelectedWindow(1);
+        model.SplitWindow(2);
         model.SetColours(0x0608);
         model.InputText = "stale command";
         var presentationResetRaised = false;
@@ -64,6 +65,7 @@ public sealed class GameDisplayModelTests
         Assert.Equal(string.Empty, model.Transcript);
         Assert.Equal(string.Empty, model.UpperWindowText);
         Assert.False(model.IsUpperWindowVisible);
+        Assert.Equal(0, model.UpperWindowHeight);
         Assert.Equal(string.Empty, model.Location);
         Assert.Equal("Score: 0  Moves: 0", model.RightStatus);
         Assert.False(model.HasStoryLoaded);
@@ -72,6 +74,22 @@ public sealed class GameDisplayModelTests
         Assert.Equal((short)0, model.SelectedWindow);
         Assert.Equal(string.Empty, model.InputText);
         Assert.True(presentationResetRaised);
+    }
+
+    [Fact]
+    public void SplitWindowTracksDeclaredUpperWindowRows()
+    {
+        var model = new GameDisplayModel();
+
+        model.SplitWindow(2);
+
+        Assert.True(model.IsUpperWindowVisible);
+        Assert.Equal(2, model.UpperWindowHeight);
+
+        model.SplitWindow(0);
+
+        Assert.False(model.IsUpperWindowVisible);
+        Assert.Equal(0, model.UpperWindowHeight);
     }
 
     [Fact]

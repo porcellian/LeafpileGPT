@@ -108,6 +108,7 @@ public partial class MainWindow : Window
             UpdateLoadedStoryDisplay();
             _gameDisplay.Model.ResetPresentation();
             _gameDisplay.Model.SetStoryLoaded(loaded: true);
+            _gameDisplay.SetStoryVersion(story.Header.Version);
             _gameDisplay.ClearPictures();
             if (story.Header.Version < 6 && _gameDisplay.TryGetScreenMetrics(out var screenMetrics))
             {

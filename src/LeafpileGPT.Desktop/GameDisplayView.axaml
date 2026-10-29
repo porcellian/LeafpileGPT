@@ -25,10 +25,12 @@
                  VerticalAlignment="Center" />
     </Grid>
     <Grid x:Name="PlayArea" Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC" ClipToBounds="True">
-      <Border Grid.Row="0" Padding="8"
+      <Border x:Name="UpperWindowBorder" Grid.Row="0" Padding="0"
               IsVisible="{Binding IsUpperWindowVisible}"
+              ClipToBounds="True"
               Background="#0066CC">
-        <TextBlock Text="{Binding UpperWindowText}"
+        <TextBlock x:Name="UpperWindowTextBlock"
+                   Text="{Binding UpperWindowText}"
                    FontFamily="Courier New, Courier, monospace"
                    FontSize="20"
                    Foreground="White"
