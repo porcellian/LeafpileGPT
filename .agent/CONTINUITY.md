@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T04:17Z [TOOL] PR #38 remains the active Task 32 review. The cover-title clipping is corrected in the current branch, `reference/pdf01.png` is tracked as requested, and the revised first page has been rendered and visually checked.
 - 2026-10-29T04:13Z [TOOL] The Zork II style revision is pushed as `c23cda6` to existing PR #38. `TASKS.md` now requires the Zork I visual/editorial style for all remaining walkthroughs; await user review and merge.
 - 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` is pushed and PR #38 is open at `https://github.com/porcellian/LeafpileGPT/pull/38`; await user review and merge before Task 33.
 - 2026-10-29T03:32Z [USER] Supersedes the PR #37 open-review state: PR #37 is merged; Task 32 is active on `feature/32-zork-ii-walkthrough` from updated `origin/main`.
@@ -100,6 +101,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T04:17Z [TOOL] Replaced fixed cover-banner row heights with content-sized rows and tighter padding after `reference/pdf01.png` showed cropped title glyphs. The new cover fits fully with all title lines visible.
 - 2026-10-29T04:03Z [TOOL] Task 32 route replay is complete; no source code changed, so Task 31 was not replayed. Final saved run halted at 400/400 with zero deaths.
 - 2026-10-29T03:32Z [TOOL] Task 32 started from origin/main commit `743fdfe`; local `stories/zork2.z3`, `.pdf` manual, and `.txt` hints are present.
 - 2026-10-29T03:22Z [TOOL] Task 31 used the desktop-independent replay runner with a fresh deterministic run; no source code changed, so there are no earlier completed walkthroughs to replay. The generated 417,780-entry JSONL opcode trace is gzip-compressed and kept ignored under `.agent/regression-routes/`.
@@ -178,6 +180,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T04:17Z [TOOL] The Zork II cover's explicit table row heights were smaller than ReportLab's paragraph leading plus cell padding, clipping text without changing PDF text extraction. Letting rows size to content resolves the visual crop.
 - 2026-10-29T04:03Z [TOOL] In this Zork II run, delaying the demon payment lets the Wizard cast Floresce after the lamp burns out; later, SE/NE/NW/SW solves the diamond and east returns to its center stairway.
 - 2026-10-29T03:22Z [TOOL] Zork I Release 88 / Serial 840726 reaches the river buoy after four waits in this replay, and the thief combat outcome varies with prior turn timing; retain the verified full route and seed rather than treating attack count as universal.
 - 2026-10-29T02:43Z [TOOL] With this repository's `.NET 10` `global.json` MTP runner setting, `dotnet test` reported zero tests (exit 5), but launching the generated xUnit v3 test apphost directly discovered and passed all 580 tests. CI and README now use `dotnet run --project tests/LeafpileGPT.Tests/LeafpileGPT.Tests.csproj` so the suite actually executes.
