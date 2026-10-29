@@ -1,7 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
-- 2026-10-29T04:35Z [TOOL] Task 30 follow-up is implemented on `feature/30-story-file-info-date`: Story File Info now shows the source file's last-modified date under Source file. Formatter, Release solution build, and 581 xUnit tests pass; final diff review, commit, and PR remain.
+- 2026-10-29T04:36Z [TOOL] Supersedes the local-complete state: commit `23683b3` is pushed and PR #39 is open at `https://github.com/porcellian/LeafpileGPT/pull/39` for the Story File Info source-date follow-up. Formatting, Release solution build, 581 xUnit tests, and diff checks pass; await review and merge.
 - 2026-10-29T04:29Z [USER] After PR #38 merged, add the source story file's date beneath the Source file row in Story File Info; treat this as a separate follow-up branch/PR.
 - 2026-10-29T04:21Z [USER] PR #38 is merged. Task 32 is complete; standby before Task 33 until the user asks to proceed.
 - 2026-10-29T04:17Z [TOOL] PR #38 remains the active Task 32 review. The cover-title clipping is corrected in the current branch, `reference/pdf01.png` is tracked as requested, and the revised first page has been rendered and visually checked.
