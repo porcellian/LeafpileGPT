@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T16:27Z [TOOL] The V4 Mind bleep compatibility fix is committed as `d453f8a`, pushed, and open as PR #41 at `https://github.com/porcellian/LeafpileGPT/pull/41`. It adds only a one-operand V4 `sound_effect` decoder alias for the opcode bytes observed at `0x00D5B7`; the standard V3 and V5+ entries remain unchanged. Formatting, Release build, 602 xUnit tests, and diff checks pass; CI status is UNCONFIRMED because `gh pr checks` could not reach GitHub. Await review and merge.
 - 2026-10-29T15:47Z [TOOL] PR #40 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/40`, latest code commit `bb33314`. It includes V4 output_stream decoding, upper-window redraw cleanup and gray/black V4/V5 status styling, plus hiding the external status strip for V4–V8; `gui14.png` through `gui17.png` are tracked. Formatting, Release solution build, all 599 xUnit tests, and diff checks pass. `gh pr checks` could not reach the API; CI status is UNCONFIRMED. Await review and merge.
 - 2026-10-29T14:22Z [USER] Fix the blocking V4 `output_stream` decoder error reproduced while playing local `stories/mind.z4` at PC `0x019B5C`; keep the story local.
 - 2026-10-29T04:43Z [USER] PR #39 is merged. Story File Info date and title-case heading updates are complete; remain on standby before Task 33 until asked to proceed.
@@ -195,6 +196,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T16:27Z [TOOL] The local `mind.z4` bytes at PC `0x00D5B7` are `F5 7F 01` (VAR:21 `sound_effect 1`). ZSpec 1.1 lists `sound_effect` for V3 and V5+, excluding V4; the story uses the one-operand bleep form anyway. The compatibility alias is restricted to exactly one operand, and generated tests verify decode, host dispatch, and rejection of other V4 operand counts.
 - 2026-10-29T14:27Z [TOOL] `mind.z4` encodes the failing instruction at `0x019B5C` as `F3 6F 03 9A`: select memory stream 3 with the table address held in variable `0x9A`. The executor already handled both operands; V3–V4 metadata's one-operand maximum caused the blocking decoder exception.
 - 2026-10-29T04:17Z [TOOL] The Zork II cover's explicit table row heights were smaller than ReportLab's paragraph leading plus cell padding, clipping text without changing PDF text extraction. Letting rows size to content resolves the visual crop.
 - 2026-10-29T04:03Z [TOOL] In this Zork II run, delaying the demon payment lets the Wizard cast Floresce after the lamp burns out; later, SE/NE/NW/SW solves the diamond and east returns to its center stairway.
