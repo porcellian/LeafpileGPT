@@ -100,7 +100,11 @@ public partial class GameDisplayView : UserControl
 
     public void FocusPrompt() => _promptTextBox.Focus();
 
-    public void SetStoryVersion(int version) => _storyVersion = version;
+    public void SetStoryVersion(int version)
+    {
+        _storyVersion = version;
+        Model.SetStoryVersion(version);
+    }
 
     public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
     {
@@ -130,6 +134,7 @@ public partial class GameDisplayView : UserControl
             contentHeight,
             sample.WidthIncludingTrailingWhitespace,
             sample.Height);
+        Model.SetUpperWindowWidth(metrics.WidthInCharacters);
         return true;
     }
 
@@ -209,6 +214,12 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.SelectWindow:
                 Model.SetSelectedWindow(operation.Window);
+                break;
+            case ZMachineScreenOperationKind.MoveCursor:
+                Model.MoveCursor(operation.Window, operation.Row, operation.Column);
+                break;
+            case ZMachineScreenOperationKind.EraseLine:
+                Model.EraseLine(operation.Window, operation.Row, operation.Column);
                 break;
             case ZMachineScreenOperationKind.SetTextStyle:
                 Model.SetTextStyle(checked((ushort)operation.Value));

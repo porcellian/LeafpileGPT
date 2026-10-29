@@ -22,12 +22,17 @@ public sealed class GameDisplayModelTests
         var model = new GameDisplayModel();
         model.AppendOutput("You are standing outside.\n");
         model.AppendOutput("There is a mailbox here.");
+        model.SplitWindow(1);
+        model.AppendOutput("stale upper text", window: 1);
 
         Assert.Equal("You are standing outside.\nThere is a mailbox here.", model.Transcript);
 
         model.ClearOutput();
 
         Assert.Equal(string.Empty, model.Transcript);
+        Assert.Equal(string.Empty, model.UpperWindowText);
+        Assert.False(model.IsUpperWindowVisible);
+        Assert.Equal(0, model.UpperWindowHeight);
     }
 
     [Fact]
@@ -90,6 +95,62 @@ public sealed class GameDisplayModelTests
 
         Assert.False(model.IsUpperWindowVisible);
         Assert.Equal(0, model.UpperWindowHeight);
+    }
+
+    [Fact]
+    public void UpperWindowCursorAndEraseOperationsReplaceOldStatusText()
+    {
+        var model = new GameDisplayModel();
+        model.SetUpperWindowWidth(40);
+        model.SplitWindow(2);
+        model.SetSelectedWindow(1);
+        model.AppendOutput("Communications Mode", window: 1);
+
+        model.MoveCursor(1, 1, 1);
+        model.EraseLine(1, 1, 1);
+        model.AppendOutput("Mode", window: 1);
+
+        Assert.Equal("Mode", model.UpperWindowText);
+    }
+
+    [Fact]
+    public void UpperWindowCursorWritesToRequestedRowAndColumn()
+    {
+        var model = new GameDisplayModel();
+        model.SetUpperWindowWidth(40);
+        model.SplitWindow(2);
+        model.MoveCursor(1, 2, 1);
+
+        model.AppendOutput("3/16/2031", window: 1);
+
+        Assert.Equal("\n3/16/2031", model.UpperWindowText);
+    }
+
+    [Fact]
+    public void UpperWindowOutputDoesNotCreateRowsBeyondItsSplitHeight()
+    {
+        var model = new GameDisplayModel();
+        model.SplitWindow(1);
+
+        model.AppendOutput("Old status\nNew status", window: 1);
+
+        Assert.Equal("New status", model.UpperWindowText);
+    }
+
+    [Fact]
+    public void V6UpperWindowKeepsItsExistingTextPresentation()
+    {
+        var model = new GameDisplayModel();
+        model.SetStoryVersion(6);
+        model.SplitWindow(200);
+        model.AppendOutput("Status", window: 1);
+
+        model.SplitWindow(100);
+        model.MoveCursor(1, 2, 3);
+        model.EraseLine(1, 1, 1);
+
+        Assert.True(model.IsUpperWindowVisible);
+        Assert.Equal("Status", model.UpperWindowText);
     }
 
     [Fact]

@@ -34,7 +34,7 @@
                    FontFamily="Courier New, Courier, monospace"
                    FontSize="20"
                    Foreground="White"
-                   TextWrapping="Wrap" />
+                   TextWrapping="NoWrap" />
       </Border>
       <Grid Grid.Row="1" ClipToBounds="True">
         <ScrollViewer x:Name="TranscriptScrollViewer"
