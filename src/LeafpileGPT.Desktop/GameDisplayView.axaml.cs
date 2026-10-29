@@ -213,6 +213,7 @@ public partial class GameDisplayView : UserControl
                 break;
             case ZMachineScreenOperationKind.ClearWindow:
                 Model.ClearWindow(operation.Window);
+                ClearPictures(operation.Window);
                 break;
             case ZMachineScreenOperationKind.SplitWindow:
                 Model.SplitWindow(operation.Value);
@@ -261,13 +262,19 @@ public partial class GameDisplayView : UserControl
 
     public void ClearPictures()
     {
-        foreach (var picture in _pictures.Values)
+        ClearPictures(window: null);
+    }
+
+    public void ResetAfterRestore() => Model.ResetAfterRestore();
+
+    private void ClearPictures(short? window)
+    {
+        foreach (var (key, picture) in _pictures.Where(entry => window is null || entry.Key.Window == window).ToArray())
         {
+            _pictures.Remove(key);
+            _pictureCanvas.Children.Remove(picture);
             (picture.Source as Bitmap)?.Dispose();
         }
-
-        _pictures.Clear();
-        _pictureCanvas.Children.Clear();
     }
 
     private void OnPromptKeyDown(object? sender, KeyEventArgs e)

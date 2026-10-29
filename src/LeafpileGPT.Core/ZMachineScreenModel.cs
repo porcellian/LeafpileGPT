@@ -463,7 +463,16 @@ public sealed class ZMachineScreenModel
             _cursors[0].Set(LowerWindowBottom, 1);
         }
 
-        OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
+        if (Version is >= 3 and <= 5)
+        {
+            OperationWriter?.Invoke(new ZMachineScreenOperation(
+                ZMachineScreenOperationKind.ClearWindow,
+                Window: 0));
+        }
+        else
+        {
+            OperationWriter?.Invoke(new ZMachineScreenOperation(ZMachineScreenOperationKind.ClearScreen));
+        }
     }
 
     public void SetV6Cursor(ushort row, ushort column, short window = -3)

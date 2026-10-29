@@ -159,11 +159,14 @@ public sealed class ZMachineSaveRestoreTests
     {
         var state = ZMachineExecutionState.Start(CreateStory(4));
         var screen = state.OutputStreams.Screen;
+        var screenOperations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = screenOperations.Add;
         screen.SetDimensions(80, 25);
         screen.SplitWindow(2);
         screen.SetWindow(1);
         screen.SetCursor(2, 67);
         var save = state.CaptureSaveState(850);
+        screenOperations.Clear();
 
         state.ApplySaveState(save);
 
@@ -171,6 +174,9 @@ public sealed class ZMachineSaveRestoreTests
         Assert.Equal(2, screen.UpperWindowHeight);
         Assert.Equal((short)1, screen.SelectedWindow);
         Assert.Equal(new ZMachineCursorPosition(2, 67), screen.CurrentCursor);
+        Assert.Contains(screenOperations, operation =>
+            operation.Kind == ZMachineScreenOperationKind.ClearWindow && operation.Window == 0);
+        Assert.DoesNotContain(screenOperations, operation => operation.Kind == ZMachineScreenOperationKind.ClearScreen);
     }
 
     [Fact]

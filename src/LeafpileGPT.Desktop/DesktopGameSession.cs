@@ -178,7 +178,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             {
                 InstructionAudit.BeginCommand("Restore");
                 State.ApplySaveState(save);
-                Dispatch(ResetDisplay);
+                Dispatch(_display.ResetAfterRestore);
             }
             else
             {
@@ -282,7 +282,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     {
                         InstructionAudit.BeginCommand("Restore");
                         State.ApplySaveState(restore.Save);
-                        Dispatch(ResetDisplay);
+                        Dispatch(_display.ResetAfterRestore);
                         restore.Completion.TrySetResult();
                         continue;
                     }

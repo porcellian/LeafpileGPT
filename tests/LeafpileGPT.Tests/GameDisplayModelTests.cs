@@ -123,6 +123,32 @@ public sealed class GameDisplayModelTests
     }
 
     [Fact]
+    public void ResetAfterRestorePreservesV4StatusLabelsAndClearsLowerOutput()
+    {
+        var model = new GameDisplayModel();
+        model.SetStoryLoaded(loaded: true);
+        model.SetStoryVersion(4);
+        model.SplitWindow(4);
+        model.AppendOutput(
+            "Mode: Simulation Mode\nLocation: Parkview Apartments\nTime: 11:49am\nDate: 3/12/2041",
+            window: 1);
+        model.AppendOutput("old lower output");
+        model.InputText = "Restore";
+
+        model.ResetAfterRestore();
+
+        Assert.Equal(
+            "Mode: Simulation Mode\nLocation: Parkview Apartments\nTime: 11:49am\nDate: 3/12/2041",
+            model.UpperWindowText);
+        Assert.Equal("", model.Transcript);
+        Assert.Equal(4, model.UpperWindowHeight);
+        Assert.True(model.IsUpperWindowVisible);
+        Assert.True(model.HasStoryLoaded);
+        Assert.Equal("", model.InputText);
+        Assert.Equal(">", model.PromptText);
+    }
+
+    [Fact]
     public void SplitWindowTracksDeclaredUpperWindowRows()
     {
         var model = new GameDisplayModel();

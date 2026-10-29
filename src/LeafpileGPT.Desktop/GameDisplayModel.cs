@@ -398,6 +398,14 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         _hasTrueColours = false;
     }
 
+    public void ResetAfterRestore()
+    {
+        PresentationReset?.Invoke();
+        ClearWindow(0);
+        InputText = string.Empty;
+        ShowMorePrompt(visible: false);
+    }
+
     public void SubmitCommand()
     {
         var command = InputText;
