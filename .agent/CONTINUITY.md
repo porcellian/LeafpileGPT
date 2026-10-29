@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T02:59Z [USER] Add the Story Hex Viewer as an unchecked, unnumbered Future Tasks entry only; keep Task 31 on standby until requested.
+- 2026-10-29T02:48Z [USER] PR #35 is merged; user requested standby. Do not begin Task 31 until the user asks to proceed.
 - 2026-10-29T02:44Z [TOOL] Task 30 is committed as `8b39830`, pushed, and open as PR #35 at `https://github.com/porcellian/LeafpileGPT/pull/35`; wait for user review and merge before Task 31.
 - 2026-10-29T02:36Z [USER] PR #34 is merged; Task 30 is active on `feature/30-story-file-info-window`. Complete implementation, tests, documentation, commit, and PR; then wait for review/merge before Task 31.
 - 2026-10-29T02:26Z [TOOL] Task 29 is submitted as PR #34 (`https://github.com/porcellian/LeafpileGPT/pull/34`) from `feature/29-view-instructions`; Windows is queued and macOS/Ubuntu checks are running. Wait for user review and merge before Task 30.
@@ -89,6 +91,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T02:59Z [TOOL] Added the Story Hex Viewer roadmap item before terminal play in Future Tasks; numbered tasks remain unchanged and implementation is deferred.
+- 2026-10-29T02:48Z [USER] Supersedes the PR #35 review state: PR #35 is merged and the workspace is on standby before Task 31.
 - 2026-10-29T02:44Z [TOOL] Supersedes the local-complete Task 30 state: commit `8b39830` is pushed and PR #35 is open; wait for user review and merge before Task 31.
 - 2026-10-29T02:43Z [TOOL] Task 30 implementation, tests, and docs are complete locally; format verification, Release solution build (0 warnings/errors), 580 xUnit tests, and diff checks pass. CI test invocation is updated to launch the xUnit v3 in-process runner. Final review, commit, push, and PR remain.
 - 2026-10-29T02:26Z [TOOL] Supersedes prior Task 29 local-completion state: commit `bfc086b` is pushed and PR #34 is open. Local formatter, clean Release build, all 566 xUnit tests, and diff checks pass; cross-platform CI is pending. Do not start Task 30 before PR merge.
@@ -196,6 +200,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T02:48Z [USER] Supersedes Task 30's PR-open outcome: PR #35 is merged; Task 30 is complete and Task 31 remains on standby until requested.
 - 2026-10-29T02:44Z [TOOL] Task 30 adds a resizable Tools > Story File Info window backed by immutable snapshots, generated V1–V8/Blorb/runtime-header coverage, spec-matrix docs, and a functioning CI test command; format/build/580 tests/diff checks pass. PR #35 is open; await review and merge.
 - 2026-10-29T02:10Z [TOOL] Task 28 implements runtime error policies, copyable fatal dialogs/warnings, View Errors history, and failure-isolated bounded JSONL logs; format, Release build, 561 tests, and diff checks pass. PR #33 is open with CI pending; await user review and merge.
 - 2026-10-29T01:35Z [TOOL] Task 27 delivers deterministic headless route replay, machine-readable results, opcode traces/inventory, generated V1–V8/CLI coverage, and usage/spec-matrix docs. PR #32 is open; CI is pending. Await user review and merge.
