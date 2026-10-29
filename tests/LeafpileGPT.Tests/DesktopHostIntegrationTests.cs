@@ -48,17 +48,125 @@ public sealed class DesktopHostIntegrationTests
     }
 
     [Fact]
-    public void DesktopEventServicesForwardSoundRequestsAndReportPlaybackUnavailable()
+    public void DesktopEventServicesPlaySupportedBleepsWithoutReportingThemAsUnavailable()
     {
-        var services = new DesktopZMachineEventServices();
-        var request = new ZMachineSoundEffectRequest(7, ZMachineSoundAction.Start, 8, 1, 0);
-        ZMachineSoundEffectRequest? forwarded = null;
-        services.SoundEffectRequested += value => forwarded = value;
+        var output = new FakeBleepOutput();
+        using var services = new DesktopZMachineEventServices(output);
+        var unavailable = new List<string>();
+        services.SoundPlaybackUnavailable += unavailable.Add;
 
-        services.PerformSoundEffect(request, completed: null);
+        services.PerformSoundEffect(new ZMachineSoundEffectRequest(1, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), completed: null);
+        services.PerformSoundEffect(new ZMachineSoundEffectRequest(2, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), completed: null);
+
+        Assert.True(services.SupportsSoundEffects);
+        Assert.Equal([1, 2], output.Played);
+        Assert.Empty(unavailable);
+    }
+
+    [Fact]
+    public void DesktopEventServicesReportUnsupportedBlorbPlayback()
+    {
+        using var services = new DesktopZMachineEventServices(new FakeBleepOutput());
+        string? message = null;
+        services.SoundPlaybackUnavailable += value => message = value;
+        var resource = new BlorbSoundResource(7, BlorbSoundFormat.OggVorbis, BlorbSoundChannel.Music, new byte[] { 1, 2, 3 }, []);
+
+        services.PerformSoundEffect(
+            new ZMachineSoundEffectRequest(7, ZMachineSoundAction.Start, 8, 1, 0, resource, BlorbSoundChannel.Music),
+            completed: null);
+
+        Assert.Contains("OggVorbis", message);
+        Assert.Contains("not available yet", message);
+    }
+
+    [Fact]
+    public void DesktopEventServicesReportAudioInitializationFailureAndClearCapability()
+    {
+        using var services = new DesktopZMachineEventServices(new FakeBleepOutput
+        {
+            IsAvailable = false,
+            UnavailableReason = "no playback device"
+        });
+        string? message = null;
+        services.SoundPlaybackUnavailable += value => message = value;
+
+        services.PerformSoundEffect(new ZMachineSoundEffectRequest(1, ZMachineSoundAction.Start, byte.MaxValue, 1, 0), completed: null);
 
         Assert.False(services.SupportsSoundEffects);
-        Assert.Equal(request, forwarded);
+        Assert.Contains("no playback device", message);
+    }
+
+    [Fact]
+    public void DesktopEventServicesReportBleepOutputFailuresWithoutThrowing()
+    {
+        using var services = new DesktopZMachineEventServices(new FakeBleepOutput
+        {
+            PlayFailure = new InvalidOperationException("device disconnected")
+        });
+        string? message = null;
+        services.SoundPlaybackUnavailable += value => message = value;
+
+        var exception = Record.Exception(() => services.PerformSoundEffect(
+            new ZMachineSoundEffectRequest(1, ZMachineSoundAction.Start, byte.MaxValue, 1, 0),
+            completed: null));
+
+        Assert.Null(exception);
+        Assert.Contains("device disconnected", message);
+    }
+
+    [Fact]
+    public void DesktopEventServiceBleepFailureDoesNotHaltVmExecution()
+    {
+        using var services = new DesktopZMachineEventServices(new FakeBleepOutput
+        {
+            PlayFailure = new InvalidOperationException("device disconnected")
+        });
+        var state = ZMachineExecutionState.Start(
+            StoryFile.Parse(StoryFixtureBuilder.Create(5)),
+            eventServices: services);
+        services.SoundPlaybackUnavailable += _ => { };
+
+        var exception = Record.Exception(() => new ZMachineOpcodeExecutor().Execute(
+            new DecodedInstruction(
+                0x352,
+                0x353,
+                InstructionForm.Extended,
+                OpcodeClass.Extended,
+                0,
+                new OpcodeDefinition(OpcodeClass.Extended, 0, "sound_effect", 1, 8, 1, 1),
+                [new DecodedOperand(OperandEncoding.SmallConstant, 1)],
+                null,
+                null,
+                []),
+            state));
+
+        Assert.Null(exception);
+        Assert.False(state.IsHalted);
+    }
+
+    private sealed class FakeBleepOutput : IDesktopBleepOutput
+    {
+        public bool IsAvailable { get; init; } = true;
+
+        public string? UnavailableReason { get; init; }
+
+        public Exception? PlayFailure { get; init; }
+
+        public List<ushort> Played { get; } = [];
+
+        public void Play(ushort number)
+        {
+            if (PlayFailure is not null)
+            {
+                throw PlayFailure;
+            }
+
+            Played.Add(number);
+        }
+
+        public void Dispose()
+        {
+        }
     }
 
     [Theory]

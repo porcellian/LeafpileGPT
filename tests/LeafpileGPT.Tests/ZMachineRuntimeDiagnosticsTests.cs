@@ -56,6 +56,25 @@ public sealed class ZMachineRuntimeDiagnosticsTests
     }
 
     [Fact]
+    public void HostWarningsAreLoggedAndReportedWithoutStoppingEvenUnderStopOnAnyError()
+    {
+        var log = new MemoryRuntimeLog();
+        var manager = new ZMachineRuntimeErrorManager(log, ZMachineRuntimeErrorPolicy.StopOnAnyError);
+
+        var diagnostic = manager.ReportHostWarning(
+            new ZMachineExecutionException("audio output unavailable"),
+            Identity,
+            0x1234,
+            Timestamp);
+
+        Assert.Equal(ZMachineRuntimeErrorSeverity.Warning, diagnostic.Severity);
+        Assert.True(diagnostic.ShouldNotify);
+        Assert.False(diagnostic.ShouldStop);
+        Assert.Single(log.Records);
+        Assert.Single(manager.GetHistory());
+    }
+
+    [Fact]
     public void FatalErrorsAreAlwaysReportedAndStopEvenWhenReportsAreSuppressed()
     {
         var manager = new ZMachineRuntimeErrorManager(new MemoryRuntimeLog(), ZMachineRuntimeErrorPolicy.SuppressReports);

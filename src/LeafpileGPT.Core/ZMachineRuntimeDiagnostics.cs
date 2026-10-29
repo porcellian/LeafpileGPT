@@ -342,6 +342,43 @@ public sealed class ZMachineRuntimeErrorManager
             shouldNotify,
             shouldStop);
 
+        Publish(record);
+        return record;
+    }
+
+    /// <summary>Logs and reports a recoverable host warning without applying VM stop-on-error policy.</summary>
+    public ZMachineRuntimeErrorRecord ReportHostWarning(
+        Exception exception,
+        ZMachineGameIdentity identity,
+        uint programCounter,
+        DateTimeOffset? timestamp = null)
+    {
+        ArgumentNullException.ThrowIfNull(exception);
+        ArgumentNullException.ThrowIfNull(identity);
+
+        var record = new ZMachineRuntimeErrorRecord(
+            timestamp ?? DateTimeOffset.UtcNow,
+            exception.GetType().FullName ?? exception.GetType().Name,
+            exception.Message,
+            ZMachineRuntimeErrorSeverity.Warning,
+            identity.StoryPath,
+            identity.Version,
+            identity.ReleaseNumber,
+            identity.SerialNumber,
+            programCounter,
+            null,
+            null,
+            null,
+            exception.ToString(),
+            string.Empty,
+            ShouldNotify: true,
+            ShouldStop: false);
+        Publish(record);
+        return record;
+    }
+
+    private void Publish(ZMachineRuntimeErrorRecord record)
+    {
         lock (_sync)
         {
             _history.Add(record);
@@ -357,26 +394,26 @@ public sealed class ZMachineRuntimeErrorManager
         }
         catch
         {
-            // Diagnostics must never turn a logging failure into a game failure.
+            // Diagnostics must never turn a host warning into a game failure.
         }
 
         var handlers = DiagnosticAdded;
-        if (handlers is not null)
+        if (handlers is null)
         {
-            foreach (Action<ZMachineRuntimeErrorRecord> handler in handlers.GetInvocationList())
-            {
-                try
-                {
-                    handler(record);
-                }
-                catch
-                {
-                    // UI observers are not allowed to turn diagnostics into VM failures.
-                }
-            }
+            return;
         }
 
-        return record;
+        foreach (Action<ZMachineRuntimeErrorRecord> handler in handlers.GetInvocationList())
+        {
+            try
+            {
+                handler(record);
+            }
+            catch
+            {
+                // UI observers are not allowed to turn diagnostics into VM failures.
+            }
+        }
     }
 
     private static string FormatMachineStack(

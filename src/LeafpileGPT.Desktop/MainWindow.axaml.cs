@@ -95,7 +95,8 @@ public partial class MainWindow : Window
             {
                 await RefreshStoryFileInfoAsync(session);
             }
-            session.EventServices.SoundEffectRequested += OnSoundEffectRequested;
+            session.EventServices.SoundPlaybackUnavailable += message => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                _appStatusText.Text = message);
             session.InputRequested += _ => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
             {
                 if (ReferenceEquals(_session, session))
@@ -442,12 +443,6 @@ public partial class MainWindow : Window
             _appStatusText.Text = "The game is not accepting input.";
         }
     }
-
-    private void OnSoundEffectRequested(ZMachineSoundEffectRequest request) =>
-        Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-            _appStatusText.Text = request.Resource is null
-                ? $"The story requested sound effect {request.Number}; no playback backend is available."
-                : $"The story requested {request.Resource.Format} sound {request.Number}; no playback backend is available.");
 
     private async void OnClosed(object? sender, EventArgs e)
     {

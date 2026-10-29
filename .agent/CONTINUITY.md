@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T19:06Z [TOOL] PR #41 bleep follow-up is implemented locally: SDL3-CS queues built-in effects 1/2; unavailable/unsupported playback is a logged recoverable warning; full Blorb audio is now an unchecked Future Task. `gui20.png` remains to be committed. Release build has 0 warnings/errors, formatting passes, and 614 xUnit tests pass. The sandbox Mac has no default playback device; SDL dummy-driver smoke initialized and queued both tones.
 - 2026-10-29T17:15Z [TOOL] Supersedes the awaiting-push status below: commits `081979a` and `63182a0` are pushed to PR #41, which remains OPEN with the updated status-label summary and `gui19.png`. macOS, Ubuntu, and Windows checks are queued.
 - 2026-10-29T17:14Z [TOOL] Supersedes the uncommitted status below: status-label preservation and tracked `reference/gui19.png` are committed as `081979a`; the branch is one commit ahead and awaits push to PR #41.
 - 2026-10-29T17:14Z [TOOL] PR #41 follow-up preserves the V4/V5 upper status display across restore (`gui19.png`): restore clears lower-window content and pictures while retaining existing mode/location/time/date labels so the story can update their values. V3 collapse remains. Release build, formatting, diff check, and all 609 tests pass. Changes are not committed yet; `reference/gui19.png` is local and will be tracked.
