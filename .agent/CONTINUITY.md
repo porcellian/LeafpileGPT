@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T02:26Z [TOOL] Task 29 is submitted as PR #34 (`https://github.com/porcellian/LeafpileGPT/pull/34`) from `feature/29-view-instructions`; Windows is queued and macOS/Ubuntu checks are running. Wait for user review and merge before Task 30.
 - 2026-10-29T02:23Z [USER] PR #33 is merged; Task 29 is active and must complete on its own branch/PR, then pause for review and merge before Task 30.
 - 2026-10-29T02:22Z [TOOL] Task 29 is active on `feature/29-view-instructions`; implement live per-session command/opcode audit capture, the modeless Tools viewer, PDF/JSONL export, generated tests, then commit and open a PR. Do not start Task 30 until PR review and merge.
 - 2026-10-29T02:10Z [TOOL] Task 28 is committed as `b54152c`, pushed, and open as PR #33 at https://github.com/porcellian/LeafpileGPT/pull/33. Windows, macOS, and Ubuntu CI checks are pending; wait for user review and merge before Task 29.
@@ -85,6 +86,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T02:26Z [TOOL] Supersedes prior Task 29 local-completion state: commit `bfc086b` is pushed and PR #34 is open. Local formatter, clean Release build, all 566 xUnit tests, and diff checks pass; cross-platform CI is pending. Do not start Task 30 before PR merge.
 - 2026-10-29T02:24Z [TOOL] Supersedes prior Task 29 verification: line/key input and menu Restart/Restore boundaries are audited; formatter passes, Release build has 0 warnings/errors, all 566 xUnit tests pass, and `git diff --check` passes. Final staged review, commit, push, and PR remain.
 - 2026-10-29T02:24Z [TOOL] Supersedes prior Task 29 check status: command and `read_char` input grouping are covered; formatter verification passes; Release build succeeds with 0 warnings/errors; all 566 xUnit tests pass; `git diff --check` is clean. Stage review and PR creation remain.
 - 2026-10-29T02:23Z [TOOL] Task 29 implementation is complete locally: live command/opcode history, navigation, virtualized viewer, app-data Audits path, paired PDF/JSONL export, documentation, and generated tests. Formatter passes; Release build has zero warnings/errors; all 566 xUnit tests pass. Final staged review, commit, push, and PR remain.
