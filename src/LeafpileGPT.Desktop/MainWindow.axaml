@@ -17,7 +17,16 @@
         <Separator />
         <MenuItem Header="Exit" Click="OnExitClick" />
       </MenuItem>
-      <MenuItem Header="_Tools" />
+      <MenuItem Header="_Tools">
+        <MenuItem x:Name="ViewErrorsMenuItem" Header="View Errors..." Click="OnViewErrorsClick" />
+        <Separator />
+        <MenuItem Header="Runtime Error Policy">
+          <MenuItem x:Name="SuppressErrorsMenuItem" Header="Suppress reports" Click="OnSuppressErrorsClick" />
+          <MenuItem x:Name="FirstErrorMenuItem" Header="Report first of each type" Click="OnFirstErrorClick" />
+          <MenuItem x:Name="EveryErrorMenuItem" Header="Report every occurrence" Click="OnEveryErrorClick" />
+          <MenuItem x:Name="StopOnErrorMenuItem" Header="Stop on any error" Click="OnStopOnErrorClick" />
+        </MenuItem>
+      </MenuItem>
     </Menu>
     <local:GameDisplayView x:Name="GameDisplay" Grid.Row="1" />
     <Border Grid.Row="2" Padding="8" BorderThickness="0,1,0,0" Background="#E5E5E5">

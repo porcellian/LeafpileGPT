@@ -6,7 +6,8 @@ using System.Text.Json;
 public sealed record UserPreferences(
     string? LastPlayGameDirectory,
     string LastSaveDirectory,
-    string LastRestoreDirectory);
+    string LastRestoreDirectory,
+    ZMachineRuntimeErrorPolicy RuntimeErrorPolicy = ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType);
 
 /// <summary>Identifies which file dialog's last-used directory should be read or updated.</summary>
 public enum FileDialogPurpose
@@ -75,6 +76,22 @@ public sealed class UserPreferencesStore
         }
     }
 
+    /// <summary>Persists the preferred runtime error-reporting policy.</summary>
+    public void SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy policy)
+    {
+        if (!Enum.IsDefined(policy))
+        {
+            throw new ArgumentOutOfRangeException(nameof(policy));
+        }
+
+        lock (_sync)
+        {
+            var updated = _current with { RuntimeErrorPolicy = policy };
+            Save(updated);
+            _current = updated;
+        }
+    }
+
     private UserPreferences Load()
     {
         if (!File.Exists(_paths.PreferencesFilePath))
@@ -103,7 +120,13 @@ public sealed class UserPreferencesStore
         var playGame = NormalizePersistedDirectory(document.LastPlayGameDirectory);
         var save = NormalizePersistedDirectory(document.LastSaveDirectory) ?? _paths.SaveDirectory;
         var restore = NormalizePersistedDirectory(document.LastRestoreDirectory) ?? _paths.SaveDirectory;
-        return new UserPreferences(playGame, save, restore);
+        if (!Enum.IsDefined(document.RuntimeErrorPolicy))
+        {
+            throw new InvalidDataException(
+                $"Preferences file '{_paths.PreferencesFilePath}' contains an unknown runtime error policy.");
+        }
+
+        return new UserPreferences(playGame, save, restore, document.RuntimeErrorPolicy);
     }
 
     private void Save(UserPreferences preferences)
@@ -113,7 +136,8 @@ public sealed class UserPreferencesStore
             FormatVersion = CurrentFormatVersion,
             LastPlayGameDirectory = preferences.LastPlayGameDirectory,
             LastSaveDirectory = preferences.LastSaveDirectory,
-            LastRestoreDirectory = preferences.LastRestoreDirectory
+            LastRestoreDirectory = preferences.LastRestoreDirectory,
+            RuntimeErrorPolicy = preferences.RuntimeErrorPolicy
         };
         var temporaryPath = _paths.PreferencesFilePath + $".{Guid.NewGuid():N}.tmp";
         try
@@ -160,5 +184,7 @@ public sealed class UserPreferencesStore
         public string? LastSaveDirectory { get; init; }
 
         public string? LastRestoreDirectory { get; init; }
+
+        public ZMachineRuntimeErrorPolicy RuntimeErrorPolicy { get; init; } = ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType;
     }
 }

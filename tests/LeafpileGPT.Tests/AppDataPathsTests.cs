@@ -15,6 +15,7 @@ public sealed class AppDataPathsTests
         Assert.Equal(Path.Combine(fixture.Path, ApplicationInfo.Name), paths.RootDirectory);
         Assert.Equal(Path.Combine(paths.RootDirectory, "Save"), paths.SaveDirectory);
         Assert.Equal(Path.Combine(paths.RootDirectory, "Preferences"), paths.PreferencesDirectory);
+        Assert.Equal(Path.Combine(paths.RootDirectory, "Logs"), paths.LogsDirectory);
         Assert.True(Directory.Exists(paths.SaveDirectory));
         Assert.True(Directory.Exists(paths.PreferencesDirectory));
         Assert.Equal(Path.Combine(paths.PreferencesDirectory, "preferences.json"), paths.PreferencesFilePath);
@@ -31,6 +32,7 @@ public sealed class AppDataPathsTests
         Assert.Null(preferences.GetLastUsedDirectory(FileDialogPurpose.PlayGame));
         Assert.Equal(paths.SaveDirectory, preferences.GetLastUsedDirectory(FileDialogPurpose.Save));
         Assert.Equal(paths.SaveDirectory, preferences.GetLastUsedDirectory(FileDialogPurpose.Restore));
+        Assert.Equal(ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType, preferences.Current.RuntimeErrorPolicy);
         Assert.False(File.Exists(paths.PreferencesFilePath));
     }
 
@@ -57,6 +59,20 @@ public sealed class AppDataPathsTests
     }
 
     [Fact]
+    public void RuntimeErrorPolicyDefaultsToFirstPerTypeAndPersistsAcrossLaunches()
+    {
+        using var fixture = new TemporaryDirectory();
+        var paths = new AppDataPaths(fixture.Path);
+        var preferences = new UserPreferencesStore(paths);
+        Assert.Equal(ZMachineRuntimeErrorPolicy.ReportFirstPerErrorType, preferences.Current.RuntimeErrorPolicy);
+
+        preferences.SetRuntimeErrorPolicy(ZMachineRuntimeErrorPolicy.StopOnAnyError);
+
+        var restored = new UserPreferencesStore(new AppDataPaths(fixture.Path));
+        Assert.Equal(ZMachineRuntimeErrorPolicy.StopOnAnyError, restored.Current.RuntimeErrorPolicy);
+    }
+
+    [Fact]
     public void MissingSaveAndRestoreValuesInExistingDocumentUseDefaultSaveDirectory()
     {
         using var fixture = new TemporaryDirectory();
@@ -73,6 +89,7 @@ public sealed class AppDataPathsTests
     [InlineData("not json")]
     [InlineData("{\"FormatVersion\":2}")]
     [InlineData("{\"FormatVersion\":1,\"LastSaveDirectory\":\"relative/path\"}")]
+    [InlineData("{\"FormatVersion\":1,\"RuntimeErrorPolicy\":99}")]
     public void InvalidPreferenceDocumentFailsWithActionableError(string content)
     {
         using var fixture = new TemporaryDirectory();

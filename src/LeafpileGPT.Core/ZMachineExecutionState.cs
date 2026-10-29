@@ -879,8 +879,11 @@ public sealed record ExecutionFrameSnapshot(
 
 public sealed class ZMachineExecutionException : Exception
 {
-    public ZMachineExecutionException(string message, Exception? innerException = null)
+    public ZMachineExecutionException(string message, Exception? innerException = null, bool isFatal = false)
         : base(message, innerException)
     {
+        IsFatal = isFatal;
     }
+
+    public bool IsFatal { get; }
 }

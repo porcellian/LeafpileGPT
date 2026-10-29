@@ -14,6 +14,7 @@ public sealed class AppDataPaths
         RootDirectory = Path.Combine(Path.GetFullPath(basePath), ApplicationInfo.Name);
         SaveDirectory = Path.Combine(RootDirectory, "Save");
         PreferencesDirectory = Path.Combine(RootDirectory, "Preferences");
+        LogsDirectory = Path.Combine(RootDirectory, "Logs");
         PreferencesFilePath = Path.Combine(PreferencesDirectory, "preferences.json");
 
         Directory.CreateDirectory(SaveDirectory);
@@ -28,6 +29,9 @@ public sealed class AppDataPaths
 
     /// <summary>Gets the directory containing persistent preferences.</summary>
     public string PreferencesDirectory { get; }
+
+    /// <summary>Gets the directory used for optional structured diagnostic logs.</summary>
+    public string LogsDirectory { get; }
 
     /// <summary>Gets the JSON preferences file path.</summary>
     public string PreferencesFilePath { get; }
