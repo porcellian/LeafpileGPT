@@ -1,6 +1,10 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T03:25Z [TOOL] Supersedes the local Task 31 state: commit `f8dbf12` is pushed and PR #37 is open at `https://github.com/porcellian/LeafpileGPT/pull/37`; Windows, macOS, and Ubuntu checks are running. Wait for user review and merge.
+- 2026-10-29T03:22Z [TOOL] Task 31 is complete locally: Zork I Release 88 reaches 350/350, Stone Barrow, and zero deaths; walkthrough PDF is authored, ignored route/trace are verified, and PR preparation remains.
+- 2026-10-29T03:05Z [USER] Supersedes the PR #36 standby state: begin Task 31 using `stories/zork1.z3`; complete the maximum-score walkthrough and submit a PR, then wait for review and merge.
+- 2026-10-29T03:05Z [USER] PR #36 is merged; user requested standby. Do not begin Task 31 until requested.
 - 2026-10-29T02:59Z [TOOL] Story Hex Viewer Future Tasks documentation is committed as `bae4c9b`, pushed, and open as PR #36 at `https://github.com/porcellian/LeafpileGPT/pull/36`; wait for review and merge. Feature implementation remains deferred.
 - 2026-10-29T02:59Z [USER] Add the Story Hex Viewer as an unchecked, unnumbered Future Tasks entry only; keep Task 31 on standby until requested.
 - 2026-10-29T02:48Z [USER] PR #35 is merged; user requested standby. Do not begin Task 31 until the user asks to proceed.
@@ -92,6 +96,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T03:22Z [TOOL] Task 31 used the desktop-independent replay runner with a fresh deterministic run; no source code changed, so there are no earlier completed walkthroughs to replay. The generated 417,780-entry JSONL opcode trace is gzip-compressed and kept ignored under `.agent/regression-routes/`.
+- 2026-10-29T03:05Z [USER] Supersedes PR #36's open-review state: the roadmap update is merged; Task 31 remains on standby.
 - 2026-10-29T02:59Z [TOOL] Documentation PR #36 is open from `feature/future-story-hex-viewer`; the unchecked Future Tasks entry preserves Task numbering and defers implementation. Await user review and merge.
 - 2026-10-29T02:59Z [TOOL] Added the Story Hex Viewer roadmap item before terminal play in Future Tasks; numbered tasks remain unchanged and implementation is deferred.
 - 2026-10-29T02:48Z [USER] Supersedes the PR #35 review state: PR #35 is merged and the workspace is on standby before Task 31.
@@ -166,6 +172,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T03:22Z [TOOL] Zork I Release 88 / Serial 840726 reaches the river buoy after four waits in this replay, and the thief combat outcome varies with prior turn timing; retain the verified full route and seed rather than treating attack count as universal.
 - 2026-10-29T02:43Z [TOOL] With this repository's `.NET 10` `global.json` MTP runner setting, `dotnet test` reported zero tests (exit 5), but launching the generated xUnit v3 test apphost directly discovered and passed all 580 tests. CI and README now use `dotnet run --project tests/LeafpileGPT.Tests/LeafpileGPT.Tests.csproj` so the suite actually executes.
 - 2026-10-29T02:09Z [TOOL] ZSpec 1.1 Appendix A describes the four selectable reporting levels; its `div` and `mod` entries specifically require division by zero to halt. The desktop preserves that fatal behavior while applying policies to other recoverable runtime errors.
 - 2026-10-28T21:12Z [TOOL] `gui09`'s early MORE came from carrying the page line counter across prior commands. `gui10` used a fixed VM page height despite a larger/different rendered transcript viewport; screen rows now come from the Courier cell size and live transcript area.
@@ -202,6 +209,9 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T03:25Z [TOOL] Task 31 commit `f8dbf12` is pushed to `feature/31-zork-i-walkthrough`; PR #37 is open for review, with cross-platform CI in progress.
+- 2026-10-29T03:22Z [TOOL] Task 31 authored `walkthroughs/zork-i-the-great-underground-empire.pdf` with the original route steps and all 59 executed opcode rows (form, opcode, mnemonic, count, first sequence, first PC). Replay result: Halted, 405 commands, 417,780 instructions, score 350/350, ending reached, zero deaths.
+- 2026-10-29T03:05Z [USER] PR #36 is merged. The Story Hex Viewer is recorded as an unchecked, unnumbered Future Task; implementation remains deferred.
 - 2026-10-29T02:48Z [USER] Supersedes Task 30's PR-open outcome: PR #35 is merged; Task 30 is complete and Task 31 remains on standby until requested.
 - 2026-10-29T02:44Z [TOOL] Task 30 adds a resizable Tools > Story File Info window backed by immutable snapshots, generated V1–V8/Blorb/runtime-header coverage, spec-matrix docs, and a functioning CI test command; format/build/580 tests/diff checks pass. PR #35 is open; await review and merge.
 - 2026-10-29T02:10Z [TOOL] Task 28 implements runtime error policies, copyable fatal dialogs/warnings, View Errors history, and failure-isolated bounded JSONL logs; format, Release build, 561 tests, and diff checks pass. PR #33 is open with CI pending; await user review and merge.
