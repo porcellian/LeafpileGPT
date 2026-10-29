@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T02:59Z [TOOL] Story Hex Viewer Future Tasks documentation is committed as `bae4c9b`, pushed, and open as PR #36 at `https://github.com/porcellian/LeafpileGPT/pull/36`; wait for review and merge. Feature implementation remains deferred.
 - 2026-10-29T02:59Z [USER] Add the Story Hex Viewer as an unchecked, unnumbered Future Tasks entry only; keep Task 31 on standby until requested.
 - 2026-10-29T02:48Z [USER] PR #35 is merged; user requested standby. Do not begin Task 31 until the user asks to proceed.
 - 2026-10-29T02:44Z [TOOL] Task 30 is committed as `8b39830`, pushed, and open as PR #35 at `https://github.com/porcellian/LeafpileGPT/pull/35`; wait for user review and merge before Task 31.
@@ -91,6 +92,7 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T02:59Z [TOOL] Documentation PR #36 is open from `feature/future-story-hex-viewer`; the unchecked Future Tasks entry preserves Task numbering and defers implementation. Await user review and merge.
 - 2026-10-29T02:59Z [TOOL] Added the Story Hex Viewer roadmap item before terminal play in Future Tasks; numbered tasks remain unchanged and implementation is deferred.
 - 2026-10-29T02:48Z [USER] Supersedes the PR #35 review state: PR #35 is merged and the workspace is on standby before Task 31.
 - 2026-10-29T02:44Z [TOOL] Supersedes the local-complete Task 30 state: commit `8b39830` is pushed and PR #35 is open; wait for user review and merge before Task 31.
