@@ -603,6 +603,11 @@ public sealed class ZMachineOpcodeExecutor
         {
             if (succeeded)
             {
+                if (state.LastRestoreWasHostCheckpoint)
+                {
+                    return;
+                }
+
                 ExecuteSavedBranch(state, true);
             }
             else
@@ -614,6 +619,11 @@ public sealed class ZMachineOpcodeExecutor
         {
             if (succeeded)
             {
+                if (state.LastRestoreWasHostCheckpoint)
+                {
+                    return;
+                }
+
                 ExecuteSavedStore(state, options.ByteCount ?? (ushort)2);
             }
             else

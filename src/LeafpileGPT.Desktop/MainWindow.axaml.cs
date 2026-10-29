@@ -242,7 +242,7 @@ public partial class MainWindow : Window
                 return;
             }
 
-            var bytes = QuetzalCodec.Encode(saveState, story);
+            var bytes = QuetzalCodec.Encode(QuetzalCodec.MarkAsHostCheckpoint(saveState), story);
             await File.WriteAllBytesAsync(path, bytes);
 
             _appStatusText.Text = $"Saved game to {Path.GetFileName(path)}.";

@@ -77,6 +77,9 @@ public sealed class ZMachineExecutionState
 
     public bool IsHalted { get; private set; }
 
+    /// <summary>True when the last opcode restore resumed a host checkpoint at an input instruction.</summary>
+    public bool LastRestoreWasHostCheckpoint { get; private set; }
+
     public ImmutableArray<ushort> EvaluationStack => _evaluationStack.ToImmutableArray();
 
     /// <summary>Returns an immutable copy of the current runtime header for diagnostic views.</summary>
@@ -287,13 +290,17 @@ public sealed class ZMachineExecutionState
     /// <summary>Loads, validates, and atomically applies a Quetzal state for this story.</summary>
     public bool RestoreGame(ZMachineSaveOptions? options = null)
     {
+        LastRestoreWasHostCheckpoint = false;
         var image = SaveStore?.Restore(options ?? new ZMachineSaveOptions());
         if (image is null)
         {
             return false;
         }
 
-        ApplySaveState(QuetzalCodec.Decode(image, _story));
+        var save = QuetzalCodec.Decode(image, _story);
+        var markedHostCheckpoint = QuetzalCodec.IsHostCheckpoint(save);
+        ApplySaveState(save);
+        LastRestoreWasHostCheckpoint = markedHostCheckpoint || IsLegacyInputCheckpoint(save.Identity.ProgramCounter);
         _undoSave = null;
         return true;
     }
@@ -323,6 +330,7 @@ public sealed class ZMachineExecutionState
     public void ApplySaveState(QuetzalSaveData save)
     {
         ArgumentNullException.ThrowIfNull(save);
+        LastRestoreWasHostCheckpoint = false;
         // Encoding validates every field before live state is touched.
         _ = QuetzalCodec.Encode(save, _story);
         var preservedFlags2 = Memory.ReadWord(0x10);
@@ -356,6 +364,7 @@ public sealed class ZMachineExecutionState
     /// <summary>Restarts from the original story image while retaining Flags 2 and host header capabilities.</summary>
     public void Restart()
     {
+        LastRestoreWasHostCheckpoint = false;
         var preservedFlags2 = Memory.ReadWord(0x10);
         var resetHeader = CaptureResetHeader();
         Memory.RestoreOriginalStory();
@@ -429,6 +438,19 @@ public sealed class ZMachineExecutionState
         {
             Memory.WriteByte(0x2C, values[11]);
             Memory.WriteByte(0x2D, values[12]);
+        }
+    }
+
+    private bool IsLegacyInputCheckpoint(uint programCounter)
+    {
+        try
+        {
+            var instruction = new ZMachineInstructionDecoder(Memory).Decode(programCounter);
+            return instruction.Definition.Mnemonic is "sread" or "aread" or "read_char";
+        }
+        catch (Exception exception) when (exception is ZMachineInstructionException or ZMachineExecutionException)
+        {
+            return false;
         }
     }
 
