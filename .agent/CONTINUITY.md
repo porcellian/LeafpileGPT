@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T16:45Z [TOOL] Supersedes the awaiting-push status below: commits `d32be11` and `fa36dbd` are pushed to PR #41 at `https://github.com/porcellian/LeafpileGPT/pull/41`; PR remains OPEN. `gh pr checks` reports no checks yet.
 - 2026-10-29T16:45Z [TOOL] Supersedes the uncommitted status below: the restore checkpoint fix is committed as `d32be11` on PR #41's branch. The branch is one commit ahead of origin and awaits push; PR #41 remains open.
 - 2026-10-29T16:44Z [TOOL] PR #41 follow-up fixes V4 Mind in-game restore from a desktop checkpoint: desktop Quetzal saves carry an `LPUI` marker, and unmarked legacy snapshots at input opcodes resume there without applying VM save-result semantics. The local `mind.ifzs` snapshot saved PC `0x00D7F9` at `sread`; its decoded globals point to dynamic buffers `0x742B` and `0x715B`. Release build, formatting, and all 604 xUnit tests pass. Changes are not yet committed or pushed.
 - 2026-10-29T16:27Z [TOOL] The V4 Mind bleep compatibility fix is committed as `d453f8a`, pushed, and open as PR #41 at `https://github.com/porcellian/LeafpileGPT/pull/41`. It adds only a one-operand V4 `sound_effect` decoder alias for the opcode bytes observed at `0x00D5B7`; the standard V3 and V5+ entries remain unchanged. Formatting, Release build, 602 xUnit tests, and diff checks pass; CI status is UNCONFIRMED because `gh pr checks` could not reach GitHub. Await review and merge.
