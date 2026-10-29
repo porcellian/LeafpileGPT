@@ -98,15 +98,25 @@ public sealed class ZMachineScreenModelTests
             operation.Kind == ZMachineScreenOperationKind.SplitWindow && operation.Value == 1);
     }
 
-    [Fact]
-    public void V4CursorRequestOutsideAvailableScreenStillFails()
+    [Theory]
+    [InlineData(4)]
+    [InlineData(5)]
+    public void V4AndV5CursorRequestBeyondAvailableScreenUsesLastAvailableRow(byte version)
     {
-        var screen = CreateState(4).OutputStreams.Screen;
-        screen.SetDimensions(80, 5);
+        var screen = CreateState(version).OutputStreams.Screen;
+        screen.SetDimensions(80, 8);
+        var operations = new List<ZMachineScreenOperation>();
+        screen.OperationWriter = operations.Add;
         screen.SetWindow(1);
 
-        Assert.Throws<ZMachineExecutionException>(() => screen.SetCursor(6, 67));
-        Assert.Equal(0, screen.UpperWindowHeight);
+        screen.SetCursor(17, 43);
+
+        Assert.Equal(8, screen.UpperWindowHeight);
+        Assert.Equal(new ZMachineCursorPosition(8, 43), screen.CurrentCursor);
+        Assert.Contains(operations, operation =>
+            operation.Kind == ZMachineScreenOperationKind.SplitWindow && operation.Value == 8);
+        Assert.Contains(operations, operation =>
+            operation.Kind == ZMachineScreenOperationKind.MoveCursor && operation.Row == 8 && operation.Column == 43);
     }
 
     [Fact]
