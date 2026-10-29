@@ -12,6 +12,9 @@ public sealed class DesktopGameSession : IAsyncDisposable
     private readonly DesktopTranscriptWriter _transcript;
     private readonly ZMachineRuntimeErrorManager _runtimeErrors;
     private readonly ZMachineGameIdentity _gameIdentity;
+    private readonly StoryFile _story;
+    private readonly string _storyPath;
+    private readonly BlorbFile? _blorb;
     private readonly Action<Action> _dispatch;
     private readonly SemaphoreSlim _stateGate = new(1, 1);
     private readonly CancellationTokenSource _shutdown = new();
@@ -37,6 +40,9 @@ public sealed class DesktopGameSession : IAsyncDisposable
     {
         ArgumentNullException.ThrowIfNull(story);
         ArgumentException.ThrowIfNullOrWhiteSpace(storyPath);
+        _story = story;
+        _storyPath = Path.GetFullPath(storyPath);
+        _blorb = blorb;
         _display = display ?? throw new ArgumentNullException(nameof(display));
         _screenOperationWriter = screenOperationWriter ?? throw new ArgumentNullException(nameof(screenOperationWriter));
         ArgumentException.ThrowIfNullOrWhiteSpace(saveDirectory);
@@ -95,6 +101,22 @@ public sealed class DesktopGameSession : IAsyncDisposable
     public string? TranscriptPath => _transcript.FilePath;
 
     public ZMachineRuntimeErrorRecord? TerminalError => _terminalError;
+
+    public async Task<StoryFileInfoSnapshot> CaptureStoryFileInfoSnapshotAsync(CancellationToken cancellationToken = default)
+    {
+        System.Collections.Immutable.ImmutableArray<byte> runtimeHeader;
+        await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            runtimeHeader = State.CaptureRuntimeHeaderSnapshot();
+        }
+        finally
+        {
+            _stateGate.Release();
+        }
+
+        return StoryFileInfoSnapshot.Create(_storyPath, _story, runtimeHeader, _blorb);
+    }
 
     public void Start()
     {

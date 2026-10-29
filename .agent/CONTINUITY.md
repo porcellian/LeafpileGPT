@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T02:44Z [TOOL] Task 30 is committed as `8b39830`, pushed, and open as PR #35 at `https://github.com/porcellian/LeafpileGPT/pull/35`; wait for user review and merge before Task 31.
+- 2026-10-29T02:36Z [USER] PR #34 is merged; Task 30 is active on `feature/30-story-file-info-window`. Complete implementation, tests, documentation, commit, and PR; then wait for review/merge before Task 31.
 - 2026-10-29T02:26Z [TOOL] Task 29 is submitted as PR #34 (`https://github.com/porcellian/LeafpileGPT/pull/34`) from `feature/29-view-instructions`; Windows is queued and macOS/Ubuntu checks are running. Wait for user review and merge before Task 30.
 - 2026-10-29T02:23Z [USER] PR #33 is merged; Task 29 is active and must complete on its own branch/PR, then pause for review and merge before Task 30.
 - 2026-10-29T02:22Z [TOOL] Task 29 is active on `feature/29-view-instructions`; implement live per-session command/opcode audit capture, the modeless Tools viewer, PDF/JSONL export, generated tests, then commit and open a PR. Do not start Task 30 until PR review and merge.
@@ -60,6 +62,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T02:36Z [CODE] Task 30 builds immutable story-info snapshots from parsed source/container bytes and a 64-byte runtime-header copy captured under the desktop session gate; the UI never accesses VM memory. Source SHA-256 values identify the exact supplied bytes, while loaded-image hashes identify trimmed executable bytes.
 - 2026-10-29T02:22Z [CODE] Task 29 stores numeric PCs and typed immutable opcode metadata per session; command lines are added when consumed by the VM. Viewer callbacks are isolated from execution, and the UI appends only newly recorded rows.
 - 2026-10-29T02:09Z [CODE] Default recoverable VM execution/memory errors continue at the decoded next PC; stop-on-any escalates them to blocking. Fatal decoder/host failures and errors explicitly marked fatal stop and notify under every policy. Runtime error policy persists in Preferences; JSONL logging is lazy and failure-isolated.
 - 2026-10-29T01:35Z [CODE] Replay routes set a deterministic host-random seed and restart that generator on VM restart; ordinary desktop sessions retain cryptographic random selection.
@@ -86,6 +89,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T02:44Z [TOOL] Supersedes the local-complete Task 30 state: commit `8b39830` is pushed and PR #35 is open; wait for user review and merge before Task 31.
+- 2026-10-29T02:43Z [TOOL] Task 30 implementation, tests, and docs are complete locally; format verification, Release solution build (0 warnings/errors), 580 xUnit tests, and diff checks pass. CI test invocation is updated to launch the xUnit v3 in-process runner. Final review, commit, push, and PR remain.
 - 2026-10-29T02:26Z [TOOL] Supersedes prior Task 29 local-completion state: commit `bfc086b` is pushed and PR #34 is open. Local formatter, clean Release build, all 566 xUnit tests, and diff checks pass; cross-platform CI is pending. Do not start Task 30 before PR merge.
 - 2026-10-29T02:24Z [TOOL] Supersedes prior Task 29 verification: line/key input and menu Restart/Restore boundaries are audited; formatter passes, Release build has 0 warnings/errors, all 566 xUnit tests pass, and `git diff --check` passes. Final staged review, commit, push, and PR remain.
 - 2026-10-29T02:24Z [TOOL] Supersedes prior Task 29 check status: command and `read_char` input grouping are covered; formatter verification passes; Release build succeeds with 0 warnings/errors; all 566 xUnit tests pass; `git diff --check` is clean. Stage review and PR creation remain.
@@ -155,6 +160,7 @@
 - 2026-10-28T14:36Z [TOOL] Supersedes prior Task 11 status: full diff review completed; commit `8855c2d` pushed and PR #15 opened at https://github.com/porcellian/LeafpileGPT/pull/15. Formatting, Release build (zero warnings/errors), `git diff --check`, and all 329 xUnit tests pass. macOS, Ubuntu, and Windows CI jobs are pending; wait for user review and merge before Task 12.
 
 ## [DISCOVERIES]
+- 2026-10-29T02:43Z [TOOL] With this repository's `.NET 10` `global.json` MTP runner setting, `dotnet test` reported zero tests (exit 5), but launching the generated xUnit v3 test apphost directly discovered and passed all 580 tests. CI and README now use `dotnet run --project tests/LeafpileGPT.Tests/LeafpileGPT.Tests.csproj` so the suite actually executes.
 - 2026-10-29T02:09Z [TOOL] ZSpec 1.1 Appendix A describes the four selectable reporting levels; its `div` and `mod` entries specifically require division by zero to halt. The desktop preserves that fatal behavior while applying policies to other recoverable runtime errors.
 - 2026-10-28T21:12Z [TOOL] `gui09`'s early MORE came from carrying the page line counter across prior commands. `gui10` used a fixed VM page height despite a larger/different rendered transcript viewport; screen rows now come from the Courier cell size and live transcript area.
 - 2026-10-28T20:51Z [TOOL] Local Avalonia build telemetry can fail when sandboxed from the user application-support directory; `-p:UsedAvaloniaProducts=` skips that telemetry target while still compiling Core, Desktop, and Tests.
@@ -190,6 +196,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T02:44Z [TOOL] Task 30 adds a resizable Tools > Story File Info window backed by immutable snapshots, generated V1–V8/Blorb/runtime-header coverage, spec-matrix docs, and a functioning CI test command; format/build/580 tests/diff checks pass. PR #35 is open; await review and merge.
 - 2026-10-29T02:10Z [TOOL] Task 28 implements runtime error policies, copyable fatal dialogs/warnings, View Errors history, and failure-isolated bounded JSONL logs; format, Release build, 561 tests, and diff checks pass. PR #33 is open with CI pending; await user review and merge.
 - 2026-10-29T01:35Z [TOOL] Task 27 delivers deterministic headless route replay, machine-readable results, opcode traces/inventory, generated V1–V8/CLI coverage, and usage/spec-matrix docs. PR #32 is open; CI is pending. Await user review and merge.
 - 2026-10-28T18:41Z [TOOL] Task 23 is implemented, verified, committed, and submitted as PR #27. Await user review and merge before starting Task 24.

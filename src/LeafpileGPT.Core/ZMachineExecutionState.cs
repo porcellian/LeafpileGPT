@@ -79,6 +79,9 @@ public sealed class ZMachineExecutionState
 
     public ImmutableArray<ushort> EvaluationStack => _evaluationStack.ToImmutableArray();
 
+    /// <summary>Returns an immutable copy of the current runtime header for diagnostic views.</summary>
+    public ImmutableArray<byte> CaptureRuntimeHeaderSnapshot() => Memory.CaptureHeaderSnapshot();
+
     public ImmutableArray<ExecutionFrameSnapshot> CallStack =>
         _callStack.Select((frame, index) => frame.Snapshot(checked((ushort)index))).ToImmutableArray();
 

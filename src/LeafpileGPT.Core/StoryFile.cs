@@ -1,4 +1,5 @@
 using System.Buffers.Binary;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace LeafpileGPT.Core;
@@ -14,10 +15,13 @@ public sealed class StoryFile
 
     private readonly byte[] _bytes;
 
-    private StoryFile(byte[] bytes, StoryHeader header)
+    private StoryFile(byte[] bytes, StoryHeader header, long sourceFileSizeBytes, string sourceFileSha256, string loadedStorySha256)
     {
         _bytes = bytes;
         Header = header;
+        SourceFileSizeBytes = sourceFileSizeBytes;
+        SourceFileSha256 = sourceFileSha256;
+        LoadedStorySha256 = loadedStorySha256;
     }
 
     public StoryHeader Header { get; }
@@ -26,6 +30,15 @@ public sealed class StoryFile
     public ReadOnlyMemory<byte> Bytes => _bytes;
 
     public int Length => _bytes.Length;
+
+    /// <summary>Gets the physical size of the input file or parsed image before story padding is trimmed.</summary>
+    public long SourceFileSizeBytes { get; }
+
+    /// <summary>Gets the SHA-256 fingerprint of the exact bytes supplied by the source.</summary>
+    public string SourceFileSha256 { get; }
+
+    /// <summary>Gets the SHA-256 fingerprint of the effective story image after declared padding is removed.</summary>
+    public string LoadedStorySha256 { get; }
 
     public static StoryFile Load(string path)
     {
@@ -55,10 +68,18 @@ public sealed class StoryFile
         stream.Position = HeaderLength;
         stream.ReadExactly(storyBytes.AsSpan(HeaderLength));
 
-        return Parse(storyBytes);
+        stream.Position = 0;
+        var sourceHash = Convert.ToHexString(SHA256.HashData(stream));
+        return Parse(storyBytes, stream.Length, sourceHash);
     }
 
     public static StoryFile Parse(ReadOnlySpan<byte> data)
+    {
+        var sourceHash = Convert.ToHexString(SHA256.HashData(data));
+        return Parse(data, data.Length, sourceHash);
+    }
+
+    private static StoryFile Parse(ReadOnlySpan<byte> data, long sourceFileSizeBytes, string sourceFileSha256)
     {
         if (data.Length < HeaderLength)
         {
@@ -77,7 +98,15 @@ public sealed class StoryFile
 
         var storyBytes = data[..fileLength].ToArray();
         var header = ParseHeader(storyBytes, version, fileLength);
-        return new StoryFile(storyBytes, header);
+        var loadedStoryHash = sourceFileSizeBytes == fileLength && data.Length == fileLength
+            ? sourceFileSha256
+            : Convert.ToHexString(SHA256.HashData(storyBytes));
+        return new StoryFile(
+            storyBytes,
+            header,
+            sourceFileSizeBytes,
+            sourceFileSha256,
+            loadedStoryHash);
     }
 
     private static StoryHeader ParseHeader(ReadOnlySpan<byte> data, byte version, int fileLength)
