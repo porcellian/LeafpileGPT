@@ -1,6 +1,9 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T04:35Z [TOOL] Task 30 follow-up is implemented on `feature/30-story-file-info-date`: Story File Info now shows the source file's last-modified date under Source file. Formatter, Release solution build, and 581 xUnit tests pass; final diff review, commit, and PR remain.
+- 2026-10-29T04:29Z [USER] After PR #38 merged, add the source story file's date beneath the Source file row in Story File Info; treat this as a separate follow-up branch/PR.
+- 2026-10-29T04:21Z [USER] PR #38 is merged. Task 32 is complete; standby before Task 33 until the user asks to proceed.
 - 2026-10-29T04:17Z [TOOL] PR #38 remains the active Task 32 review. The cover-title clipping is corrected in the current branch, `reference/pdf01.png` is tracked as requested, and the revised first page has been rendered and visually checked.
 - 2026-10-29T04:13Z [TOOL] The Zork II style revision is pushed as `c23cda6` to existing PR #38. `TASKS.md` now requires the Zork I visual/editorial style for all remaining walkthroughs; await user review and merge.
 - 2026-10-29T04:05Z [TOOL] Task 32 commit `ae0b496` is pushed and PR #38 is open at `https://github.com/porcellian/LeafpileGPT/pull/38`; await user review and merge before Task 33.
@@ -73,6 +76,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T04:35Z [CODE] Story File Info reports source `Last modified (UTC)` captured in its immutable snapshot; if source metadata is unavailable, the UI says `Not available`.
 - 2026-10-29T04:13Z [USER] All remaining game walkthrough PDFs must follow the visual and editorial style of the Zork I walkthrough; Zork II is being revised to match.
 - 2026-10-29T02:36Z [CODE] Task 30 builds immutable story-info snapshots from parsed source/container bytes and a 64-byte runtime-header copy captured under the desktop session gate; the UI never accesses VM memory. Source SHA-256 values identify the exact supplied bytes, while loaded-image hashes identify trimmed executable bytes.
 - 2026-10-29T02:22Z [CODE] Task 29 stores numeric PCs and typed immutable opcode metadata per session; command lines are added when consumed by the VM. Viewer callbacks are isolated from execution, and the UI appends only newly recorded rows.
