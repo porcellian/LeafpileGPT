@@ -31,6 +31,40 @@ The File menu also provides Play Game, Save, Restore, Restart, and Exit. The app
 
 The GitHub Actions workflow restores, formats, builds, and tests the solution on Windows, macOS, and Linux. Automated tests use generated or in-memory fixtures and do not require local story files.
 
+## Headless route replay
+
+`LeafpileGPT.Replay` replays a JSON route through the same Core decoder and executor without initializing Avalonia. Route story paths are resolved relative to the route file. For example, save a local route as `.agent/regression-routes/zork1.json`:
+
+```json
+{
+  "schemaVersion": 1,
+  "storyPath": "../../stories/zork1.z3",
+  "commands": ["open mailbox", "take leaflet", "read leaflet"],
+  "keyPresses": [],
+  "randomSeed": 1,
+  "maximumInstructions": 1000000,
+  "expectedCompletionStatus": "AwaitingInput"
+}
+```
+
+Run it and optionally write one JSON object per executed instruction to a trace file:
+
+```sh
+dotnet run --project src/LeafpileGPT.Replay -- .agent/regression-routes/zork1.json --trace zork1.jsonl
+```
+
+Trace paths are resolved relative to the route file.
+
+After adding more local route files, replay the entire directory in stable filename order:
+
+```sh
+dotnet run --project src/LeafpileGPT.Replay -- --all .agent/regression-routes
+```
+
+This emits one JSON result per route and returns a nonzero exit code if any route fails.
+
+The command writes a JSON completion result to standard output, including captured story text, its SHA-256, final VM state hash, and an opcode inventory with occurrence counts, first execution sequence, and first PC. A route can require an expected completion status and/or output hash; a mismatch, VM fault, or instruction-limit stop returns a nonzero exit code. Routes and traces remain local and ignored; CI uses generated story fixtures instead.
+
 ## Per-user data
 
 The core resolves user storage through .NET's `LocalApplicationData` special folder. It creates `LeafpileGPT/Save/` for Quetzal files and `LeafpileGPT/Preferences/` for versioned JSON preferences. Play Game, Save, and Restore remember separate last-used directories; Save and Restore start in the app's `Save/` folder.

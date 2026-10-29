@@ -14,5 +14,6 @@
   <ItemGroup>
     <ProjectReference Include="../../src/LeafpileGPT.Core/LeafpileGPT.Core.csproj" />
     <ProjectReference Include="../../src/LeafpileGPT.Desktop/LeafpileGPT.Desktop.csproj" />
+    <ProjectReference Include="../../src/LeafpileGPT.Replay/LeafpileGPT.Replay.csproj" />
   </ItemGroup>
 </Project>
