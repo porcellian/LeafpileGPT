@@ -104,6 +104,12 @@ public partial class GameDisplayView : UserControl
     {
         _storyVersion = version;
         Model.SetStoryVersion(version);
+
+        var upperWindowIsStatusDisplay = version is 4 or 5;
+        _upperWindowBorder.Background = upperWindowIsStatusDisplay
+            ? new SolidColorBrush(Color.FromRgb(170, 170, 170))
+            : new SolidColorBrush(Color.FromRgb(0, 102, 204));
+        _upperWindowTextBlock.Foreground = upperWindowIsStatusDisplay ? Brushes.Black : Brushes.White;
     }
 
     public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
