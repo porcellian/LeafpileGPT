@@ -10,6 +10,8 @@ public sealed class DesktopHostIntegrationTests
     public async Task DesktopInputProviderDeliversLinesAndEmptyCommands()
     {
         var provider = CreateInputProvider();
+        var consumed = new List<string>();
+        provider.InputConsumed += consumed.Add;
         provider.SubmitLine("look mailbox");
         provider.SubmitLine(string.Empty);
 
@@ -19,6 +21,7 @@ public sealed class DesktopHostIntegrationTests
 
         Assert.Equal(new ZMachineLineInputResult("look mailbox", 13), command);
         Assert.Equal(new ZMachineLineInputResult(string.Empty, 13), empty);
+        Assert.Equal(["look mailbox", string.Empty], consumed);
         Assert.False(provider.SupportsTimedInput);
     }
 
@@ -26,9 +29,12 @@ public sealed class DesktopHostIntegrationTests
     public async Task DesktopInputProviderUsesTheFirstSubmittedCharacterForReadChar()
     {
         var provider = CreateInputProvider();
+        var consumed = new List<string>();
+        provider.InputConsumed += consumed.Add;
         provider.SubmitLine("x");
 
         Assert.Equal((ushort)'x', await provider.ReadCharacterAsync(TestContext.Current.CancellationToken));
+        Assert.Equal(["x"], consumed);
     }
 
     [Fact]
@@ -197,6 +203,11 @@ public sealed class DesktopHostIntegrationTests
 
                 Assert.True(session.State.IsHalted);
                 Assert.Equal("look\n", display.Transcript);
+                var auditGroups = session.InstructionAudit.GetSnapshot();
+                Assert.Contains(auditGroups, group => group.Command == "Restore");
+                var commandGroup = Assert.Single(auditGroups, group => group.Command == "look");
+                Assert.Equal(["sread", "quit"], commandGroup.Instructions.Select(instruction => instruction.Mnemonic));
+                Assert.Equal([1L, 2L], commandGroup.Instructions.Select(instruction => instruction.Sequence));
             }
         }
         finally

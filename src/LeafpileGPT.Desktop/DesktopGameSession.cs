@@ -66,6 +66,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             AfterInputWaitAsync = ReacquireStateAfterInputAsync
         };
         _input.LineInputRequested += request => InputRequested?.Invoke(request);
+        _input.InputConsumed += InstructionAudit.BeginCommand;
         State.OutputStreams.ScreenWriter = text =>
         {
             var window = State.OutputStreams.Screen.SelectedWindow;
@@ -82,6 +83,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
     public IZMachineSaveStore SaveStore { get; }
 
     public DesktopZMachineEventServices EventServices { get; }
+
+    public ZMachineInstructionAudit InstructionAudit { get; } = new();
 
     public event Action<Exception>? TranscriptWriteFailed;
 
@@ -151,6 +154,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
         {
             if (Volatile.Read(ref _activeInstruction) is null)
             {
+                InstructionAudit.BeginCommand("Restore");
                 State.ApplySaveState(save);
                 Dispatch(ResetDisplay);
             }
@@ -186,6 +190,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             await _stateGate.WaitAsync(cancellationToken).ConfigureAwait(false);
             try
             {
+                InstructionAudit.BeginCommand("Restart");
                 State.Restart();
                 Dispatch(ResetDisplay);
             }
@@ -253,6 +258,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     var restore = Interlocked.Exchange(ref _pendingRestore, null);
                     if (restore is not null)
                     {
+                        InstructionAudit.BeginCommand("Restore");
                         State.ApplySaveState(restore.Save);
                         Dispatch(ResetDisplay);
                         restore.Completion.TrySetResult();
@@ -261,6 +267,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
 
                     if (Interlocked.Exchange(ref _restartRequested, 0) != 0)
                     {
+                        InstructionAudit.BeginCommand("Restart");
                         State.Restart();
                         Dispatch(ResetDisplay);
                         Volatile.Read(ref _pendingRestart)?.TrySetResult();
@@ -275,6 +282,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
                     using var instructionCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     Volatile.Write(ref _activeInstruction, instructionCancellation);
                     DecodedInstruction? instruction = null;
+                    var instructionRecorded = false;
                     var instructionPc = State.ProgramCounter;
                     try
                     {
@@ -282,6 +290,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
                         instruction = decoder.Decode(instructionPc);
                         await executor.ExecuteAsync(instruction, State, _input, cancellationToken: instructionCancellation.Token)
                             .ConfigureAwait(false);
+                        InstructionAudit.Record(instruction, State);
+                        instructionRecorded = true;
                         await State.OutputStreams.Screen.WaitForMoreAsync(
                             _input.ReadMoreKeyAsync,
                             instructionCancellation.Token).ConfigureAwait(false);
@@ -316,6 +326,11 @@ public sealed class DesktopGameSession : IAsyncDisposable
                         }
 
                         State.SetProgramCounter(instruction!.NextProgramCounter);
+                        if (!instructionRecorded)
+                        {
+                            InstructionAudit.Record(instruction, State);
+                        }
+
                         await State.OutputStreams.Screen.WaitForMoreAsync(
                             _input.ReadMoreKeyAsync,
                             instructionCancellation.Token).ConfigureAwait(false);

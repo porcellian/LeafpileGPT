@@ -18,6 +18,8 @@
         <MenuItem Header="Exit" Click="OnExitClick" />
       </MenuItem>
       <MenuItem Header="_Tools">
+        <MenuItem x:Name="ViewInstructionsMenuItem" Header="View Instructions..." Click="OnViewInstructionsClick" IsEnabled="False" />
+        <Separator />
         <MenuItem x:Name="ViewErrorsMenuItem" Header="View Errors..." Click="OnViewErrorsClick" />
         <Separator />
         <MenuItem Header="Runtime Error Policy">

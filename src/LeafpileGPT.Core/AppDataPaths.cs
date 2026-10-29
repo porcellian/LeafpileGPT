@@ -15,6 +15,7 @@ public sealed class AppDataPaths
         SaveDirectory = Path.Combine(RootDirectory, "Save");
         PreferencesDirectory = Path.Combine(RootDirectory, "Preferences");
         LogsDirectory = Path.Combine(RootDirectory, "Logs");
+        AuditsDirectory = Path.Combine(RootDirectory, "Audits");
         PreferencesFilePath = Path.Combine(PreferencesDirectory, "preferences.json");
 
         Directory.CreateDirectory(SaveDirectory);
@@ -32,6 +33,9 @@ public sealed class AppDataPaths
 
     /// <summary>Gets the directory used for optional structured diagnostic logs.</summary>
     public string LogsDirectory { get; }
+
+    /// <summary>Gets the default directory for exported instruction audits.</summary>
+    public string AuditsDirectory { get; }
 
     /// <summary>Gets the JSON preferences file path.</summary>
     public string PreferencesFilePath { get; }
