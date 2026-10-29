@@ -37,10 +37,10 @@ Each numbered task is a reviewable unit on its own branch, with one conventional
 
 ## Maximum-score story walkthroughs
 
-For each game, use the story and same-basename manual/hint files supplied for that run. Play from a fresh game to maximum score and ending without deaths. Create an original, concise, professionally formatted PDF in `walkthroughs/` and commit it with the updated checkbox. Include an opcode table with form, opcode, mnemonic, total count, first execution sequence, and first PC. Save a deterministic route and machine-readable opcode trace under `.agent/regression-routes/`; keep these local and ignored. Record first sequence as a 1-based instruction execution index and PCs as hexadecimal byte addresses. If source code changes during a run, replay every previously completed maximum-score route from a fresh game before closing the task; verify score, ending, and deaths, and fix defects with regression tests.
+For each game, use the story and same-basename manual/hint files supplied for that run. Play from a fresh game to maximum score and ending without deaths. Create an original, concise, professionally formatted PDF in `walkthroughs/` and commit it with the updated checkbox. Match the visual and editorial style of the Zork I walkthrough: cover and score panel, brief guide/checkpoint notes, numbered stages with concise prose and Courier command blocks, and a compact opcode inventory table with repeated headers when continued. Include an opcode table with form, opcode, mnemonic, total count, first execution sequence, and first PC. Save a deterministic route and machine-readable opcode trace under `.agent/regression-routes/`; keep these local and ignored. Record first sequence as a 1-based instruction execution index and PCs as hexadecimal byte addresses. If source code changes during a run, replay every previously completed maximum-score route from a fresh game before closing the task; verify score, ending, and deaths, and fix defects with regression tests.
 
 - [x] **31. Zork I: The Great Underground Empire**
-- [ ] **32. Zork II: The Wizard of Frobozz**
+- [x] **32. Zork II: The Wizard of Frobozz**
 - [ ] **33. Deadline**
 - [ ] **34. Zork III: The Dungeon Master**
 - [ ] **35. Starcross**
