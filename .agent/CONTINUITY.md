@@ -1,6 +1,8 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-29T01:35Z [USER] Supersedes the PR #31 standby state: begin Task 27 on `feature/27-conformance-replay-tooling`; complete the feature, open a PR, then wait for review and merge.
+- 2026-10-28T21:30Z [USER] PR #31 is merged; user requested standby. Wait for the next instruction before starting work.
 - 2026-10-28T21:29Z [USER] PR #31 follow-up: hide score/moves before a story is loaded and show a bold `[MORE]` marker without helper text; track `gui11.png`/`gui12.png`.
 - 2026-10-28T21:20Z [USER] PR #31 follow-up: `gui10.png` still loses exactly one line above the viewport; correct the remaining MORE threshold boundary.
 - 2026-10-28T21:12Z [USER] PR #31 follow-up: diagnose and correct early MORE in `gui09.png` and late MORE in `gui10.png`; track both references.
@@ -53,6 +55,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-29T01:35Z [CODE] Replay routes set a deterministic host-random seed and restart that generator on VM restart; ordinary desktop sessions retain cryptographic random selection.
 - 2026-10-28T19:26Z [CODE] Task 26 wires VM sound requests to desktop status reporting, while `SupportsSoundEffects` remains false because the desktop has no playback backend; README and spec coverage state this limitation.
 - 2026-10-28T19:04Z [CODE] Task 25 implements the reference screen as a blue `#0066CC` play area with Courier-family text, a light status strip, a bottom-left prompt, bottom-anchored scrolling output, and separate app status. VM callback wiring remains Task 26.
 - 2026-10-28T18:51Z [CODE] Task 24 initializes story/VM state on desktop load and uses direct Quetzal file operations; the interactive VM display and event loop remain Task 26. Blorb launch selects its validated ZCOD executable.
@@ -76,6 +79,8 @@
 - 2026-10-28T17:10Z [CODE] Blorb image resources retain encoded PNG/JPEG bytes with validated dimensions; Reso computes host-window scaling and APal updates a current indexed palette only when non-adaptive images are plotted. V6 picture availability is reported through Flags 1 bit 1; Flags 2 bit 3 remains game-owned in V6 and is used for V5 character-graphics capability.
 
 ## [PROGRESS]
+- 2026-10-29T01:35Z [TOOL] Supersedes prior Task 27 status: implementation is committed as `ce434fd`, pushed, and submitted as PR #32 at https://github.com/porcellian/LeafpileGPT/pull/32. Windows, macOS, and Ubuntu CI checks are pending; wait for user review and merge.
+- 2026-10-29T01:35Z [TOOL] Task 27 implementation passes format verification, Release build (0 warnings/errors), all 538 xUnit tests, and `git diff --check`; generated V1–V8 replay tests pass and a local-only Zork I route stops at the expected input prompt after 386 instructions. Full diff review and PR submission remain.
 - 2026-10-28T21:29Z [TOOL] Supersedes pending commit/push state: commit `0577c85` is pushed to PR #31; the working tree is clean. CI status was not checked.
 - 2026-10-28T21:29Z [TOOL] Score/moves visibility now follows loaded-story state; MORE display is bold `[MORE]` only. Added generated model assertions and tracked `gui11.png`/`gui12.png`. Formatting, Release build (0 warnings/errors), 518 tests, and diff checks pass; commit/push remain.
 - 2026-10-28T21:20Z [TOOL] Supersedes the pending-push note: commit `49fc8d7` is pushed to PR #31. Worktree is clean; CI status has not been rechecked.
@@ -171,6 +176,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-29T01:35Z [TOOL] Task 27 delivers deterministic headless route replay, machine-readable results, opcode traces/inventory, generated V1–V8/CLI coverage, and usage/spec-matrix docs. PR #32 is open; CI is pending. Await user review and merge.
 - 2026-10-28T18:41Z [TOOL] Task 23 is implemented, verified, committed, and submitted as PR #27. Await user review and merge before starting Task 24.
 - 2026-10-28T18:35Z [TOOL] Task 22 is implemented, validated, committed, and submitted as PR #26. Await user review and merge before starting Task 23.
 - 2026-10-28T18:33Z [TOOL] Task 22 implements Quetzal-backed save/restore, restart, single-step undo, host storage options for extended save opcodes, and generated all-version state restoration tests. Await conventional commit and PR creation.

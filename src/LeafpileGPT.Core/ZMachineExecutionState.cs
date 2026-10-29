@@ -14,6 +14,8 @@ public sealed class ZMachineExecutionState
     private readonly List<ExecutionFrame> _callStack = [];
     private readonly int _maximumStackWords;
     private readonly StoryFile _story;
+    private readonly int? _deterministicRandomSeed;
+    private Random? _deterministicRandom;
     private QuetzalSaveData? _undoSave;
     private bool _isPredictableRandomMode;
     private int _predictableSeed;
@@ -26,7 +28,8 @@ public sealed class ZMachineExecutionState
         int maximumStackWords,
         IZMachineEventServices eventServices,
         BlorbPictureCatalog? pictureCatalog,
-        BlorbSoundCatalog? soundCatalog)
+        BlorbSoundCatalog? soundCatalog,
+        int? deterministicRandomSeed)
     {
         Memory = memory;
         _story = story;
@@ -34,6 +37,7 @@ public sealed class ZMachineExecutionState
         EventServices = eventServices;
         PictureCatalog = pictureCatalog;
         SoundCatalog = soundCatalog;
+        _deterministicRandomSeed = deterministicRandomSeed;
         OutputStreams = new ZMachineOutputStreams(memory);
         OutputStreams.Screen.NewlineInterruptHandler = routine => RoutineCallRequested?.Invoke(routine);
         InitializePictureCapabilities();
@@ -103,7 +107,8 @@ public sealed class ZMachineExecutionState
 
         if (!_isPredictableRandomMode)
         {
-            return (ushort)RandomNumberGenerator.GetInt32(1, range + 1);
+            return (ushort)(_deterministicRandom?.Next(1, range + 1)
+                ?? RandomNumberGenerator.GetInt32(1, range + 1));
         }
 
         if (_predictableSeed < 1_000)
@@ -189,7 +194,8 @@ public sealed class ZMachineExecutionState
         IZMachineEventServices? eventServices = null,
         BlorbPictureCatalog? pictureCatalog = null,
         BlorbSoundCatalog? soundCatalog = null,
-        IZMachineSaveStore? saveStore = null)
+        IZMachineSaveStore? saveStore = null,
+        int? deterministicRandomSeed = null)
     {
         ArgumentNullException.ThrowIfNull(story);
         if (maximumStackWords < 1_024)
@@ -200,7 +206,7 @@ public sealed class ZMachineExecutionState
 
         var state = new ZMachineExecutionState(
             new ZMachineMemory(story), story, maximumStackWords, eventServices ?? NullZMachineEventServices.Instance,
-            pictureCatalog, soundCatalog);
+            pictureCatalog, soundCatalog, deterministicRandomSeed);
         state.SaveStore = saveStore;
         state.InitializeExecutionPoint();
         return state;
@@ -208,6 +214,7 @@ public sealed class ZMachineExecutionState
 
     private void InitializeExecutionPoint()
     {
+        _deterministicRandom = _deterministicRandomSeed is { } seed ? new Random(seed) : null;
         _evaluationStack.Clear();
         _callStack.Clear();
         ProgramCounter = 0;

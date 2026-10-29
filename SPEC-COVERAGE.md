@@ -36,6 +36,16 @@ The decoder and tests must account for every standard opcode, including version-
 - **VAR:** `call` / `call_vs`, `storew`, `storeb`, `put_prop`, `sread` / `aread`, `print_char`, `print_num`, `random`, `push`, `pull`, `split_window`, `set_window`, `call_vs2`, `erase_window`, `erase_line`, `set_cursor`, `get_cursor`, `set_text_style`, `buffer_mode`, `output_stream`, `input_stream`, `sound_effect`, `read_char`, `scan_table`, `not`, `call_vn`, `call_vn2`, `tokenise`, `encode_text`, `copy_table`, `print_table`, `check_arg_count`.
 - **EXT:** `save`, `restore`, `log_shift`, `art_shift`, `set_font`, `draw_picture`, `picture_data`, `erase_picture`, `set_margins`, `save_undo`, `restore_undo`, `print_unicode`, `check_unicode`, `set_true_colour`, `move_window`, `window_size`, `window_style`, `get_wind_prop`, `scroll_window`, `pop_stack`, `read_mouse`, `mouse_window`, `push_stack`, `put_wind_prop`, `print_form`, `make_menu`, `picture_table`, `buffer_screen`.
 
+## Headless route replay and opcode trace
+
+| Requirement | Implementation | Generated coverage |
+|---|---|---|
+| Run scripted routes through the shared VM without desktop initialization | `ZMachineReplayRunner` uses `ZMachineExecutionState`, `ZMachineInstructionDecoder`, and `ZMachineOpcodeExecutor`; route input provides commands, defined key values, automatic MORE acknowledgements, a deterministic host random seed, and an instruction limit. | `ZMachineReplayTests` runs generated V1–V8 stories, a V5 line-input route, route exhaustion, and an instruction limit. |
+| Produce deterministic machine-readable results and opcode traces | `ZMachineReplayResult` reports completion state, story identity, captured output and hash, final PC and Quetzal state hash, input/MORE counts, and opcode inventory. Optional JSONL records include 1-based sequence, hex PC, form/opcode/mnemonic, operands, branch/store metadata, next and resulting PC, and halt state. | Tests compare traced and untraced output/state, verify inventory counts and first-PC metadata, and verify seeded random sequences/restart. |
+| Replay local story routes without requiring licensed stories in CI | `LeafpileGPT.Replay` reads route JSON, resolves the story path relative to that route, supports standalone stories and Blorb Z-code, emits JSON, can write an optional JSONL trace, and runs all route files in stable filename order. `.agent/regression-routes/` remains ignored. | The replay executable references Core only; generated fixtures exercise route behavior in CI, including CLI paths with spaces, invalid stories, and route-directory execution. README documents local invocation and route schema. |
+
+The existing CI matrix already runs formatting, build, and xUnit on Windows, macOS, and Linux; adding the replay executable to `LeafpileGPT.sln` includes it in those checks. Local route files and story files are never required by CI.
+
 ## Quetzal 1.4
 
 | Standard area | Implementation tasks | Coverage / acceptance evidence |
