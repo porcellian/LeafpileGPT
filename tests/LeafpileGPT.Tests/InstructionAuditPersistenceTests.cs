@@ -167,6 +167,37 @@ public sealed class InstructionAuditPersistenceTests
     }
 
     [Fact]
+    public async Task AutomaticAuditPersistsRapidInstructionBurstsWithoutOverflowingQueue()
+    {
+        using var directory = new TemporaryDirectory();
+        using var reported = new ManualResetEventSlim();
+        Exception? failure = null;
+        var audit = new ZMachineInstructionAudit();
+        var saver = new InstructionAuditAutoSaver(directory.Path, "fixture.z3", audit, exception =>
+        {
+            failure = exception;
+            reported.Set();
+        });
+        var instruction = CreateQuit(0x352);
+        var state = CreateState(0x353);
+        const int instructionCount = 20_000;
+
+        saver.Start();
+        audit.BeginCommand("rapid instruction burst");
+        for (var index = 0; index < instructionCount; index++)
+        {
+            audit.Record(instruction, state);
+        }
+
+        await saver.DisposeAsync();
+
+        Assert.False(reported.IsSet);
+        Assert.Null(failure);
+        var loaded = await InstructionAuditJsonLinesImporter.LoadAsync(saver.JsonLinesPath!, TestContext.Current.CancellationToken);
+        Assert.Equal(instructionCount, loaded.InstructionCount);
+    }
+
+    [Fact]
     public async Task ImportedTraceCanBeExportedAgainWithoutChangingItsData()
     {
         using var directory = new TemporaryDirectory();

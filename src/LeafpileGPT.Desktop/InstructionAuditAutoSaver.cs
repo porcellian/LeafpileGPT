@@ -8,7 +8,9 @@ namespace LeafpileGPT.Desktop;
 /// <summary>Persists an instruction audit on a worker task without blocking VM execution.</summary>
 public sealed class InstructionAuditAutoSaver : IAsyncDisposable
 {
-    private const int QueueCapacity = 8192;
+    private const int QueueCapacity = 65536;
+    private const int WriterBufferSize = 65536;
+    private const int FlushEventBatchSize = 64;
     private readonly string _directory;
     private readonly string _storyName;
     private readonly ZMachineInstructionAudit _audit;
@@ -57,6 +59,7 @@ public sealed class InstructionAuditAutoSaver : IAsyncDisposable
         _basePath = CreateUniqueBasePath();
         var initialGroups = _audit.GetSnapshot();
         _audit.EventRecorded += OnAuditEvent;
+        _writerTask = Task.Run(WriteLoopAsync);
         foreach (var group in initialGroups)
         {
             if (!TryQueue(new ZMachineInstructionAuditEvent(
@@ -83,7 +86,6 @@ public sealed class InstructionAuditAutoSaver : IAsyncDisposable
             }
         }
 
-        _writerTask = Task.Run(WriteLoopAsync);
     }
 
     public async ValueTask DisposeAsync()
@@ -128,15 +130,26 @@ public sealed class InstructionAuditAutoSaver : IAsyncDisposable
         {
             Directory.CreateDirectory(_directory);
             var path = _basePath + ".jsonl";
-            await using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.Read, 4096, FileOptions.Asynchronous | FileOptions.SequentialScan);
-            await using var writer = new StreamWriter(stream, new UTF8Encoding(encoderShouldEmitUTF8Identifier: false), leaveOpen: true);
+            await using var stream = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.Read, WriterBufferSize, FileOptions.Asynchronous | FileOptions.SequentialScan);
+            await using var writer = new StreamWriter(
+                stream,
+                new UTF8Encoding(encoderShouldEmitUTF8Identifier: false),
+                WriterBufferSize,
+                leaveOpen: true);
+            var eventsSinceFlush = 0;
             await foreach (var auditEvent in _events.Reader.ReadAllAsync().ConfigureAwait(false))
             {
                 var line = ApplyEvent(auditEvent, groups, groupsByNumber, groupAliases);
                 if (line is not null)
                 {
                     await writer.WriteLineAsync(line).ConfigureAwait(false);
-                    await writer.FlushAsync().ConfigureAwait(false);
+                    eventsSinceFlush++;
+                    if (auditEvent.Kind == ZMachineInstructionAuditEventKind.CommandStarted
+                        || eventsSinceFlush >= FlushEventBatchSize)
+                    {
+                        await writer.FlushAsync().ConfigureAwait(false);
+                        eventsSinceFlush = 0;
+                    }
                 }
             }
 
