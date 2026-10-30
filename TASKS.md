@@ -45,7 +45,7 @@ For each game, use the story and same-basename manual/hint files supplied for th
 - [x] **34. Zork III: The Dungeon Master**
 - [x] **35. Starcross**
 - [x] **36. Suspended**
-- [ ] **37. The Witness**
+- [x] **37. The Witness**
 - [ ] **38. Planetfall**
 - [ ] **39. Enchanter**
 - [ ] **40. Infidel**
