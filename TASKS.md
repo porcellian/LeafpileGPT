@@ -46,7 +46,7 @@ For each game, use the story and same-basename manual/hint files supplied for th
 - [x] **35. Starcross**
 - [x] **36. Suspended**
 - [x] **37. The Witness**
-- [ ] **38. Planetfall**
+- [x] **38. Planetfall**
 - [ ] **39. Enchanter**
 - [ ] **40. Infidel**
 - [ ] **41. Sorcerer**
