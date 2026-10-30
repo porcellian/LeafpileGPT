@@ -33,6 +33,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private bool _isStatusStripVisible;
     private bool _isMorePromptVisible;
     private bool _hasStoryLoaded;
+    private bool _isCharacterInputPending;
     private short _selectedWindow;
     private ZMachineTextStyle _textStyle;
     private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
@@ -44,6 +45,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     public event PropertyChangedEventHandler? PropertyChanged;
 
     public event Action<string>? CommandSubmitted;
+
+    public event Action<string>? CharacterSubmitted;
 
     public event Action<GameDisplayTextSegment>? OutputSegmentAdded;
 
@@ -115,6 +118,12 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     {
         get => _hasStoryLoaded;
         private set => SetProperty(ref _hasStoryLoaded, value);
+    }
+
+    public bool IsCharacterInputPending
+    {
+        get => _isCharacterInputPending;
+        private set => SetProperty(ref _isCharacterInputPending, value);
     }
 
     public short SelectedWindow
@@ -223,6 +232,26 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     }
 
     public void SetUpperWindowWidth(int width) => _upperWindowWidth = Math.Max(1, width);
+
+    public void BeginCharacterInput() => IsCharacterInputPending = true;
+
+    public bool CompleteCharacterInput(string character)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(character);
+        if (!IsCharacterInputPending)
+        {
+            return false;
+        }
+
+        IsCharacterInputPending = false;
+        if (character != "\r")
+        {
+            AppendOutput(character);
+        }
+
+        CharacterSubmitted?.Invoke(character);
+        return true;
+    }
 
     public void MoveCursor(short window, int row, int column)
     {
@@ -385,6 +414,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         InputText = string.Empty;
         SetStatusLine(string.Empty, "Score: 0  Moves: 0");
         SetStoryLoaded(loaded: false);
+        IsCharacterInputPending = false;
         ShowMorePrompt(visible: false);
         UpperWindowHeight = 0;
         ResizeUpperWindowRows(0);
@@ -403,6 +433,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         PresentationReset?.Invoke();
         ClearWindow(0);
         InputText = string.Empty;
+        IsCharacterInputPending = false;
         ShowMorePrompt(visible: false);
     }
 
