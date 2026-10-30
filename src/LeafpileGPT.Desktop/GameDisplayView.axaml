@@ -30,12 +30,13 @@
               IsVisible="{Binding IsUpperWindowVisible}"
               ClipToBounds="True"
               Background="#0066CC">
-        <TextBlock x:Name="UpperWindowTextBlock"
-                   Text="{Binding UpperWindowText}"
-                   FontFamily="Courier New, Courier, monospace"
-                   FontSize="20"
-                   Foreground="White"
-                   TextWrapping="NoWrap" />
+        <Grid>
+          <Canvas x:Name="UpperWindowBackgroundCanvas" IsHitTestVisible="False" />
+          <StackPanel x:Name="UpperWindowTextPanel"
+                      HorizontalAlignment="Stretch"
+                      Orientation="Vertical" />
+          <Canvas x:Name="UpperWindowInputCanvas" IsHitTestVisible="False" />
+        </Grid>
       </Border>
       <Grid Grid.Row="1" ClipToBounds="True">
         <ScrollViewer x:Name="TranscriptScrollViewer"

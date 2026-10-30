@@ -15,6 +15,7 @@ public sealed class DesktopScreenMetricsTests
 
     [Theory]
     [InlineData(3, 31, 28)]
+    [InlineData(4, 30, 28)]
     [InlineData(5, 30, 28)]
     public void PageLimitReservesPromptAndLineTransitionRows(int version, int expectedHeight, int expectedPageLimit)
     {
