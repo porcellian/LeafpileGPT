@@ -144,6 +144,28 @@ public sealed class ZMachineObjectTableTests
     }
 
     [Fact]
+    public void ReadsUnorderedPropertyTablesAndKeepsFirstDuplicateValue()
+    {
+        var bytes = CreateStoryBytes(3);
+        bytes[501] = 0x05; // property 5, one byte
+        bytes[502] = 0x77;
+        bytes[503] = 0x2A; // property 10, two bytes (out of order)
+        StoryFixtureBuilder.WriteWord(bytes, 504, 0x1234);
+        bytes[506] = 0x05; // duplicate property 5; the first declaration wins
+        bytes[507] = 0x99;
+        bytes[508] = 0;
+        SetObject(bytes, 3, 1, parent: 0, sibling: 0, child: 0, propertyTable: 500);
+        UpdateChecksum(bytes);
+        var objects = new ZMachineObjectTable(new ZMachineMemory(StoryFile.Parse(bytes)));
+
+        Assert.Equal((ushort)0x77, objects.GetProperty(1, 5));
+        Assert.Equal((ushort)0x1234, objects.GetProperty(1, 10));
+        Assert.Equal(10, objects.GetNextProperty(1, 0));
+        Assert.Equal(5, objects.GetNextProperty(1, 10));
+        Assert.Equal(0, objects.GetNextProperty(1, 5));
+    }
+
+    [Fact]
     public void SupportsExtendedPropertySizesAndPropertyLengthLookup()
     {
         var state = CreateState(5, extendedPropertyLength: 64);

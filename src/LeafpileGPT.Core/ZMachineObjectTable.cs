@@ -339,14 +339,18 @@ public sealed class ZMachineObjectTable
         var cursor = (uint)tableAddress + 1 + (uint)wordCount * sizeof(ushort);
         ValidateDynamicRange(tableAddress, checked(1 + wordCount * sizeof(ushort)));
         var properties = new List<Property>();
-        var previousNumber = _maximumPropertyNumber + 1;
+        var seenNumbers = new HashSet<int>();
         while (true)
         {
             ValidateDynamicRange(cursor, 1);
             var first = _memory.ReadByte(checked((ushort)cursor));
             if (first == 0)
             {
-                return properties;
+                // Valid story files store properties in descending order, but
+                // legacy Infocom data can contain unordered or duplicate
+                // entries. Keep the first declared value for each property
+                // and expose a canonical sequence to get_next_prop.
+                return properties.OrderByDescending(property => property.Number).ToList();
             }
 
             cursor++;
@@ -390,15 +394,13 @@ public sealed class ZMachineObjectTable
                 }
             }
 
-            if (number >= previousNumber)
+            ValidateDynamicRange(cursor, length);
+            if (seenNumbers.Add(number))
             {
-                throw new ZMachineExecutionException($"Properties on object {objectNumber} are not in descending numerical order.");
+                properties.Add(new(number, new(cursor, length)));
             }
 
-            ValidateDynamicRange(cursor, length);
-            properties.Add(new(number, new(cursor, length)));
             cursor += (uint)length;
-            previousNumber = number;
         }
     }
 
