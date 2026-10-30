@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-30T02:03Z [TOOL] Supersedes the local-complete status below: commit `9b7cbb9` and the continuity follow-up are pushed on `feature/34-zork-iii-walkthrough`; PR #47 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/47`. Wait for review and merge before Task 35.
 - 2026-10-30T02:03Z [USER] Supersedes the prior PR #46 OPEN entry: PR #46 is merged; Task 34 is authorized to proceed.
 - 2026-10-30T02:03Z [TOOL] Task 34 Zork III is complete locally on `feature/34-zork-iii-walkthrough`: 7/7 potential, Treasury/successor ending, zero deaths, 282 moves, 210,414 instructions, 61 unique opcodes. The Zork I-style PDF and clean seed-3 route/trace are ready; route and trace remain local/ignored. Task checkbox is complete. Finish diff review, commit, push, open PR, then await review and merge.
 - 2026-10-30T01:35Z [TOOL] Supersedes the Task 33 preparation status above: commit `c8f5d15` is pushed to `feature/33-deadline-walkthrough`, and PR #46 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/46`. Wait for review and merge before Task 34.
