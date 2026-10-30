@@ -123,9 +123,11 @@ public partial class GameDisplayView : UserControl
             typeface,
             _transcriptTextBlock.FontSize,
             Brushes.White);
-        var padding = _transcriptScrollViewer.Padding;
-        var contentWidth = _transcriptScrollViewer.Viewport.Width;
-        var contentHeight = _transcriptScrollViewer.Bounds.Height - padding.Top - padding.Bottom;
+        // The transcript viewer occupies only the lower window after a story
+        // splits the screen. Measure the play area instead so upper-window
+        // height never gets subtracted from the VM's total screen dimensions.
+        var contentWidth = _playArea.Bounds.Width;
+        var contentHeight = _playArea.Bounds.Height;
         if (contentWidth <= 0 || contentHeight <= 0 || sample.WidthIncludingTrailingWhitespace <= 0 || sample.Height <= 0)
         {
             metrics = default;
