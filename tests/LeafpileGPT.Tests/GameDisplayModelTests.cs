@@ -37,7 +37,7 @@ public sealed class GameDisplayModelTests
     }
 
     [Fact]
-    public void CharacterInputIsEchoedAfterThePromptAndSubmittedImmediately()
+    public void CharacterInputRemainsVisibleUntilSubmittedThenEchoesAfterThePrompt()
     {
         var model = new GameDisplayModel();
         model.AppendOutput("Do you want to continue? (y/n) >");
@@ -46,6 +46,12 @@ public sealed class GameDisplayModelTests
 
         model.BeginCharacterInput();
         Assert.True(model.IsCharacterInputPending);
+        model.InputText = "Y";
+
+        Assert.Equal("Do you want to continue? (y/n) >", model.Transcript);
+        Assert.Equal("Y", model.InputText);
+        Assert.True(model.IsCharacterInputPending);
+
         Assert.True(model.CompleteCharacterInput("Y"));
 
         Assert.Equal("Do you want to continue? (y/n) >Y", model.Transcript);

@@ -296,7 +296,14 @@ public partial class GameDisplayView : UserControl
 
         if (Model.IsCharacterInputPending && e.Key == Key.Enter)
         {
-            CompleteCharacterInput("\r");
+            CompleteCharacterInput(string.IsNullOrEmpty(Model.InputText) ? "\r" : Model.InputText[..1]);
+            e.Handled = true;
+            return;
+        }
+
+        if (Model.IsCharacterInputPending && e.Key is Key.Back or Key.Delete)
+        {
+            Model.InputText = string.Empty;
             e.Handled = true;
             return;
         }
@@ -317,7 +324,10 @@ public partial class GameDisplayView : UserControl
         }
 
         e.Handled = true;
-        CompleteCharacterInput(e.Text[..1]);
+        if (Model.InputText.Length == 0)
+        {
+            Model.InputText = e.Text[..1];
+        }
     }
 
     private void CompleteCharacterInput(string character)

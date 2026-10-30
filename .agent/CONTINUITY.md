@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-30T01:06Z [TOOL] PR #45 remains OPEN; `reference/gui22.png` exposed that immediate `read_char` submission treated a following Return as a second response. The PR follow-up now keeps the single typed character visible until Return, then submits exactly that character once; Backspace/Delete clear it. Release build (0 warnings/errors), formatter, diff check, and all 627 xUnit tests pass. Commit and push remain.
 - 2026-10-30T00:59Z [TOOL] Supersedes the local implementation state below: commit `83ff145` is pushed to `fix/read-char-prompt-echo`, and PR #45 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/45`. PR #44 merged into `origin/main` at `b5239b2`. `read_char` now signals GUI input, displays the inline blinking cursor, accepts a typed character immediately without Return, and echoes it after the story prompt. `reference/gui21.png` is tracked. Release build (0 warnings/errors), formatter, diff check, and all 627 tests pass; macOS, Ubuntu, and Windows checks are pending. Wait for user review and merge.
 - 2026-10-30T00:59Z [TOOL] PR #44 is merged into `origin/main` at `b5239b2`. Read-char prompt visibility fix is being prepared on `fix/read-char-prompt-echo`: notify the GUI when `read_char` awaits input, show the inline cursor, accept a text key immediately without Return, and echo that key after the story prompt. `reference/gui21.png` is included. Release build (0 warnings/errors), formatting, diff check, and all 627 xUnit tests pass; commit and PR remain.
 - 2026-10-29T23:49Z [TOOL] Supersedes the local-complete state below: commit `27978b5` is pushed to `fix/instruction-audit-queue-overflow`, and PR #44 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/44`. PR #43 merged into `origin/main` at `6d7ad08`. The audit writer uses a 65,536-event bounded queue, a 64 KiB buffer, and batched JSONL flushes; a 20,000-instruction stress test passes. Release build (0 warnings/errors), formatting, diff check, and all 625 xUnit tests pass. macOS, Ubuntu, and Windows checks are pending. Wait for user review and merge.
@@ -100,6 +101,7 @@
 - 2026-10-28T17:10Z [USER] PR #22 is merged. Task 19 is active on `feature/19-blorb-images-display-hints` from updated `origin/main`.
 
 ## [DECISIONS]
+- 2026-10-30T01:06Z [CODE] In GUI `read_char` prompts, stage one typed character in the inline input and submit it only on Return; this prevents the confirmation Return from being consumed as a second game response. Keep Backspace/Delete available before submission.
 - 2026-10-30T00:59Z [CODE] Keep Z-machine `read_char` return behavior unchanged; the desktop host opens the same inline prompt while awaiting a character, submits the first typed text character immediately, and echoes it in the UI for visible Y/N feedback.
 - 2026-10-29T23:49Z [CODE] Keep audit persistence off the VM path while reducing queue pressure: a 64 KiB writer buffer, 65,536-event bounded channel, and 64-event flush batches with immediate command-boundary flushes. Preserve final flush/PDF behavior on session close.
 - 2026-10-29T14:27Z [CODE] Permit one or two operands for V3–V5 `output_stream`, following the specification's opcode definition that includes the memory-stream table operand; retain the V6–V8 three-operand maximum.
@@ -257,6 +259,7 @@
 - 2026-10-28T16:55Z [CODE] Blorb RIdx start offsets are file-relative byte offsets to chunk headers, and the mandatory zero pad for odd chunk data is excluded from its declared data length. Fspc must identify an indexed Pict resource and cannot identify a Rect.
 
 ## [OUTCOMES]
+- 2026-10-30T01:06Z [USER] `reference/gui22.png` shows Return immediately following a character input caused the next Y/N prompt to receive the Return as another answer. The fix stages one character until Return and submits that character only.
 - 2026-10-30T00:59Z [TOOL] PR #44 is confirmed merged at `b5239b2`. The `read_char` prompt/echo fix and tracked `reference/gui21.png` are submitted as PR #45; CI checks are pending.
 - 2026-10-30T00:59Z [TOOL] PR #44 is confirmed merged at `b5239b2`. `read_char` now signals a pending GUI input request, and the display model can append and submit a single echoed response; 627 xUnit tests pass. PR submission remains.
 - 2026-10-29T23:49Z [TOOL] PR #43 is confirmed merged at `6d7ad08`. The follow-up audit queue change passes a 20,000-instruction burst test and the 625-test suite; PR submission remains.
