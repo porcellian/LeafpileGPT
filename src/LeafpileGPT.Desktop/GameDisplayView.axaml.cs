@@ -17,7 +17,7 @@ public partial class GameDisplayView : UserControl
     private readonly Border _upperWindowBorder;
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
-    private readonly TextBlock _upperWindowTextBlock;
+    private readonly StackPanel _upperWindowTextPanel;
     private readonly TextBox _promptTextBox;
     private Run? _promptInputRun;
     private Run? _blockCursorRun;
@@ -36,7 +36,7 @@ public partial class GameDisplayView : UserControl
         _upperWindowBorder = this.FindControl<Border>("UpperWindowBorder")!;
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
-        _upperWindowTextBlock = this.FindControl<TextBlock>("UpperWindowTextBlock")!;
+        _upperWindowTextPanel = this.FindControl<StackPanel>("UpperWindowTextPanel")!;
         _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
         _promptTextBox.TextInput += OnPromptTextInput;
@@ -106,8 +106,7 @@ public partial class GameDisplayView : UserControl
     {
         _storyVersion = version;
         Model.SetStoryVersion(version);
-        _upperWindowBorder.Background = new SolidColorBrush(Color.FromRgb(0, 0, 170));
-        _upperWindowTextBlock.Foreground = Brushes.White;
+        _upperWindowBorder.Background = new SolidColorBrush(Color.FromRgb(0, 102, 204));
     }
 
     public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
@@ -162,16 +161,16 @@ public partial class GameDisplayView : UserControl
         }
 
         var typeface = new Typeface(
-            _upperWindowTextBlock.FontFamily,
-            _upperWindowTextBlock.FontStyle,
-            _upperWindowTextBlock.FontWeight,
+            _transcriptTextBlock.FontFamily,
+            _transcriptTextBlock.FontStyle,
+            _transcriptTextBlock.FontWeight,
             FontStretch.Normal);
         var sample = new FormattedText(
             "M",
             CultureInfo.InvariantCulture,
             FlowDirection.LeftToRight,
             typeface,
-            _upperWindowTextBlock.FontSize,
+            _transcriptTextBlock.FontSize,
             Brushes.White);
         _upperWindowBorder.Height = sample.Height * Model.UpperWindowHeight;
     }
@@ -420,23 +419,35 @@ public partial class GameDisplayView : UserControl
 
     private void RefreshUpperWindowSegments()
     {
-        var inlines = _upperWindowTextBlock.Inlines;
-        if (inlines is null)
-        {
-            return;
-        }
-
-        inlines.Clear();
+        _upperWindowTextPanel.Children.Clear();
+        var currentLine = CreateUpperWindowLine();
+        _upperWindowTextPanel.Children.Add(currentLine);
         foreach (var segment in Model.UpperWindowSegments)
         {
-            inlines.Add(CreateOutputRun(segment, upperWindow: true));
+            if (segment.Text == "\n")
+            {
+                currentLine = CreateUpperWindowLine();
+                _upperWindowTextPanel.Children.Add(currentLine);
+                continue;
+            }
+
+            currentLine.Inlines?.Add(CreateOutputRun(segment, upperWindow: true));
         }
     }
+
+    private TextBlock CreateUpperWindowLine() => new()
+    {
+        FontFamily = new FontFamily("Courier New, Courier, monospace"),
+        FontSize = _transcriptTextBlock.FontSize,
+        Foreground = Brushes.White,
+        TextWrapping = TextWrapping.NoWrap,
+        VerticalAlignment = Avalonia.Layout.VerticalAlignment.Top
+    };
 
     private Run CreateOutputRun(GameDisplayTextSegment segment, bool upperWindow)
     {
         var defaultForeground = Color.FromRgb(255, 255, 255);
-        var defaultBackground = Color.FromRgb(0, 0, 170);
+        var defaultBackground = Color.FromRgb(0, 102, 204);
         var foreground = segment.HasExplicitColours
             ? ResolveColour(segment.Foreground, segment.HasTrueColours)
             : defaultForeground;
@@ -460,6 +471,7 @@ public partial class GameDisplayView : UserControl
         return new Run(segment.Text)
         {
             FontFamily = new FontFamily("Courier New, Courier, monospace"),
+            FontSize = _transcriptTextBlock.FontSize,
             FontWeight = (style & ZMachineTextStyle.Bold) != 0 ? FontWeight.Bold : FontWeight.Normal,
             FontStyle = (style & ZMachineTextStyle.Italic) != 0 ? FontStyle.Italic : FontStyle.Normal,
             Foreground = new SolidColorBrush(foreground),

@@ -48,7 +48,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private ZMachineTextStyle _textStyle;
     private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
     private ushort _foreground = 9;
-    private ushort _background = 6;
+    private ushort _background = 2;
     private bool _hasExplicitColours;
     private bool _hasTrueColours;
 
@@ -432,7 +432,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
             if (rowIndex < lastOccupiedRow)
             {
                 segments.Add(new GameDisplayTextSegment("\n", 1, ZMachineTextStyle.Roman,
-                    ZMachineFontCatalog.NormalFont, 9, 6, false, false));
+                    ZMachineFontCatalog.NormalFont, 9, 2, false, false));
             }
         }
 
@@ -497,7 +497,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         _textStyle = ZMachineTextStyle.Roman;
         _fontNumber = ZMachineFontCatalog.NormalFont;
         _foreground = 9;
-        _background = 6;
+        _background = 2;
         _hasExplicitColours = false;
         _hasTrueColours = false;
     }

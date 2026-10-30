@@ -3,7 +3,7 @@
              xmlns:desktop="using:LeafpileGPT.Desktop"
              x:Class="LeafpileGPT.Desktop.GameDisplayView"
              x:DataType="desktop:GameDisplayModel">
-  <Grid RowDefinitions="Auto,*" Background="#0000AA">
+  <Grid RowDefinitions="Auto,*" Background="#0066CC">
     <Grid Grid.Row="0" ColumnDefinitions="*,Auto" MinHeight="32" Background="#E5E5E5"
           IsVisible="{Binding IsStatusStripVisible}">
       <TextBlock Grid.Column="0"
@@ -25,21 +25,19 @@
                  TextAlignment="Right"
                  VerticalAlignment="Center" />
     </Grid>
-    <Grid x:Name="PlayArea" Grid.Row="1" RowDefinitions="Auto,*" Background="#0000AA" ClipToBounds="True">
+    <Grid x:Name="PlayArea" Grid.Row="1" RowDefinitions="Auto,*" Background="#0066CC" ClipToBounds="True">
       <Border x:Name="UpperWindowBorder" Grid.Row="0" Padding="0"
               IsVisible="{Binding IsUpperWindowVisible}"
               ClipToBounds="True"
-              Background="#0000AA">
-        <TextBlock x:Name="UpperWindowTextBlock"
-                   FontFamily="Courier New, Courier, monospace"
-                   FontSize="20"
-                   Foreground="White"
-                   TextWrapping="NoWrap" />
+              Background="#0066CC">
+        <StackPanel x:Name="UpperWindowTextPanel"
+                    HorizontalAlignment="Stretch"
+                    Orientation="Vertical" />
       </Border>
       <Grid Grid.Row="1" ClipToBounds="True">
         <ScrollViewer x:Name="TranscriptScrollViewer"
                       Padding="8"
-                      Background="#0000AA"
+                      Background="#0066CC"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Auto">
           <Grid MinHeight="{Binding Viewport.Height, ElementName=TranscriptScrollViewer}">
@@ -77,7 +75,7 @@
                    VerticalAlignment="Bottom"
                    Margin="8"
                    Padding="2,0"
-                   Background="#0000AA"
+                   Background="#0066CC"
                    Foreground="White"
                    FontWeight="Bold"
                    FontFamily="Courier New, Courier, monospace"
