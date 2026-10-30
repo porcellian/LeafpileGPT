@@ -231,10 +231,20 @@ public sealed class GameDisplayModelTests
 
         model.AppendOutput("  APPLICATION  ", window: 1);
 
-        var firstRow = Assert.Single(model.UpperWindowSegments);
-        Assert.Equal("     APPLICATION  ", firstRow.Text);
-        Assert.Equal(ZMachineTextStyle.ReverseVideo, firstRow.Style);
-        Assert.Equal((short)1, firstRow.Window);
+        Assert.Collection(
+            model.UpperWindowSegments,
+            skippedCells =>
+            {
+                Assert.Equal("   ", skippedCells.Text);
+                Assert.Equal(ZMachineTextStyle.Roman, skippedCells.Style);
+                Assert.Equal((short)1, skippedCells.Window);
+            },
+            writtenText =>
+            {
+                Assert.Equal("  APPLICATION  ", writtenText.Text);
+                Assert.Equal(ZMachineTextStyle.ReverseVideo, writtenText.Style);
+                Assert.Equal((short)1, writtenText.Window);
+            });
     }
 
     [Fact]
