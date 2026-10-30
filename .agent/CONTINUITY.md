@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-30T15:15Z [TOOL] Task 36 commit `1c135ad` is pushed on `feature/36-suspended-walkthrough`; PR #50 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/50`, base `main`, head `feature/36-suspended-walkthrough`. Await user review and merge; do not start Task 37 yet.
 - 2026-10-30T15:15Z [TOOL] Task 36 is complete locally on `feature/36-suspended-walkthrough`: fresh Release 8 Advanced-mode replay reached rank 1/5, 85,000 current casualties, 10,000 projected recovery casualties, the successful systems-restored ending in 113 cycles, and 349,714 instructions. No robot death/system-failure event appeared; Whiz was out of communication from the initial report. The 108-input route passes with expected completion `Halted`; its 54-opcode trace is local and ignored. PDF and checkbox are ready for review/commit/PR.
 - 2026-10-30T15:15Z [TOOL] Task 36 deliverable is `walkthroughs/suspended-a-cryogenic-nightmare.pdf`; visually rendered and checked across six pages in the established Zork I style. Story/manual/hint and regression route/trace remain ignored/local. No source code changed, so earlier walkthrough replays were not required.
 - 2026-10-30T14:53Z [USER] PR #49 is merged. Task 36 is active: use `stories/suspend.z3`, complete a maximum-rank deathless run, create the Zork I-style walkthrough PDF with opcode inventory, and keep route/trace local and ignored.
