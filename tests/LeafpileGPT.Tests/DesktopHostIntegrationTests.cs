@@ -38,6 +38,20 @@ public sealed class DesktopHostIntegrationTests
     }
 
     [Fact]
+    public async Task DesktopInputProviderSignalsWhenItIsWaitingForACharacter()
+    {
+        var provider = CreateInputProvider();
+        var requested = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        provider.CharacterInputRequested += () => requested.TrySetResult();
+
+        var read = provider.ReadCharacterAsync(TestContext.Current.CancellationToken).AsTask();
+        await requested.Task.WaitAsync(TimeSpan.FromSeconds(5), TestContext.Current.CancellationToken);
+        Assert.True(provider.SubmitLine("y"));
+
+        Assert.Equal((ushort)'y', await read);
+    }
+
+    [Fact]
     public async Task DesktopInputProviderAcceptsAnyKeyForMorePrompt()
     {
         var provider = CreateInputProvider();

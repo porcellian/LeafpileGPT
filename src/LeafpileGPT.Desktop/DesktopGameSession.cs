@@ -93,6 +93,7 @@ public sealed class DesktopGameSession : IAsyncDisposable
             AfterInputWaitAsync = ReacquireStateAfterInputAsync
         };
         _input.LineInputRequested += request => InputRequested?.Invoke(request);
+        _input.CharacterInputRequested += () => CharacterInputRequested?.Invoke();
         _input.InputConsumed += InstructionAudit.BeginCommand;
         State.OutputStreams.ScreenWriter = text =>
         {
@@ -116,6 +117,8 @@ public sealed class DesktopGameSession : IAsyncDisposable
     public event Action<Exception>? TranscriptWriteFailed;
 
     public event Action<ZMachineLineInputRequest>? InputRequested;
+
+    public event Action? CharacterInputRequested;
 
     public Task Completion => _runTask ?? Task.CompletedTask;
 

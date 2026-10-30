@@ -41,6 +41,7 @@ public partial class MainWindow : Window
         _appStatusText = this.FindControl<TextBlock>("AppStatusText")!;
         _gameDisplay = this.FindControl<GameDisplayView>("GameDisplay")!;
         _gameDisplay.Model.CommandSubmitted += OnCommandSubmitted;
+        _gameDisplay.Model.CharacterSubmitted += OnCommandSubmitted;
         _gameDisplay.MoreKeySubmitted += () => _session?.SubmitMoreKey();
         _gameDisplay.ScreenMetricsChanged += OnScreenMetricsChanged;
         _storyFileInfoMenuItem = this.FindControl<MenuItem>("StoryFileInfoMenuItem")!;
@@ -103,6 +104,13 @@ public partial class MainWindow : Window
                 if (ReferenceEquals(_session, session))
                 {
                     _gameDisplay.BeginPromptInput();
+                }
+            });
+            session.CharacterInputRequested += () => Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            {
+                if (ReferenceEquals(_session, session))
+                {
+                    _gameDisplay.BeginCharacterInput();
                 }
             });
             session.TranscriptWriteFailed += exception => Avalonia.Threading.Dispatcher.UIThread.Post(() =>

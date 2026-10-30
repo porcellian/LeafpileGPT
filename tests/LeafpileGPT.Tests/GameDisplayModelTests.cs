@@ -37,6 +37,25 @@ public sealed class GameDisplayModelTests
     }
 
     [Fact]
+    public void CharacterInputIsEchoedAfterThePromptAndSubmittedImmediately()
+    {
+        var model = new GameDisplayModel();
+        model.AppendOutput("Do you want to continue? (y/n) >");
+        string? submitted = null;
+        model.CharacterSubmitted += character => submitted = character;
+
+        model.BeginCharacterInput();
+        Assert.True(model.IsCharacterInputPending);
+        Assert.True(model.CompleteCharacterInput("Y"));
+
+        Assert.Equal("Do you want to continue? (y/n) >Y", model.Transcript);
+        Assert.Equal("Y", submitted);
+        Assert.False(model.IsCharacterInputPending);
+        Assert.False(model.CompleteCharacterInput("N"));
+        Assert.Equal("Do you want to continue? (y/n) >Y", model.Transcript);
+    }
+
+    [Fact]
     public void DisplaysLocationAndRightAlignedStatusText()
     {
         var model = new GameDisplayModel();

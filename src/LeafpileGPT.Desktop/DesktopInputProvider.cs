@@ -28,6 +28,9 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
     /// <summary>Raised when a submitted line has been consumed by a line-input instruction.</summary>
     public event Action<string>? InputConsumed;
 
+    /// <summary>Raised when the interpreter is waiting for a single character.</summary>
+    public event Action? CharacterInputRequested;
+
     /// <summary>Queues a submitted line, including an empty line, for the next VM input request.</summary>
     public bool SubmitLine(string line)
     {
@@ -52,7 +55,9 @@ public sealed class DesktopInputProvider : IZMachineInputProvider
 
     public async ValueTask<ushort> ReadCharacterAsync(CancellationToken cancellationToken = default)
     {
-        var line = await ReadSubmittedLineAsync(cancellationToken).ConfigureAwait(false);
+        var line = await ReadSubmittedLineAsync(
+            cancellationToken,
+            () => CharacterInputRequested?.Invoke()).ConfigureAwait(false);
         if (line.Length == 0)
         {
             InputConsumed?.Invoke("[Return]");

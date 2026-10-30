@@ -39,6 +39,7 @@ public partial class GameDisplayView : UserControl
         _upperWindowTextBlock = this.FindControl<TextBlock>("UpperWindowTextBlock")!;
         _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
+        _promptTextBox.TextInput += OnPromptTextInput;
         _playArea.SizeChanged += (_, _) => PublishScreenMetrics();
         _transcriptScrollViewer.SizeChanged += (_, _) => PublishScreenMetrics();
         Loaded += (_, _) => PublishScreenMetrics();
@@ -185,6 +186,13 @@ public partial class GameDisplayView : UserControl
         AddPromptInputRuns();
     }
 
+    public void BeginCharacterInput()
+    {
+        BeginPromptInput();
+        Model.BeginCharacterInput();
+        FocusPrompt();
+    }
+
     private void AddPromptInputRuns()
     {
         _promptInputRun = new Run(Model.InputText) { Foreground = Brushes.White };
@@ -286,12 +294,37 @@ public partial class GameDisplayView : UserControl
             return;
         }
 
+        if (Model.IsCharacterInputPending && e.Key == Key.Enter)
+        {
+            CompleteCharacterInput("\r");
+            e.Handled = true;
+            return;
+        }
+
         if (e.Key == Key.Enter)
         {
             Model.SubmitCommand();
             EndPromptInput();
             e.Handled = true;
         }
+    }
+
+    private void OnPromptTextInput(object? sender, TextInputEventArgs e)
+    {
+        if (!Model.IsCharacterInputPending || string.IsNullOrEmpty(e.Text))
+        {
+            return;
+        }
+
+        e.Handled = true;
+        CompleteCharacterInput(e.Text[..1]);
+    }
+
+    private void CompleteCharacterInput(string character)
+    {
+        EndPromptInput();
+        Model.InputText = string.Empty;
+        Model.CompleteCharacterInput(character);
     }
 
     private void OnOutputCleared()
