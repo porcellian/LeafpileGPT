@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-30T14:46Z [TOOL] Supersedes the pending commit/PR status below: commit `9c772e6` is pushed on `feature/35-starcross-walkthrough`; PR #49 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/49`, base `main`, head `feature/35-starcross-walkthrough`, merge state CLEAN. Await review and merge; do not start Task 36.
 - 2026-10-30T14:46Z [TOOL] Supersedes the Task 35 exploration entry below: fresh Starcross route completed at 400/400, successful Earth return, zero deaths, 476 moves, and 233,098 instructions; all 57 unique opcodes are documented in the Zork I-style PDF. Zork I, Zork II, Deadline, and Zork III fresh-route replays all passed after the object-table compatibility fix. Release build and all 631 xUnit tests pass; `git diff --check` passes. `dotnet format --verify-no-changes` is blocked by the sandbox denying Roslyn build-host named-pipe creation; review source formatting manually. Commit and PR remain.
 - 2026-10-30T14:46Z [TOOL] Task 35 local outcome: `walkthroughs/starcross-the-artifact-test.pdf` is the authored deliverable; deterministic route and trace remain ignored under `.agent/regression-routes/`. Story/manual/hint remain ignored under `stories/`. Current branch is `feature/35-starcross-walkthrough`, based on merged PR #48 commit `e527c6d`.
 - 2026-10-30T14:17Z [USER] PR #48 is merged. Task 35 is active: complete a fresh, deterministic maximum-score Starcross run from `stories/starcros.z3`, verify ending/deaths/score, author the Zork I-style PDF, and keep route/trace local and ignored.
