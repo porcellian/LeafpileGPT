@@ -42,7 +42,7 @@ For each game, use the story and same-basename manual/hint files supplied for th
 - [x] **31. Zork I: The Great Underground Empire**
 - [x] **32. Zork II: The Wizard of Frobozz**
 - [x] **33. Deadline**
-- [ ] **34. Zork III: The Dungeon Master**
+- [x] **34. Zork III: The Dungeon Master**
 - [ ] **35. Starcross**
 - [ ] **36. Suspended**
 - [ ] **37. The Witness**
