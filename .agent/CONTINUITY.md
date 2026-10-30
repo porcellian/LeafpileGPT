@@ -1,6 +1,7 @@
 # LeafpileGPT Continuity
 
 ## [PLANS]
+- 2026-10-30T02:29Z [USER] Supersedes the PR #47 OPEN entry: PR #47 is merged. Follow-up `fix/bureaucracy-form-rendering` is in progress for Bureaucracy's V4 reverse-video application form, with `reference/gui23.png` and `reference/gui24.png` supplied; 628 xUnit tests pass, formatter passes, desktop Release build passes with Avalonia telemetry opted out. Review, commit, push, and open a PR before awaiting user review.
 - 2026-10-30T02:03Z [TOOL] Supersedes the local-complete status below: commit `9b7cbb9` and the continuity follow-up are pushed on `feature/34-zork-iii-walkthrough`; PR #47 is OPEN at `https://github.com/porcellian/LeafpileGPT/pull/47`. Wait for review and merge before Task 35.
 - 2026-10-30T02:03Z [USER] Supersedes the prior PR #46 OPEN entry: PR #46 is merged; Task 34 is authorized to proceed.
 - 2026-10-30T02:03Z [TOOL] Task 34 Zork III is complete locally on `feature/34-zork-iii-walkthrough`: 7/7 potential, Treasury/successor ending, zero deaths, 282 moves, 210,414 instructions, 61 unique opcodes. The Zork I-style PDF and clean seed-3 route/trace are ready; route and trace remain local/ignored. Task checkbox is complete. Finish diff review, commit, push, open PR, then await review and merge.

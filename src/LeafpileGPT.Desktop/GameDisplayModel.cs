@@ -14,6 +14,15 @@ public sealed record GameDisplayTextSegment(
     bool HasExplicitColours,
     bool HasTrueColours);
 
+internal sealed record UpperWindowCell(
+    string Text,
+    ZMachineTextStyle Style,
+    ushort FontNumber,
+    ushort Foreground,
+    ushort Background,
+    bool HasExplicitColours,
+    bool HasTrueColours);
+
 /// <summary>Bindable presentation state for the scrolling story display and its prompt.</summary>
 public sealed class GameDisplayModel : INotifyPropertyChanged
 {
@@ -28,7 +37,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private int _upperWindowRow = 1;
     private int _upperWindowColumn = 1;
     private int _storyVersion = 5;
-    private readonly List<List<string>> _upperWindowRows = [];
+    private readonly List<List<UpperWindowCell>> _upperWindowRows = [];
+    private IReadOnlyList<GameDisplayTextSegment> _upperWindowSegments = [];
     private bool _isUpperWindowVisible;
     private bool _isStatusStripVisible;
     private bool _isMorePromptVisible;
@@ -38,7 +48,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     private ZMachineTextStyle _textStyle;
     private ushort _fontNumber = ZMachineFontCatalog.NormalFont;
     private ushort _foreground = 9;
-    private ushort _background = 2;
+    private ushort _background = 6;
     private bool _hasExplicitColours;
     private bool _hasTrueColours;
 
@@ -53,6 +63,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
     public event Action? OutputCleared;
 
     public event Action? PresentationReset;
+
+    public event Action? UpperWindowSegmentsChanged;
 
     public string Location
     {
@@ -89,6 +101,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         get => _upperWindowText;
         private set => SetProperty(ref _upperWindowText, value);
     }
+
+    public IReadOnlyList<GameDisplayTextSegment> UpperWindowSegments => _upperWindowSegments;
 
     public bool IsUpperWindowVisible
     {
@@ -147,7 +161,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         {
             if (_storyVersion >= 6)
             {
-                UpperWindowText += text;
+                AppendV6UpperWindowText(text);
             }
             else
             {
@@ -189,6 +203,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
             if (_storyVersion >= 6)
             {
                 UpperWindowText = string.Empty;
+                _upperWindowSegments = [];
+                UpperWindowSegmentsChanged?.Invoke();
             }
             else
             {
@@ -276,7 +292,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         var line = _upperWindowRows[row - 1];
         for (var index = Math.Max(1, column) - 1; index < line.Count; index++)
         {
-            line[index] = " ";
+            line[index] = CaptureUpperWindowCell(" ");
         }
 
         RefreshUpperWindowText();
@@ -292,6 +308,30 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         _background = (byte)packedColours;
         _hasExplicitColours = true;
         _hasTrueColours = false;
+    }
+
+    private UpperWindowCell CaptureUpperWindowCell(string text) => new(
+        text,
+        _textStyle,
+        _fontNumber,
+        _foreground,
+        _background,
+        _hasExplicitColours,
+        _hasTrueColours);
+
+    private void AppendV6UpperWindowText(string text)
+    {
+        UpperWindowText += text;
+        _upperWindowSegments = [new GameDisplayTextSegment(
+            UpperWindowText,
+            1,
+            _textStyle,
+            _fontNumber,
+            _foreground,
+            _background,
+            _hasExplicitColours,
+            _hasTrueColours)];
+        UpperWindowSegmentsChanged?.Invoke();
     }
 
     private void AppendUpperWindowText(string text)
@@ -314,10 +354,10 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
             var line = _upperWindowRows[_upperWindowRow - 1];
             while (line.Count < _upperWindowColumn)
             {
-                line.Add(" ");
+                line.Add(CaptureUpperWindowCell(" "));
             }
 
-            line[_upperWindowColumn - 1] = rune.ToString();
+            line[_upperWindowColumn - 1] = CaptureUpperWindowCell(rune.ToString());
             _upperWindowColumn++;
             if (_upperWindowColumn > _upperWindowWidth)
             {
@@ -378,11 +418,45 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
 
     private void RefreshUpperWindowText()
     {
-        var renderedRows = _upperWindowRows.Select(line => string.Concat(line).TrimEnd()).ToArray();
+        var renderedRows = _upperWindowRows.Select(line => string.Concat(line.Select(cell => cell.Text)).TrimEnd()).ToArray();
         var lastContentRow = Array.FindLastIndex(renderedRows, row => !string.IsNullOrEmpty(row));
         UpperWindowText = lastContentRow < 0
             ? string.Empty
             : string.Join('\n', renderedRows.Take(lastContentRow + 1));
+
+        var segments = new List<GameDisplayTextSegment>();
+        var lastOccupiedRow = _upperWindowRows.FindLastIndex(line => line.Count > 0);
+        for (var rowIndex = 0; rowIndex <= lastOccupiedRow; rowIndex++)
+        {
+            AppendUpperWindowSegments(segments, _upperWindowRows[rowIndex]);
+            if (rowIndex < lastOccupiedRow)
+            {
+                segments.Add(new GameDisplayTextSegment("\n", 1, ZMachineTextStyle.Roman,
+                    ZMachineFontCatalog.NormalFont, 9, 6, false, false));
+            }
+        }
+
+        _upperWindowSegments = segments;
+        UpperWindowSegmentsChanged?.Invoke();
+    }
+
+    private static void AppendUpperWindowSegments(List<GameDisplayTextSegment> segments, IReadOnlyList<UpperWindowCell> cells)
+    {
+        var index = 0;
+        while (index < cells.Count)
+        {
+            var first = cells[index];
+            var text = new System.Text.StringBuilder(first.Text);
+            index++;
+            while (index < cells.Count && (cells[index] with { Text = first.Text }) == first)
+            {
+                text.Append(cells[index].Text);
+                index++;
+            }
+
+            segments.Add(new GameDisplayTextSegment(text.ToString(), 1, first.Style, first.FontNumber,
+                first.Foreground, first.Background, first.HasExplicitColours, first.HasTrueColours));
+        }
     }
 
     public void SetTrueColours(ushort foreground, ushort background)
@@ -423,7 +497,7 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         _textStyle = ZMachineTextStyle.Roman;
         _fontNumber = ZMachineFontCatalog.NormalFont;
         _foreground = 9;
-        _background = 2;
+        _background = 6;
         _hasExplicitColours = false;
         _hasTrueColours = false;
     }

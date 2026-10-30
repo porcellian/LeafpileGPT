@@ -1,3 +1,4 @@
+using LeafpileGPT.Core;
 using LeafpileGPT.Desktop;
 using Xunit;
 
@@ -216,6 +217,24 @@ public sealed class GameDisplayModelTests
         model.AppendOutput("3/16/2031", window: 1);
 
         Assert.Equal("\n3/16/2031", model.UpperWindowText);
+    }
+
+    [Fact]
+    public void UpperWindowRetainsReverseVideoAndSpaceCellsForFormRendering()
+    {
+        var model = new GameDisplayModel();
+        model.SetStoryVersion(4);
+        model.SplitWindow(2);
+        model.SetSelectedWindow(1);
+        model.SetTextStyle((ushort)ZMachineTextStyle.ReverseVideo);
+        model.MoveCursor(1, 1, 4);
+
+        model.AppendOutput("  APPLICATION  ", window: 1);
+
+        var firstRow = Assert.Single(model.UpperWindowSegments);
+        Assert.Equal("     APPLICATION  ", firstRow.Text);
+        Assert.Equal(ZMachineTextStyle.ReverseVideo, firstRow.Style);
+        Assert.Equal((short)1, firstRow.Window);
     }
 
     [Fact]

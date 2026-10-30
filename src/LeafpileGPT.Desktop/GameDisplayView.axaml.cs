@@ -74,6 +74,7 @@ public partial class GameDisplayView : UserControl
         Model = new GameDisplayModel();
         DataContext = Model;
         Model.OutputSegmentAdded += AppendOutputSegment;
+        Model.UpperWindowSegmentsChanged += RefreshUpperWindowSegments;
         Model.OutputCleared += OnOutputCleared;
         Model.PresentationReset += EndPromptInput;
         Model.PropertyChanged += (_, args) =>
@@ -105,12 +106,8 @@ public partial class GameDisplayView : UserControl
     {
         _storyVersion = version;
         Model.SetStoryVersion(version);
-
-        var upperWindowIsStatusDisplay = version is 4 or 5;
-        _upperWindowBorder.Background = upperWindowIsStatusDisplay
-            ? new SolidColorBrush(Color.FromRgb(170, 170, 170))
-            : new SolidColorBrush(Color.FromRgb(0, 102, 204));
-        _upperWindowTextBlock.Foreground = upperWindowIsStatusDisplay ? Brushes.Black : Brushes.White;
+        _upperWindowBorder.Background = new SolidColorBrush(Color.FromRgb(0, 0, 170));
+        _upperWindowTextBlock.Foreground = Brushes.White;
     }
 
     public bool TryGetScreenMetrics(out DesktopScreenMetrics metrics)
@@ -418,19 +415,49 @@ public partial class GameDisplayView : UserControl
 
     private void AppendOutputSegment(GameDisplayTextSegment segment)
     {
+        _transcriptTextBlock.Inlines?.Add(CreateOutputRun(segment, upperWindow: false));
+    }
+
+    private void RefreshUpperWindowSegments()
+    {
+        var inlines = _upperWindowTextBlock.Inlines;
+        if (inlines is null)
+        {
+            return;
+        }
+
+        inlines.Clear();
+        foreach (var segment in Model.UpperWindowSegments)
+        {
+            inlines.Add(CreateOutputRun(segment, upperWindow: true));
+        }
+    }
+
+    private Run CreateOutputRun(GameDisplayTextSegment segment, bool upperWindow)
+    {
+        var defaultForeground = Color.FromRgb(255, 255, 255);
+        var defaultBackground = Color.FromRgb(0, 0, 170);
         var foreground = segment.HasExplicitColours
             ? ResolveColour(segment.Foreground, segment.HasTrueColours)
-            : Color.FromRgb(255, 255, 255);
+            : defaultForeground;
         var background = segment.HasExplicitColours
             ? ResolveColour(segment.Background, segment.HasTrueColours)
-            : Color.FromRgb(0, 102, 204);
+            : defaultBackground;
         var style = segment.Style;
         if ((style & ZMachineTextStyle.ReverseVideo) != 0)
         {
-            (foreground, background) = (background, foreground);
+            if (upperWindow && !segment.HasExplicitColours && _storyVersion is 4 or 5)
+            {
+                foreground = Color.FromRgb(0, 0, 170);
+                background = Color.FromRgb(170, 170, 170);
+            }
+            else
+            {
+                (foreground, background) = (background, foreground);
+            }
         }
 
-        var run = new Run(segment.Text)
+        return new Run(segment.Text)
         {
             FontFamily = new FontFamily("Courier New, Courier, monospace"),
             FontWeight = (style & ZMachineTextStyle.Bold) != 0 ? FontWeight.Bold : FontWeight.Normal,
@@ -438,7 +465,6 @@ public partial class GameDisplayView : UserControl
             Foreground = new SolidColorBrush(foreground),
             Background = new SolidColorBrush(background)
         };
-        _transcriptTextBlock.Inlines?.Add(run);
     }
 
     private static Color ResolveColour(ushort value, bool trueColour)
