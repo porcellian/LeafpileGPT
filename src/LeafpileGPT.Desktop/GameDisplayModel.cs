@@ -146,6 +146,8 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
         private set => SetProperty(ref _selectedWindow, value);
     }
 
+    public (int Row, int Column) UpperWindowCursor => (_upperWindowRow, _upperWindowColumn);
+
     public void SetStatusLine(string location, string rightStatus)
     {
         ArgumentNullException.ThrowIfNull(location);
@@ -354,7 +356,16 @@ public sealed class GameDisplayModel : INotifyPropertyChanged
             var line = _upperWindowRows[_upperWindowRow - 1];
             while (line.Count < _upperWindowColumn)
             {
-                line.Add(CaptureUpperWindowCell(" "));
+                // A cursor move does not write styled spaces into the skipped
+                // cells. Keep those cells at the screen's normal background.
+                line.Add(new UpperWindowCell(
+                    " ",
+                    ZMachineTextStyle.Roman,
+                    ZMachineFontCatalog.NormalFont,
+                    9,
+                    2,
+                    false,
+                    false));
             }
 
             line[_upperWindowColumn - 1] = CaptureUpperWindowCell(rune.ToString());

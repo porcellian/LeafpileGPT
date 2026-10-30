@@ -18,7 +18,11 @@ public partial class GameDisplayView : UserControl
     private readonly Canvas _pictureCanvas;
     private readonly TextBlock _transcriptTextBlock;
     private readonly StackPanel _upperWindowTextPanel;
+    private readonly Canvas _upperWindowBackgroundCanvas;
+    private readonly Canvas _upperWindowInputCanvas;
     private readonly TextBox _promptTextBox;
+    private TextBlock? _upperWindowPromptBlock;
+    private TextBlock? _promptInputHost;
     private Run? _promptInputRun;
     private Run? _blockCursorRun;
     private bool _promptInputActive;
@@ -37,6 +41,8 @@ public partial class GameDisplayView : UserControl
         _pictureCanvas = this.FindControl<Canvas>("PictureCanvas")!;
         _transcriptTextBlock = this.FindControl<TextBlock>("TranscriptTextBlock")!;
         _upperWindowTextPanel = this.FindControl<StackPanel>("UpperWindowTextPanel")!;
+        _upperWindowBackgroundCanvas = this.FindControl<Canvas>("UpperWindowBackgroundCanvas")!;
+        _upperWindowInputCanvas = this.FindControl<Canvas>("UpperWindowInputCanvas")!;
         _transcriptTextBlock.LayoutUpdated += OnTranscriptLayoutUpdated;
         _promptTextBox = this.FindControl<TextBox>("PromptTextBox")!;
         _promptTextBox.TextInput += OnPromptTextInput;
@@ -84,7 +90,10 @@ public partial class GameDisplayView : UserControl
                 if (_promptInputRun is not null)
                 {
                     _promptInputRun.Text = Model.InputText;
-                    RequestScrollToEnd();
+                    if (_promptInputHost == _transcriptTextBlock)
+                    {
+                        RequestScrollToEnd();
+                    }
                 }
             }
             else if (args.PropertyName == nameof(GameDisplayModel.Transcript))
@@ -175,12 +184,14 @@ public partial class GameDisplayView : UserControl
             _transcriptTextBlock.FontSize,
             Brushes.White);
         _upperWindowBorder.Height = sample.Height * Model.UpperWindowHeight;
+        RefreshUpperWindowBackground();
     }
 
     public void BeginPromptInput()
     {
         EndPromptInput();
         _promptInputActive = true;
+        _promptInputHost = CreatePromptInputHost();
         AddPromptInputRuns();
     }
 
@@ -193,12 +204,56 @@ public partial class GameDisplayView : UserControl
 
     private void AddPromptInputRuns()
     {
+        _promptInputHost ??= _transcriptTextBlock;
         _promptInputRun = new Run(Model.InputText) { Foreground = Brushes.White };
         _blockCursorRun = new Run("█") { Foreground = Brushes.White };
-        _transcriptTextBlock.Inlines?.Add(_promptInputRun);
-        _transcriptTextBlock.Inlines?.Add(_blockCursorRun);
+        _promptInputHost.Inlines?.Add(_promptInputRun);
+        _promptInputHost.Inlines?.Add(_blockCursorRun);
         _cursorBlinkTimer.Start();
-        RequestScrollToEnd();
+        if (_promptInputHost == _transcriptTextBlock)
+        {
+            RequestScrollToEnd();
+        }
+    }
+
+    private TextBlock CreatePromptInputHost()
+    {
+        if (Model.SelectedWindow != 1 || _storyVersion is < 4 or > 5 || !Model.IsUpperWindowVisible)
+        {
+            return _transcriptTextBlock;
+        }
+
+        var cursor = Model.UpperWindowCursor;
+        var host = new TextBlock
+        {
+            FontFamily = new FontFamily("Courier New, Courier, monospace"),
+            FontSize = _transcriptTextBlock.FontSize,
+            Foreground = Brushes.White,
+            TextWrapping = TextWrapping.NoWrap
+        };
+        _upperWindowInputCanvas.Children.Add(host);
+        var (characterWidth, lineHeight) = GetCellMetrics();
+        Canvas.SetLeft(host, Math.Max(0, cursor.Column - 1) * characterWidth);
+        Canvas.SetTop(host, Math.Max(0, cursor.Row - 1) * lineHeight);
+        _upperWindowPromptBlock = host;
+        return host;
+    }
+
+    private (double CharacterWidth, double LineHeight) GetCellMetrics()
+    {
+        var typeface = new Typeface(
+            _transcriptTextBlock.FontFamily,
+            _transcriptTextBlock.FontStyle,
+            _transcriptTextBlock.FontWeight,
+            FontStretch.Normal);
+        var sample = new FormattedText(
+            "M",
+            CultureInfo.InvariantCulture,
+            FlowDirection.LeftToRight,
+            typeface,
+            _transcriptTextBlock.FontSize,
+            Brushes.White);
+        return (sample.WidthIncludingTrailingWhitespace, sample.Height);
     }
 
     public void ApplyScreenOperation(ZMachineScreenOperation operation)
@@ -343,6 +398,7 @@ public partial class GameDisplayView : UserControl
         if (restorePrompt)
         {
             _promptInputActive = true;
+            _promptInputHost = CreatePromptInputHost();
             AddPromptInputRuns();
         }
     }
@@ -364,17 +420,26 @@ public partial class GameDisplayView : UserControl
     {
         _promptInputActive = false;
         _cursorBlinkTimer.Stop();
+        _promptInputHost ??= _transcriptTextBlock;
         if (_promptInputRun is not null)
         {
-            _transcriptTextBlock.Inlines?.Remove(_promptInputRun);
+            _promptInputHost.Inlines?.Remove(_promptInputRun);
             _promptInputRun = null;
         }
 
         if (_blockCursorRun is not null)
         {
-            _transcriptTextBlock.Inlines?.Remove(_blockCursorRun);
+            _promptInputHost.Inlines?.Remove(_blockCursorRun);
             _blockCursorRun = null;
         }
+
+        if (_upperWindowPromptBlock is not null)
+        {
+            _upperWindowInputCanvas.Children.Remove(_upperWindowPromptBlock);
+            _upperWindowPromptBlock = null;
+        }
+
+        _promptInputHost = null;
     }
 
     private void DrawPicture(ZMachineScreenOperation operation)
@@ -421,6 +486,7 @@ public partial class GameDisplayView : UserControl
 
     private void RefreshUpperWindowSegments()
     {
+        RefreshUpperWindowBackground();
         _upperWindowTextPanel.Children.Clear();
         var currentLine = CreateUpperWindowLine();
         _upperWindowTextPanel.Children.Add(currentLine);
@@ -437,6 +503,48 @@ public partial class GameDisplayView : UserControl
         }
     }
 
+    private void RefreshUpperWindowBackground()
+    {
+        _upperWindowBackgroundCanvas.Children.Clear();
+        var firstColumn = int.MaxValue;
+        var lastColumn = 0;
+        var column = 1;
+
+        foreach (var segment in Model.UpperWindowSegments)
+        {
+            if (segment.Text == "\n")
+            {
+                column = 1;
+                continue;
+            }
+
+            var (_, background) = ResolveOutputColours(segment, upperWindow: true);
+            var cellCount = segment.Text.EnumerateRunes().Count();
+            if (background == Color.FromRgb(170, 170, 170) && cellCount > 0)
+            {
+                firstColumn = Math.Min(firstColumn, column);
+                lastColumn = Math.Max(lastColumn, column + cellCount - 1);
+            }
+
+            column += cellCount;
+        }
+
+        if (lastColumn == 0)
+        {
+            return;
+        }
+
+        var (characterWidth, lineHeight) = GetCellMetrics();
+        var panel = new Border
+        {
+            Background = new SolidColorBrush(Color.FromRgb(170, 170, 170)),
+            Width = (lastColumn - firstColumn + 1) * characterWidth,
+            Height = lineHeight * Math.Max(1, Model.UpperWindowHeight)
+        };
+        Canvas.SetLeft(panel, (firstColumn - 1) * characterWidth);
+        _upperWindowBackgroundCanvas.Children.Add(panel);
+    }
+
     private TextBlock CreateUpperWindowLine() => new()
     {
         FontFamily = new FontFamily("Courier New, Courier, monospace"),
@@ -448,16 +556,29 @@ public partial class GameDisplayView : UserControl
 
     private Run CreateOutputRun(GameDisplayTextSegment segment, bool upperWindow)
     {
-        var defaultForeground = Color.FromRgb(255, 255, 255);
-        var defaultBackground = Color.FromRgb(0, 102, 204);
+        var style = segment.Style;
+        var (foreground, background) = ResolveOutputColours(segment, upperWindow);
+
+        return new Run(segment.Text)
+        {
+            FontFamily = new FontFamily("Courier New, Courier, monospace"),
+            FontSize = _transcriptTextBlock.FontSize,
+            FontWeight = (style & ZMachineTextStyle.Bold) != 0 ? FontWeight.Bold : FontWeight.Normal,
+            FontStyle = (style & ZMachineTextStyle.Italic) != 0 ? FontStyle.Italic : FontStyle.Normal,
+            Foreground = new SolidColorBrush(foreground),
+            Background = new SolidColorBrush(background)
+        };
+    }
+
+    private (Color Foreground, Color Background) ResolveOutputColours(GameDisplayTextSegment segment, bool upperWindow)
+    {
         var foreground = segment.HasExplicitColours
             ? ResolveColour(segment.Foreground, segment.HasTrueColours)
-            : defaultForeground;
+            : Color.FromRgb(255, 255, 255);
         var background = segment.HasExplicitColours
             ? ResolveColour(segment.Background, segment.HasTrueColours)
-            : defaultBackground;
-        var style = segment.Style;
-        if ((style & ZMachineTextStyle.ReverseVideo) != 0)
+            : Color.FromRgb(0, 102, 204);
+        if ((segment.Style & ZMachineTextStyle.ReverseVideo) != 0)
         {
             if (upperWindow && !segment.HasExplicitColours && _storyVersion is 4 or 5)
             {
@@ -470,15 +591,7 @@ public partial class GameDisplayView : UserControl
             }
         }
 
-        return new Run(segment.Text)
-        {
-            FontFamily = new FontFamily("Courier New, Courier, monospace"),
-            FontSize = _transcriptTextBlock.FontSize,
-            FontWeight = (style & ZMachineTextStyle.Bold) != 0 ? FontWeight.Bold : FontWeight.Normal,
-            FontStyle = (style & ZMachineTextStyle.Italic) != 0 ? FontStyle.Italic : FontStyle.Normal,
-            Foreground = new SolidColorBrush(foreground),
-            Background = new SolidColorBrush(background)
-        };
+        return (foreground, background);
     }
 
     private static Color ResolveColour(ushort value, bool trueColour)
